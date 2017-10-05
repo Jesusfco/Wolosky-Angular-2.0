@@ -1,0 +1,25 @@
+<div class=ToClosePop *ngIf="paymentView">
+    <div class="cancel" (click)="paymentView = !paymentView"></div>
+    <div class="card">
+
+
+        <h4>Establecer Pago</h4>
+ 
+        <form (submit)="verify()">
+
+            <label>Cantidad:</label>
+            <input type="number" [ngClass]="{ invalid: payment.amount < 0 }" [(ngModel)]="payment.amount" name="amount" min="0">
+
+            <label>Fecha</label>
+            <input type="date" [(ngModel)]="payment.date" name="date" [ngClass]="{ invalid: payment.date == null }">
+
+            <label>Descripción:</label>
+            <textarea [(ngModel)]="payment.description" name="description" class="materialize-textarea"></textarea>
+
+            <button class="btn" [ngClass]="{ 'grey lighten-2': payment.date == null || payment.amount == null }">Aceptar</button>
+            
+        </form>
+
+
+    </div>
+</div>

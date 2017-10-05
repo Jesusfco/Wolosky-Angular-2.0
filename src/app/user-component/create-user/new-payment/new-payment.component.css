@@ -1,0 +1,26 @@
+.ToClosePop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.cancel {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, .5);
+    cursor: pointer;
+}
+
+.card {
+    padding: 15px;
+    width: 450px;
+    max-height: 85%;
+    text-align: center;
+}
