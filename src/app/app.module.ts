@@ -51,7 +51,8 @@ import { NewScheduleComponent } from './user-component/create-user/new-schedule/
 
 import { NewSalariesComponent } from './user-component/create-user/new-salaries/new-salaries.component';
 import { NewPaymentComponent } from './user-component/create-user/new-payment/new-payment.component';
-import { LoginComponent } from '../src/app/login/login.component';
+import { LoginComponent } from './login/login.component';
+import { LoginService } from './login/login.service';
 
 @NgModule({
   declarations: [
@@ -109,7 +110,7 @@ import { LoginComponent } from '../src/app/login/login.component';
     CdkTableModule
     
   ],
-  providers: [ UserService ],
+  providers: [ UserService, LoginService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
