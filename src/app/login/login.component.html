@@ -1,0 +1,27 @@
+<div class="cardSpace">
+
+    <div class="closeCardBackground"></div>
+
+    <div class="loginCardModule">
+        <h2>Accesar</h2>
+
+        <form (submit)="accesar()">
+            <p *ngIf="form.email == 1">* Correo Requerido </p>
+            <p *ngIf="form.password == 1">* Contraseña Requerida</p>
+
+            <md-form-field class="l12">
+                <input mdInput [(ngModel)]="data.email" name="email" type="email" placeholder="Correo" #focus>
+            </md-form-field>
+
+            <md-form-field class="l12">
+                <input mdInput [(ngModel)]="data.password" name="password" type="password" placeholder="Contraseña">
+            </md-form-field>
+
+            <button md-raised-button color="primary">Login</button>
+
+        </form>
+
+
+
+    </div>
+</div>

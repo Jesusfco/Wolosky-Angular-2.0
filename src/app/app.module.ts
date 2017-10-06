@@ -51,6 +51,7 @@ import { NewScheduleComponent } from './user-component/create-user/new-schedule/
 
 import { NewSalariesComponent } from './user-component/create-user/new-salaries/new-salaries.component';
 import { NewPaymentComponent } from './user-component/create-user/new-payment/new-payment.component';
+import { LoginComponent } from '../src/app/login/login.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { NewPaymentComponent } from './user-component/create-user/new-payment/ne
     
     NewSalariesComponent,
     NewPaymentComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
