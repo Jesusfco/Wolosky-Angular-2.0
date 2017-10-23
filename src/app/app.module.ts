@@ -53,6 +53,8 @@ import { NewSalariesComponent } from './user-component/create-user/new-salaries/
 import { NewPaymentComponent } from './user-component/create-user/new-payment/new-payment.component';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
+import { StructureComponent } from './structure/structure.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,8 @@ import { LoginService } from './login/login.service';
     NewSalariesComponent,
     NewPaymentComponent,
     LoginComponent,
+    StructureComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
