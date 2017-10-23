@@ -43,10 +43,9 @@ import {
 
 import { AppComponent } from './app.component';
 import { UserComponentComponent } from './user-component/user-component.component';
-import { CreateUserComponent } from './user-component/create-user/create-user.component';
+import { CreateUserComponent } from './user/create-user/create-user.component';
 import { EditUserComponent } from './user-component/edit-user/edit-user.component';
 
-import { UserService } from './user-component/user.service';
 import { NewScheduleComponent } from './user-component/create-user/new-schedule/new-schedule.component';
 
 import { NewSalariesComponent } from './user-component/create-user/new-salaries/new-salaries.component';
@@ -55,6 +54,12 @@ import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
 import { StructureComponent } from './structure/structure.component';
 import { FooterComponent } from './footer/footer.component';
+import { UserComponent } from './user/user.component';
+import { UserService } from './user/user.service';
+import { CreateScheduleComponent } from './user/create-schedule/create-schedule.component';
+import { SalaryComponent } from './user/create-user/salary/salary.component';
+import { ReferenceComponent } from './user/create-user/reference/reference.component';
+import { PaymentComponent } from './user/create-user/payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +74,11 @@ import { FooterComponent } from './footer/footer.component';
     LoginComponent,
     StructureComponent,
     FooterComponent,
+    UserComponent,
+    CreateScheduleComponent,
+    SalaryComponent,
+    ReferenceComponent,
+    PaymentComponent,
   ],
   imports: [
     BrowserModule,

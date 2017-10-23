@@ -1,0 +1,56 @@
+<div id="createCard">
+
+<div id="cerrarBtn" (click)="close()"> Cerrar <i class="material-icons">close</i></div>
+  
+  <div class="form">
+    <h1>Crear Usuario</h1>
+    
+    <div>
+      <form>
+        <div>
+          <div> 
+            <h2>Datos Personales</h2>
+            <input name="nombre" type="text" placeholder="Nombre">
+
+            <select>
+              <option value="1">Alumno</option> 
+              <option value="2">Empleado</option>
+              <option value="3">Escritor</option>
+              <option value="4">Super escritor</option>
+              <option value="5">Administrador</option>
+            </select><br>
+
+            <input name="telefono" type="tel" placeholder="Telefono">
+
+            <input name="correo" type="email" placeholder="Correo"><br>
+
+            <input name="cumpleanos" type="date" placeholder="Cumpleanos">
+
+            <input name="lNacimiento" type="text" placeholder="Lugar de nacimiento"><br>
+
+            <input name="curp" type="text" placeholder="Curp">
+
+            <input name="seguro" type="text" placeholder="Seguro social"><br>
+
+            <select>
+              <option value="1">Masculino</option> 
+              <option value="2">Femenino</option>
+            </select>
+
+            <input name="foto" type="file" placeholder="Foto">
+
+          </div>
+
+          <div>
+            <h2>Direccion</h2>
+            <input name="calle" type="text" placeholder="Calle">
+            <input name="noCasa" type="number" placeholder="Numero de casa"><br>
+            <input name="colonia" type="text" placeholder="Colonia">
+            <input name="ciudad" type="text" placeholder="Ciudad"><br>   
+          </div>
+
+        </div>  
+      </form>
+    </div>  
+  </div>
+</div>

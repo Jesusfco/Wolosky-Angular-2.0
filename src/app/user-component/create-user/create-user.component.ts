@@ -10,7 +10,7 @@ import { Horario } from '../horario';
 
 
 @Component({
-  selector: 'app-create-user',
+  selector: 'app-create-users2',
   templateUrl: './create-user.component.html',
   styleUrls: ['./create-user.component.css']
 })

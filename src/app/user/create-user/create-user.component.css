@@ -1,0 +1,35 @@
+input, select {
+    border: none;
+    background: #ECECEC;
+    padding: 10px;
+    border-radius: 3px;
+    margin-bottom: 15px;
+    width: 20%;
+}
+
+
+#createCard{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh; 
+    background: white;   
+    z-index: 10;
+}
+
+#cerrarBtn {
+    padding: 10px;
+    background: black;
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+
+.form {
+    display: block;
+    margin: 0 auto;
+    width: 90%;
+}
