@@ -58,6 +58,11 @@ export class AppComponent {
 
     if(this.localData.token == null || this.localData.token == ''){ 
       this.userSignin = false;
+
+      setTimeout(() => {
+        
+        this.loaderAnimation();        
+      }, 1000);
     }
 
     else {

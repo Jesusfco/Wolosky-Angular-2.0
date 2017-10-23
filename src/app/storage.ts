@@ -10,10 +10,10 @@ export class Storage {
         if(localStorage.getItem('token') !== null){
             this.token = localStorage.getItem('token');
             this.tokenRequest = "?token=" + this.token;
-            this.userName = localStorage.getItem('userName');
-            this.userEmail = localStorage.getItem('userEmail');
+            this.userName = localStorage.getItem('name');
+            this.userEmail = localStorage.getItem('email');
             this.userId = parseInt(localStorage.getItem('userId'));
-            this.userType = parseInt(localStorage.getItem('userType'))
+            this.userType = parseInt(localStorage.getItem('typeUser'))
         }
     }
 }

@@ -1,3 +1,43 @@
-<p>
-  structure works!
-</p>
+<nav>
+    <button mat-button color="" (click)='sideNav()'><mat-icon>menu</mat-icon> Menu</button>
+
+    <div id="userName">
+
+
+    </div>
+</nav>
+
+<div class="sideNav" [@menu]='stateMenu'>
+    <div style="background-image: url(https://roc21cdn-roc21.netdna-ssl.com/blog/wp-content/uploads/2016/07/patrones-hechos-con-papel-seis.jpg)" id="userInfSection">
+        <div>
+            <img src="https://www.w3schools.com/w3css/img_avatar3.png">
+            <p>{{userData.userName | lowercase}}</p>
+            <p id="emailInf">{{userData.userEmail | lowercase}}</p>
+            <p *ngIf="userData.userType == 1" id="userTypeInf">Caja</p>
+            <p *ngIf="userData.userType == 2" id="userTypeInf">Administrador</p>
+            <p *ngIf="userData.userType == 3" id="userTypeInf">Super Administrador</p>
+        </div>
+    </div>
+
+    <h5>APLICACIÓN</h5>
+    <ul>
+        <li><button mat-button (click)="userView()">USUARIOS</button></li>
+
+    </ul>
+    <h5>USUARIO</h5>
+    <ul>
+        <li><button mat-button (click)="cerrarSesion()">Cerrar Sesión</button></li>
+        <!-- <li><button md-button>Perfil</button></li> -->
+    </ul>
+
+
+</div>
+
+<div class="principal" [@space]="statePanel">
+    <div class="principalCard">
+        <app-user-component *ngIf="views.user"></app-user-component>
+
+
+    </div>
+
+</div>

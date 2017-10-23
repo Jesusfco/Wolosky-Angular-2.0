@@ -1,0 +1,130 @@
+nav {
+    position: fixed;
+    height: 48px;
+    width: 100%;
+    background: #3f51b5;
+    z-index: 4;
+    color: white;
+    padding: 5px 20px;
+    box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);
+}
+
+nav button {
+    z-index: 4;
+    display: block;
+}
+
+#userName {
+    position: fixed;
+    top: 3px;
+    right: 15px;
+    text-align: right;
+}
+
+#userName img {
+    height: 30px;
+    display: inline-block;
+    margin: 5px;
+}
+
+#userName p {
+    display: inline-block;
+    padding-left: 20px;
+    margin: 0;
+}
+
+
+/* Todo lo que tenga que ver con el menu Alado */
+
+.sideNav {
+    position: fixed;
+    height: 100vh;
+    width: 250px;
+    top: 0;
+    padding: 48px 0px;
+    background: white;
+    z-index: 3;
+    /* outline: 1px solid #333;
+    overflow-y: scroll; */
+}
+
+.sideNav h5 {
+    padding: 6px 10px;
+    color: #333333;
+    margin: 0;
+    font-size: 11px;
+    border-bottom: 1px solid #DDDDDD
+}
+
+.sideNav ul {
+    list-style-type: none;
+    margin: 0px 0px 0px 20px;
+    padding: 0;
+}
+
+.sideNav button {
+    text-align: left;
+    width: 100%;
+}
+
+
+/* ZONA DE INFORMACION DEL USUARIO */
+
+#userInfSection {
+    height: 135px;
+    width: 100%;
+    position: relative;
+    background-size: 100%;
+}
+
+#userInfSection div {
+    padding: 15px;
+}
+
+#userInfSection img {
+    width: 60px;
+    border-radius: 50%;
+}
+
+#userInfSection p {
+    color: white !important;
+    margin: 10px 0 0 0;
+    font-size: 12px;
+    text-transform: capitalize;
+}
+
+#userInfSection #emailInf {
+    color: #CECECE;
+    font-size: 11px;
+    margin-top: 5px;
+    text-transform: lowercase;
+}
+
+#userInfSection #userTypeInf {
+    font-size: 10px;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    margin: 0;
+}
+
+
+/* Area de Aplicacion principal */
+
+.principalCard {
+    width: 95%;
+    margin: 0 auto;
+    max-width: 1600px;
+    background: white;
+    display: block;
+    margin-bottom: 15%;
+    min-height: 85vh;
+    font-weight: 300px;
+    position: relative;
+}
+
+@media screen and (max-width: 750px) {
+    .principalCard {
+        width: 100%;
+    }
+}

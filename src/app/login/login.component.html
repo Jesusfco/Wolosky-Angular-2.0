@@ -1,26 +1,36 @@
 <div class="cardSpace">
 
-    <div class="closeCardBackground"></div>
+
 
     <div class="loginCardModule">
-        <h2>Accesar</h2>
+        <img id="logo" src="http://www.woloskygimnasia.com/images/Wolosky-Logo.png">
+        <h2 id="bienvenida">Inicia sesión </h2>
 
-        <form (submit)="accesar()">
-            <p *ngIf="form.email == 1">* Correo Requerido </p>
-            <p *ngIf="form.password == 1">* Contraseña Requerida</p>
+        <div id="formSpace">
+            <form (submit)="accesar()">
+                <p *ngIf="form.email == 1">* Correo/Tel Requerido </p>
+                <p *ngIf="form.password == 1">* Contraseña Requerida</p>
 
-            <mat-form-field class="l12">
-                <input matInput [(ngModel)]="data.email" name="email" type="email" placeholder="Correo" #focus>
-            </mat-form-field>
 
-            <mat-form-field class="l12">
-                <input matInput [(ngModel)]="data.password" name="password" type="password" placeholder="Contraseña">
-            </mat-form-field>
+                <input [(ngModel)]="data.email" name="email" type="email" placeholder="Correo o Telefono" #focus><br>
 
-            <button mat-raised-button color="primary">Login</button>
+                <input [(ngModel)]="data.password" name="password" type="password" placeholder="Contraseña"><br>
 
-        </form>
 
+                <button id="btnLog">asdfasdfas</button>
+                <div class="btn" id="btnLogin" (click)="accesar()">Iniciar sesión</div>
+
+                <button id="btnFacebook" class="btn">Iniciar con Facebook</button>
+
+            </form>
+            <p>¿Olvidaste tu Contraseña?</p>
+            <!-- <hr>
+            <div class="registrateSection">
+                <span>¿Aún no estás registrado?</span>
+                <button>Registrate</button>
+            </div> -->
+
+        </div>
 
 
     </div>
