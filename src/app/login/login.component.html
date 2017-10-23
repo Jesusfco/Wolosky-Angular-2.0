@@ -9,15 +9,15 @@
             <p *ngIf="form.email == 1">* Correo Requerido </p>
             <p *ngIf="form.password == 1">* Contraseña Requerida</p>
 
-            <md-form-field class="l12">
-                <input mdInput [(ngModel)]="data.email" name="email" type="email" placeholder="Correo" #focus>
-            </md-form-field>
+            <mat-form-field class="l12">
+                <input matInput [(ngModel)]="data.email" name="email" type="email" placeholder="Correo" #focus>
+            </mat-form-field>
 
-            <md-form-field class="l12">
-                <input mdInput [(ngModel)]="data.password" name="password" type="password" placeholder="Contraseña">
-            </md-form-field>
+            <mat-form-field class="l12">
+                <input matInput [(ngModel)]="data.password" name="password" type="password" placeholder="Contraseña">
+            </mat-form-field>
 
-            <button md-raised-button color="primary">Login</button>
+            <button mat-raised-button color="primary">Login</button>
 
         </form>
 

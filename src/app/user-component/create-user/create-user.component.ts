@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {MdSelectModule} from '@angular/material';
+
 import { User } from '../user';
 import { Schedule } from '../schedule';
 import { Payment } from '../payment';

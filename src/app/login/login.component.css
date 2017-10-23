@@ -1,0 +1,8 @@
+.loginCardModule{
+    background: white;
+    z-index: 12;
+}
+
+.closeCardBackground {
+    z-index: 5;
+}

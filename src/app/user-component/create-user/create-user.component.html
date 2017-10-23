@@ -22,10 +22,10 @@
                 </div>
 
                 <div class="col l2">
-                    <md-select placeholder="Sexo" [(ngModel)]="user.gender" name="gender">
-                        <md-option value="M">Masculino</md-option>
-                        <md-option value="F">Femenino</md-option>
-                    </md-select>
+                    <mat-select placeholder="Sexo" [(ngModel)]="user.gender" name="gender">
+                        <mat-option value="M">Masculino</mat-option>
+                        <mat-option value="F">Femenino</mat-option>
+                    </mat-select>
 
                     <label class="active">Selecciona el sexo</label>
                 </div>
@@ -45,9 +45,9 @@
 
                 <div class="col l2">
 
-                    <md-select placeholder="Mes" [(ngModel)]="month" name="month">
-                        <md-option *ngFor="let month of months" [value]="month.value">{{ month.viewValue}}</md-option>
-                    </md-select>
+                    <mat-select placeholder="Mes" [(ngModel)]="month" name="month">
+                        <mat-option *ngFor="let month of months" [value]="month.value">{{ month.viewValue}}</mat-option>
+                    </mat-select>
 
                 </div>
 

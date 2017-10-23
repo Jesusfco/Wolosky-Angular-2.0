@@ -9,10 +9,10 @@
             <label>Cantidad:</label>
             <input type="number" [ngClass]="{ invalid: salary.amount < 0 }" [(ngModel)]="salary.amount" name="amount" min="0">
             <br><br>
-            <md-select placeholder="Tipo de Salario" [(ngModel)]="salary.salaryTypeId" name="salaryTypeId">
-                <md-option value="1">Hora</md-option>
-                <md-option value="2">Día</md-option>
-            </md-select>
+            <mat-select placeholder="Tipo de Salario" [(ngModel)]="salary.salaryTypeId" name="salaryTypeId">
+                <mat-option value="1">Hora</mat-option>
+                <mat-option value="2">Día</mat-option>
+            </mat-select>
 
             <br><br>
             <label>Descripción:</label>
