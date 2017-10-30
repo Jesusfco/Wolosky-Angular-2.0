@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-salary',
+  selector: 'app-salary-create',
   templateUrl: './salary.component.html',
   styleUrls: ['./salary.component.css']
 })

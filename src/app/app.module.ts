@@ -42,19 +42,12 @@ import {
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
-import { UserComponentComponent } from './user-component/user-component.component';
-import { CreateUserComponent } from './user/create-user/create-user.component';
-import { EditUserComponent } from './user-component/edit-user/edit-user.component';
-
-import { NewScheduleComponent } from './user-component/create-user/new-schedule/new-schedule.component';
-
-import { NewSalariesComponent } from './user-component/create-user/new-salaries/new-salaries.component';
-import { NewPaymentComponent } from './user-component/create-user/new-payment/new-payment.component';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
 import { StructureComponent } from './structure/structure.component';
 import { FooterComponent } from './footer/footer.component';
 import { UserComponent } from './user/user.component';
+import { CreateUserComponent } from './user/create-user/create-user.component';
 import { UserService } from './user/user.service';
 import { CreateScheduleComponent } from './user/create-schedule/create-schedule.component';
 import { SalaryComponent } from './user/create-user/salary/salary.component';
@@ -64,17 +57,12 @@ import { PaymentComponent } from './user/create-user/payment/payment.component';
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponentComponent,
-    CreateUserComponent,
-    EditUserComponent,
-    NewScheduleComponent,
-    
-    NewSalariesComponent,
-    NewPaymentComponent,
+
     LoginComponent,
     StructureComponent,
     FooterComponent,
     UserComponent,
+    CreateUserComponent,
     CreateScheduleComponent,
     SalaryComponent,
     ReferenceComponent,

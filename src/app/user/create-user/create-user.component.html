@@ -1,56 +1,107 @@
-<div id="createCard">
+<div class="background" [@background]="backgroundState"></div>
+<div id="createCard" [@principal]="cardState">
 
-<div id="cerrarBtn" (click)="close()"> Cerrar <i class="material-icons">close</i></div>
-  
-  <div class="form">
-    <h1>Crear Usuario</h1>
-    
-    <div>
-      <form>
+    <div id="cerrarBtn" (click)="close()"> Cerrar <i class="material-icons">close</i></div>
+
+    <div class="form">
+        <h1 align="center">Crear Usuario</h1>
+
         <div>
-          <div> 
-            <h2>Datos Personales</h2>
-            <input name="nombre" type="text" placeholder="Nombre">
+            <form (submit)="createUser()">
+                <div class="form1">
+                    <div class="personalData">
+                        <h2>Datos Personales</h2>
+                        <input [(ngModel)]="user.name" name="name" type="text" placeholder="Nombre">
 
-            <select>
-              <option value="1">Alumno</option> 
-              <option value="2">Empleado</option>
-              <option value="3">Escritor</option>
-              <option value="4">Super escritor</option>
-              <option value="5">Administrador</option>
-            </select><br>
+                        <select [(ngModel)]="user.userTypeId" name="userTypeId">
+                          <option value="1">Alumno</option> 
+                          <option value="2">Empleado</option>
+                          <option value="3">Escritor</option>
+                          <option value="4">Super escritor</option>
+                          <option value="5">Administrador</option>
+                        </select><br>
 
-            <input name="telefono" type="tel" placeholder="Telefono">
+                        <input [(ngModel)]="user.phone" name="phone" type="tel" placeholder="Telefono">
 
-            <input name="correo" type="email" placeholder="Correo"><br>
+                        <input [(ngModel)]="user.email" name="email" type="email" placeholder="Correo"><br>
 
-            <input name="cumpleanos" type="date" placeholder="Cumpleanos">
+                        <input [(ngModel)]="user.birthday" name="birthday" type="date" placeholder="Cumpleanos">
 
-            <input name="lNacimiento" type="text" placeholder="Lugar de nacimiento"><br>
+                        <input [(ngModel)]="user.placeBirth" name="placeBirth" type="text" placeholder="Lugar de nacimiento"><br>
 
-            <input name="curp" type="text" placeholder="Curp">
+                        <input [(ngModel)]="user.curp" name="curp" type="text" placeholder="Curp">
 
-            <input name="seguro" type="text" placeholder="Seguro social"><br>
+                        <input [(ngModel)]="user.insurance" name="insurance" type="text" placeholder="Seguro social"><br>
 
-            <select>
-              <option value="1">Masculino</option> 
-              <option value="2">Femenino</option>
-            </select>
+                        <select [(ngModel)]="user.gender" name="gender">
+                          <option value="1">Masculino</option> 
+                          <option value="2">Femenino</option>
+                        </select>
 
-            <input name="foto" type="file" placeholder="Foto">
+                        <input name="foto" type="file" placeholder="Foto">
 
-          </div>
+                        <input *ngIf="user.userTypeId > 2" [(ngModel)]="user.password" name="password" placeholder="Contraseña" type="password" width="100%">
 
-          <div>
-            <h2>Direccion</h2>
-            <input name="calle" type="text" placeholder="Calle">
-            <input name="noCasa" type="number" placeholder="Numero de casa"><br>
-            <input name="colonia" type="text" placeholder="Colonia">
-            <input name="ciudad" type="text" placeholder="Ciudad"><br>   
-          </div>
+                    </div>
 
-        </div>  
-      </form>
-    </div>  
-  </div>
-</div>
+                    <div class="direccion">
+                        <h2>Direccion</h2>
+                        <input [(ngModel)]="user.street" name="street" type="text" placeholder="Calle">
+                        <input [(ngModel)]="user.hauseNumber" name="hauseNumber" type="number" placeholder="Numero de casa"><br>
+                        <input [(ngModel)]="user.colony" name="colony" type="text" placeholder="Colonia">
+                        <input [(ngModel)]="user.city" name="city" type="text" placeholder="Ciudad"><br>
+                    </div>
+
+                    <div class="horarios" *ngIf="user.userTypeId < 3">
+                        <h2>Horarios</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Dia</th>
+                                    <th>Entrada</th>
+                                    <th>Salida</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let x of schedules">
+                                    <th>{{ x.dayView }}</th>
+                                    <th>{{ x.checkIn }}</th>
+                                    <th>{{ x.checkOut }}</th>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <a class="btn horarioBtn" (click)="scheduleView = true">Asignar Horario</a>
+
+                    </div>
+                    <div class="referencias" *ngIf="user.userTypeId < 3">
+                        <h2>Referencias</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Parentesco</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let x of references">
+                                    <th>{{ x.name }}</th>
+                                    <th>{{ x.relationship }}</th>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <a class="btn referenceBtn" (click)="referenceView = true">Asignar Referencias</a>
+
+                    </div>
+
+                </div>
+
+
+                <button type="submit" class="btn formBtn">Crear Usuario</button>
+            </form>
+            <app-create-schedule *ngIf="scheduleView" [schedules]="schedules" (closeEventCreateSchedule)="scheduleView = false"></app-create-schedule>
+            <app-reference-create *ngIf="referenceView"></app-reference-create>
+        </div>
+    </div>

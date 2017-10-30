@@ -40,40 +40,40 @@ export class LoginComponent implements OnInit {
   
       if(this.form.form == 1)  return; 
 
-      if(this.data.email == 'jfcr@live.com' || this.data.email == 'bexan1818@hotmail.com'){
-        if(this.data.password == 'secret'){
-          localStorage.setItem('token', 'ñajsdnfkljasñkdhflkjahsdkjfjñasjdfkjhasd');
-          if(this.data.email == 'bexan1818@hotmail.com'){
-            localStorage.setItem('email', 'bexan1818@hotmail.com');
-            localStorage.setItem('name', 'Diana Toledo');
-            localStorage.setItem('typeUser', '5');
-          }
+      // if(this.data.email == 'jfcr@live.com' || this.data.email == 'bexan1818@hotmail.com'){
+      //   if(this.data.password == 'secret'){
+      //     localStorage.setItem('token', 'ñajsdnfkljasñkdhflkjahsdkjfjñasjdfkjhasd');
+      //     if(this.data.email == 'bexan1818@hotmail.com'){
+      //       localStorage.setItem('email', 'bexan1818@hotmail.com');
+      //       localStorage.setItem('name', 'Diana Toledo');
+      //       localStorage.setItem('typeUser', '5');
+      //     }
 
-          if(this.data.email == 'jfcr@live.com'){
-            localStorage.setItem('email', 'jfcr@live.com');
-            localStorage.setItem('name', 'Jesus Fco. Cortés');
-            localStorage.setItem('typeUser', '5');
-          }
+      //     if(this.data.email == 'jfcr@live.com'){
+      //       localStorage.setItem('email', 'jfcr@live.com');
+      //       localStorage.setItem('name', 'Jesus Fco. Cortés');
+      //       localStorage.setItem('typeUser', '5');
+      //     }
 
-          this.login.emit();
-        }
-      }
-  
-      // this._http.login(this.data).then(
-      //   data => {
-      //     localStorage.setItem('token', data.token);
-      //     localStorage.setItem('userName', data.user.name);
-      //     localStorage.setItem('userId', data.user.id);
-      //     localStorage.setItem('userEmail', data.user.email);
-      //     localStorage.setItem('userPhone', data.user.phone);
-      //     localStorage.setItem('userEnterprise', data.user.enterprise);
-      //     localStorage.setItem('userType', data.user.type);
-      //     localStorage.setItem('userActive', data.user.active);
-      //     console.log(data);
       //     this.login.emit();
-      //   },
-      //   error => console.log(error)
-      // );
+      //   }
+      // }
+  
+      this._http.login(this.data).then(
+        data => {
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('userName', data.user.name);
+          localStorage.setItem('userId', data.user.id);
+          localStorage.setItem('userEmail', data.user.email);
+          localStorage.setItem('userPhone', data.user.phone);
+          localStorage.setItem('userEnterprise', data.user.enterprise);
+          localStorage.setItem('userType', data.user.type);
+          localStorage.setItem('userActive', data.user.active);
+          console.log(data);
+          this.login.emit();
+        },
+        error => console.log(error)
+      );
     }
     
     checkAuth() {
