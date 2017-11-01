@@ -64,9 +64,11 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let x of schedules">
-                                    <th>{{ x.dayView }}</th>
-                                    <th>{{ x.checkIn }}</th>
-                                    <th>{{ x.checkOut }}</th>
+                                    <ng-container *ngIf="x.active">
+                                        <th>{{ x.dayView }}</th>
+                                        <th>{{ x.checkIn }}</th>
+                                        <th>{{ x.checkOut }}</th>
+                                    </ng-container>
                                 </tr>
                             </tbody>
                         </table>
@@ -101,7 +103,7 @@
 
                 <button type="submit" class="btn formBtn">Crear Usuario</button>
             </form>
-            <app-create-schedule *ngIf="scheduleView" [schedules]="schedules" (closeEventCreateSchedule)="scheduleView = false"></app-create-schedule>
+            <app-create-schedule *ngIf="scheduleView" [schedules]="schedules" (closeEventCreateSchedule)="assignSchedules($event)"></app-create-schedule>
             <app-reference-create *ngIf="referenceView"></app-reference-create>
         </div>
     </div>

@@ -82,4 +82,9 @@ export class CreateUserComponent implements OnInit {
     console.log(this.user);
   }
 
+  assignSchedules(data){
+    this.schedules = data;
+    this.scheduleView = false;
+  }
+
 }

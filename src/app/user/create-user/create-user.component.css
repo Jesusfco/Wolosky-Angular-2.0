@@ -1,13 +1,3 @@
-input,
-select {
-    border: none;
-    background: #ECECEC;
-    padding: 10px;
-    border-radius: 3px;
-    margin-bottom: 15px;
-    width: 45%;
-}
-
 #createCard {
     position: fixed;
     top: 0;
@@ -21,23 +11,6 @@ select {
 
 h2 {
     margin-top: 0;
-}
-
-.btn {
-    width: 100%;
-    padding: 10px;
-    color: white;
-    transition: .45s;
-    border: none;
-    cursor: pointer;
-}
-
-.btn:focus {
-    background: red;
-}
-
-.btn:hover {
-    background: red;
 }
 
 .referenceBtn {
