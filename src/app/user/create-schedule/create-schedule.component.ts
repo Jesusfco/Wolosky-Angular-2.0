@@ -51,7 +51,7 @@ export class CreateScheduleComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.schedules);
+    
     
     setTimeout(() => {      
       this.cardState = 'final';
@@ -59,7 +59,7 @@ export class CreateScheduleComponent implements OnInit {
     }, 100);
 
     if(Object.keys(this.schedules).length == 0) this.assignSchedulesNames();
-    console.log(this.schedules);
+    
   }
 
   close(x){
@@ -104,15 +104,15 @@ export class CreateScheduleComponent implements OnInit {
 
       if(x.active == true){
 
-        if(x.checkIn == null){
+        if(x.checkIn == null || x.checkIn == ''){
           x.error = 1;
           this.validations.checkIn = 1;        
         } 
-        if(x.checkOut == null){
+        if(x.checkOut == null || x.checkOut == ''){
           this.validations.checkOut = 1;
           x.error = 1;
         }  
-        if(x.checkIn > x.checkOut){
+        if(x.checkIn >= x.checkOut){
           this.validations.format = 1
           x.error = 1;
         } 

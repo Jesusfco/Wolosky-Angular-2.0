@@ -87,4 +87,8 @@ export class CreateUserComponent implements OnInit {
     this.scheduleView = false;
   }
 
+  closeReferenceView(){
+    this.referenceView = false;
+  }
+
 }

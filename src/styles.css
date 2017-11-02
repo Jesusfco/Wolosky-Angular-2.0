@@ -170,3 +170,50 @@ select {
         width: 49%;
     }
 }
+
+
+/* Componentes que ocupan toda la pantalla */
+
+#createCard {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: white;
+    z-index: 10;
+    overflow-y: scroll;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background: black;
+    height: 100vh;
+    width: 100vw;
+    z-index: 9;
+}
+
+#cerrarBtn {
+    padding: 10px;
+    background: black;
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.flex {
+    display: flex !important;
+    flex-flow: row wrap;
+    margin: 0 auto;
+}
+
+.container {
+    display: block;
+    width: 80%;
+    max-width: 1000px;
+}

@@ -104,6 +104,6 @@
                 <button type="submit" class="btn formBtn">Crear Usuario</button>
             </form>
             <app-create-schedule *ngIf="scheduleView" [schedules]="schedules" (closeEventCreateSchedule)="assignSchedules($event)"></app-create-schedule>
-            <app-reference-create *ngIf="referenceView"></app-reference-create>
+            <app-reference-create *ngIf="referenceView" (closeReferenceEvent)="closeReferenceView()" [references]="references"></app-reference-create>
         </div>
     </div>

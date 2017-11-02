@@ -1,3 +1,37 @@
-<p>
-  reference works!
-</p>
+<div class="background" [@background]="backgroundState"></div>
+<div id="createCard" [@principal]="cardState">
+
+    <div id="cerrarBtn" (click)="close()"> Cerrar <i class="material-icons">close</i></div>
+
+    <div class="flex container">
+        <h1 align="center">Asignar Referencias</h1>
+
+        <div class="form">
+            <div *ngIf="validations.validate == false" class="divErrors">
+                <h5>Error/es:</h5>
+                <p *ngIf="validations.name == 1">Se requiere el nombre</p>
+                <p *ngIf="validations.type == 1">Seleccion el tipo de relacion</p>
+                <p *ngIf="validations.nuMail == 1">Se requiere el Correo/Telefono</p>
+            </div>
+            <form (submit)="form()">
+                <input type="text" [(ngModel)]="reference.name" name="name">
+
+                <select [(ngModel)]="reference.relationship" name="relationship">
+                    <option *ngFor="let x of relationshipOptions" value="{{x.value}}">{{x.view}}</option>               
+                </select>
+
+                <input type="phone" [(ngModel)]="reference.phone" name="phone">
+                <input type="mail" [(ngModel)]="reference.email" name="email">
+
+                <button type="submit">Aceptar</button>
+
+            </form>
+        </div>
+        <div class="list">
+            <ol>
+                <li *ngFor="let x of references"> x.name</li>
+            </ol>
+
+        </div>
+    </div>
+</div>
