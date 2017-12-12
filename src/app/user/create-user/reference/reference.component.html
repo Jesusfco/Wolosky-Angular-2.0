@@ -3,8 +3,8 @@
 
     <div id="cerrarBtn" (click)="close()"> Cerrar <i class="material-icons">close</i></div>
 
-    <div class="flex container">
-        <h1 align="center">Asignar Referencias</h1>
+    <div class=" container">
+        <h1 align="center">Asignar Referencias</h1><br>
 
         <div class="form">
             <div *ngIf="validations.validate == false" class="divErrors">
@@ -13,25 +13,55 @@
                 <p *ngIf="validations.type == 1">Seleccion el tipo de relacion</p>
                 <p *ngIf="validations.nuMail == 1">Se requiere el Correo/Telefono</p>
             </div>
-            <form (submit)="form()">
-                <input type="text" [(ngModel)]="reference.name" name="name">
+            <form (submit)="form()" *ngIf="!toUpdate">
+                <br>
+                <input type="text" [(ngModel)]="reference.name" name="name" placeholder="Nombre Completo" (keydown)="nameUpperCase()">
 
-                <select [(ngModel)]="reference.relationship" name="relationship">
+                <select [(ngModel)]="reference.relationship" name="relationship" placeholder="Parentesco">
                     <option *ngFor="let x of relationshipOptions" value="{{x.value}}">{{x.view}}</option>               
                 </select>
 
-                <input type="phone" [(ngModel)]="reference.phone" name="phone">
-                <input type="mail" [(ngModel)]="reference.email" name="email">
+                <input type="phone" [(ngModel)]="reference.phone" name="phone" placeholder="Telefono">
+                <input type="mail" [(ngModel)]="reference.email" name="email" placeholder="Correo">
+
+                <button type="submit">Aceptar</button>
+
+            </form>
+
+            <form (submit)="update()" *ngIf="toUpdate">
+                <br>
+                <input type="text" [(ngModel)]="referenceToModify.name" name="name" placeholder="Nombre Completo" (keydown)="nameUpperCase()">
+
+                <select [(ngModel)]="referenceToModify.relationship" name="relationship" placeholder="Parentesco">
+                    <option *ngFor="let x of relationshipOptions" value="{{x.value}}">{{x.view}}</option>               
+                </select>
+
+                <input type="phone" [(ngModel)]="referenceToModify.phone" name="phone" placeholder="Telefono">
+                <input type="mail" [(ngModel)]="referenceToModify.email" name="email" placeholder="Correo">
 
                 <button type="submit">Aceptar</button>
 
             </form>
         </div>
-        <div class="list">
-            <ol>
-                <li *ngFor="let x of references"> x.name</li>
-            </ol>
 
-        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Parentesco</th>
+                    <th>Nombre</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let x of references">
+                    <th>{{ x.id }}</th>
+                    <th>{{ x.relationshipView }}</th>
+                    <th (click)="selectReference(x)">{{ x.name }}</th>
+                    <th><button (click)="deleteReference(x)">Eliminar</button></th>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>

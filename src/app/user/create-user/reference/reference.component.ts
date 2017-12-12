@@ -40,11 +40,13 @@ export class ReferenceComponent implements OnInit {
   cardState: string = 'initial';
   backgroundState: string = 'initial';
 
+
   @Output() closeReferenceEvent = new EventEmitter();
-  @Input() references: Reference;
+  @Input() references;
 
   reference: Reference = new Reference();
-  
+  toUpdate: boolean =  false;
+  referenceToModify: Reference;
 
   relationshipOptions = [
     {
@@ -69,6 +71,9 @@ export class ReferenceComponent implements OnInit {
     nuMail: -1,
   };
 
+  arrayNumber = 1;
+
+
   constructor() { }
 
   ngOnInit() {
@@ -77,6 +82,16 @@ export class ReferenceComponent implements OnInit {
       this.cardState = 'final';
       this.backgroundState = 'final';
     }, 100);
+
+    this.countReferences();
+    
+  }
+
+  countReferences(){
+
+    for(let x = 0; x < Object.keys(this.references).length; x++){
+      this.arrayNumber = this.references[x].id + 1;
+    }
 
   }
 
@@ -93,28 +108,95 @@ export class ReferenceComponent implements OnInit {
 
   form(){
 
+    this.restoreValidationValues2();    
+    this.validateForm();
+
+    if(this.validations.validate == true){
+
+      this.reference.id =  this.arrayNumber;
+      this.reference.setRelationshipView();
+      this.references.push(this.reference);
+      this.reference = new Reference();
+      this.arrayNumber++;
+
+    } 
+
   }
 
   validateForm(){
-   
+    this.validateName();
+    this.validateType();
+    this.validateMailNumber();
   }
 
   restoreValidationValues2(){
+
     this.validations = {
       validate: true,
       name: 0,
       type: 0,
       nuMail: 0,
     }
+
   }
 
   restoreValidationValues1(){
+
     this.validations = {
       validate: true,
       name: -1,
       type: -1,
       nuMail: -1,
     }
+
   }
 
+  validateName(){
+
+    if(this.reference.name == null || this.reference.name == ''){
+      this.validations.name = 1;
+      this.validations.validate = false;      
+    }
+
+  }
+
+  validateType(){
+
+    if(this.reference.relationship == null){
+      this.validations.type = 1;
+      this.validations.validate = false;
+    }
+
+  }
+
+  validateMailNumber(){
+
+    if(this.reference.phone == null && this.reference.email == null){
+      this.validations.nuMail = 1;
+      this.validations.validate = false;
+    }
+    else if(this.reference.phone == "" && this.reference.email == ""){
+      this.validations.nuMail = 1;
+      this.validations.validate = false;
+    }
+          
+  }
+
+  nameUpperCase(){
+    if(this.reference.name != null) this.reference.name.toUpperCase();
+  }
+
+  deleteReference(ref){    
+    this.references.splice(this.references.indexOf(ref), 1);
+  }
+
+  selectReference(ref){
+    this.referenceToModify = ref;
+    this.toUpdate = true;
+  }
+
+  update(){
+    this.toUpdate = false;
+    // let x = this.reference
+  }
 }

@@ -9,4 +9,11 @@ export class Reference {
     constructor(){
         
     }
+
+    setRelationshipView(){
+        if(this.relationship == 1)this.relationshipView = 'Padres/Madre';
+        else if(this.relationship == 2)this.relationshipView = 'Familiar';
+        else if(this.relationship == 3)this.relationshipView = 'Herman@';
+        else if(this.relationship == 4)this.relationshipView = 'Otro';
+    }
 }
