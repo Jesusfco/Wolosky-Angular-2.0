@@ -15,14 +15,14 @@
             </div>
             <form (submit)="form()" *ngIf="!toUpdate">
                 <br>
-                <input type="text" [(ngModel)]="reference.name" name="name" placeholder="Nombre Completo" (keydown)="nameUpperCase()">
+                <input type="text" [(ngModel)]="reference.name" name="name" placeholder="Nombre Completo" (keydown)="nameUpper()">
 
                 <select [(ngModel)]="reference.relationship" name="relationship" placeholder="Parentesco">
                     <option *ngFor="let x of relationshipOptions" value="{{x.value}}">{{x.view}}</option>               
                 </select>
 
                 <input type="phone" [(ngModel)]="reference.phone" name="phone" placeholder="Telefono">
-                <input type="mail" [(ngModel)]="reference.email" name="email" placeholder="Correo">
+                <input type="mail" [(ngModel)]="reference.email" name="email" placeholder="Correo" (keydown)="mailUpper()">
 
                 <button type="submit">Aceptar</button>
 
@@ -30,14 +30,14 @@
 
             <form (submit)="update()" *ngIf="toUpdate">
                 <br>
-                <input type="text" [(ngModel)]="referenceToModify.name" name="name" placeholder="Nombre Completo" (keydown)="nameUpperCase()">
+                <input type="text" [(ngModel)]="referenceToModify.name" name="name" placeholder="Nombre Completo" (keydown)="nameModifyUpper()">
 
                 <select [(ngModel)]="referenceToModify.relationship" name="relationship" placeholder="Parentesco">
                     <option *ngFor="let x of relationshipOptions" value="{{x.value}}">{{x.view}}</option>               
                 </select>
 
                 <input type="phone" [(ngModel)]="referenceToModify.phone" name="phone" placeholder="Telefono">
-                <input type="mail" [(ngModel)]="referenceToModify.email" name="email" placeholder="Correo">
+                <input type="mail" [(ngModel)]="referenceToModify.email" name="email" placeholder="Correo" (keydown)="mailModifyUpper()">
 
                 <button type="submit">Aceptar</button>
 

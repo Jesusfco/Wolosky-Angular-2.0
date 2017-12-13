@@ -38,26 +38,7 @@ export class LoginComponent implements OnInit {
       this.validateMail();
       this.validatePassword();
   
-      if(this.form.form == 1)  return; 
-
-      // if(this.data.email == 'jfcr@live.com' || this.data.email == 'bexan1818@hotmail.com'){
-      //   if(this.data.password == 'secret'){
-      //     localStorage.setItem('token', 'ñajsdnfkljasñkdhflkjahsdkjfjñasjdfkjhasd');
-      //     if(this.data.email == 'bexan1818@hotmail.com'){
-      //       localStorage.setItem('email', 'bexan1818@hotmail.com');
-      //       localStorage.setItem('name', 'Diana Toledo');
-      //       localStorage.setItem('typeUser', '5');
-      //     }
-
-      //     if(this.data.email == 'jfcr@live.com'){
-      //       localStorage.setItem('email', 'jfcr@live.com');
-      //       localStorage.setItem('name', 'Jesus Fco. Cortés');
-      //       localStorage.setItem('typeUser', '5');
-      //     }
-
-      //     this.login.emit();
-      //   }
-      // }
+      if(this.form.form == 1)  return;      
   
       this._http.login(this.data).then(
         data => {

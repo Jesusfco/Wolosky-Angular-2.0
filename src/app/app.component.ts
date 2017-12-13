@@ -72,22 +72,22 @@ export class AppComponent {
         this.loaderAnimation();        
       }, 1000);
 
-      // this.loginService.checkAuth().then(
-      //   data => {          
+      this.loginService.checkAuth().then(
+        data => {          
           
-      //     localStorage.setItem('userName', data.user.name);
-      //     localStorage.setItem('userId', data.user.id);
-      //     localStorage.setItem('userEmail', data.user.email);                    
-      //     localStorage.setItem('userType', data.user.type);          
+          localStorage.setItem('userName', data.user.name);
+          localStorage.setItem('userId', data.user.id);
+          localStorage.setItem('userEmail', data.user.email);                    
+          localStorage.setItem('userType', data.user.type);          
                     
-      //     setTimeout(this.appView(),5000);
+          setTimeout(this.appView(),5000);
           
-      //   },
-      //   error =>  {
-      //     console.log(error);
-      //     this.userSignin = false;
-      //   }
-      // );
+        },
+        error =>  {
+          console.log(error);
+          this.userSignin = false;
+        }
+      );
 
     }
   }

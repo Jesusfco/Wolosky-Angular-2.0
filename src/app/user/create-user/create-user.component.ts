@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes} from '@angular/animations';
 import { User } from '../user';
+import { UserService } from '../user.service';
 import { Schedule } from '../schedule';
 import { Reference } from '../reference';
 import { Salary } from '../salary';
@@ -56,7 +57,7 @@ export class CreateUserComponent implements OnInit {
   scheduleView: boolean = false;
   referenceView: boolean = false;
 
-  constructor() { }
+  constructor(private _http: UserService) { }
 
   ngOnInit() {
 
@@ -79,7 +80,12 @@ export class CreateUserComponent implements OnInit {
   }
 
   createUser(){
-    console.log(this.user);
+    this._http.create({user: this.user, references: this.references, schedules: this.schedules})
+      .then(
+        data => console.log(data),
+        error => console.log(error)
+      );
+    
   }
 
   assignSchedules(data){
@@ -89,6 +95,48 @@ export class CreateUserComponent implements OnInit {
 
   closeReferenceView(){
     this.referenceView = false;
+  }
+
+  // Funciones para mayusculas en los campos
+
+  nameUppercase(){    
+    if(this.user.name != null)
+      this.user.name = this.user.name.toUpperCase();                  
+  }
+
+  mailUpper(){
+    if(this.user.email != null)
+      this.user.email =  this.user.email.toUpperCase();
+  }
+
+  curpUpper(){
+    if(this.user.curp != null)
+      this.user.curp = this.user.curp.toUpperCase();    
+  }
+
+  placeUpper(){
+    if(this.user.placeBirth != null)
+      this.user.placeBirth =  this.user.placeBirth.toUpperCase();
+  }
+
+  seguroUpper(){
+    if(this.user.insurance != null)
+      this.user.insurance =  this.user.insurance.toUpperCase();
+  }
+
+  streetUpper(){
+    if(this.user.street != null)
+      this.user.street =  this.user.street.toUpperCase();
+  }
+
+  colonyUpper(){
+    if(this.user.colony != null)
+      this.user.colony = this.user.colony.toUpperCase();
+  }
+
+  cityUpper(){
+    if(this.user.city != null)
+      this.user.city = this.user.city.toUpperCase();
   }
 
 }

@@ -13,24 +13,7 @@ export class UserService {
   public token: Storage = new Storage();
   
   constructor(private _http: Http) { }
-
-  getUser(){
-      
-    return [{
-        name: 'Jesus Fco Cortes',
-        type: 5,
-        phone: '9611221222',
-        sexo: 1,      
-      
-      },{
-        name: 'Diana Toledo Chida',
-        type: 5,
-        phone: '9611113543',
-        sexo: 2,      
-      }
-      ];
-    
-  }
+ 
 
   create(information) {
     return this._http.post(this.link.url + 'user', information)
@@ -38,10 +21,10 @@ export class UserService {
             .toPromise();
   }
 
-  // get() {
-  //   return this._http.post(this.link.url + 'user')
-  //           .map(data => data.json())
-  //           .toPromise();
-  // }
+  get() {
+    return this._http.get(this.link.url + 'user')
+            .map(data => data.json())
+            .toPromise();
+  }
 
 }

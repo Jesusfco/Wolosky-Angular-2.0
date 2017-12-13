@@ -15,7 +15,14 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
 
-    this.users = this._http.getUser();
+    this._http.get().then(
+      data => {
+        this.users = data;
+        console.log("Usuarios:");
+        console.log(data);
+      },
+      error =>  console.log(error)
+    );
 
     console.log(this.users);
   }

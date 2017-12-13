@@ -182,8 +182,22 @@ export class ReferenceComponent implements OnInit {
           
   }
 
-  nameUpperCase(){
-    if(this.reference.name != null) this.reference.name.toUpperCase();
+  nameUpper(){
+    if(this.reference.name != null) 
+      this.reference.name = this.reference.name.toUpperCase();          
+  }
+  nameModifyUpper(){
+    if(this.referenceToModify.name != null) 
+      this.referenceToModify.name = this.referenceToModify.name.toUpperCase();
+  }
+
+  mailUpper(){
+    if(this.reference.email != null)
+      this.reference.email =  this.reference.email.toUpperCase();
+  }
+  mailModifyUpper(){
+    if(this.referenceToModify.email != null)
+      this.referenceToModify.email =  this.referenceToModify.email.toUpperCase();
   }
 
   deleteReference(ref){    

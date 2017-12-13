@@ -11,7 +11,7 @@
                 <div class="form1">
                     <div class="personalData">
                         <h2>Datos Personales</h2>
-                        <input [(ngModel)]="user.name" name="name" type="text" placeholder="Nombre">
+                        <input [(ngModel)]="user.name" name="name" type="text" placeholder="Nombre" (keydown)="nameUppercase()">
 
                         <select [(ngModel)]="user.userTypeId" name="userTypeId">
                           <option value="1">Alumno</option> 
@@ -23,15 +23,16 @@
 
                         <input [(ngModel)]="user.phone" name="phone" type="tel" placeholder="Telefono">
 
-                        <input [(ngModel)]="user.email" name="email" type="email" placeholder="Correo"><br>
+                        <input [(ngModel)]="user.email" name="email" type="email" placeholder="Correo" (keydown)="mailUpper()"><br>
 
                         <input [(ngModel)]="user.birthday" name="birthday" type="date" placeholder="Cumpleanos">
 
-                        <input [(ngModel)]="user.placeBirth" name="placeBirth" type="text" placeholder="Lugar de nacimiento"><br>
+                        <input [(ngModel)]="user.placeBirth" name="placeBirth" type="text" placeholder="Lugar de nacimiento"
+                        (keydown)="placeUpper()"><br>
 
-                        <input [(ngModel)]="user.curp" name="curp" type="text" placeholder="Curp">
+                        <input [(ngModel)]="user.curp" name="curp" type="text" placeholder="Curp" (keydown)="curpUpper()">
 
-                        <input [(ngModel)]="user.insurance" name="insurance" type="text" placeholder="Seguro social"><br>
+                        <input [(ngModel)]="user.insurance" name="insurance" type="text" placeholder="Seguro social" (keydown)="seguroUpper()"><br>
 
                         <select [(ngModel)]="user.gender" name="gender">
                           <option value="1">Masculino</option> 
@@ -46,10 +47,10 @@
 
                     <div class="direccion">
                         <h2>Direccion</h2>
-                        <input [(ngModel)]="user.street" name="street" type="text" placeholder="Calle">
+                        <input [(ngModel)]="user.street" name="street" type="text" placeholder="Calle" (keydown)="streetUpper()">
                         <input [(ngModel)]="user.hauseNumber" name="hauseNumber" type="number" placeholder="Numero de casa"><br>
-                        <input [(ngModel)]="user.colony" name="colony" type="text" placeholder="Colonia">
-                        <input [(ngModel)]="user.city" name="city" type="text" placeholder="Ciudad"><br>
+                        <input [(ngModel)]="user.colony" name="colony" type="text" placeholder="Colonia" (keydown)="colonyUpper()">
+                        <input [(ngModel)]="user.city" name="city" type="text" placeholder="Ciudad" (keydown)="cityUpper()"><br>
                     </div>
 
                     <div class="horarios" *ngIf="user.userTypeId < 3">
@@ -89,7 +90,7 @@
                             <tbody>
                                 <tr *ngFor="let x of references">
                                     <th>{{ x.name }}</th>
-                                    <th>{{ x.relationship }}</th>
+                                    <th>{{ x.relationshipView }}</th>
                                 </tr>
                             </tbody>
                         </table>
