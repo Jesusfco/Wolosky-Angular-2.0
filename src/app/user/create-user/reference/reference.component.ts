@@ -54,10 +54,10 @@ export class ReferenceComponent implements OnInit {
       view: 'Padres/Madre'
     },{
       value: 2,
-      view: 'Familiar'
+      view: 'Hermano/a'
     },{
       value: 3,
-      view: 'Herman@'
+      view: 'Familiar'
     },{
       value: 4,
       view: 'Otro'

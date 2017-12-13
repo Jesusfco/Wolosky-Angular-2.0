@@ -12,8 +12,10 @@ export class Reference {
 
     setRelationshipView(){
         if(this.relationship == 1)this.relationshipView = 'Padres/Madre';
-        else if(this.relationship == 2)this.relationshipView = 'Familiar';
-        else if(this.relationship == 3)this.relationshipView = 'Herman@';
-        else if(this.relationship == 4)this.relationshipView = 'Otro';
+        else if(this.relationship == 2)this.relationshipView = 'Hermano/a';
+        else if(this.relationship == 3)this.relationshipView = 'Familiares';
+        else if(this.relationship == 4)this.relationshipView = 'Amigos';
+        else if(this.relationship == 5)this.relationshipView = 'Compañeros de Trabajo';
+        else if(this.relationship == 6)this.relationshipView = 'Otro';
     }
 }
