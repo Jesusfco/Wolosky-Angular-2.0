@@ -27,4 +27,16 @@ export class UserService {
             .toPromise();
   }
 
+  checkUniqueEmail(data){
+    return this._http.post(this.link.url + 'user/uniqueEmail', {email: data})
+      .map(data => data.json())
+      .toPromise();
+  }
+
+  checkUniqueName(data){
+    return this._http.post(this.link.url + 'user/uniqueName', {name: data})
+      .map(data => data.json())
+      .toPromise();
+  }
+
 }

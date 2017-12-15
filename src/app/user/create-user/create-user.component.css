@@ -78,3 +78,7 @@ h2 {
     width: 100vw;
     z-index: 9;
 }
+
+.scheduleInactive {
+    background: rgb(196, 196, 196);
+}

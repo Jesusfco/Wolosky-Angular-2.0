@@ -6,6 +6,8 @@ export class Schedule {
     public dayView: string;
     public checkIn: any;
     public checkOut: any;
+    public active: boolean;
+    public error: number;
     
     public user_id: number;
 
@@ -24,5 +26,18 @@ export class Schedule {
         else if(this.day == 5){ this.dayView = "Viernes" }
         else if(this.day == 6){ this.dayView = "Sábado" }
         else if(this.day == 7){ this.dayView = "Domingo" }
+    }
+
+    setArray(){
+        let x = [
+            {day: 1, checkIn: null, checkOut: null, dayView: 'Lunes', active: false, error: 0},
+            {day: 2, checkIn: null, checkOut: null, dayView: 'Martes', active: false, error: 0},
+            {day: 3, checkIn: null, checkOut: null, dayView: 'Miercoles', active: false, error: 0},
+            {day: 4, checkIn: null, checkOut: null, dayView: 'Jueves', active: false, error: 0},
+            {day: 5, checkIn: null, checkOut: null, dayView: 'Viernes', active: false, error: 0},
+            {day: 6, checkIn: null, checkOut: null, dayView: 'Sabado', active: false, error: 0},
+          ];
+
+        return x;
     }
 }

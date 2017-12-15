@@ -95,6 +95,14 @@ select {
     width: 45%;
 }
 
+.inputError {
+    background: rgb(243, 147, 147);
+}
+
+.inputValidate {
+    background: rgb(167, 248, 187);
+}
+
 .cardSpace {
     height: 100vh;
     width: 100vw;

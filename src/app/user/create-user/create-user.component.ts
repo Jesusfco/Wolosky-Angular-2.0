@@ -49,7 +49,8 @@ export class CreateUserComponent implements OnInit {
   @Output() closeEventCreateComponent =  new EventEmitter();
 
   user: User = new User();
-  schedules: Array<Schedule> = [];
+  schedules = [];
+  sche: Schedule =  new Schedule();
   references: Array<Reference> = [];
   salary: Salary =  new Salary();
   monthlyPayment : MonthlyPayment =  new MonthlyPayment();
@@ -62,6 +63,14 @@ export class CreateUserComponent implements OnInit {
     name: 0,
     email: 0,
     password: 0,
+    monthlyPaymentAmount: 0,
+    salaryAmount: 0
+
+  }
+
+  timer = {
+    name: 0,
+    email: 0
   }
 
   constructor(private _http: UserService) { }
@@ -72,7 +81,10 @@ export class CreateUserComponent implements OnInit {
       
       this.cardState = 'final';
       this.backgroundState = 'final';
+
     }, 100);
+
+    this.schedules = this.sche.setArray();
   }
 
   close(){
@@ -87,9 +99,16 @@ export class CreateUserComponent implements OnInit {
   }
 
   createUser(){
+
+    this.restoreValidations();
+    this.logicValidations();
+    if(this.validations.validate == false) return;
+
     this._http.create({user: this.user, 
                       references: this.references, 
-                      schedules: this.schedules})
+                      schedules: this.schedules,
+                      salary: this.salary,
+                      monthlyPayment: this.monthlyPayment})
       .then(
         data => console.log(data),
         error => console.log(error)
@@ -106,7 +125,25 @@ export class CreateUserComponent implements OnInit {
     this.referenceView = false;
   }
   //Validaciones
-  
+  logicValidations(){
+    this.nameValidation();
+    
+
+    if(this.user.userTypeId == 1){
+
+    }
+    else if(this.user.userTypeId == 2){
+
+    }
+    else if( this.user.userTypeId == 3){
+      this.emailValidation();
+    }
+    else {
+      this.emailValidation();
+      this.passwordValidation();
+    }
+  }
+
   nameValidation(){
 
     if(this.user.name == null || this.user.name == ''){
@@ -123,9 +160,54 @@ export class CreateUserComponent implements OnInit {
     }
   }
 
+  uniqueEmailWriting(){
+    this.timer.email++;
+
+    setTimeout(() => {      
+      this.timer.email--;
+    }, 1500);
+
+    setTimeout(() => {
+      if(this.timer.email == 0){
+        if(this.user.email != null || this.user.email != '') this.uniqueEmail();
+      } 
+    }, 1550);
+
+  }
+
+  uniqueNameWriting(){
+    this.timer.name++;
+    
+        setTimeout(() => {      
+          this.timer.name--;
+          
+        }, 1500);
+    
+        setTimeout(() => {
+          if(this.timer.name == 0){
+            if(this.user.name != null || this.user.name != '') this.uniqueName();
+          } 
+        }, 1550);
+
+  }
   uniqueEmail(){
+    this._http.checkUniqueEmail(this.user.email).then(
+      data => {
+        if(data == false) this.validations.email = 2;
+        else { this.validations.email = -1; }
+      },
+      error => console.log(error)
+    )
+  }
 
-
+  uniqueName(){
+    this._http.checkUniqueName(this.user.name).then(
+      data => {
+        if(data == false) this.validations.name = 2;
+        else {this.validations.name = -1;}
+      },
+      error => console.log(error)
+    )
   }
 
   passwordValidation(){
@@ -141,6 +223,22 @@ export class CreateUserComponent implements OnInit {
       name: 0,
       email: 0,
       password: 0,
+      monthlyPaymentAmount: 0,
+      salaryAmount: 0
+    }
+  }
+
+  monthlyPaymentAmountValidation(){
+    if(this.monthlyPayment.amount == null || this.monthlyPayment.amount == 0) {
+      this.validations.validate = false;
+      this.validations.monthlyPaymentAmount = 1; 
+    }    
+  }
+
+  salaryAmountValidation(){
+    if (this.salary.amount == null || this.salary.amount == 0){
+      this.validations.validate = false;
+      this.validations.salaryAmount = 1;
     }
   }
 
