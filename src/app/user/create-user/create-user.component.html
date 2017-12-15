@@ -16,9 +16,10 @@
                         <select [(ngModel)]="user.userTypeId" name="userTypeId">
                           <option value="1">Alumno</option> 
                           <option value="2">Empleado</option>
-                          <option value="3">Escritor</option>
-                          <option value="4">Super escritor</option>
-                          <option value="5">Administrador</option>
+                          <option value="3">Cajero</option>
+                          <option value="4">Escritor</option>
+                          <option value="5">Super escritor</option>
+                          <option value="6">Administrador</option>
                         </select><br>
 
                         <input [(ngModel)]="user.phone" name="phone" type="tel" placeholder="Telefono">
@@ -27,8 +28,7 @@
 
                         <input [(ngModel)]="user.birthday" name="birthday" type="date" placeholder="Cumpleanos">
 
-                        <input [(ngModel)]="user.placeBirth" name="placeBirth" type="text" placeholder="Lugar de nacimiento"
-                        (keydown)="placeUpper()"><br>
+                        <input [(ngModel)]="user.placeBirth" name="placeBirth" type="text" placeholder="Lugar de nacimiento" (keydown)="placeUpper()"><br>
 
                         <input [(ngModel)]="user.curp" name="curp" type="text" placeholder="Curp" (keydown)="curpUpper()">
 
@@ -53,7 +53,7 @@
                         <input [(ngModel)]="user.city" name="city" type="text" placeholder="Ciudad" (keydown)="cityUpper()"><br>
                     </div>
 
-                    <div class="horarios" *ngIf="user.userTypeId < 3">
+                    <div class="horarios" *ngIf="user.userTypeId <= 3">
                         <h2>Horarios</h2>
                         <table>
                             <thead>
@@ -77,7 +77,7 @@
                         <a class="btn horarioBtn" (click)="scheduleView = true">Asignar Horario</a>
 
                     </div>
-                    <div class="referencias" *ngIf="user.userTypeId < 3">
+                    <div class="referencias" *ngIf="user.userTypeId <= 3">
                         <h2>Referencias</h2>
                         <table>
                             <thead>

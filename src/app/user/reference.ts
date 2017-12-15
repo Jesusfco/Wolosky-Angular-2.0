@@ -8,6 +8,9 @@ export class Reference {
 
     constructor(){
         
+        this.phone = null;
+        this.email = null;
+        this.relationship = 1;
     }
 
     setRelationshipView(){

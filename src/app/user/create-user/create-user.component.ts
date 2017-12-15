@@ -57,6 +57,13 @@ export class CreateUserComponent implements OnInit {
   scheduleView: boolean = false;
   referenceView: boolean = false;
 
+  validations = {
+    validate: true,
+    name: 0,
+    email: 0,
+    password: 0,
+  }
+
   constructor(private _http: UserService) { }
 
   ngOnInit() {
@@ -80,7 +87,9 @@ export class CreateUserComponent implements OnInit {
   }
 
   createUser(){
-    this._http.create({user: this.user, references: this.references, schedules: this.schedules})
+    this._http.create({user: this.user, 
+                      references: this.references, 
+                      schedules: this.schedules})
       .then(
         data => console.log(data),
         error => console.log(error)
@@ -96,9 +105,46 @@ export class CreateUserComponent implements OnInit {
   closeReferenceView(){
     this.referenceView = false;
   }
+  //Validaciones
+  
+  nameValidation(){
+
+    if(this.user.name == null || this.user.name == ''){
+      this.validations.validate = false;
+      this.validations.name = 1;
+    }
+
+  }
+
+  emailValidation(){
+    if(this.user.email == null || this.user.email == ''){
+      this.validations.validate = false;
+      this.validations.email = 1;
+    }
+  }
+
+  uniqueEmail(){
+
+
+  }
+
+  passwordValidation(){
+    if(this.user.password == null || this.user.password == ''){
+      this.validations.validate = false;
+      this.validations.password = 1;
+    }
+  }
+
+  restoreValidations(){
+    this.validations = {
+      validate: true,
+      name: 0,
+      email: 0,
+      password: 0,
+    }
+  }
 
   // Funciones para mayusculas en los campos
-
   nameUppercase(){    
     if(this.user.name != null)
       this.user.name = this.user.name.toUpperCase();                  

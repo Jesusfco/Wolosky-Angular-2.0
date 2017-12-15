@@ -7,7 +7,7 @@ export class Schedule {
     public checkIn: any;
     public checkOut: any;
     
-    public userId: number;
+    public user_id: number;
 
     constructor(){
         // if(this.day != null || this.day != ""){

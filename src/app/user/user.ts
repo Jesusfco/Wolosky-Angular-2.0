@@ -13,7 +13,7 @@ export class User {
     public birthday: string;
     public curp: string;
     public placeBirth: string;
-    public gender: string;
+    public gender: number;
     public phone: string;
     public insurance: string;
 
@@ -34,6 +34,22 @@ export class User {
 
     constructor(){
         this.editable = false;
+
+        this.name = null;
+        this.userTypeId = 1;
+        this.phone = null;
+        this.email = null;
+        this.birthday = null
+        this.placeBirth = null;
+        this.curp = null;
+        this.insurance = null;
+        this.gender = 1;
+        this.password = null;
+
+        this.street = null;
+        this.hauseNumber = null;
+        this.colony = null;
+        this.city = null;
     }
 
 
