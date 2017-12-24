@@ -18,7 +18,7 @@
                     <td>{{ user.type }}</td>
                     <td>{{ user.phone }}</td>
                     <td>{{ user.sexo }}</td>
-                    <td>
+                    <td (click)="selectUser(user.id)">
                         <a matTooltip="Ver" href="#"><i class="material-icons">remove_red_eye</i></a>
                     </td>
                     <td>
@@ -39,3 +39,5 @@
 
     <app-create-user *ngIf="createView" (closeEventCreateComponent)="createViewShow()"></app-create-user>
 </div>
+
+<app-show-user *ngIf="showUserView" [idShowUser]="idShowUser" (closeEvent)="showUserView = false"></app-show-user>

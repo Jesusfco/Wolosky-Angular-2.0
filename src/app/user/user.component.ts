@@ -15,6 +15,9 @@ export class UserComponent implements OnInit {
     search: 0
   }
 
+  idShowUser: number = null;
+  showUserView: boolean = false;
+
   constructor(private _http: UserService) { }
 
   ngOnInit() {
@@ -53,5 +56,12 @@ export class UserComponent implements OnInit {
       error =>  console.log(error)
     );  
   }
+
+  selectUser(id){
+    this.idShowUser= id;
+    this.showUserView = true;
+  }
+
+  
 
 }

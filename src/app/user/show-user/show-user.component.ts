@@ -44,19 +44,26 @@ import { MonthlyPayment } from '../../monthly-payment';
 export class ShowUserComponent implements OnInit {
 
   @Output() closeEvent: EventEmitter<any> =  new EventEmitter();
+  @Input() idShowUser;
+  user: User = new User();
 
   state = {
     background: 'initial',
     card: 'initial',
   }
 
-  constructor() { }
+  constructor(private _http: UserService) { }
 
   ngOnInit() {
     setTimeout(() => {
       this.state.background = 'final';
       this.state.card = 'final';
     }, 100);
+
+    this._http.getUser(this.idShowUser).then(
+      data => this.user = data,
+      error => console.log(error)
+    )
   }
 
   closePop(){    

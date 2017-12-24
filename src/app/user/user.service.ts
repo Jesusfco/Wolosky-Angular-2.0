@@ -27,6 +27,12 @@ export class UserService {
             .toPromise();
   }
 
+  getUser(id){
+    return this._http.get(this.link.url + 'user/' + id)
+            .map(data => data.json())
+            .toPromise();
+  }
+
   checkUniqueEmail(data){
     return this._http.post(this.link.url + 'user/uniqueEmail', {email: data})
       .map(data => data.json())
