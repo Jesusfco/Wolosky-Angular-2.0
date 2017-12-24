@@ -120,7 +120,7 @@ nav button {
     margin-bottom: 15%;
     min-height: 85vh;
     font-weight: 300px;
-    position: relative;
+    position: ;
 }
 
 @media screen and (max-width: 750px) {

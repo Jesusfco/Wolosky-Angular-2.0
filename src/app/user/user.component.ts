@@ -10,25 +10,48 @@ export class UserComponent implements OnInit {
 
   users: Array<any> = [];
   createView: boolean =  false;
+  searchWord: string = "";
+  timer = {
+    search: 0
+  }
 
   constructor(private _http: UserService) { }
 
   ngOnInit() {
 
-    this._http.get().then(
+   this.search();
+    console.log(this.users);
+  }
+
+  createViewShow(){
+    this.createView = !this.createView;
+  }
+
+  searchInput(){
+    this.timer.search++;    
+
+    setTimeout(() => {      
+      this.timer.search--;      
+    }, 300);
+
+    setTimeout(() => {
+      if(this.timer.search == 0){
+        console.log(this.searchWord);
+        this.search();
+      } 
+    }, 350);
+  }
+
+  search(){
+
+    this._http.search(this.searchWord).then(
       data => {
         this.users = data;
         console.log("Usuarios:");
         console.log(data);
       },
       error =>  console.log(error)
-    );
-
-    console.log(this.users);
-  }
-
-  createViewShow(){
-    this.createView = !this.createView;
+    );  
   }
 
 }

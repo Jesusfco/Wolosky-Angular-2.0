@@ -1,41 +1,41 @@
 <div>
-  
-  <div>
-      
-    <input align="middle" name="buscar" type="search" placeholder="Buscar"><br>
-      <div>
-        <table align="center">
-          <tr class="cabecera">
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Telefono</th>
-            <th>Sexo</th>
-            <th colspan="3">Opciones</th>
-          </tr>
-          
-          <tr *ngFor="let user of users">
-            <td>{{ user.name }}</td>
-            <td>{{ user.type }}</td>
-            <td>{{ user.phone }}</td>
-            <td>{{ user.sexo }}</td>
-            <td>
-              <a matTooltip="Ver" href="#"><i class="material-icons">remove_red_eye</i></a>
-            </td>
-            <td>
-              <a matTooltip="Editar" href="#"><i class="material-icons">edit</i></a>
-            </td>
-            <td>
-              <a matTooltip="Eliminar" href="#"><i class="material-icons">delete</i></a>
-            </td>
-          </tr>
-        </table>
-      </div>
 
-      <div class="boton">
-          <a class= "botonA" matTooltip="Crear" href="#" (click)="createViewShow()" ><i class="material-icons">add</i></a>
-      </div>
+    <div>
 
-  </div>
+        <input align="middle" [(ngModel)]="searchWord" name="searchWord" type="search" placeholder="Buscar" (keyup)="searchInput()"><br>
+        <div>
+            <table align="center">
+                <tr class="cabecera">
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Telefono</th>
+                    <th>Sexo</th>
+                    <th colspan="3">Opciones</th>
+                </tr>
 
-  <app-create-user *ngIf="createView" (closeEventCreateComponent)="createViewShow()"></app-create-user>
+                <tr *ngFor="let user of users">
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.type }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td>{{ user.sexo }}</td>
+                    <td>
+                        <a matTooltip="Ver" href="#"><i class="material-icons">remove_red_eye</i></a>
+                    </td>
+                    <td>
+                        <a matTooltip="Editar" href="#"><i class="material-icons">edit</i></a>
+                    </td>
+                    <td>
+                        <a matTooltip="Eliminar" href="#"><i class="material-icons">delete</i></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="boton">
+            <a class="botonA" matTooltip="Crear" href="#" (click)="createViewShow()"><i class="material-icons">add</i></a>
+        </div>
+
+    </div>
+
+    <app-create-user *ngIf="createView" (closeEventCreateComponent)="createViewShow()"></app-create-user>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes} from '@angular/animations';
 import { User } from '../user';
 import { UserService } from '../user.service';
@@ -73,6 +73,8 @@ export class CreateUserComponent implements OnInit {
     email: 0
   }
 
+  private elem: ElementRef;
+
   constructor(private _http: UserService) { }
 
   ngOnInit() {
@@ -98,21 +100,35 @@ export class CreateUserComponent implements OnInit {
     
   }
 
-  createUser(){
-
-    this.restoreValidations();
+  createUser(){    
     this.logicValidations();
-    if(this.validations.validate == false) return;
 
-    this._http.create({user: this.user, 
-                      references: this.references, 
-                      schedules: this.schedules,
-                      salary: this.salary,
-                      monthlyPayment: this.monthlyPayment})
-      .then(
-        data => console.log(data),
-        error => console.log(error)
-      );
+    setTimeout(() => {
+
+      if(this.validations.validate == false) return;
+
+        let files = this.elem.nativeElement.querySelector('#fileInput').files;
+
+        // console.log(files.name);
+        
+        
+        let formData = new FormData();
+        let file = files[0];
+        formData.append('fileInput', file, file.name);
+      
+        
+          // this._http.create({img: formData,
+          //                   user: this.user, 
+          //                   references: this.references, 
+          //                   schedules: this.schedules,
+          //                   salary: this.salary,
+          //                   monthlyPayment: this.monthlyPayment})
+          //   .then(
+          //     data => console.log(data),
+          //     error => console.log(error)
+          //   );
+
+    }, 750);   
     
   }
 
@@ -126,22 +142,34 @@ export class CreateUserComponent implements OnInit {
   }
   //Validaciones
   logicValidations(){
-    this.nameValidation();
-    
+
+    this.restoreValidations();
+    this.nameValidation();       
 
     if(this.user.userTypeId == 1){
+      
+      if(this.user.email != null || this.user.email != '')
+        this.uniqueEmail();
+
+      this.monthlyPaymentAmountValidation();
 
     }
     else if(this.user.userTypeId == 2){
-
+      if(this.user.email != null || this.user.email != '')
+        this.uniqueEmail();
+      this.salaryAmountValidation();
     }
+
     else if( this.user.userTypeId == 3){
       this.emailValidation();
+      this.salaryAmountValidation();
+      this.passwordValidation();
     }
     else {
       this.emailValidation();
       this.passwordValidation();
     }
+
   }
 
   nameValidation(){
@@ -150,6 +178,9 @@ export class CreateUserComponent implements OnInit {
       this.validations.validate = false;
       this.validations.name = 1;
     }
+    else {
+      this.uniqueName();
+    }
 
   }
 
@@ -157,6 +188,9 @@ export class CreateUserComponent implements OnInit {
     if(this.user.email == null || this.user.email == ''){
       this.validations.validate = false;
       this.validations.email = 1;
+    }
+    else {
+      this.uniqueEmail();
     }
   }
 
@@ -193,7 +227,10 @@ export class CreateUserComponent implements OnInit {
   uniqueEmail(){
     this._http.checkUniqueEmail(this.user.email).then(
       data => {
-        if(data == false) this.validations.email = 2;
+        if(data == false){
+          this.validations.email = 2;
+          this.validations.validate = false;
+        }  
         else { this.validations.email = -1; }
       },
       error => console.log(error)
@@ -203,7 +240,10 @@ export class CreateUserComponent implements OnInit {
   uniqueName(){
     this._http.checkUniqueName(this.user.name).then(
       data => {
-        if(data == false) this.validations.name = 2;
+        if(data == false){
+          this.validations.name = 2;
+          this.validations.validate = false;this.validations.name = 2
+        } 
         else {this.validations.name = -1;}
       },
       error => console.log(error)

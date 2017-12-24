@@ -21,8 +21,8 @@ export class UserService {
             .toPromise();
   }
 
-  get() {
-    return this._http.get(this.link.url + 'user')
+  search(data) {
+    return this._http.post(this.link.url + 'userSearch', {search: data})
             .map(data => data.json())
             .toPromise();
   }

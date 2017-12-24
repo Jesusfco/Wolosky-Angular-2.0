@@ -11,7 +11,7 @@ export class Salary {
 
         this.description = null;
         this.amount = null;
-        this.bonus = null;
+        this.bonus = 0;
         this.salaryTypeId = 1;
         this.salaryTypeView = this.returnSalaryView();
 
