@@ -72,20 +72,6 @@ h2 {
 
 /* esctructurada css para  Inputs y labels etc */
 
-.flexform {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-flow: row wrap;
-    padding: 0;
-    margin: 0;
-    width: 100% !important;
-}
-
-.flexform div input {
-    width: 90%;
-}
-
 .background {
     position: absolute;
     top: 0;
