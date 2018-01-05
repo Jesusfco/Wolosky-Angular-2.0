@@ -51,8 +51,7 @@ export class AppComponent {
 
   ngOnInit(){
 
-    setTimeout(() => {
-      
+    setTimeout(() => {      
       this.loaderAnimationImg();        
     }, 100);
 
@@ -78,10 +77,12 @@ export class AppComponent {
           localStorage.setItem('userName', data.user.name);
           localStorage.setItem('userId', data.user.id);
           localStorage.setItem('userEmail', data.user.email);                    
-          localStorage.setItem('userType', data.user.type);          
+          localStorage.setItem('userType', data.user.userTypeId);          
                     
-          setTimeout(this.appView(),5000);
-          
+          setTimeout(() => {
+            this.appView();
+            
+          }, 500);
         },
         error =>  {
           console.log(error);

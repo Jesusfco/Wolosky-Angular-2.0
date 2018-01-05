@@ -16,31 +16,31 @@ export class UserService {
  
 
   create(information) {
-    return this._http.post(this.link.url + 'user', information)
+    return this._http.post(this.link.url + 'user' + this.token.tokenRequest , information)
             .map(data => data.json())
             .toPromise();
   }
 
   search(data) {
-    return this._http.post(this.link.url + 'userSearch', {search: data})
+    return this._http.post(this.link.url + 'userSearch' + this.token.tokenRequest, {search: data})
             .map(data => data.json())
             .toPromise();
   }
 
   getUser(id){
-    return this._http.get(this.link.url + 'user/' + id)
+    return this._http.get(this.link.url + 'user/' + id + this.token.tokenRequest)
             .map(data => data.json())
             .toPromise();
   }
 
   checkUniqueEmail(data){
-    return this._http.post(this.link.url + 'user/uniqueEmail', {email: data})
+    return this._http.post(this.link.url + 'user/uniqueEmail' + this.token.tokenRequest, {email: data})
       .map(data => data.json())
       .toPromise();
   }
 
   checkUniqueName(data){
-    return this._http.post(this.link.url + 'user/uniqueName', {name: data})
+    return this._http.post(this.link.url + 'user/uniqueName' + this.token.tokenRequest, {name: data})
       .map(data => data.json())
       .toPromise();
   }

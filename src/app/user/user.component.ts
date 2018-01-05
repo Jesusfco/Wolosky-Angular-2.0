@@ -23,7 +23,7 @@ export class UserComponent implements OnInit {
   ngOnInit() {
 
    this.search();
-    console.log(this.users);
+    
   }
 
   createViewShow(){
@@ -38,8 +38,7 @@ export class UserComponent implements OnInit {
     }, 300);
 
     setTimeout(() => {
-      if(this.timer.search == 0){
-        console.log(this.searchWord);
+      if(this.timer.search == 0){        
         this.search();
       } 
     }, 350);
@@ -49,9 +48,7 @@ export class UserComponent implements OnInit {
 
     this._http.search(this.searchWord).then(
       data => {
-        this.users = data;
-        console.log("Usuarios:");
-        console.log(data);
+        this.users = data;        
       },
       error =>  console.log(error)
     );  
