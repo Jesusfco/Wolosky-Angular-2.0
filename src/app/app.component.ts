@@ -62,9 +62,9 @@ export class AppComponent {
         
         this.loaderAnimation();        
       }, 1000);
-    }
 
-    else {
+      // console.log('aqui');
+    } else {
       
       setTimeout(() => {
         this.userSignin = true;
@@ -72,17 +72,11 @@ export class AppComponent {
       }, 1000);
 
       this.loginService.checkAuth().then(
-        data => {          
-          
+        data => {                    
           localStorage.setItem('userName', data.user.name);
           localStorage.setItem('userId', data.user.id);
           localStorage.setItem('userEmail', data.user.email);                    
-          localStorage.setItem('userType', data.user.userTypeId);          
-                    
-          setTimeout(() => {
-            this.appView();
-            
-          }, 500);
+          localStorage.setItem('userType', data.user.userTypeId);                                       
         },
         error =>  {
           console.log(error);

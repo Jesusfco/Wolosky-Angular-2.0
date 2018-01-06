@@ -13,9 +13,9 @@ export class LoginComponent implements OnInit {
   
   @Output() login = new EventEmitter();
 
-  public ngAfterViewInit(): void {
-    this.elementRef.nativeElement.focus();
-  }
+  // public ngAfterViewInit(): void {
+  //   this.elementRef.nativeElement.focus();
+  // }
 
   data = {
     email: null,
@@ -28,10 +28,12 @@ export class LoginComponent implements OnInit {
     form: 0,
   };
 
+  serverConection: boolean = false;
+
   constructor(private _http:  LoginService) { }
   
     ngOnInit() {
-      this.ngAfterViewInit();
+      // this.ngAfterViewInit();
     }
     accesar() {
       this.form.form == 0;
@@ -40,6 +42,7 @@ export class LoginComponent implements OnInit {
   
       if(this.form.form == 1)  return;      
   
+      this.serverConection = true;
       this._http.login(this.data).then(
         data => {
           localStorage.setItem('token', data.token);
@@ -50,7 +53,10 @@ export class LoginComponent implements OnInit {
           
           this.login.emit();
         },
-        error => console.log(error)
+        error => {
+          console.log(error);
+          this.serverConection = false;
+        }
       );
     }
     

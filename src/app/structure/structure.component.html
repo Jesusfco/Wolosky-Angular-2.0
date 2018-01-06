@@ -8,13 +8,13 @@
 </nav>
 
 <div class="sideNav" [@menu]='stateMenu'>
-    <div style="background-image: url(https://roc21cdn-roc21.netdna-ssl.com/blog/wp-content/uploads/2016/07/patrones-hechos-con-papel-seis.jpg)" id="userInfSection">
+    <div style="background-image: url(https://png.pngtree.com/thumb_back/fh260/back_pic/00/12/25/24563b4acf5ccd5.jpg)" id="userInfSection">
         <div>
             <img src="https://www.w3schools.com/w3css/img_avatar3.png">
             <p>{{userData.userName | lowercase}}</p>
             <p id="emailInf">{{userData.userEmail | lowercase}}</p>
             <p *ngIf="userData.userType == 1" id="userTypeInf">Caja</p>
-            <p *ngIf="userData.userType == 2" id="userTypeInf">Administrador</p>
+            <p *ngIf="userData.userType == 6" id="userTypeInf">Administrador</p>
             <p *ngIf="userData.userType == 3" id="userTypeInf">Super Administrador</p>
         </div>
     </div>

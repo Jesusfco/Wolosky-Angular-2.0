@@ -10,6 +10,18 @@
     position: relative;
 }
 
+.loader {
+    position: absolute;
+    margin: 0 auto;
+    right: 0;
+    left: 0;
+    width: 60%;
+}
+
+.loading {
+    opacity: .4;
+}
+
 .cardSpace {
     background-image: url(http://thepatternlibrary.com/img/b.jpg);
 }
