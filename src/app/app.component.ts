@@ -67,7 +67,7 @@ export class AppComponent {
     } else {
       
       setTimeout(() => {
-        this.userSignin = true;
+        
         this.loaderAnimation();        
       }, 1000);
 
@@ -76,9 +76,11 @@ export class AppComponent {
           localStorage.setItem('userName', data.user.name);
           localStorage.setItem('userId', data.user.id);
           localStorage.setItem('userEmail', data.user.email);                    
-          localStorage.setItem('userType', data.user.userTypeId);                                       
+          localStorage.setItem('userType', data.user.userTypeId);     
+          this.userSignin = true;                                  
         },
         error =>  {
+          localStorage.setItem('token', '');
           console.log(error);
           this.userSignin = false;
         }
