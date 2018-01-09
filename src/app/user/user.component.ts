@@ -9,7 +9,7 @@ import { UserService } from './user.service';
 export class UserComponent implements OnInit {
 
   users: Array<any> = [];
-  createView: boolean =  false;
+  
   searchWord: string = "";
   timer = {
     search: 0
@@ -25,10 +25,7 @@ export class UserComponent implements OnInit {
    this.search();
     
   }
-
-  createViewShow(){
-    this.createView = !this.createView;
-  }
+  
 
   searchInput(){
     this.timer.search++;    

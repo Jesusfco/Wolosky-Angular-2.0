@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes} from '@angular/animations';
 import { Storage } from "../storage";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-structure',
@@ -46,7 +47,7 @@ export class StructureComponent implements OnInit {
 
   userData: Storage = new Storage();
 
-  constructor() { }
+  constructor( private router: Router) { }
 
   ngOnInit() {
     if(window.screen.width < 750){
@@ -71,8 +72,7 @@ export class StructureComponent implements OnInit {
 
   cerrarSesion(){
     localStorage.clear();
-    location.reload();
-    // this.cerrarSesion.emit();
+    this.router.navigate(['/login']);
   }
 
   closeNavMov(){

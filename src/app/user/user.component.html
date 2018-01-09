@@ -31,13 +31,15 @@
             </table>
         </div>
 
-        <div class="boton">
-            <a class="botonA" matTooltip="Crear" href="#" (click)="createViewShow()"><i class="material-icons">add</i></a>
-        </div>
+        <a [routerLink]="['create']">
+            <div class="boton">
+                <a class="botonA" matTooltip="Crear" href="#"><i class="material-icons">add</i></a>
+            </div>
+        </a>
 
     </div>
 
-    <app-create-user *ngIf="createView" (closeEventCreateComponent)="createViewShow()"></app-create-user>
+
 </div>
 
-<app-show-user *ngIf="showUserView" [idShowUser]="idShowUser" (closeEvent)="showUserView = false"></app-show-user>
+<router-outlet></router-outlet>

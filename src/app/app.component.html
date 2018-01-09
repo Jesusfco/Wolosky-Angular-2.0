@@ -1,5 +1,4 @@
-<app-login *ngIf="!userSignin" (login)="appView()"></app-login>
-<app-structure *ngIf="userSignin"></app-structure>
+<app-structure></app-structure>
 
 <div class="loader" [@loader]="stateLoader">
     <img [@loaderImg]="stateLoaderImg" src="http://www.woloskygimnasia.com/images/Wolosky-Logo.png">

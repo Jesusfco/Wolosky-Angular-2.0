@@ -14,28 +14,56 @@ import { MonthlyPayment } from '../../monthly-payment';
   animations: [
     trigger('principal', [
       
-      state('initial', style({
-        transform: 'translate3d(100%,0,0)',                
-      })),
+      // state('initial', style({
+      //   transform: 'translate3d(100%,0,0)',                
+      // })),
 
-      state('final' ,style({
-        transform: 'translate3d(0,0,0) scale(1)',               
-      })),      
+      // state('final' ,style({
+      //   transform: 'translate3d(0,0,0) scale(1)',               
+      // })),      
 
-      transition('initial <=> final' , animate('350ms ease-out')),
+      // transition('initial <=> final' , animate('350ms ease-out')),
+      transition(':enter', [
+        style({
+          transform: 'translate3d(0,0,0)',
+        }),
+        animate('350ms ease-in')
+      ]),
+
+      transition(':leave', [
+        style({
+          transform: 'translate3d(100%,0,0)',          
+        }),
+        animate('350ms ease-in')
+      ]),
     ]),
 
     trigger('background', [
       
-      state('initial', style({        
-        opacity: 0
-      })),
+      // state('initial', style({        
+      //   opacity: 0
+      // })),
 
-      state('final' ,style({       
-        opacity: .7
-      })),      
+      // state('final' ,style({       
+      //   opacity: .7
+      // })),      
 
-      transition('initial <=> final' , animate('180ms ease-out')),
+      // transition('initial <=> final' , animate('180ms ease-out')),
+      
+      transition(':enter', [
+        style({
+          opacity: 1,          
+        }),
+        animate('0.2s ease-in')
+      ]),
+
+      transition(':leave', [
+        style({
+          opacity: 0,          
+        }),
+        animate('0.2s ease-in')
+      ]),
+
     ])
 
   ]
@@ -79,12 +107,12 @@ export class CreateUserComponent implements OnInit {
 
   ngOnInit() {
 
-    setTimeout(() => {
+    // setTimeout(() => {
       
-      this.cardState = 'final';
-      this.backgroundState = 'final';
+    //   this.cardState = 'final';
+    //   this.backgroundState = 'final';
 
-    }, 100);
+    // }, 100);
 
     this.schedules = this.sche.setArray();
   }

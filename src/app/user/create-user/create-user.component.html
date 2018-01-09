@@ -1,7 +1,10 @@
 <div class="background" [@background]="backgroundState"></div>
 <div id="createCard" [@principal]="cardState">
 
-    <div id="cerrarBtn" (click)="close()"> Cerrar <i class="material-icons">close</i></div>
+    <a [routerLink]="['../']">
+        <div id="cerrarBtn"> Cerrar <i class="material-icons">close</i></div>
+    </a>
+
 
     <div class="form">
         <h1 align="center">Crear Usuario</h1>

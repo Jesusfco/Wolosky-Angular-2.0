@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes} from '@angular/animations';
 import { LoginService } from './login/login.service';
 import { Storage } from './storage';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -43,11 +44,13 @@ export class AppComponent {
 
   stateLoaderImg: string = "initial";
   stateLoader: string = "initial";
-
-  userSignin:boolean = false;
+  
   localData: Storage = new Storage();
 
-  constructor(private loginService: LoginService){}
+  constructor(
+    private loginService: LoginService,
+    private router: Router
+  ){}
 
   ngOnInit(){
 
@@ -56,7 +59,7 @@ export class AppComponent {
     }, 100);
 
     if(this.localData.token == null || this.localData.token == ''){ 
-      this.userSignin = false;
+      this.router.navigate(['/login']);
 
       setTimeout(() => {
         
@@ -77,21 +80,20 @@ export class AppComponent {
           localStorage.setItem('userId', data.user.id);
           localStorage.setItem('userEmail', data.user.email);                    
           localStorage.setItem('userType', data.user.userTypeId);     
-          this.userSignin = true;                                  
+              
+          if(this.router.url == '/') this.router.navigate(['/users']);
+              
         },
         error =>  {
           localStorage.setItem('token', '');
           console.log(error);
-          this.userSignin = false;
+          this.router.navigate(['/login']);
         }
       );
 
     }
   }
-
-  appView(){
-    this.userSignin = !this.userSignin;
-  }
+  
 
   loaderAnimationImg(){
     this.stateLoaderImg = (this.stateLoaderImg === 'initial' ? 'final' : 'initial');

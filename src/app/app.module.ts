@@ -13,8 +13,7 @@ import {
   MatButtonToggleModule,
   MatCardModule,
   MatCheckboxModule,
-  MatChipsModule,
-  
+  MatChipsModule,  
   MatDatepickerModule,
   MatDialogModule,
   MatExpansionModule,
@@ -55,6 +54,8 @@ import { ReferenceComponent } from './user/create-user/reference/reference.compo
 import { PaymentComponent } from './user/create-user/payment/payment.component';
 import { ShowUserComponent } from './user/show-user/show-user.component';
 
+import { routes } from './app.route';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,7 +78,7 @@ import { ShowUserComponent } from './user/show-user/show-user.component';
     ReactiveFormsModule,
     HttpModule, 
     JsonpModule,
-    
+    RouterModule.forRoot(routes),
 
     MatAutocompleteModule,
     MatButtonModule,

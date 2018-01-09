@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { LoginService } from './login.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -9,13 +10,11 @@ import { LoginService } from './login.service';
 })
 export class LoginComponent implements OnInit {
 
-  @ViewChild('focus') private elementRef: ElementRef;
-  
-  @Output() login = new EventEmitter();
+  @ViewChild('focus') private elementRef: ElementRef;    
 
-  // public ngAfterViewInit(): void {
-  //   this.elementRef.nativeElement.focus();
-  // }
+  public ngAfterViewInit(): void {
+    this.elementRef.nativeElement.focus();
+  }
 
   data = {
     email: null,
@@ -30,10 +29,12 @@ export class LoginComponent implements OnInit {
 
   serverConection: boolean = false;
 
-  constructor(private _http:  LoginService) { }
+  constructor(
+    private _http:  LoginService,
+    private router: Router) { }
   
     ngOnInit() {
-      // this.ngAfterViewInit();
+      //this.ngAfterViewInit();
     }
     accesar() {
       this.form.form == 0;
@@ -51,7 +52,8 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('userEmail', data.user.email);                    
           localStorage.setItem('userType', data.user.userTypeId); 
           
-          this.login.emit();
+          // this.router.navigate(['/users']);
+          location.reload();
         },
         error => {
           console.log(error);
