@@ -1,30 +1,48 @@
-import { trigger, state, animate, transition, style } from '@angular/animations';
+// import { trigger, state, animate, transition, style } from '@angular/animations';
+import { animate, AnimationEntryMetadata, state, style, transition, trigger } from '@angular/core';
 
-export const fadeInAnimation =
-        trigger('principal', [
-            
-            state('initial', style({
-            transform: 'translate3d(100%,0,0)',                
-            })),
+export const SlideAnimation: AnimationEntryMetadata = 
 
-            state('final' ,style({
-            transform: 'translate3d(0,0,0) scale(1)',               
-            })),      
-
-            transition(':enter' , animate('350ms ease-out')),
-            transition(':leave' , animate('350ms ease-out')),
+trigger('principal', [                
+        state('*' ,style({
+        transform: 'translate3d(0,0,0)',               
+        })),      
+        
+        transition(':enter', [
+        style({
+            transform: 'translate3d(100%,0,0)',
+        }),
+        animate('550ms ease-out')
         ]),
 
-        trigger('background', [
-            
-            state('initial', style({        
-            opacity: 0
-            })),
+        transition('void => *', [
+        style({
+            transform: 'translate3d(100%,0,0)',          
+        }),
+        animate('350ms ease-in')
+        ]),
+    ]);
 
-            state('final' ,style({       
-            opacity: .7
-            })),      
+export const FadeAnimation: AnimationEntryMetadata = 
 
-            transition(':enter' , animate('180ms ease-out')),
-            transition(':leave' , animate('180ms ease-out')),
-        ]);
+trigger('background', [
+        
+        state('*', style({        
+        opacity: .65
+        })),                  
+        
+        transition(':enter', [
+        style({
+            opacity: 0,          
+        }),
+        animate('0.3s ease-out')
+        ]),
+
+        transition(':leave', [
+        animate('0.5s ease-out', style({
+            opacity: 0,          
+        }))
+        ])
+
+    ])
+;

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
+import { Storage } from '../storage';
 
 
 @Component({
@@ -10,10 +11,15 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  @ViewChild('focus') private elementRef: ElementRef;    
+  @ViewChild('mail2') private mailRef: ElementRef;    
+  @ViewChild('password2') private passwordRef: ElementRef;    
 
   public ngAfterViewInit(): void {
-    this.elementRef.nativeElement.focus();
+    this.data.email = localStorage.getItem('userEmail');
+    
+    if(this.data.email == '' || this.data.email == null)      
+      this.mailRef.nativeElement.focus();
+    this.passwordRef.nativeElement.focus();
   }
 
   data = {
@@ -24,7 +30,7 @@ export class LoginComponent implements OnInit {
   form = {
     email: 0,
     password: 0,
-    form: 0,
+    validate: 0,
   };
 
   serverConection: boolean = false;
@@ -34,14 +40,16 @@ export class LoginComponent implements OnInit {
     private router: Router) { }
   
     ngOnInit() {
-      //this.ngAfterViewInit();
+      
+      
+
     }
     accesar() {
-      this.form.form == 0;
+      this.restoreValidation();
       this.validateMail();
       this.validatePassword();
   
-      if(this.form.form == 1)  return;      
+      if(this.form.validate == 1)  return;      
   
       this.serverConection = true;
       this._http.login(this.data).then(
@@ -73,7 +81,7 @@ export class LoginComponent implements OnInit {
       this.form.email = 0;
       if(this.data.email == null || this.data.email == '') {
         this.form.email = 1;
-        this.form.form = 1;
+        this.form.validate = 1;
       }    
     }
   
@@ -81,8 +89,18 @@ export class LoginComponent implements OnInit {
       this.form.password = 0;
       if(this.data.password == null || this.data.password == '') {
         this.form.password = 1;
-        this.form.form = 1;
+        this.form.validate = 1;
       }
+    }
+
+    restoreValidation(){
+
+      this.form = {
+        email: 0,
+        password: 0,
+        validate: 0
+      };
+
     }
 
 }

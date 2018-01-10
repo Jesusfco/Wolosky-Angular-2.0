@@ -81,7 +81,7 @@ export class AppComponent {
           localStorage.setItem('userEmail', data.user.email);                    
           localStorage.setItem('userType', data.user.userTypeId);     
               
-          if(this.router.url == '/') this.router.navigate(['/users']);
+          if(this.router.url == '/' || this.router.url == '/login') this.router.navigate(['/users']);
               
         },
         error =>  {

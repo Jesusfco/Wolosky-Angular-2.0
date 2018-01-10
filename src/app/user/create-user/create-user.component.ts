@@ -1,72 +1,24 @@
 import { Component, ElementRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes} from '@angular/animations';
+import { Router, ActivatedRoute } from '@angular/router';
+// import { trigger, state, style, transition, animate, keyframes} from '@angular/animations';
 import { User } from '../user';
 import { UserService } from '../user.service';
 import { Schedule } from '../schedule';
 import { Reference } from '../reference';
 import { Salary } from '../salary';
 import { MonthlyPayment } from '../../monthly-payment';
+import { FadeAnimation, SlideAnimation } from '../../animations/slide-in-out.animation';
 
+// @HostBinding('@principal') principal  = true;
+// @HostBinding('@background') background  = true;
 @Component({
   selector: 'app-create-user',
   templateUrl: './create-user.component.html',
   styleUrls: ['./create-user.component.css'],
-  animations: [
-    trigger('principal', [
-      
-      // state('initial', style({
-      //   transform: 'translate3d(100%,0,0)',                
-      // })),
+  animations: [FadeAnimation, SlideAnimation],
+  // host: {'[@SlideAnimation]': ''}
 
-      // state('final' ,style({
-      //   transform: 'translate3d(0,0,0) scale(1)',               
-      // })),      
-
-      // transition('initial <=> final' , animate('350ms ease-out')),
-      transition(':enter', [
-        style({
-          transform: 'translate3d(0,0,0)',
-        }),
-        animate('350ms ease-in')
-      ]),
-
-      transition(':leave', [
-        style({
-          transform: 'translate3d(100%,0,0)',          
-        }),
-        animate('350ms ease-in')
-      ]),
-    ]),
-
-    trigger('background', [
-      
-      // state('initial', style({        
-      //   opacity: 0
-      // })),
-
-      // state('final' ,style({       
-      //   opacity: .7
-      // })),      
-
-      // transition('initial <=> final' , animate('180ms ease-out')),
-      
-      transition(':enter', [
-        style({
-          opacity: 1,          
-        }),
-        animate('0.2s ease-in')
-      ]),
-
-      transition(':leave', [
-        style({
-          opacity: 0,          
-        }),
-        animate('0.2s ease-in')
-      ]),
-
-    ])
-
-  ]
+    
 })
 export class CreateUserComponent implements OnInit {
 
@@ -75,6 +27,7 @@ export class CreateUserComponent implements OnInit {
 
   @Input() createView;
   @Output() closeEventCreateComponent =  new EventEmitter();
+  
 
   user: User = new User();
   schedules = [];

@@ -21,7 +21,9 @@
 
     <h5>APLICACIÓN</h5>
     <ul>
-        <li><button mat-button (click)="userView()">USUARIOS</button></li>
+        <a [routerLink]="['users']">
+            <li><button mat-button>USUARIOS</button></li>
+        </a>
 
     </ul>
     <h5>USUARIO</h5>

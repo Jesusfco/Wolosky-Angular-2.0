@@ -14,17 +14,17 @@
                 <p *ngIf="form.password == 1">* Contraseña Requerida</p>
 
 
-                <input *ngIf="!serverConection" [(ngModel)]="data.email" name="email" type="email" placeholder="Correo o Telefono" #focus><br>
+                <input *ngIf="!serverConection" [(ngModel)]="data.email" name="email" type="email" placeholder="Correo o Telefono" #mail2><br>
                 <input *ngIf="serverConection" [(ngModel)]="data.email" name="email" type="email" placeholder="Correo o Telefono" disabled><br>
 
-                <input *ngIf="!serverConection" [(ngModel)]="data.password" name="password" type="password" placeholder="Contraseña"><br>
+                <input *ngIf="!serverConection" [(ngModel)]="data.password" name="password" type="password" placeholder="Contraseña" #password2>
                 <input *ngIf="serverConection" [(ngModel)]="data.password" name="password" type="password" placeholder="Contraseña" disabled><br>
 
 
-                <button id="btnLog">asdfasdfas</button>
-                <div class="btn" id="btnLogin" (click)="accesar()">Iniciar sesión</div>
+                <button class="btn " id="btnLog">Iniciar sesión</button>
 
-                <button id="btnFacebook" class="btn">Iniciar con Facebook</button>
+
+                <!-- <button id="btnFacebook" class="btn">Iniciar con Facebook</button> -->
                 <p>¿Olvidaste tu Contraseña?</p>
             </form>
 
