@@ -12,14 +12,14 @@ import { Storage } from '../storage';
 export class LoginComponent implements OnInit {
 
   @ViewChild('mail2') private mailRef: ElementRef;    
-  @ViewChild('password2') private passwordRef: ElementRef;    
+  // @ViewChild('password2') private passwordRef: ElementRef;    
 
   public ngAfterViewInit(): void {
-    this.data.email = localStorage.getItem('userEmail');
+    // this.data.email = localStorage.getItem('userEmail');
     
-    if(this.data.email == '' || this.data.email == null)      
+    // if(this.data.email == '' || this.data.email == null)      
       this.mailRef.nativeElement.focus();
-    this.passwordRef.nativeElement.focus();
+    // this.passwordRef.nativeElement.focus();
   }
 
   data = {
@@ -60,8 +60,8 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('userEmail', data.user.email);                    
           localStorage.setItem('userType', data.user.userTypeId); 
           
-          // this.router.navigate(['/users']);
-          location.reload();
+          this.router.navigate(['/users']);
+          
         },
         error => {
           console.log(error);

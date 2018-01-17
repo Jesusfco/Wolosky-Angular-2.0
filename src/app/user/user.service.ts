@@ -16,31 +16,31 @@ export class UserService {
  
 
   create(information) {
-    return this._http.post(this.link.url + 'user' + this.token.tokenRequest , information)
+    return this._http.post(this.link.url + 'user' + this.token.getTokenUrl() , information)
             .map(data => data.json())
             .toPromise();
   }
 
   search(data) {
-    return this._http.post(this.link.url + 'userSearch' + this.token.tokenRequest, {search: data})
+    return this._http.post(this.link.url + 'userSearch' + this.token.getTokenUrl(), {search: data})
             .map(data => data.json())
             .toPromise();
   }
 
   getUser(id){
-    return this._http.get(this.link.url + 'user/' + id + this.token.tokenRequest)
+    return this._http.get(this.link.url + 'user/' + id + this.token.getTokenUrl())
             .map(data => data.json())
             .toPromise();
   }
 
   checkUniqueEmail(data){
-    return this._http.post(this.link.url + 'user/uniqueEmail' + this.token.tokenRequest, {email: data})
+    return this._http.post(this.link.url + 'user/uniqueEmail' + this.token.getTokenUrl(), {email: data})
       .map(data => data.json())
       .toPromise();
   }
 
   checkUniqueName(data){
-    return this._http.post(this.link.url + 'user/uniqueName' + this.token.tokenRequest, {name: data})
+    return this._http.post(this.link.url + 'user/uniqueName' + this.token.getTokenUrl(), {name: data})
       .map(data => data.json())
       .toPromise();
   }

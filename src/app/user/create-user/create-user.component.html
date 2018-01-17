@@ -82,10 +82,10 @@
                                 <input [(ngModel)]="user.insurance" name="insurance" type="text" placeholder="Seguro social" (keydown)="seguroUpper()">
                             </div>
 
-                            <div>
+                            <!-- <div>
                                 <label>Foto:</label><br>
                                 <input #fileInput class="fileInput" id="fileInput" name="fileInput" type="file" accept="image/x-png,image/gif,image/jpeg">
-                            </div>
+                            </div> -->
 
                             <div *ngIf="user.userTypeId > 2">
                                 <label>Contraseña:</label><br>

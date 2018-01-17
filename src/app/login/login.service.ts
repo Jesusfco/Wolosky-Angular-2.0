@@ -22,7 +22,7 @@ export class LoginService {
   }
 
   checkAuth() { 
-    return this._http.get(this.link.url + 'login/check' + this.token.tokenRequest)
+    return this._http.get(this.link.url + 'login/check' + this.token.getTokenUrl())
     .map(data => data.json())
     .toPromise();
   }

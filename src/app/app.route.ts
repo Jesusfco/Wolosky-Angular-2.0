@@ -26,5 +26,6 @@ export const routes: Routes = [
             // {path: '/users/', component: Sh}
         ]
     },
+    {path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: '**', component:  PageNotFoundComponent },
 ]

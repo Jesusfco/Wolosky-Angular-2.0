@@ -8,12 +8,35 @@ export class Storage {
 
     constructor(){
         if(localStorage.getItem('token') !== null){
-            this.token = localStorage.getItem('token');
+            
             this.tokenRequest = "?token=" + this.token;
-            this.userName = localStorage.getItem('userName');
-            this.userEmail = localStorage.getItem('userEmail');
+
             this.userId = parseInt(localStorage.getItem('userId'));
             this.userType = parseInt(localStorage.getItem('userType'))
         }
+    }
+
+    getToken(){
+        return localStorage.getItem('token');
+    }
+
+    getTokenUrl(){
+        return '?token=' + this.getToken();
+    }
+
+    getUserName(){
+        return localStorage.getItem('userName');
+    }
+
+    getUserEmail(){
+        return localStorage.getItem('userEmail');
+    }
+
+    getUserId(){
+        return parseInt(localStorage.getItem('userId'));
+    }
+
+    getUserType(){
+        return parseInt(localStorage.getItem('userType'));
     }
 }
