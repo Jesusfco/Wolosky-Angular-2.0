@@ -10,6 +10,9 @@ import { ReferenceComponent } from './user/create-user/reference/reference.compo
 import { PaymentComponent } from './user/create-user/payment/payment.component';
 import { ShowUserComponent } from './user/show-user/show-user.component';
 
+
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+
 export const routes: Routes = [
     {
         path: 'login',
@@ -22,5 +25,6 @@ export const routes: Routes = [
             {path: 'create', component: CreateUserComponent},
             // {path: '/users/', component: Sh}
         ]
-    }
+    },
+    { path: '**', component:  PageNotFoundComponent },
 ]

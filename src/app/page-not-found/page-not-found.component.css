@@ -1,0 +1,21 @@
+.cardSpace {
+    background: white;
+}
+
+.cardSpace div img {
+    width: 300px;
+    position: relative;
+    margin-left: -40px;
+}
+
+.cardSpace div {
+    text-align: center;
+}
+
+@media screen and (max-width: 750px) {
+    .cardSpace div img {
+        width: 150px;
+        position: relative;
+        margin-left: -20px;
+    }
+}

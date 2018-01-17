@@ -55,6 +55,7 @@ import { PaymentComponent } from './user/create-user/payment/payment.component';
 import { ShowUserComponent } from './user/show-user/show-user.component';
 
 import { routes } from './app.route';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { routes } from './app.route';
     ReferenceComponent,
     PaymentComponent,
     ShowUserComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,

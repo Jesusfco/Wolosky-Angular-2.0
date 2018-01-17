@@ -48,21 +48,21 @@ export class ReferenceComponent implements OnInit {
   toUpdate: boolean =  false;
   referenceToModify: Reference;
 
-  relationshipOptions = [
-    {
-      value: 1,
-      view: 'Padres/Madre'
-    },{
-      value: 2,
-      view: 'Hermano/a'
-    },{
-      value: 3,
-      view: 'Familiar'
-    },{
-      value: 4,
-      view: 'Otro'
-    }
-  ];
+    relationshipOptions = [
+      {
+        value: 1,
+        view: 'Padres/Madre'
+      },{
+        value: 2,
+        view: 'Hermano/a'
+      },{
+        value: 3,
+        view: 'Familiar'
+      },{
+        value: 4,
+        view: 'Otro'
+      }
+    ];
 
   validations: any = {
     validate: true,

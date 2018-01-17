@@ -55,45 +55,37 @@ export class AppComponent {
   ngOnInit(){
 
     setTimeout(() => {      
+      if(this.localData.token == null || this.localData.token == ''){ 
+        if(this.router.url == '/'){
+          this.router.navigate(['/login']); 
+        }
+      }  
       this.loaderAnimationImg();        
     }, 100);
 
-    if(this.localData.token == null || this.localData.token == ''){ 
-      this.router.navigate(['/login']);
-
       setTimeout(() => {
-        
-        this.loaderAnimation();        
+        this.loaderAnimation();
       }, 1000);
-
-      // console.log('aqui');
-    } else {
-      
-      setTimeout(() => {
-        
-        this.loaderAnimation();        
-      }, 1000);
-
-      this.loginService.checkAuth().then(
-        data => {                    
-          localStorage.setItem('userName', data.user.name);
-          localStorage.setItem('userId', data.user.id);
-          localStorage.setItem('userEmail', data.user.email);                    
-          localStorage.setItem('userType', data.user.userTypeId);     
-              
-          if(this.router.url == '/' || this.router.url == '/login') this.router.navigate(['/users']);
-              
-        },
-        error =>  {
-          localStorage.setItem('token', '');
-          console.log(error);
-          this.router.navigate(['/login']);
-        }
-      );
-
-    }
   }
-  
+
+  checkLogin(){
+    this.loginService.checkAuth().then(
+      data => {                    
+        localStorage.setItem('userName', data.user.name);
+        localStorage.setItem('userId', data.user.id);
+        localStorage.setItem('userEmail', data.user.email);                    
+        localStorage.setItem('userType', data.user.userTypeId);     
+            
+        if(this.router.url == '/' || this.router.url == '/login') this.router.navigate(['/users']);
+            
+      },
+      error =>  {
+        localStorage.setItem('token', '');
+        console.log(error);
+        this.router.navigate(['/login']);
+      }
+    );
+  }
 
   loaderAnimationImg(){
     this.stateLoaderImg = (this.stateLoaderImg === 'initial' ? 'final' : 'initial');

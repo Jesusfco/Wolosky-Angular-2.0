@@ -1,0 +1,10 @@
+<div class="cardSpace">
+    <div>
+        <img src="http://www.woloskygimnasia.com/images/Wolosky-Logo.png">
+        <h1>Wolosky App:(</h1>
+        <h2>ERROR: Esta url no existe </h2>
+        <a *ngIf="checkToken()" [routerLink]="['/users']">Regresar a la Aplicacion</a>
+        <a *ngIf="checkToken() == false" [routerLink]="['/login']">Regresar a la Aplicacion</a>
+
+    </div>
+</div>
