@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 // import { trigger, state, style, transition, animate, keyframes} from '@angular/animations';
 import { User } from '../user';
@@ -24,7 +24,7 @@ export class CreateUserComponent implements OnInit {
 
   cardState: string = 'initial';
   backgroundState: string = 'initial';
-
+  sendingData:boolean = false;
   
   
 
@@ -55,7 +55,7 @@ export class CreateUserComponent implements OnInit {
 
   
 
-  constructor(private _http: UserService) { }
+  constructor(private _http: UserService, private router: Router) { }
 
   ngOnInit() {
 
@@ -69,43 +69,47 @@ export class CreateUserComponent implements OnInit {
     this.schedules = this.sche.setArray();
   }
 
-  close(){
-    this.cardState = 'initial';
-    this.backgroundState = 'initial';
-    // this.createView = false;
-
-    setTimeout(() => {
-      
-    }, 400);
-    
+  ngOnDestroy(){
+    if(localStorage.getItem('saleStatus') == '1')
+      localStorage.setItem('saleStatus', '0');
   }
 
   createUser(){
+    this.sendingData = true;
     this.logicValidations();
 
     setTimeout(() => {
-
-      if(this.validations.validate == false) return;
       this.sendNewUser();
+    }, 750);
 
-    }, 750);   
-    
+  }
+
+  closeWindow(){
+      this.router.navigate(['/users']);    
   }
 
   sendNewUser(){
-          this._http.create({
-                            user: this.user, 
-                            references: this.references, 
-                            schedules: this.schedules,
-                            salary: this.salary,
-                            monthlyPayment: this.monthlyPayment})
-                      .then(
-                      data => {
-                        console.log(data);
-
-                      },
-                      error => console.log(error)
-                      );
+    if(this.validations.validate == false){
+      this.sendingData = false;
+      return;
+    }
+    this._http.create({
+                      user: this.user, 
+                      references: this.references, 
+                      schedules: this.schedules,
+                      salary: this.salary,
+                      monthlyPayment: this.monthlyPayment})
+                .then(
+                data => {
+                  localStorage.removeItem('userCreationStatus');
+                  this.sendingData = false;
+                  this.closeWindow();
+                },
+                error => {
+                  console.log(error);
+                  this.sendingData = false;
+                }
+                );
   }
 
   assignSchedules(data){

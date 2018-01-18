@@ -210,6 +210,7 @@ export class ReferenceComponent implements OnInit {
   }
 
   update(){
+    console.log(this.referenceToModify);
     this.toUpdate = false;
     // let x = this.reference
   }

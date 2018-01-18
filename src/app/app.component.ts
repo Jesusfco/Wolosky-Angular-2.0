@@ -49,10 +49,9 @@ export class AppComponent {
   checkLogin(){
     this.loginService.checkAuth().then(
       data => {
-        localStorage.setItem('userName', data.user.name);
-        localStorage.setItem('userId', data.user.id);
-        localStorage.setItem('userEmail', data.user.email);                    
-        localStorage.setItem('userType', data.user.userTypeId);     
+
+        this.localData.storageUserData(data.user);
+        
         if(this.router.url == '/login') this.router.navigate(['/users']);
       },
       error =>  {

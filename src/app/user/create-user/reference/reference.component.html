@@ -6,43 +6,60 @@
     <div class=" container">
         <h1 align="center">Asignar Referencias</h1><br>
 
-        <div class="form">
-            <div *ngIf="validations.validate == false" class="divErrors">
-                <h5>Error/es:</h5>
-                <p *ngIf="validations.name == 1">Se requiere el nombre</p>
-                <p *ngIf="validations.type == 1">Seleccion el tipo de relacion</p>
-                <p *ngIf="validations.nuMail == 1">Se requiere el Correo/Telefono</p>
-            </div>
-            <form (submit)="form()" *ngIf="!toUpdate">
-                <br>
+        <form (submit)="form()" *ngIf="!toUpdate">
+            <br>
+
+            <div>
+                <label>Nombre completo:</label><br>
                 <input type="text" [(ngModel)]="reference.name" name="name" placeholder="Nombre Completo" (keydown)="nameUpper()">
+                <small class="inputError" *ngIf="validations.name == 1">Requerido</small>
+            </div>
 
+            <div>
+                <label>Parentesco:</label><br>
                 <select [(ngModel)]="reference.relationship_id" name="relationship_id" placeholder="Parentesco">
-                    <option *ngFor="let x of relationshipOptions" value="{{x.value}}">{{x.view}}</option>               
-                </select>
+                        <option *ngFor="let x of relationshipOptions" value="{{x.value}}">{{x.view}}</option>               
+                    </select>
+            </div>
 
+            <div>
+                <label>Telefono:</label><br>
                 <input type="phone" [(ngModel)]="reference.phone" name="phone" placeholder="Telefono">
+
+            </div>
+
+            <div>
+                <label>Correo</label><br>
                 <input type="mail" [(ngModel)]="reference.email" name="email" placeholder="Correo" (keydown)="mailUpper()">
+                <small *ngIf="validations.nuMail == 1">Se requiere el Correo/Telefono</small>
+            </div>
 
-                <button type="submit">Aceptar</button>
 
-            </form>
+            <button type="submit">Aceptar</button>
 
-            <form (submit)="update()" *ngIf="toUpdate">
-                <br>
+        </form>
+
+        <form (submit)="update()" *ngIf="toUpdate">
+            <br>
+
+            <div>
+                <label>Correo</label><br>
                 <input type="text" [(ngModel)]="referenceToModify.name" name="name" placeholder="Nombre Completo" (keydown)="nameModifyUpper()">
+                <small *ngIf="validations.nuMail == 1">Se requiere el Correo/Telefono</small>
+            </div>
 
-                <select [(ngModel)]="referenceToModify.relationship_id" name="relationship_id" placeholder="Parentesco">
+
+            <select [(ngModel)]="referenceToModify.relationship_id" name="relationship_id" placeholder="Parentesco">
                     <option *ngFor="let x of relationshipOptions" value="{{x.value}}">{{x.view}}</option>               
                 </select>
 
-                <input type="phone" [(ngModel)]="referenceToModify.phone" name="phone" placeholder="Telefono">
-                <input type="mail" [(ngModel)]="referenceToModify.email" name="email" placeholder="Correo" (keydown)="mailModifyUpper()">
+            <input type="phone" [(ngModel)]="referenceToModify.phone" name="phone" placeholder="Telefono">
+            <input type="mail" [(ngModel)]="referenceToModify.email" name="email" placeholder="Correo" (keydown)="mailModifyUpper()">
 
-                <button type="submit">Aceptar</button>
+            <button type="submit">Aceptar</button>
 
-            </form>
-        </div>
+        </form>
+
 
 
         <table>

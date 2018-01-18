@@ -1,3 +1,4 @@
+<mat-progress-bar mode="indeterminate" *ngIf="sendingData" class="barLoader"></mat-progress-bar>
 <div class="background" [@background]></div>
 <div id="createCard" @principal>
 
@@ -6,11 +7,11 @@
     </a>
 
 
-    <div class="form">
+    <div class="form" [ngClass]="{'loadingForm': sendingData == true}">
         <h1 align="center">Crear Usuario</h1>
 
         <div>
-            <form (submit)="createUser()" enctype="multipart/form-data">
+            <form (submit)="createUser()" enctype="multipart/form-data" autocomplete="off">
                 <div class="form1">
                     <div class="personalData">
                         <h2>Datos Personales</h2>

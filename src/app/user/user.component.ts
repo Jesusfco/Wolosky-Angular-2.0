@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from './user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -15,10 +16,12 @@ export class UserComponent implements OnInit {
     search: 0
   }
 
+  public interval: any = 0;
+
   idShowUser: number = null;
   showUserView: boolean = false;
 
-  constructor(private _http: UserService) { }
+  constructor(private _http: UserService, private router: Router) { }
 
   ngOnInit() {
 
@@ -55,6 +58,24 @@ export class UserComponent implements OnInit {
     this.idShowUser= id;
     this.showUserView = true;
   }
+
+  redirectCreateUser(){
+    this.router.navigate(['/users/create']);
+    localStorage.setItem('userCreationStatus', '1');
+    this.interval = setInterval(() => this.intervalSaleLogic(), 1000);
+  }
+
+  intervalSaleLogic(){
+    console.log('intervalo');
+    if(localStorage.getItem('userCreationStatus') == undefined){
+      this.search();
+      clearInterval(this.interval);
+    } else if(localStorage.getItem('userCreationStatus') == '0'){
+      clearInterval(this.interval);
+    }
+  }
+
+  
 
   
 
