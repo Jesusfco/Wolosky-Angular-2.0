@@ -340,6 +340,9 @@ select {
 }
 
 @media screen and (max-width: 1000px) {
+    .container {
+        width: 92%;
+    }
     .l9 {
         width: 100%;
     }
@@ -352,6 +355,9 @@ select {
     .l3 {
         width: 49%;
     }
+    .m6 {
+        width: 49%;
+    }
 }
 
 @media screen and (max-width: 700px) {
@@ -360,6 +366,12 @@ select {
     }
     .l3 {
         width: 100%;
+    }
+    .m6 {
+        width: 100%;
+    }
+    .s6 {
+        width: 49%;
     }
 }
 
@@ -404,8 +416,10 @@ select {
     margin: 0 auto;
 }
 
-.container {
-    display: block;
-    width: 80%;
-    max-width: 1000px;
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    background-color: inherit !important;
+    background-image: none;
+    color: rgb(0, 0, 0);
 }

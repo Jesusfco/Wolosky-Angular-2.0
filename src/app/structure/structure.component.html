@@ -10,7 +10,8 @@
 <div class="sideNav" [@menu]='stateMenu'>
     <div style="background-image: url(https://png.pngtree.com/thumb_back/fh260/back_pic/00/12/25/24563b4acf5ccd5.jpg)" id="userInfSection">
         <div>
-            <img src="https://www.w3schools.com/w3css/img_avatar3.png">
+            <!-- <img src="http://www.woloskygimnasia.com/images/app/woman_avatar.png"> -->
+            <img src="http://www.woloskygimnasia.com/images/app/man_avatar.png">
             <p>{{userData.getUserName() | lowercase}}</p>
             <p id="emailInf">{{userData.getUserEmail() | lowercase}}</p>
             <p *ngIf="userData.getUserType() == 1" id="userTypeInf">Caja</p>

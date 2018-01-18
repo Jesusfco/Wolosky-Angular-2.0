@@ -8,9 +8,8 @@ export class Reference {
     public email: string;
 
     constructor(){
-        
-        this.phone = null;
-        this.email = null;
+        this.phone = '';
+        this.email = '';
         this.relationship_id = 1;
     }
 
@@ -21,5 +20,27 @@ export class Reference {
         else if(this.relationship_id == 4)this.relationshipView = 'Amigos';
         else if(this.relationship_id == 5)this.relationshipView = 'Compañeros de Trabajo';
         else if(this.relationship_id == 6)this.relationshipView = 'Otro';
+    }
+
+    validateLengthEmail(x){
+        if(this.email.length < x){
+            return false;
+        } else { return true; }
+    }
+
+    validateLengthPhone(x){
+        if(this.phone.length < x){
+            return false;
+        } else { return true; }
+    }
+
+    validateEmailFormat(){
+        if(this.email.indexOf("@") > 0 && this.email.indexOf(".") > 0){
+            return true;
+        } else { return false; }
+    }
+
+    validatePhoneFormat(){
+        this.phone =  this.phone.replace(/\D/g, '');
     }
 }

@@ -9,54 +9,70 @@
         <form class="flexRow" (submit)="form()" *ngIf="!toUpdate">
             <br>
 
-            <div class="formData">
+            <div class="formData l6 m6">
                 <label>Nombre completo:</label><br>
-                <input type="text" [(ngModel)]="reference.name" name="name" placeholder="Nombre Completo" (keydown)="nameUpper()">
+                <input type="text" [ngClass]="{'inputError': validations.name > 0}" [(ngModel)]="reference.name" name="name" placeholder="Nombre Completo" (keydown)="nameUpper()">
                 <small class="error" *ngIf="validations.name == 1">Requerido</small>
+                <small class="error" *ngIf="validations.name == 2">6 letras minimo</small>
+                <small class="error" *ngIf="validations.name == 3">Nombre ya asignado</small>
             </div>
 
-            <div class="formData">
+            <div class="formData l6 m6">
                 <label>Parentesco:</label><br>
                 <select [(ngModel)]="reference.relationship_id" name="relationship_id" placeholder="Parentesco">
                         <option *ngFor="let x of relationshipOptions" value="{{x.value}}">{{x.view}}</option>               
                     </select>
             </div>
 
-            <div class="formData">
+            <div class="formData l6 m6">
                 <label>Telefono:</label><br>
-                <input type="phone" [(ngModel)]="reference.phone" name="phone" placeholder="Telefono">
+                <input type="phone" [ngClass]="{'inputError': validations.name > 0 || validations.nuMail > 0}" [(ngModel)]="reference.phone" (keyup)="reference.validatePhoneFormat()" name="phone" placeholder="Telefono">
+                <small>{{ reference.phone.length }}</small>
                 <small class="error" *ngIf="validations.nuMail == 1">Se requiere el Correo/Telefono</small>
+                <small class="error" *ngIf="validations.phone == 1">7 Dijitos minimo</small>
+                <small class="error" *ngIf="validations.phone == 2">10 Dijitos maximo</small>
             </div>
 
-            <div class="formData">
+            <div class="formData l6 m6">
                 <label>Correo</label><br>
                 <input type="mail" [(ngModel)]="reference.email" name="email" placeholder="Correo" (keydown)="mailUpper()">
                 <small class="error" *ngIf="validations.nuMail == 1">Se requiere el Correo/Telefono</small>
+                <small class="error" *ngIf="validations.mail == 1">13 caracteres minimo</small>
+                <small class="error" *ngIf="validations.mail == 2">Formato incorrecto "@" / "."</small>
             </div>
 
-
-            <button type="submit">Aceptar</button>
+            <button class="l12" type="submit">Aceptar</button>
 
         </form>
 
-        <form (submit)="update()" *ngIf="toUpdate">
-            <br>
+        <form class="flexWrap" (submit)="update()" *ngIf="toUpdate">
 
-            <div class="formData">
+
+            <div class="formData l6 m6">
                 <label>Correo</label><br>
                 <input type="text" [(ngModel)]="referenceToModify.name" name="name" placeholder="Nombre Completo" (keydown)="nameModifyUpper()">
                 <small *ngIf="validations.nuMail == 1">Se requiere el Correo/Telefono</small>
             </div>
 
-
-            <select [(ngModel)]="referenceToModify.relationship_id" name="relationship_id" placeholder="Parentesco">
+            <div class="formData l6 m6">
+                <label>Parentesco:</label><br>
+                <select [(ngModel)]="referenceToModify.relationship_id" name="relationship_id" placeholder="Parentesco">
                     <option *ngFor="let x of relationshipOptions" value="{{x.value}}">{{x.view}}</option>               
                 </select>
+            </div>
 
-            <input type="phone" [(ngModel)]="referenceToModify.phone" name="phone" placeholder="Telefono">
-            <input type="mail" [(ngModel)]="referenceToModify.email" name="email" placeholder="Correo" (keydown)="mailModifyUpper()">
+            <div class="formData l6 m6">
+                <label>Telefono:</label><br>
+                <input type="phone" (keyup)="referenceToModify.validatePhoneFormat()" [(ngModel)]="referenceToModify.phone" name="phone" placeholder="Telefono">
+            </div>>
 
-            <button type="submit">Aceptar</button>
+            <div class="formData l6 m6">
+                <label>Correo:</label>
+                <input type="mail" [(ngModel)]="referenceToModify.email" name="email" placeholder="Correo" (keydown)="mailModifyUpper()">
+            </div>
+
+
+            <button class="l12" type="submit">Aceptar</button>
 
         </form>
 

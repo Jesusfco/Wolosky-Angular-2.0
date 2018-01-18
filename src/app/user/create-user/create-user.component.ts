@@ -58,20 +58,12 @@ export class CreateUserComponent implements OnInit {
   constructor(private _http: UserService, private router: Router) { }
 
   ngOnInit() {
-
-    // setTimeout(() => {
-      
-    //   this.cardState = 'final';
-    //   this.backgroundState = 'final';
-
-    // }, 100);
-
     this.schedules = this.sche.setArray();
   }
 
   ngOnDestroy(){
-    if(localStorage.getItem('saleStatus') == '1')
-      localStorage.setItem('saleStatus', '0');
+    if(localStorage.getItem('userCreationStatus') == '1')
+      +localStorage.setItem('userCreationStatus', '0');
   }
 
   createUser(){
@@ -124,31 +116,28 @@ export class CreateUserComponent implements OnInit {
   logicValidations(){
 
     this.restoreValidations();
-    this.nameValidation();       
+
+    if(this.emailValidation())
+      this.uniqueEmail();    
 
     if(this.user.user_type_id == 1){
-      
-      if(this.user.email != null || this.user.email != '')
-        this.uniqueEmail();
-
       this.monthlyPaymentAmountValidation();
-
     }
+
     else if(this.user.user_type_id == 2){
-      if(this.user.email != null || this.user.email != '')
-        this.uniqueEmail();
       this.salaryAmountValidation();
     }
 
     else if( this.user.user_type_id == 3){
-      this.emailValidation();
       this.salaryAmountValidation();
       this.passwordValidation();
     }
     else {
-      this.emailValidation();
       this.passwordValidation();
     }
+
+    if(this.nameValidation())
+      this.uniqueName();
 
   }
 
@@ -157,20 +146,23 @@ export class CreateUserComponent implements OnInit {
     if(this.user.name == null || this.user.name == ''){
       this.validations.validate = false;
       this.validations.name = 1;
+      return false;
     }
     else {
-      this.uniqueName();
+      return true;
     }
 
   }
 
   emailValidation(){
     if(this.user.email == null || this.user.email == ''){
-      this.validations.validate = false;
-      this.validations.email = 1;
-    }
-    else {
-      this.uniqueEmail();
+      if(this.user.user_type_id > 2){
+        this.validations.validate = false;
+        this.validations.email = 1;
+      }
+      return false;
+    } else {
+      return true;
     }
   }
 
@@ -179,13 +171,13 @@ export class CreateUserComponent implements OnInit {
 
     setTimeout(() => {      
       this.timer.email--;
-    }, 1500);
+    }, 900);
 
     setTimeout(() => {
       if(this.timer.email == 0){
-        if(this.user.email != null || this.user.email != '') this.uniqueEmail();
+        if(this.user.email.length > 7) this.uniqueEmail();
       } 
-    }, 1550);
+    }, 950);
 
   }
 
@@ -195,15 +187,18 @@ export class CreateUserComponent implements OnInit {
         setTimeout(() => {      
           this.timer.name--;
           
-        }, 1500);
+        }, 900);
     
         setTimeout(() => {
           if(this.timer.name == 0){
-            if(this.user.name != null || this.user.name != '') this.uniqueName();
+            if(this.user.name.length > 5) {
+              this.uniqueName();
+            }
           } 
-        }, 1550);
+        }, 950);
 
   }
+
   uniqueEmail(){
     this._http.checkUniqueEmail(this.user.email).then(
       data => {
@@ -222,12 +217,18 @@ export class CreateUserComponent implements OnInit {
       data => {
         if(data == false){
           this.validations.name = 2;
-          this.validations.validate = false;this.validations.name = 2
+          this.validations.validate = false;
         } 
         else {this.validations.name = -1;}
+        if(this.sendingData == true)
+        this.sendNewUser();
       },
-      error => console.log(error)
-    )
+      error => {
+        console.log(error);
+        if(this.sendingData == true)
+        this.sendNewUser();
+      }
+    );
   }
 
   passwordValidation(){

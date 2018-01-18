@@ -66,9 +66,10 @@ export class ReferenceComponent implements OnInit {
 
   validations: any = {
     validate: true,
-    name: -1,
-    type:-1,
-    nuMail: -1,
+    name: 0,
+    nuMail: 0,
+    phone: 0,
+    email: 0,
   };
 
   arrayNumber = 1;
@@ -108,7 +109,7 @@ export class ReferenceComponent implements OnInit {
 
   form(){
 
-    this.restoreValidationValues2();    
+    this.restoreValidationValues();    
     this.validateForm();
 
     if(this.validations.validate == true){
@@ -124,62 +125,70 @@ export class ReferenceComponent implements OnInit {
   }
 
   validateForm(){
-    this.validateName();
+    if(this.validateName())
+
     // this.validateType();
     this.validateMailNumber();
+
+    if(this.reference.email.length > 0){
+
+      if(!this.reference.validateLengthEmail(12)){
+        this.validations.email = 1;
+        this.validations.validate = false;
+      } else {
+        if(!this.reference.validateEmailFormat()){
+          this.validations.email = 1;
+          this.validations.validate = false;
+        }
+      }
+
+    }
+
+    if(this.reference.phone.length > 0){
+      if(this.reference.validateLengthPhone(7)){
+        this.validations.phone = 1;
+        this.validations.validate = false;
+      } else if (!this.reference.validateLengthPhone(11)){
+        this.validations.phone = 2;
+        this.validations.validate = false;
+      }
+    }
+
   }
 
-  restoreValidationValues2(){
+  restoreValidationValues(){
 
     this.validations = {
       validate: true,
       name: 0,
-      type: 0,
       nuMail: 0,
-    }
-
-  }
-
-  restoreValidationValues1(){
-
-    this.validations = {
-      validate: true,
-      name: -1,
-      type: -1,
-      nuMail: -1,
-    }
+      email: 0,
+      phone: 0,
+    };
 
   }
 
   validateName(){
 
-    if(this.reference.name == null || this.reference.name == ''){
-      this.validations.name = 1;
-      this.validations.validate = false;      
+    if(this.reference.name.length > 0){
+      return true;
     }
 
-  }
-
-  validateType(){
-
-    if(this.reference.relationship_id == null){
-      this.validations.type = 1;
-      this.validations.validate = false;
-    }
+    this.validations.name = 1;
+    this.validations.validate = false;
+    return false;
 
   }
 
   validateMailNumber(){
 
-    if(this.reference.phone == null && this.reference.email == null){
+    if(this.reference.phone.length > 0  && this.reference.email.length > 0){
+      return true;
+    } else {
       this.validations.nuMail = 1;
       this.validations.validate = false;
+      return false;
     }
-    else if(this.reference.phone == "" && this.reference.email == ""){
-      this.validations.nuMail = 1;
-      this.validations.validate = false;
-    }
-          
   }
 
   nameUpper(){
@@ -190,7 +199,7 @@ export class ReferenceComponent implements OnInit {
     if(this.referenceToModify.name != null) 
       this.referenceToModify.name = this.referenceToModify.name.toUpperCase();
   }
-
+  
   mailUpper(){
     if(this.reference.email != null)
       this.reference.email =  this.reference.email.toUpperCase();
