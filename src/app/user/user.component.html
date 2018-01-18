@@ -10,30 +10,29 @@
                     <th>Tipo</th>
                     <th>Telefono</th>
                     <th>Sexo</th>
-                    <th colspan="3">Opciones</th>
+                    <!-- <th colspan="3">Opciones</th> -->
                 </tr>
 
-                <tr *ngFor="let user of users">
+                <tr *ngFor="let user of users" [routerLink]="['/users/show', user.id]">
                     <td>{{ user.name }}</td>
-                    <td>{{ user.type }}</td>
+                    <td *ngIf="user.user_type_id == 1">Alumno</td>
+                    <td *ngIf="user.user_type_id == 2">Maestro</td>
+                    <td *ngIf="user.user_type_id == 3">Cajero</td>
+                    <td *ngIf="user.user_type_id == 4">Escritor</td>
+                    <td *ngIf="user.user_type_id == 5">S Escritor</td>
+                    <td *ngIf="user.user_type_id == 6">Administrador</td>
+
                     <td>{{ user.phone }}</td>
-                    <td>{{ user.sexo }}</td>
-                    <td (click)="selectUser(user.id)">
-                        <a matTooltip="Ver" href="#"><i class="material-icons">remove_red_eye</i></a>
-                    </td>
-                    <td>
-                        <a matTooltip="Editar" href="#"><i class="material-icons">edit</i></a>
-                    </td>
-                    <td>
-                        <a matTooltip="Eliminar" href="#"><i class="material-icons">delete</i></a>
-                    </td>
+
+                    <td *ngIf="user.gender == 1">M</td>
+                    <td *ngIf="user.gender == 2">F</td>
                 </tr>
             </table>
         </div>
 
-        <a [routerLink]="['create']">
+        <a [routerLink]="['/users/create']">
             <div class="boton">
-                <a class="botonA" matTooltip="Crear" href="#"><i class="material-icons">add</i></a>
+                <a class="botonA" matTooltip="Crear"><i class="material-icons">add</i></a>
             </div>
         </a>
 

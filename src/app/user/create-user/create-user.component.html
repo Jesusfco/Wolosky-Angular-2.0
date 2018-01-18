@@ -37,7 +37,7 @@
 
                             <div>
                                 <label>Tipo de usuario:</label><br>
-                                <select [(ngModel)]="user.userTypeId" name="userTypeId">
+                                <select [(ngModel)]="user.user_type_id" name="user_type_id">
                                     <option value="1">Alumno</option> 
                                     <option value="2">Empleado</option>
                                     <option value="3">Cajero</option>
@@ -87,7 +87,7 @@
                                 <input #fileInput class="fileInput" id="fileInput" name="fileInput" type="file" accept="image/x-png,image/gif,image/jpeg">
                             </div> -->
 
-                            <div *ngIf="user.userTypeId > 2">
+                            <div *ngIf="user.user_type_id > 2">
                                 <label>Contraseña:</label><br>
                                 <input [(ngModel)]="user.password" name="password" placeholder="Contraseña" type="password" [ngClass]="{ inputError: validations.password > 0 }">
                             </div>
@@ -121,18 +121,18 @@
                             </div>
 
 
-                            <div *ngIf="user.userTypeId == 2 || user.userTypeId == 3">
+                            <div *ngIf="user.user_type_id == 2 || user.user_type_id == 3">
                                 <h2>Salario</h2>
                                 <input [(ngModel)]="salary.amount" name="amount" type="number" min="0" placeholder="Monto" [ngClass]="{ inputError: validations.salaryAmount == 1}">
                                 <input [(ngModel)]="salary.bonus" name="bonus" type="number" min="0" placeholder="Bono">
-                                <select [(ngModel)]="salary.salaryTypeId" name="salaryTypeId">
+                                <select [(ngModel)]="salary.salary_type_id" name="salary_type_id">
                                 <option value="1">Hora</option>
                                 <option value="2">Día</option>
                             </select>
 
                             </div>
 
-                            <div *ngIf="user.userTypeId == 1 ">
+                            <div *ngIf="user.user_type_id == 1 ">
                                 <h2>Pago Mensual</h2>
                                 <input [(ngModel)]="monthlyPayment.amount" name="amount" type="number" min="0" placeholder="Monto" [ngClass]="{ inputError: validations.monthlyPaymentAmount > 0 }">
                             </div>
@@ -143,7 +143,7 @@
                 </div>
             </form>
 
-            <div class="horarios" *ngIf="user.userTypeId <= 3">
+            <div class="horarios" *ngIf="user.user_type_id <= 3">
                 <h2>Horarios</h2>
                 <table>
                     <thead>
@@ -157,8 +157,8 @@
                         <tr *ngFor="let x of schedules" [ngClass]="{ scheduleInactive: !x.active }">
                             <!-- <ng-container *ngIf="x.active"> -->
                             <th>{{ x.dayView }}</th>
-                            <th>{{ x.checkIn }}</th>
-                            <th>{{ x.checkOut }}</th>
+                            <th>{{ x.check_in }}</th>
+                            <th>{{ x.check_out }}</th>
                             <!-- </ng-container> -->
                         </tr>
                     </tbody>
@@ -167,7 +167,7 @@
                 <button class="btn horarioBtn" (click)="scheduleView = true">Asignar Horario</button>
 
             </div>
-            <div class="referencias" *ngIf="user.userTypeId <= 3">
+            <div class="referencias" *ngIf="user.user_type_id <= 3">
                 <h2>Referencias</h2>
                 <table>
                     <thead>

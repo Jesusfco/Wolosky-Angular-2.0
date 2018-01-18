@@ -30,8 +30,8 @@
                         <ng-container *ngIf="x.active">
 
                             <th>{{ x.dayView }}</th>
-                            <th><input [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.checkIn" name="checkIn" type="time"></th>
-                            <th><input [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.checkOut" name="checkOut" type="time"></th>
+                            <th><input [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_in" name="check_in" type="time"></th>
+                            <th><input [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_out" name="check_out" type="time"></th>
                         </ng-container>
                     </tr>
                 </tbody>

@@ -25,8 +25,7 @@ export class CreateUserComponent implements OnInit {
   cardState: string = 'initial';
   backgroundState: string = 'initial';
 
-  @Input() createView;
-  @Output() closeEventCreateComponent =  new EventEmitter();
+  
   
 
   user: User = new User();
@@ -54,7 +53,7 @@ export class CreateUserComponent implements OnInit {
     email: 0
   }
 
-  private elem: ElementRef;
+  
 
   constructor(private _http: UserService) { }
 
@@ -76,41 +75,37 @@ export class CreateUserComponent implements OnInit {
     // this.createView = false;
 
     setTimeout(() => {
-      this.closeEventCreateComponent.emit();      
+      
     }, 400);
     
   }
 
-  createUser(){    
+  createUser(){
     this.logicValidations();
 
     setTimeout(() => {
 
       if(this.validations.validate == false) return;
-
-        let files = this.elem.nativeElement.querySelector('#fileInput').files;
-
-        // console.log(files.name);
-        
-        
-        let formData = new FormData();
-        let file = files[0];
-        formData.append('fileInput', file, file.name);
-      
-        
-          // this._http.create({img: formData,
-          //                   user: this.user, 
-          //                   references: this.references, 
-          //                   schedules: this.schedules,
-          //                   salary: this.salary,
-          //                   monthlyPayment: this.monthlyPayment})
-          //   .then(
-          //     data => console.log(data),
-          //     error => console.log(error)
-          //   );
+      this.sendNewUser();
 
     }, 750);   
     
+  }
+
+  sendNewUser(){
+          this._http.create({
+                            user: this.user, 
+                            references: this.references, 
+                            schedules: this.schedules,
+                            salary: this.salary,
+                            monthlyPayment: this.monthlyPayment})
+                      .then(
+                      data => {
+                        console.log(data);
+
+                      },
+                      error => console.log(error)
+                      );
   }
 
   assignSchedules(data){
@@ -127,7 +122,7 @@ export class CreateUserComponent implements OnInit {
     this.restoreValidations();
     this.nameValidation();       
 
-    if(this.user.userTypeId == 1){
+    if(this.user.user_type_id == 1){
       
       if(this.user.email != null || this.user.email != '')
         this.uniqueEmail();
@@ -135,13 +130,13 @@ export class CreateUserComponent implements OnInit {
       this.monthlyPaymentAmountValidation();
 
     }
-    else if(this.user.userTypeId == 2){
+    else if(this.user.user_type_id == 2){
       if(this.user.email != null || this.user.email != '')
         this.uniqueEmail();
       this.salaryAmountValidation();
     }
 
-    else if( this.user.userTypeId == 3){
+    else if( this.user.user_type_id == 3){
       this.emailValidation();
       this.salaryAmountValidation();
       this.passwordValidation();

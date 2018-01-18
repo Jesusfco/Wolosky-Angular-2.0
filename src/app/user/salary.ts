@@ -4,7 +4,7 @@ export class Salary {
     public description: string;
     public amount: number;
     public bonus: number;
-    public salaryTypeId: number;   
+    public salary_type_id: number;   
     public salaryTypeView: string; 
 
     constructor(){
@@ -12,14 +12,14 @@ export class Salary {
         this.description = null;
         this.amount = null;
         this.bonus = 0;
-        this.salaryTypeId = 1;
+        this.salary_type_id = 1;
         this.salaryTypeView = this.returnSalaryView();
 
     }
 
     returnSalaryView(){
-        if(this.salaryTypeId == 1) return 'Hora';
-        else if(this.salaryTypeId == 2) return 'Día';
+        if(this.salary_type_id == 1) return 'Hora';
+        else if(this.salary_type_id == 2) return 'Día';
     }
 
     

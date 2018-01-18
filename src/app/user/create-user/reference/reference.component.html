@@ -17,7 +17,7 @@
                 <br>
                 <input type="text" [(ngModel)]="reference.name" name="name" placeholder="Nombre Completo" (keydown)="nameUpper()">
 
-                <select [(ngModel)]="reference.relationship" name="relationship" placeholder="Parentesco">
+                <select [(ngModel)]="reference.relationship_id" name="relationship_id" placeholder="Parentesco">
                     <option *ngFor="let x of relationshipOptions" value="{{x.value}}">{{x.view}}</option>               
                 </select>
 
@@ -32,7 +32,7 @@
                 <br>
                 <input type="text" [(ngModel)]="referenceToModify.name" name="name" placeholder="Nombre Completo" (keydown)="nameModifyUpper()">
 
-                <select [(ngModel)]="referenceToModify.relationship" name="relationship" placeholder="Parentesco">
+                <select [(ngModel)]="referenceToModify.relationship_id" name="relationship_id" placeholder="Parentesco">
                     <option *ngFor="let x of relationshipOptions" value="{{x.value}}">{{x.view}}</option>               
                 </select>
 

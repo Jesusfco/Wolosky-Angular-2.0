@@ -77,12 +77,12 @@ export class CreateScheduleComponent implements OnInit {
 
   assignSchedulesNames(){
     this.schedules = [
-      {day: 1, checkIn: null, checkOut: null, dayView: 'Lunes', active: false, error: 0},
-      {day: 2, checkIn: null, checkOut: null, dayView: 'Martes', active: false, error: 0},
-      {day: 3, checkIn: null, checkOut: null, dayView: 'Miercoles', active: false, error: 0},
-      {day: 4, checkIn: null, checkOut: null, dayView: 'Jueves', active: false, error: 0},
-      {day: 5, checkIn: null, checkOut: null, dayView: 'Viernes', active: false, error: 0},
-      {day: 6, checkIn: null, checkOut: null, dayView: 'Sabado', active: false, error: 0},
+      {day_id: 1, check_in: null, check_out: null, dayView: 'Lunes', active: false, error: 0},
+      {day_id: 2, check_in: null, check_out: null, dayView: 'Martes', active: false, error: 0},
+      {day_id: 3, check_in: null, check_out: null, dayView: 'Miercoles', active: false, error: 0},
+      {day_id: 4, check_in: null, check_out: null, dayView: 'Jueves', active: false, error: 0},
+      {day_id: 5, check_in: null, check_out: null, dayView: 'Viernes', active: false, error: 0},
+      {day_id: 6, check_in: null, check_out: null, dayView: 'Sabado', active: false, error: 0},
     ]
   }
 
@@ -104,16 +104,16 @@ export class CreateScheduleComponent implements OnInit {
 
       if(x.active == true){
 
-        if(x.checkIn == null || x.checkIn == ''){
+        if(x.check_in == null || x.check_in == ''){
           x.error = 1;
           this.validations.checkIn = 1;        
         } 
-        if(x.checkOut == null || x.checkOut == ''){
+        if(x.check_out == null || x.check_out == ''){
           this.validations.checkOut = 1;
           x.error = 1;
         }  
-        if(x.checkIn >= x.checkOut){
-          this.validations.format = 1
+        if(x.check_in >= x.check_out){
+          this.validations.format = 1;
           x.error = 1;
         } 
 

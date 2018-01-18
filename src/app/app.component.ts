@@ -27,7 +27,7 @@ export class AppComponent {
 
     //INICIA LA ANIMACION DE ENTRADA
     setTimeout(() => {  
-
+      this.loaderAnimationImg();
       //APAGA LA ANIMACION
       setTimeout(() => {
         this.loaderAnimation();
@@ -36,10 +36,13 @@ export class AppComponent {
       if(this.localData.getToken() != undefined ){ 
         // console.log(this.localData.getToken());
         this.checkLogin();
+        return;
       }
 
-      this.loaderAnimationImg();
+      
     }, 100);
+
+    this.router.navigate(['/login']);
 
   }
 

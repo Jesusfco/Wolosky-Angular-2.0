@@ -6,45 +6,17 @@ import { Schedule } from '../schedule';
 import { Reference } from '../reference';
 import { Salary } from '../salary';
 import { MonthlyPayment } from '../../monthly-payment';
+import { BackgroundCard, Card } from '../../animations/card.animation';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-show-user',
   templateUrl: './show-user.component.html',
   styleUrls: ['./show-user.component.css'],
-  animations: [
-    trigger('card', [
-      
-      state('initial', style({
-        transform: 'translate3d(0,50%,0) scale(.7)',                
-      })),
-
-      state('final' ,style({
-        transform: 'translate3d(0,0,0) scale(1)',       
-        
-      })),      
-
-      transition('initial <=> final' , animate('350ms ease-out')),
-    ]),
-
-    trigger('background', [
-      
-      state('initial', style({        
-        opacity: 0
-      })),
-
-      state('final' ,style({
-              
-        opacity: 1
-      })),      
-
-      transition('initial <=> final' , animate('250ms ease-out')),
-    ])
-  ]
+  animations: [ Card, BackgroundCard]
 })
 export class ShowUserComponent implements OnInit {
 
-  @Output() closeEvent: EventEmitter<any> =  new EventEmitter();
-  @Input() idShowUser;
   user: User = new User();
 
   state = {
@@ -52,7 +24,17 @@ export class ShowUserComponent implements OnInit {
     card: 'initial',
   }
 
-  constructor(private _http: UserService) { }
+  observerRef: any;
+
+  constructor(private _http: UserService,
+    private router: Router,
+    private actRou: ActivatedRoute) {
+
+      this.observerRef = actRou.params.subscribe(params => {
+        this.user.id = params['id'];
+        this.getUserData();
+      });
+     }
 
   ngOnInit() {
     setTimeout(() => {
@@ -60,15 +42,18 @@ export class ShowUserComponent implements OnInit {
       this.state.card = 'final';
     }, 100);
 
-    this._http.getUser(this.idShowUser).then(
+  }
+
+  getUserData(){
+    this._http.getUser(this.user.id).then(
       data => this.user = data,
       error => console.log(error)
-    )
+    );
   }
 
   closePop(){    
     setTimeout(() => {
-      this.closeEvent.emit();
+      this.router.navigate(['/users']);
     }, 450);
     this.state.background = 'initial';
     this.state.card = 'initial';

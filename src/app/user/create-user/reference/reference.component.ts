@@ -125,7 +125,7 @@ export class ReferenceComponent implements OnInit {
 
   validateForm(){
     this.validateName();
-    this.validateType();
+    // this.validateType();
     this.validateMailNumber();
   }
 
@@ -162,7 +162,7 @@ export class ReferenceComponent implements OnInit {
 
   validateType(){
 
-    if(this.reference.relationship == null){
+    if(this.reference.relationship_id == null){
       this.validations.type = 1;
       this.validations.validate = false;
     }

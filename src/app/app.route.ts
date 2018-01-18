@@ -23,7 +23,7 @@ export const routes: Routes = [
         component: UserComponent,
         children: [
             {path: 'create', component: CreateUserComponent},
-            // {path: '/users/', component: Sh}
+            {path: 'show/:id', component: ShowUserComponent}
         ]
     },
     {path: '', redirectTo: 'login', pathMatch: 'full' },

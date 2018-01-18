@@ -22,21 +22,18 @@ export class User {
     public colony: string;
     public city: string;
 
-    public monthlyPaymentId: number;
-    public userTypeId: number;
-    public salaryId: number;
+    public creator_user_id: number;
+    public monthly_payment_id: number;
+    public user_type_id: number;
+    public salary_id: number;
     public status:number;        
-
-    public editable: boolean;
-    public delete:boolean;
-    public show:boolean;
 
 
     constructor(){
-        this.editable = false;
+        
 
         this.name = null;
-        this.userTypeId = 1;
+        this.user_type_id = 1;
         this.phone = null;
         this.email = null;
         this.birthday = null
