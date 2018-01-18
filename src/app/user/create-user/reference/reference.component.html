@@ -6,32 +6,32 @@
     <div class=" container">
         <h1 align="center">Asignar Referencias</h1><br>
 
-        <form (submit)="form()" *ngIf="!toUpdate">
+        <form class="flexRow" (submit)="form()" *ngIf="!toUpdate">
             <br>
 
-            <div>
+            <div class="formData">
                 <label>Nombre completo:</label><br>
                 <input type="text" [(ngModel)]="reference.name" name="name" placeholder="Nombre Completo" (keydown)="nameUpper()">
-                <small class="inputError" *ngIf="validations.name == 1">Requerido</small>
+                <small class="error" *ngIf="validations.name == 1">Requerido</small>
             </div>
 
-            <div>
+            <div class="formData">
                 <label>Parentesco:</label><br>
                 <select [(ngModel)]="reference.relationship_id" name="relationship_id" placeholder="Parentesco">
                         <option *ngFor="let x of relationshipOptions" value="{{x.value}}">{{x.view}}</option>               
                     </select>
             </div>
 
-            <div>
+            <div class="formData">
                 <label>Telefono:</label><br>
                 <input type="phone" [(ngModel)]="reference.phone" name="phone" placeholder="Telefono">
-
+                <small class="error" *ngIf="validations.nuMail == 1">Se requiere el Correo/Telefono</small>
             </div>
 
-            <div>
+            <div class="formData">
                 <label>Correo</label><br>
                 <input type="mail" [(ngModel)]="reference.email" name="email" placeholder="Correo" (keydown)="mailUpper()">
-                <small *ngIf="validations.nuMail == 1">Se requiere el Correo/Telefono</small>
+                <small class="error" *ngIf="validations.nuMail == 1">Se requiere el Correo/Telefono</small>
             </div>
 
 
@@ -42,7 +42,7 @@
         <form (submit)="update()" *ngIf="toUpdate">
             <br>
 
-            <div>
+            <div class="formData">
                 <label>Correo</label><br>
                 <input type="text" [(ngModel)]="referenceToModify.name" name="name" placeholder="Nombre Completo" (keydown)="nameModifyUpper()">
                 <small *ngIf="validations.nuMail == 1">Se requiere el Correo/Telefono</small>

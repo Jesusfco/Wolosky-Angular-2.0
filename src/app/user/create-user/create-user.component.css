@@ -10,7 +10,7 @@
 }
 
 h2 {
-    margin-top: 0;
+    margin: 0;
 }
 
 .referenceBtn {
@@ -50,23 +50,6 @@ h2 {
 
 #cerrarBtn:hover {
     background: red;
-}
-
-.form {
-    display: block;
-    margin: 0 auto;
-    width: 90%;
-    max-width: 1200px;
-}
-
-.form1 {
-    display: flex;
-    flex-flow: row wrap;
-}
-
-.form1 div {
-    width: 48%;
-    /* padding: 20px 0; */
 }
 
 
