@@ -8,6 +8,7 @@ export class Reference {
     public email: string;
 
     constructor(){
+        this.name = '';
         this.phone = '';
         this.email = '';
         this.relationship_id = 1;

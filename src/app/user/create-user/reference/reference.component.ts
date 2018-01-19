@@ -128,7 +128,10 @@ export class ReferenceComponent implements OnInit {
     if(this.validateName())
 
     // this.validateType();
-    this.validateMailNumber();
+    if(this.validateMailNumber()){
+      console.log('valido');
+      return;
+    }
 
     if(this.reference.email.length > 0){
 
@@ -154,6 +157,8 @@ export class ReferenceComponent implements OnInit {
       }
     }
 
+    console.log(this.validations);
+
   }
 
   restoreValidationValues(){
@@ -170,7 +175,7 @@ export class ReferenceComponent implements OnInit {
 
   validateName(){
 
-    if(this.reference.name.length > 0){
+    if(this.reference.name.length > 6){
       return true;
     }
 
@@ -183,6 +188,7 @@ export class ReferenceComponent implements OnInit {
   validateMailNumber(){
 
     if(this.reference.phone.length > 0  && this.reference.email.length > 0){
+      console.log('segun hay algo en los campos');
       return true;
     } else {
       this.validations.nuMail = 1;

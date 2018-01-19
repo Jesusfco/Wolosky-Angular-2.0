@@ -35,7 +35,7 @@
 
             <div class="formData l6 m6">
                 <label>Correo</label><br>
-                <input type="mail" [(ngModel)]="reference.email" name="email" placeholder="Correo" (keydown)="mailUpper()">
+                <input type="mail" [ngClass]="{'inputError': validations.name > 0 || validations.nuMail > 0}" [(ngModel)]="reference.email" name="email" placeholder="Correo" (keydown)="mailUpper()">
                 <small class="error" *ngIf="validations.nuMail == 1">Se requiere el Correo/Telefono</small>
                 <small class="error" *ngIf="validations.mail == 1">13 caracteres minimo</small>
                 <small class="error" *ngIf="validations.mail == 2">Formato incorrecto "@" / "."</small>
