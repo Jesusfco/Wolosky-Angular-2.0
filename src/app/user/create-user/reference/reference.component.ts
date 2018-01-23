@@ -109,7 +109,7 @@ export class ReferenceComponent implements OnInit {
 
   form(){
 
-    this.restoreValidationValues();    
+    this.restoreValidationValues();
     this.validateForm();
 
     if(this.validations.validate == true){
@@ -127,7 +127,7 @@ export class ReferenceComponent implements OnInit {
   validateForm(){
     if(this.validateName())
 
-    // this.validateType();
+    
     if(this.validateMailNumber()){
       console.log('valido');
       return;
@@ -140,7 +140,7 @@ export class ReferenceComponent implements OnInit {
         this.validations.validate = false;
       } else {
         if(!this.reference.validateEmailFormat()){
-          this.validations.email = 1;
+          this.validations.email = 2;
           this.validations.validate = false;
         }
       }
@@ -148,10 +148,10 @@ export class ReferenceComponent implements OnInit {
     }
 
     if(this.reference.phone.length > 0){
-      if(this.reference.validateLengthPhone(7)){
+      if(!this.reference.validateLengthPhone(7)){
         this.validations.phone = 1;
         this.validations.validate = false;
-      } else if (!this.reference.validateLengthPhone(11)){
+      } else if (this.reference.validateLengthPhone(11)){
         this.validations.phone = 2;
         this.validations.validate = false;
       }

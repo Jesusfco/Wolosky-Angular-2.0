@@ -26,8 +26,8 @@
 
             <div class="formData l6 m6">
                 <label>Telefono:</label><br>
-                <input type="phone" [ngClass]="{'inputError': validations.name > 0 || validations.nuMail > 0}" [(ngModel)]="reference.phone" (keyup)="reference.validatePhoneFormat()" name="phone" placeholder="Telefono">
-                <small>{{ reference.phone.length }}</small>
+                <input type="phone" [ngClass]="{'inputError': validations.phone > 0 || validations.nuMail > 0}" [(ngModel)]="reference.phone" (keyup)="reference.validatePhoneFormat()" name="phone" placeholder="Telefono">
+                <small>{{ reference.phone.length }} / 10, minimo 7</small>
                 <small class="error" *ngIf="validations.nuMail == 1">Se requiere el Correo/Telefono</small>
                 <small class="error" *ngIf="validations.phone == 1">7 Dijitos minimo</small>
                 <small class="error" *ngIf="validations.phone == 2">10 Dijitos maximo</small>
@@ -35,13 +35,13 @@
 
             <div class="formData l6 m6">
                 <label>Correo</label><br>
-                <input type="mail" [ngClass]="{'inputError': validations.name > 0 || validations.nuMail > 0}" [(ngModel)]="reference.email" name="email" placeholder="Correo" (keydown)="mailUpper()">
+                <input type="mail" [ngClass]="{'inputError': validations.email > 0 || validations.nuMail > 0}" [(ngModel)]="reference.email" name="email" placeholder="Correo" (keydown)="mailUpper()">
                 <small class="error" *ngIf="validations.nuMail == 1">Se requiere el Correo/Telefono</small>
-                <small class="error" *ngIf="validations.mail == 1">13 caracteres minimo</small>
-                <small class="error" *ngIf="validations.mail == 2">Formato incorrecto "@" / "."</small>
+                <small class="error" *ngIf="validations.email == 1">13 caracteres minimo</small>
+                <small class="error" *ngIf="validations.email == 2">Formato incorrecto "@" / "."</small>
             </div>
 
-            <button class="l12" type="submit">Aceptar</button>
+            <button class="btn l12" type="submit">Aceptar</button>
 
         </form>
 

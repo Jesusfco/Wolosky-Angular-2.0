@@ -52,7 +52,8 @@ export class AppComponent {
 
         this.localData.storageUserData(data.user);
         
-        if(this.router.url == '/login') this.router.navigate(['/users']);
+        if(this.router.url == '/login') 
+          this.router.navigate(['/users']);
       },
       error =>  {
         localStorage.removeItem('token');
