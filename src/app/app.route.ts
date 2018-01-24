@@ -30,8 +30,8 @@ export const routes: Routes = [
             {path: 'show/:id', component: ShowUserComponent},
             {path: 'edit/:id', component: EditUserComponent,
             children: [
-                { path: 'schedule', component: EditScheduleComponent},
-                { path: 'references', component: EditReferenceComponent},
+                { path: 'schedule/:id', component: EditScheduleComponent},
+                { path: 'references/:id', component: EditReferenceComponent},
             ]
         }
         ]

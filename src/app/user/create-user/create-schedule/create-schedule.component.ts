@@ -1,38 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes} from '@angular/animations';
-
+import { FadeAnimation, SlideAnimation } from '../../../animations/slide-in-out.animation';
 @Component({
   selector: 'app-create-schedule',
   templateUrl: './create-schedule.component.html',
   styleUrls: ['./create-schedule.component.css'],
-  animations: [
-    trigger('principal', [
-      
-      state('initial', style({
-        transform: 'translate3d(100%,0,0)',                
-      })),
-
-      state('final' ,style({
-        transform: 'translate3d(0,0,0) scale(1)',               
-      })),      
-
-      transition('initial <=> final' , animate('350ms ease-out')),
-    ]),
-
-    trigger('background', [
-      
-      state('initial', style({        
-        opacity: 0
-      })),
-
-      state('final' ,style({       
-        opacity: .7
-      })),      
-
-      transition('initial <=> final' , animate('180ms ease-out')),
-    ])
-
-  ]
+  animations: [FadeAnimation, SlideAnimation],
 })
 export class CreateScheduleComponent implements OnInit {
 

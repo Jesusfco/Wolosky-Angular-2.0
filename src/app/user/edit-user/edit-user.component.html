@@ -10,15 +10,15 @@
     <div class="cardModule" [@card]="state.card">
         <h2> Editar {{ user.name }}</h2>
         <div>
-            <mat-icon [routerLink]="['/users/edit', user.id]">edit</mat-icon>
-            <mat-icon>delete</mat-icon>
+            <button [routerLink]="['/users/edit/'+ user.id + '/schedule/' + user.id]">Horarios</button>
+            <button>Referencias</button>
         </div>
 
         <form (submit)="sendProccess()" autocomplete="off" [ngClass]="{'loadingForm': sendingData == true}">
-            <div class="flexform">
+            <div class="flexform l6">
                 <div class="formData">
                     <label>Nombre Completo:</label><br>
-                    <input [(ngModel)]="user.name" name="name" type="text" placeholder="Nombre" (keydown)="nameWriting()" [ngClass]="{ 'inputError': user.validations.name > 0, 'inputValidate': user.validations.name < 0 }">
+                    <input [(ngModel)]="user.name" name="name" type="text" placeholder="Nombre" (keyup)="nameWriting()" [ngClass]="{ 'inputError': user.validations.name > 0, 'inputValidate': user.validations.name < 0 }">
                     <small class="error" *ngIf="user.validations.name == 1">Se requiere el nombre</small>
                     <small class="error" *ngIf="user.validations.name == 2">Nombre existente en la base de datos</small>
                     <small class="validate" *ngIf="user.validations.name == -1">Correcto</small>
@@ -32,19 +32,19 @@
                     <small class="error" *ngIf="user.validations.email == 2">Correo ya asignado</small>
                 </div>
 
-                <div>
+                <div class="formData">
                     <label>Tipo de usuario:</label><br>
                     <select [(ngModel)]="user.user_type_id" name="user_type_id">
-                    <option value="1">Alumno</option> 
-                    <option value="2">Empleado</option>
-                    <option value="3">Cajero</option>
-                    <option value="4">Escritor</option>
-                    <option value="5">Super escritor</option>
-                    <option value="6">Administrador</option>
-            </select>
+                        <option value="1">Alumno</option> 
+                        <option value="2">Empleado</option>
+                        <option value="3">Cajero</option>
+                        <option value="4">Escritor</option>
+                        <option value="5">Super escritor</option>
+                        <option value="6">Administrador</option>
+                    </select>
                 </div>
 
-                <div>
+                <div class="formData">
                     <label>Genero:</label><br>
                     <select [(ngModel)]="user.gender" name="gender">
                     <option value="1">Masculino</option> 
@@ -131,3 +131,5 @@
 
     </div>
 </div>
+
+<router-outlet></router-outlet>

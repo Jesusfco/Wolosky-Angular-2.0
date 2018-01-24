@@ -1,0 +1,42 @@
+.form {
+    width: 75%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.inputError {
+    background: rgb(255, 186, 186);
+}
+
+.trNone {
+    display: none;
+}
+
+button {
+    width: initial;
+}
+
+button:hover {
+    opacity: .85;
+    background: rgb(221, 221, 221);
+}
+
+.formBtn {
+    background: rgb(1, 194, 1);
+}
+
+.LV {
+    background: orange;
+}
+
+.active {
+    background: rgb(0, 119, 255);
+}
+
+.divErrors {
+    background: rgb(255, 186, 186);
+    color: rgb(168, 0, 0);
+    padding: 10px;
+    border-radius: 3px;
+    border: red solid 1px;
+}

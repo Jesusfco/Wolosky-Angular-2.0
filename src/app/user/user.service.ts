@@ -22,7 +22,7 @@ export class UserService {
   }
 
   updateUser(user) {
-    return this._http.post(this.link.url + 'user/' + user.id + this.token.getTokenUrl() , user)
+    return this._http.post(this.link.url + 'user/edit/' + user.id + this.token.getTokenUrl() , user)
             .map(data => data.json())
             .toPromise();
   }
@@ -37,6 +37,18 @@ export class UserService {
     return this._http.get(this.link.url + 'user/' + id + this.token.getTokenUrl())
             .map(data => data.json())
             .toPromise();
+  }
+
+  getSchedules(id){
+    return this._http.get(this.link.url + 'user/schedules/' + id + this.token.getTokenUrl())
+              .map(data => data.json())
+              .toPromise();
+  }
+
+  updateSchedule(id, schedules){
+    return this._http.post(this.link.url + 'user/schedules/' + id + this.token.getTokenUrl(), schedules)
+              .map(data => data.json())
+              .toPromise();
   }
 
   checkUniqueEmail(data){

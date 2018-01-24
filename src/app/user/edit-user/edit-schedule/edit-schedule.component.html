@@ -1,3 +1,45 @@
-<p>
-  edit-schedule works!
-</p>
+<mat-progress-bar mode="indeterminate" *ngIf="sendingData" class="barLoader"></mat-progress-bar>
+
+<div class="background" [@background]="backgroundState"></div>
+<div id="createCard" [@principal]="cardState">
+
+    <div id="cerrarBtn" (click)="close()"> Cerrar <i class="material-icons">close</i></div>
+
+    <div class="form" [ngClass]="{'loadingForm': sendingData == true}">
+        <h1 align="center">Asignar Horarios</h1>
+
+        <div *ngIf="validations.validate == false" class="divErrors">
+            <h5>Error/es:</h5>
+            <p *ngIf="validations.checkIn == 1">No se ha asignado la hora de entrada en todos los campos</p>
+            <p *ngIf="validations.checkOut == 1">No se ha asignado la hora de salida en todos los campos</p>
+            <p *ngIf="validations.format == 1">Recuerda que siempre la H.Entrada debe ser mas temprano que la H.Salida</p>
+        </div>
+
+        <button (click)="selectLV()" class="btn LV">L-V</button>
+        <button (click)="x.active = !x.active" *ngFor="let x of schedules" class="btn" [ngClass]="{active: x.active}">{{ x.dayView }}</button>
+
+        <form (submit)="form()">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Día</th>
+                        <th>Hora de Entrada</th>
+                        <th>Hora de Salida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let x of schedules" [ngClass]="{trNone: x.active == false}">
+                        <ng-container *ngIf="x.active">
+
+                            <th>{{ x.dayView }}</th>
+                            <th><input [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_in" name="check_in" type="time"></th>
+                            <th><input [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_out" name="check_out" type="time"></th>
+                        </ng-container>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="submit" class="btn formBtn">Asignar Horarios</button>
+        </form>
+
+    </div>
+</div>

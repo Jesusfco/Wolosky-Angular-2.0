@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes} from '@angular/animations';
 import { User } from '../user';
 import { UserService } from '../user.service';
 import { Schedule } from '../schedule';
