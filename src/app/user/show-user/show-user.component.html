@@ -8,6 +8,11 @@
 
     <div class="cardModule" [@card]="state.card">
         <h2>{{ user.name }}</h2>
+        <div>
+            <mat-icon [routerLink]="['/users/edit', user.id]">edit</mat-icon>
+            <mat-icon>delete</mat-icon>
+        </div>
+
 
         <div class="flexform">
             <div>
@@ -84,7 +89,7 @@
 
             <div>
                 <label>Numero de casa:</label><br>
-                <input [(ngModel)]="user.hauseNumber" name="hauseNumber" type="number" disabled><br>
+                <input [(ngModel)]="user.houseNumber" name="houseNumber" type="number" disabled><br>
             </div>
 
             <div>

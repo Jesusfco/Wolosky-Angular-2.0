@@ -38,23 +38,6 @@ export class CreateUserComponent implements OnInit {
   scheduleView: boolean = false;
   referenceView: boolean = false;
 
-  validations = {
-    validate: true,
-    name: 0,
-    email: 0,
-    password: 0,
-    monthlyPaymentAmount: 0,
-    salaryAmount: 0
-
-  }
-
-  timer = {
-    name: 0,
-    email: 0
-  }
-
-  
-
   constructor(private _http: UserService, private router: Router) { }
 
   ngOnInit() {
@@ -81,7 +64,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   sendNewUser(){
-    if(this.validations.validate == false){
+    if(this.user.validations.validate == false){
       this.sendingData = false;
       return;
     }
@@ -144,8 +127,8 @@ export class CreateUserComponent implements OnInit {
   nameValidation(){
 
     if(this.user.name == null || this.user.name == ''){
-      this.validations.validate = false;
-      this.validations.name = 1;
+      this.user.validations.validate = false;
+      this.user.validations.name = 1;
       return false;
     }
     else {
@@ -157,8 +140,8 @@ export class CreateUserComponent implements OnInit {
   emailValidation(){
     if(this.user.email == null || this.user.email == ''){
       if(this.user.user_type_id > 2){
-        this.validations.validate = false;
-        this.validations.email = 1;
+        this.user.validations.validate = false;
+        this.user.validations.email = 1;
       }
       return false;
     } else {
@@ -167,30 +150,30 @@ export class CreateUserComponent implements OnInit {
   }
 
   uniqueEmailWriting(){
-    this.timer.email++;
+    this.user.timer.email++;
 
-    setTimeout(() => {      
-      this.timer.email--;
+    setTimeout(() => {
+      this.user.timer.email--;
     }, 900);
 
     setTimeout(() => {
-      if(this.timer.email == 0){
+      if(this.user.timer.email == 0){
         if(this.user.email.length > 7) this.uniqueEmail();
-      } 
+      }
     }, 950);
 
   }
 
   uniqueNameWriting(){
-    this.timer.name++;
-    
-        setTimeout(() => {      
-          this.timer.name--;
-          
-        }, 900);
-    
+    this.user.timer.name++;
+
         setTimeout(() => {
-          if(this.timer.name == 0){
+          this.user.timer.name--;
+
+        }, 900);
+
+        setTimeout(() => {
+          if(this.user.timer.name == 0){
             if(this.user.name.length > 5) {
               this.uniqueName();
             }
@@ -203,10 +186,10 @@ export class CreateUserComponent implements OnInit {
     this._http.checkUniqueEmail(this.user.email).then(
       data => {
         if(data == false){
-          this.validations.email = 2;
-          this.validations.validate = false;
+          this.user.validations.email = 2;
+          this.user.validations.validate = false;
         }  
-        else { this.validations.email = -1; }
+        else { this.user.validations.email = -1; }
       },
       error => console.log(error)
     )
@@ -216,10 +199,10 @@ export class CreateUserComponent implements OnInit {
     this._http.checkUniqueName(this.user.name).then(
       data => {
         if(data == false){
-          this.validations.name = 2;
-          this.validations.validate = false;
+          this.user.validations.name = 2;
+          this.user.validations.validate = false;
         } 
-        else {this.validations.name = -1;}
+        else {this.user.validations.name = -1;}
         if(this.sendingData == true)
         this.sendNewUser();
       },
@@ -233,75 +216,39 @@ export class CreateUserComponent implements OnInit {
 
   passwordValidation(){
     if(this.user.password == null || this.user.password == ''){
-      this.validations.validate = false;
-      this.validations.password = 1;
+      this.user.validations.validate = false;
+      this.user.validations.password = 1;
     }
   }
 
   restoreValidations(){
-    this.validations = {
+    this.user.validations = {
       validate: true,
       name: 0,
       email: 0,
       password: 0,
       monthlyPaymentAmount: 0,
       salaryAmount: 0
-    }
+    };
   }
 
   monthlyPaymentAmountValidation(){
     if(this.monthlyPayment.amount == null || this.monthlyPayment.amount == 0) {
-      this.validations.validate = false;
-      this.validations.monthlyPaymentAmount = 1; 
+      this.user.validations.validate = false;
+      this.user.validations.monthlyPaymentAmount = 1; 
     }    
   }
 
   salaryAmountValidation(){
     if (this.salary.amount == null || this.salary.amount == 0){
-      this.validations.validate = false;
-      this.validations.salaryAmount = 1;
+      this.user.validations.validate = false;
+      this.user.validations.salaryAmount = 1;
     }
   }
 
-  // Funciones para mayusculas en los campos
-  nameUppercase(){    
-    if(this.user.name != null)
-      this.user.name = this.user.name.toUpperCase();                  
-  }
-
-  mailUpper(){
-    if(this.user.email != null)
-      this.user.email =  this.user.email.toUpperCase();
-  }
-
-  curpUpper(){
-    if(this.user.curp != null)
-      this.user.curp = this.user.curp.toUpperCase();    
-  }
-
-  placeUpper(){
-    if(this.user.placeBirth != null)
-      this.user.placeBirth =  this.user.placeBirth.toUpperCase();
-  }
-
-  seguroUpper(){
-    if(this.user.insurance != null)
-      this.user.insurance =  this.user.insurance.toUpperCase();
-  }
-
-  streetUpper(){
-    if(this.user.street != null)
-      this.user.street =  this.user.street.toUpperCase();
-  }
-
-  colonyUpper(){
-    if(this.user.colony != null)
-      this.user.colony = this.user.colony.toUpperCase();
-  }
-
-  cityUpper(){
-    if(this.user.city != null)
-      this.user.city = this.user.city.toUpperCase();
+  mailWriting(){
+    this.user.mailUpper();
+    this.uniqueEmailWriting();
   }
 
 }

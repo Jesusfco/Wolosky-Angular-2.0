@@ -18,6 +18,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class EditUserComponent implements OnInit {
 
   user: User = new User();
+  user2: User = new User();
 
   state = {
     background: 'initial',
@@ -46,7 +47,10 @@ export class EditUserComponent implements OnInit {
 
   getUserData(){
     this._http.getUser(this.user.id).then(
-      data => this.user = data,
+      data => {
+        this.user.setValues(data);
+        this.user2.setValues(data);
+      },
       error => console.log(error)
     );
   }
@@ -58,7 +62,87 @@ export class EditUserComponent implements OnInit {
     this.state.background = 'initial';
     this.state.card = 'initial';
     
-  }Init() {
+  }
+  nameWriting(){
+    this.user.nameUppercase();
+    
+  }
+
+  mailWriting(){
+    // console.log(this.user);
+    this.user.mailUpper();
+    this.uniqueEmailWriting();
+  }
+
+  uniqueEmailWriting(){
+    this.user.timer.email++;
+
+    setTimeout(() => {
+      this.user.timer.email--;
+    }, 900);
+
+    setTimeout(() => {
+      if(this.user.timer.email == 0){
+        if(this.user.email.length > 7 && this.user2.email != this.user.email){ 
+          this.uniqueEmail();
+        } else {
+          this.user.validations.email = 0;
+        }
+      }
+    }, 950);
+
+  }
+
+  uniqueEmail(){
+    this._http.checkUniqueEmail(this.user.email).then(
+      data => {
+        if(data == false){
+          this.user.validations.email = 2;
+          this.user.validations.validate = false;
+        }  
+        else { this.user.validations.email = -1; }
+      },
+      error => console.log(error)
+    )
+  }
+
+  uniqueNameWriting(){
+    this.user.timer.name++;
+
+        setTimeout(() => {
+          this.user.timer.name--;
+
+        }, 900);
+
+        setTimeout(() => {
+          if(this.user.timer.name == 0){
+            if(this.user.name.length > 5 && this.user.name != this.user2.name) {
+              this.uniqueName();
+            } else {
+              this.user.validations.name = 0;
+            }
+          } 
+        }, 950);
+
+  }
+
+  uniqueName(){
+    this._http.checkUniqueName(this.user.name).then(
+      data => {
+        if(data == false){
+          this.user.validations.name = 2;
+          this.user.validations.validate = false;
+        } 
+        else {this.user.validations.name = -1;}
+        // if(this.sendingData == true)
+        // this.sendNewUser();
+      },
+      error => {
+        console.log(error);
+        // if(this.sendingData == true)
+        // this.sendNewUser();
+      }
+    );
   }
 
 }

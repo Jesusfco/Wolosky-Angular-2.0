@@ -22,18 +22,18 @@
 
                     <div class="formData l6 m6">
                         <label>Nombre Completo:</label><br>
-                        <input [(ngModel)]="user.name" name="name" type="text" placeholder="Nombre" (keydown)="nameUppercase()" (keypress)="uniqueNameWriting()" [ngClass]="{ 'inputError': validations.name > 0, 'inputValidate': validations.name < 0 }">
-                        <small class="error" *ngIf="validations.name == 1">Se requiere el nombre</small>
-                        <small class="error" *ngIf="validations.name == 2">Nombre existente en la base de datos</small>
-                        <small class="validate" *ngIf="validations.name == -1">Correcto</small>
+                        <input [(ngModel)]="user.name" name="name" type="text" placeholder="Nombre" (keydown)="user.nameUppercase()" (keypress)="uniqueNameWriting()" [ngClass]="{ 'inputError': user.validations.name > 0, 'inputValidate': user.validations.name < 0 }">
+                        <small class="error" *ngIf="user.validations.name == 1">Se requiere el nombre</small>
+                        <small class="error" *ngIf="user.validations.name == 2">Nombre existente en la base de datos</small>
+                        <small class="validate" *ngIf="user.validations.name == -1">Correcto</small>
                     </div>
 
 
                     <div class="formData l6 m6">
                         <label>Correo:</label><br>
-                        <input [(ngModel)]="user.email" name="email" type="email" placeholder="Correo" (keydown)="mailUpper()" (keypress)="uniqueEmailWriting()" [ngClass]="{ 'inputError': validations.email > 0, 'inputValidate': validations.email < 0 }">
-                        <small class="error" *ngIf="validations.email == 1">Correo Requerido</small>
-                        <small class="error" *ngIf="validations.email == 2">Correo ya asignado</small>
+                        <input [(ngModel)]="user.email" name="email" type="email" placeholder="Correo" (keyup)="mailWriting()" [ngClass]="{ 'inputError': user.validations.email > 0, 'inputValidate': user.validations.email < 0 }">
+                        <small class="error" *ngIf="user.validations.email == 1">Correo Requerido</small>
+                        <small class="error" *ngIf="user.validations.email == 2">Correo ya asignado</small>
                     </div>
 
                     <div class="formData l6 m6">
@@ -58,7 +58,7 @@
 
                     <div class="formData l6 m6">
                         <label>Telefono:</label><br>
-                        <input [(ngModel)]="user.phone" name="phone" type="tel" placeholder="Telefono">
+                        <input [(ngModel)]="user.phone" name="phone" type="tel" placeholder="Telefono" (keyup)="user.validatePhoneFormat()">
                     </div>
 
 
@@ -70,17 +70,17 @@
 
                     <div class="formData l6 m6">
                         <label>Lugar de nacimiento:</label><br>
-                        <input [(ngModel)]="user.placeBirth" name="placeBirth" type="text" placeholder="Lugar de nacimiento" (keydown)="placeUpper()">
+                        <input [(ngModel)]="user.placeBirth" name="placeBirth" type="text" placeholder="Lugar de nacimiento" (keyup)="user.placeUpper()">
                     </div>
 
                     <div class="formData l6 m6">
                         <label>CURP:</label><br>
-                        <input [(ngModel)]="user.curp" name="curp" type="text" placeholder="Curp" (keydown)="curpUpper()">
+                        <input [(ngModel)]="user.curp" name="curp" type="text" placeholder="Curp" (keyup)="user.curpUpper()">
                     </div>
 
                     <div class="formData l6 m6">
                         <label>Seguro Medico:</label><br>
-                        <input [(ngModel)]="user.insurance" name="insurance" type="text" placeholder="Seguro social" (keydown)="seguroUpper()">
+                        <input [(ngModel)]="user.insurance" name="insurance" type="text" placeholder="Seguro social" (keyup)="user.seguroUpper()">
                     </div>
 
                     <!-- <div>
@@ -90,8 +90,8 @@
 
                     <div class="formData l6 m6" *ngIf="user.user_type_id > 2">
                         <label>Contraseña:</label><br>
-                        <input [(ngModel)]="user.password" name="password" placeholder="Contraseña" type="password" [ngClass]="{ inputError: validations.password > 0 }">
-                        <small class="error" *ngIf="validations.password == 1">Se requiere el Correo/Telefono</small>
+                        <input [(ngModel)]="user.password" name="password" placeholder="Contraseña" type="password" [ngClass]="{ inputError: user.validations.password > 0 }">
+                        <small class="error" *ngIf="user.validations.password == 1">Se requiere el Correo/Telefono</small>
                     </div>
 
                 </div>
@@ -104,22 +104,22 @@
 
                     <div class="formData l6 m6">
                         <label>Calle:</label><br>
-                        <input [(ngModel)]="user.street" name="street" type="text" placeholder="Calle" (keydown)="streetUpper()">
+                        <input [(ngModel)]="user.street" name="street" type="text" placeholder="Calle" (keyup)="user.streetUpper()">
                     </div>
 
                     <div class="formData l6 m6">
                         <label>Numero de casa:</label><br>
-                        <input [(ngModel)]="user.hauseNumber" name="hauseNumber" type="number" placeholder="Numero de casa"><br>
+                        <input [(ngModel)]="user.houseNumber" name="houseNumber" type="number" placeholder="Numero de casa"><br>
                     </div>
 
                     <div class="formData l6 m6">
                         <label>Colonia:</label><br>
-                        <input [(ngModel)]="user.colony" name="colony" type="text" placeholder="Colonia" (keydown)="colonyUpper()">
+                        <input [(ngModel)]="user.colony" name="colony" type="text" placeholder="Colonia" (keyup)="user.colonyUpper()">
                     </div>
 
                     <div class="formData l6 m6">
                         <label>Ciudad:</label><br>
-                        <input [(ngModel)]="user.city" name="city" type="text" placeholder="Ciudad" (keydown)="cityUpper()"><br>
+                        <input [(ngModel)]="user.city" name="city" type="text" placeholder="Ciudad" (keyup)="user.cityUpper()"><br>
                     </div>
 
 
@@ -127,8 +127,8 @@
                         <h2 class="l12">Salario</h2>
                         <div class="formData l6 m6">
                             <label> Monto:</label><br>
-                            <input [(ngModel)]="salary.amount" name="amount" type="number" min="0" placeholder="Monto" [ngClass]="{ 'inputError': validations.salaryAmount == 1}">
-                            <small class="error" *ngIf="validations.salaryAmount == 1">Requerido</small>
+                            <input [(ngModel)]="salary.amount" name="amount" type="number" min="0" placeholder="Monto" [ngClass]="{ 'inputError': user.validations.salaryAmount == 1}">
+                            <small class="error" *ngIf="user.validations.salaryAmount == 1">Requerido</small>
                         </div>
 
 
@@ -151,8 +151,8 @@
                         <h2 class="l12">Pago Mensual</h2>
                         <div class="formData l6 m6">
                             <label>Monto:</label><br>
-                            <input [(ngModel)]="monthlyPayment.amount" name="amount" type="number" min="0" placehoder="Monto" [ngClass]="{ 'inputError': validations.monthlyPaymentAmount > 0 }">
-                            <small class="error" *ngIf="validations.monthlyPaymentAmount > 0">Requerido</small>
+                            <input [(ngModel)]="monthlyPayment.amount" name="amount" type="number" min="0" placehoder="Monto" [ngClass]="{ 'inputError': user.validations.monthlyPaymentAmount > 0 }">
+                            <small class="error" *ngIf="user.validations.monthlyPaymentAmount > 0">Requerido</small>
                         </div>
 
                     </div>

@@ -7,98 +7,125 @@
     </div>
 
     <div class="cardModule" [@card]="state.card">
-        <h2>{{ user.name }}</h2>
-
-        <div class="flexform">
-            <div>
-                <label>Nombre Completo:</label><br>
-                <input [(ngModel)]="user.name" name="name" type="text" disabled>
-            </div>
-
-
-            <div>
-                <label>Correo:</label><br>
-                <input [(ngModel)]="user.email" name="email" type="email" disabled>
-            </div>
-
-            <div>
-                <label>Tipo de usuario:</label><br>
-                <select [(ngModel)]="user.user_type_id" name="user_type_id" disabled>
-                  <option value="1">Alumno</option> 
-                  <option value="2">Empleado</option>
-                  <option value="3">Cajero</option>
-                  <option value="4">Escritor</option>
-                  <option value="5">Super escritor</option>
-                  <option value="6">Administrador</option>
-          </select>
-            </div>
-
-            <div>
-                <label>Genero:</label><br>
-                <select [(ngModel)]="user.gender" name="gender" disabled>
-                  <option value="1">Masculino</option> 
-                  <option value="2">Femenino</option>
-          </select>
-            </div>
-
-            <div>
-                <label>Telefono:</label><br>
-                <input [(ngModel)]="user.phone" name="phone" type="tel" disabled>
-            </div>
-
-
-
-            <div>
-                <label>Fecha de nacimiento:</label><br>
-                <input [(ngModel)]="user.birthday" name="birthday" type="date" disabled>
-            </div>
-
-            <div>
-                <label>Lugar de nacimiento:</label><br>
-                <input [(ngModel)]="user.placeBirth" name="placeBirth" type="text" disabled>
-            </div>
-
-            <div>
-                <label>CURP:</label><br>
-                <input [(ngModel)]="user.curp" name="curp" type="text" disabled>
-            </div>
-
-            <div>
-                <label>Seguro Medico:</label><br>
-                <input [(ngModel)]="user.insurance" name="insurance" type="text" disabled>
-            </div>
-
-            <!-- <div>
-              <label>Foto:</label><br>
-              <input #fileInput class="fileInput" id="fileInput" name="fileInput" type="file" accept="image/x-png,image/gif,image/jpeg">
-          </div>             -->
-
+        <h2> Editar {{ user.name }}</h2>
+        <div>
+            <mat-icon [routerLink]="['/users/edit', user.id]">edit</mat-icon>
+            <mat-icon>delete</mat-icon>
         </div>
 
-        <h2>Direccion</h2>
-        <div class="flexform">
-            <div>
-                <label>Calle:</label><br>
-                <input [(ngModel)]="user.street" name="street" type="text" disabled>
+        <form autocomplete="off">
+            <div class="flexform">
+                <div class="formData">
+                    <label>Nombre Completo:</label><br>
+                    <input [(ngModel)]="user.name" name="name" type="text" placeholder="Nombre" (keydown)="nameWriting()" [ngClass]="{ 'inputError': user.validations.name > 0, 'inputValidate': user.validations.name < 0 }">
+                    <small class="error" *ngIf="user.validations.name == 1">Se requiere el nombre</small>
+                    <small class="error" *ngIf="user.validations.name == 2">Nombre existente en la base de datos</small>
+                    <small class="validate" *ngIf="user.validations.name == -1">Correcto</small>
+                </div>
+
+
+                <div class="formData">
+                    <label>Correo:</label><br>
+                    <input [(ngModel)]="user.email" name="email" type="email" placeholder="Correo" (keyup)="mailWriting()" [ngClass]="{ 'inputError': user.validations.email > 0, 'inputValidate': user.validations.email < 0 }">
+                    <small class="error" *ngIf="user.validations.email == 1">Correo Requerido</small>
+                    <small class="error" *ngIf="user.validations.email == 2">Correo ya asignado</small>
+                </div>
+
+                <div>
+                    <label>Tipo de usuario:</label><br>
+                    <select [(ngModel)]="user.user_type_id" name="user_type_id">
+                    <option value="1">Alumno</option> 
+                    <option value="2">Empleado</option>
+                    <option value="3">Cajero</option>
+                    <option value="4">Escritor</option>
+                    <option value="5">Super escritor</option>
+                    <option value="6">Administrador</option>
+            </select>
+                </div>
+
+                <div>
+                    <label>Genero:</label><br>
+                    <select [(ngModel)]="user.gender" name="gender">
+                    <option value="1">Masculino</option> 
+                    <option value="2">Femenino</option>
+            </select>
+                </div>
+
+                <div>
+                    <label>Telefono:</label><br>
+                    <input [(ngModel)]="user.phone" name="phone" type="tel" (keyup)="user.validatePhoneFormat();">
+                </div>
+
+
+
+                <div>
+                    <label>Fecha de nacimiento:</label><br>
+                    <input [(ngModel)]="user.birthday" name="birthday" type="date">
+                </div>
+
+                <div>
+                    <label>Lugar de nacimiento:</label><br>
+                    <input [(ngModel)]="user.placeBirth" name="placeBirth" type="text" (keyup)="user.placeUpper()">
+                </div>
+
+                <div>
+                    <label>CURP:</label><br>
+                    <input [(ngModel)]="user.curp" name="curp" type="text" (keyup)="user.curpUpper()">
+                </div>
+
+                <div>
+                    <label>Seguro Medico:</label><br>
+                    <input [(ngModel)]="user.insurance" name="insurance" type="text" (keyup)="user.seguroUpper()">
+                </div>
+
+                <!-- <div>
+                <label>Foto:</label><br>
+                <input #fileInput class="fileInput" id="fileInput" name="fileInput" type="file" accept="image/x-png,image/gif,image/jpeg">
+            </div>             -->
+
             </div>
 
-            <div>
-                <label>Numero de casa:</label><br>
-                <input [(ngModel)]="user.hauseNumber" name="hauseNumber" type="number" disabled><br>
+            <h2>Direccion</h2>
+            <div class="flexform">
+                <div>
+                    <label>Calle:</label><br>
+                    <input [(ngModel)]="user.street" name="street" type="text" (keyup)="user.streetUpper()">
+                </div>
+
+                <div>
+                    <label>Numero de casa:</label><br>
+                    <input [(ngModel)]="user.houseNumber" name="houseNumber" type="number"><br>
+                </div>
+
+                <div>
+                    <label>Colonia:</label><br>
+                    <input [(ngModel)]="user.colony" name="colony" type="text" (keyup)="user.colonyUpper()">
+                </div>
+
+                <div>
+                    <label>Ciudad:</label><br>
+                    <input [(ngModel)]="user.city" name="city" type="text" (keyup)="user.cityUpper()"><br>
+                </div>
+
+
+                <!-- <div *ngIf="user.userTypeId == 2 || user.userTypeId == 3">
+                                <h2>Salario</h2>
+                                <input [(ngModel)]="salary.amount" name="amount" type="number" min="0" placeholder="Monto" [ngClass]="{ inputError: validations.salaryAmount == 1}">
+                                <input [(ngModel)]="salary.bonus" name="bonus" type="number" min="0" placeholder="Bono">
+                                <select [(ngModel)]="salary.salaryTypeId" name="salaryTypeId">
+                                <option value="1">Hora</option>
+                                <option value="2">Día</option>
+                            </select>
+
+                            </div>
+
+                            <div *ngIf="user.userTypeId == 1 ">
+                                <h2>Pago Mensual</h2>
+                                <input [(ngModel)]="monthlyPayment.amount" name="amount" type="number" min="0" placeholder="Monto" [ngClass]="{ inputError: validations.monthlyPaymentAmount > 0 }">
+                            </div> -->
+
             </div>
-
-            <div>
-                <label>Colonia:</label><br>
-                <input [(ngModel)]="user.colony" name="colony" type="text" disabled>
-            </div>
-
-            <div>
-                <label>Ciudad:</label><br>
-                <input [(ngModel)]="user.city" name="city" type="text" disabled><br>
-            </div>
-
-        </div>
-
+        </form>
 
     </div>
 </div>
