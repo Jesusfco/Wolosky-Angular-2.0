@@ -1,3 +1,4 @@
+<mat-progress-bar mode="indeterminate" *ngIf="sendingData" class="barLoader"></mat-progress-bar>
 <div class="cardSpace" [@background]="state.background">
 
     <div class="closeCardBackground" (click)="closePop()">
@@ -13,7 +14,7 @@
             <mat-icon>delete</mat-icon>
         </div>
 
-        <form autocomplete="off">
+        <form (submit)="sendProccess()" autocomplete="off" [ngClass]="{'loadingForm': sendingData == true}">
             <div class="flexform">
                 <div class="formData">
                     <label>Nombre Completo:</label><br>
@@ -125,6 +126,7 @@
                             </div> -->
 
             </div>
+            <button class="btn formBtn" type="submit">Modificar</button>
         </form>
 
     </div>

@@ -26,6 +26,7 @@ export class EditUserComponent implements OnInit {
   };
 
   observerRef: any;
+  sendingData: boolean = false;
 
   constructor(private _http: UserService,
     private router: Router,
@@ -63,6 +64,21 @@ export class EditUserComponent implements OnInit {
     this.state.card = 'initial';
     
   }
+
+  sendProccess(){
+    this.sendingData = true;
+    this._http.updateUser(this.user).then(
+      data =>{
+        console.log(data);
+        this.sendingData = false;
+      },
+      error => {
+        console.log(error);
+        this.sendingData = false;
+      }
+    );
+  }
+
   nameWriting(){
     this.user.nameUppercase();
     

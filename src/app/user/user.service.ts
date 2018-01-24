@@ -21,6 +21,12 @@ export class UserService {
             .toPromise();
   }
 
+  updateUser(user) {
+    return this._http.post(this.link.url + 'user/' + user.id + this.token.getTokenUrl() , user)
+            .map(data => data.json())
+            .toPromise();
+  }
+
   search(data) {
     return this._http.post(this.link.url + 'userSearch' + this.token.getTokenUrl(), {search: data})
             .map(data => data.json())
