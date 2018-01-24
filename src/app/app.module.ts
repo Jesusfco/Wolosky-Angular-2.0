@@ -56,6 +56,9 @@ import { ShowUserComponent } from './user/show-user/show-user.component';
 
 import { routes } from './app.route';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { EditUserComponent } from './user/edit-user/edit-user.component';
+import { EditReferenceComponent } from './user/edit-user/edit-reference/edit-reference.component';
+import { EditScheduleComponent } from './user/edit-user/edit-schedule/edit-schedule.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +75,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     PaymentComponent,
     ShowUserComponent,
     PageNotFoundComponent,
+    EditUserComponent,
+    EditReferenceComponent,
+    EditScheduleComponent,
   ],
   imports: [
     BrowserModule,

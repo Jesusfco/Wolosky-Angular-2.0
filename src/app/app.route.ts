@@ -10,6 +10,10 @@ import { ReferenceComponent } from './user/create-user/reference/reference.compo
 import { PaymentComponent } from './user/create-user/payment/payment.component';
 import { ShowUserComponent } from './user/show-user/show-user.component';
 
+import { EditUserComponent } from './user/edit-user/edit-user.component';
+import { EditReferenceComponent } from './user/edit-user/edit-reference/edit-reference.component';
+import { EditScheduleComponent } from './user/edit-user/edit-schedule/edit-schedule.component';
+
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
@@ -23,7 +27,13 @@ export const routes: Routes = [
         component: UserComponent,
         children: [
             {path: 'create', component: CreateUserComponent},
-            {path: 'show/:id', component: ShowUserComponent}
+            {path: 'show/:id', component: ShowUserComponent},
+            {path: 'edit/:id', component: EditUserComponent,
+            children: [
+                { path: 'schedule', component: EditScheduleComponent},
+                { path: 'references', component: EditReferenceComponent},
+            ]
+        }
         ]
     },
     {path: '', redirectTo: 'login', pathMatch: 'full' },

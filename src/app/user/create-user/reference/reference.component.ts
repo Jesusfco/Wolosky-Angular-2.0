@@ -174,20 +174,27 @@ export class ReferenceComponent implements OnInit {
   }
 
   validateName(){
-
+    
     if(this.reference.name.length > 6){
       return true;
     }
+    else if(this.reference.name.length == 0){
+      this.validations.name = 1;
+      this.validations.validate = false;
+      return false;
+    } else {
+      this.validations.name = 2;
+      this.validations.validate = false;
+      return false;
+    }
 
-    this.validations.name = 1;
-    this.validations.validate = false;
-    return false;
+    
 
   }
 
   validateMailNumber(){
 
-    if(this.reference.phone.length > 0  && this.reference.email.length > 0){
+    if(this.reference.phone.length > 0  || this.reference.email.length > 0){
       console.log('segun hay algo en los campos');
       return true;
     } else {
