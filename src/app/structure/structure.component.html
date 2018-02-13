@@ -14,9 +14,11 @@
             <img src="http://www.woloskygimnasia.com/images/app/man_avatar.png">
             <p>{{userData.getUserName() | lowercase}}</p>
             <p id="emailInf">{{userData.getUserEmail() | lowercase}}</p>
-            <p *ngIf="userData.getUserType() == 1" id="userTypeInf">Caja</p>
+            <p *ngIf="userData.getUserType() == 1" id="userTypeInf">Alumno/a</p>
+            <p *ngIf="userData.getUserType() == 2" id="userTypeInf">Maestro/a</p>
+            <p *ngIf="userData.getUserType() == 3" id="userTypeInf">Cajera</p>
             <p *ngIf="userData.getUserType() == 6" id="userTypeInf">Administrador</p>
-            <p *ngIf="userData.getUserType() == 3" id="userTypeInf">Super Administrador</p>
+
         </div>
     </div>
 

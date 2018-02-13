@@ -17,14 +17,16 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class ShowUserComponent implements OnInit {
 
-  user: User = new User();
+  public user: User = new User();
 
-  state = {
-    background: 'initial',
-    card: 'initial',
-  }
+  public state = {
+      background: 'initial',
+      card: 'initial',
+    };
 
-  observerRef: any;
+  public observerRef: any;
+
+  public credential = localStorage.getItem('userType');
 
   constructor(private _http: UserService,
     private router: Router,

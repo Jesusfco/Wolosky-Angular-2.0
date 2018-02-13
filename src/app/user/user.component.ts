@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from './user.service';
 import { Router } from '@angular/router';
+import {PageEvent} from '@angular/material';
 
 @Component({
   selector: 'app-user',
@@ -10,11 +11,16 @@ import { Router } from '@angular/router';
 export class UserComponent implements OnInit {
 
   users: Array<any> = [];
+  search = {
+    searchWord: '',
+    items: 10,
+    page: 1,
+    total: 0,
+  };
   
-  searchWord: string = "";
-  timer = {
-    search: 0
-  }
+  pageEvent: PageEvent;
+
+  timer = 0;
 
   public interval: any = 0;
 
@@ -25,30 +31,38 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
 
-   this.search();
+   this.searchRequest();
     
   }
   
 
+  pageAction(data){
+    console.log(data);
+    this.search.items = data.pageSize;
+    this.search.page = data.pageIndex + 1;
+    this.searchRequest();
+  }
+
   searchInput(){
-    this.timer.search++;    
+    this.timer++;    
 
     setTimeout(() => {      
-      this.timer.search--;      
+      this.timer--;      
     }, 300);
 
     setTimeout(() => {
-      if(this.timer.search == 0){        
-        this.search();
+      if(this.timer == 0){        
+        this.searchRequest();
       } 
     }, 350);
   }
 
-  search(){
+  searchRequest(){
 
-    this._http.search(this.searchWord).then(
+    this._http.search(this.search).then(
       data => {
-        this.users = data;        
+        this.users = data.data;
+        this.search.total = data.total;
       },
       error =>  console.log(error)
     );  
@@ -68,7 +82,7 @@ export class UserComponent implements OnInit {
   intervalSaleLogic(){
     console.log('intervalo');
     if(localStorage.getItem('userCreationStatus') == undefined){
-      this.search();
+      this.searchRequest();
       clearInterval(this.interval);
     } else if(localStorage.getItem('userCreationStatus') == '0'){
       clearInterval(this.interval);

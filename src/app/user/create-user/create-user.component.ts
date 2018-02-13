@@ -26,7 +26,7 @@ export class CreateUserComponent implements OnInit {
   backgroundState: string = 'initial';
   sendingData:boolean = false;
   
-  
+  public credential = localStorage.getItem('userType');
 
   user: User = new User();
   schedules = [];
@@ -233,7 +233,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   monthlyPaymentAmountValidation(){
-    if(this.monthlyPayment.amount == null || this.monthlyPayment.amount == 0) {
+    if(this.monthlyPayment.amount == null || this.monthlyPayment.amount < 0) {
       this.user.validations.validate = false;
       this.user.validations.monthlyPaymentAmount = 1; 
     }    

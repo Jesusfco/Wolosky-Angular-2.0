@@ -39,7 +39,7 @@ export class User {
         this.phone = '';
         this.email = '';
         this.birthday = null;
-        this.placeBirth = '';
+        this.placeBirth = 'TUXTLA GUTIERREZ';
         this.curp = '';
         this.insurance = '';
         this.gender = 1;
@@ -48,7 +48,7 @@ export class User {
         this.street = '';
         this.houseNumber = null;
         this.colony = '';
-        this.city = '';
+        this.city = 'TUXTLA GUTIERREZ';
 
         this.timer = {
             name: 0,

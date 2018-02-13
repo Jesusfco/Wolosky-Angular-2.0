@@ -2,9 +2,9 @@
     Usuarios</h1>
 
 <div class="search">
-    <input [(ngModel)]="searchWord" name="searchWord" type="search" placeholder="Buscar Usuario" (keyup)="searchInput()">
-    <label *ngIf="searchWord == undefined || searchWord == ''"><mat-icon>search</mat-icon></label>
-    <label *ngIf="searchWord != undefined && searchWord != ''" (click)="searchWord = null">
+    <input [(ngModel)]="search.searchWord" name="searchWord" type="search" placeholder="Buscar Usuario" (keyup)="searchInput()">
+    <label *ngIf="search.searchWord == undefined || search.searchWord == ''"><mat-icon>search</mat-icon></label>
+    <label *ngIf="search.searchWord != undefined && search.searchWord != ''" (click)="searchWord = null">
                 <mat-icon>close</mat-icon>
             </label>
 </div>
@@ -37,6 +37,8 @@
             </tr>
         </tbody>
     </table>
+    <mat-paginator (page)="pageAction($event)" [length]="search.total" [pageSize]="search.items" [pageSizeOptions]="[5, 10, 25, 50, 100]">
+    </mat-paginator>
 </div>
 
 <a (click)="redirectCreateUser()">

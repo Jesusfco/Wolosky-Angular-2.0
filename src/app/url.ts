@@ -3,6 +3,6 @@ export class Url {
     
         constructor() {
             this.url = "http://server.woloskygimnasia.com/api/";
-            // this.url = "http://localhost:8000/api/";
+            this.url = "http://localhost:8000/api/";
         }
 }

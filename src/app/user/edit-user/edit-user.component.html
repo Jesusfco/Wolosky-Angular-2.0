@@ -34,13 +34,17 @@
 
                 <div class="formData">
                     <label>Tipo de usuario:</label><br>
-                    <select [(ngModel)]="user.user_type_id" name="user_type_id">
+                    <select [(ngModel)]="user.user_type_id" name="user_type_id" *ngIf="credential == '6'">
                         <option value="1">Alumno</option> 
                         <option value="2">Empleado</option>
                         <option value="3">Cajero</option>
                         <option value="4">Escritor</option>
                         <option value="5">Super escritor</option>
                         <option value="6">Administrador</option>
+                    </select>
+                    <select [(ngModel)]="user.user_type_id" name="user_type_id" *ngIf="credential == '3'" disabled>
+                        <option value="1">Alumno</option> 
+                       
                     </select>
                 </div>
 
@@ -77,6 +81,11 @@
                 <div>
                     <label>Seguro Medico:</label><br>
                     <input [(ngModel)]="user.insurance" name="insurance" type="text" (keyup)="user.seguroUpper()">
+                </div>
+
+                <div *ngIf="user.user_type_id >= 3">
+                    <label>Contraseña:</label><br>
+                    <input [(ngModel)]="user.password" name="password" type="text">
                 </div>
 
                 <!-- <div>

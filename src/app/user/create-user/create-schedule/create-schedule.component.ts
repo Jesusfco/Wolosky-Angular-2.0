@@ -55,7 +55,7 @@ export class CreateScheduleComponent implements OnInit {
       {day_id: 4, check_in: null, check_out: null, dayView: 'Jueves', active: false, error: 0},
       {day_id: 5, check_in: null, check_out: null, dayView: 'Viernes', active: false, error: 0},
       {day_id: 6, check_in: null, check_out: null, dayView: 'Sabado', active: false, error: 0},
-    ]
+    ];
   }
 
   selectLV(){

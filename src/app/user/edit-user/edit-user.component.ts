@@ -27,6 +27,7 @@ export class EditUserComponent implements OnInit {
   observerRef: any;
   sendingData: boolean = false;
 
+  credential = localStorage.getItem('userType');
   constructor(private _http: UserService,
     private router: Router,
     private actRou: ActivatedRoute) {
