@@ -60,6 +60,9 @@ import { EditUserComponent } from './user/edit-user/edit-user.component';
 import { EditReferenceComponent } from './user/edit-user/edit-reference/edit-reference.component';
 import { EditScheduleComponent } from './user/edit-user/edit-schedule/edit-schedule.component';
 
+import { ReceiptComponent } from './receipt/receipt.component';
+import { ReceiptService } from './receipt/receipt.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,6 +81,7 @@ import { EditScheduleComponent } from './user/edit-user/edit-schedule/edit-sched
     EditUserComponent,
     EditReferenceComponent,
     EditScheduleComponent,
+    ReceiptComponent,
   ],
   imports: [
     BrowserModule,
@@ -123,7 +127,7 @@ import { EditScheduleComponent } from './user/edit-user/edit-schedule/edit-sched
     
     
   ],
-  providers: [ UserService, LoginService ],
+  providers: [ UserService, LoginService, ReceiptService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
