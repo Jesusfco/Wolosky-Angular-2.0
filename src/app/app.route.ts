@@ -15,6 +15,7 @@ import { EditReferenceComponent } from './user/edit-user/edit-reference/edit-ref
 import { EditScheduleComponent } from './user/edit-user/edit-schedule/edit-schedule.component';
 
 import { ReceiptComponent } from './receipt/receipt.component';
+import { CreateRecieptComponent } from './receipt/create-reciept/create-reciept.component';
 
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -42,7 +43,10 @@ export const routes: Routes = [
 
     {
         path: 'receipt',
-        component: ReceiptComponent
+        component: ReceiptComponent,
+        children: [
+            { path: 'create', component: CreateRecieptComponent },
+        ]
     },
     {path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: '**', component:  PageNotFoundComponent },

@@ -62,6 +62,7 @@ import { EditScheduleComponent } from './user/edit-user/edit-schedule/edit-sched
 
 import { ReceiptComponent } from './receipt/receipt.component';
 import { ReceiptService } from './receipt/receipt.service';
+import { CreateRecieptComponent } from './receipt/create-reciept/create-reciept.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { ReceiptService } from './receipt/receipt.service';
     EditReferenceComponent,
     EditScheduleComponent,
     ReceiptComponent,
+    CreateRecieptComponent,
   ],
   imports: [
     BrowserModule,

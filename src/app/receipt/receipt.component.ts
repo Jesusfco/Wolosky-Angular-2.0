@@ -14,8 +14,30 @@ export class ReceiptComponent implements OnInit {
     debtorsInscription: 0,
   }
 
+  public search = {
+    searchWord: null
+  };
+
+  public notifications = {
+    on: false,
+    debtorsMonthly: 0,
+    debtorsInscription: 0,
+    debtors: undefined,
+  }
+
   constructor(private _http: ReceiptService ) { 
-    console.log(this._http.getReceiptAnalisis());
+    this._http.getReceiptAnalisis().then(
+      data => {
+
+        if(data.count > 0)                  
+          this.notifications.on = true
+
+        this.notifications.debtorsMonthly = data.count;
+        this.notifications.debtors = data.users;        
+
+      },
+      error => console.log(error)
+    );
   }
 
   ngOnInit() {
