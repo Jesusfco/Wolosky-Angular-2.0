@@ -53,7 +53,7 @@ export class CreateRecieptComponent implements OnInit {
 
   closePop(){    
     setTimeout(() => {
-      this.router.navigate(['/users']);
+      this.router.navigate(['/receipt']);
     }, 450);
     this.state.background = 'initial';
     this.state.card = 'initial';

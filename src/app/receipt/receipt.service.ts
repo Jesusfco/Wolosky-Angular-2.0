@@ -26,4 +26,10 @@ export class ReceiptService {
               .toPromise();
   }
 
+  sugestUserReceipt(data){
+    return this._http.post(this.link.url + "receipt/sugestUser" + this.token.getTokenUrl(), data)
+              .map(data => data.json())
+              .toPromise();
+  }
+
 }

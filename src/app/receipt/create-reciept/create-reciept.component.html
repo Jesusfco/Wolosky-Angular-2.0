@@ -13,7 +13,14 @@
             <div class="flexform">
                 <div>
                     <label>Nombre de Alumno:</label><br>
-                    <input [(ngModel)]="payment.userName" name="userName" type="text" disabled>
+                    <input [(ngModel)]="payment.userName" name="userName" type="text" [matAutocomplete]="auto">
+
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let sugest of sugests" [value]="sugest.name">
+                          {{ sugest.name }}
+                        </mat-option>
+                    </mat-autocomplete>
+
                 </div>                    
     
                 <div>
@@ -27,24 +34,24 @@
 
                 </div>
                 
-                <div *nfIf="payment.type == 1">
+                <div *ngIf="payment.type == 1">
                     <label>Monto:</label><br>
                     <input [(ngModel)]="payment.monthlyAmount" name="monthlyAmount" type="number" disabled>
                 </div>
                 
-                <div *nfIf="payment.type > 1">
+                <div *ngIf="payment.type > 1">
                     <label>Monto:</label><br>
                     <input [(ngModel)]="payment.amount" name="amount" type="number">
                 </div> 
 
-                <div *nfIf="payment.type == 1">
+                <div *ngIf="payment.type == 1">
                     <label>Mes:</label><br>
                     <select [(ngModel)]="payment.month" name="month">
                         <option *ngFor="let x of months" value="{{ x.value }}">{{ x.view}}</option>
                     </select>
                 </div> 
 
-                <div *nfIf="payment.type == 3">
+                <div *ngIf="payment.type == 3">
                     <label>Mes:</label><br>
                     <input [(ngModel)]="payment.days" name="days" type="number" min="1" max="30">
                         
