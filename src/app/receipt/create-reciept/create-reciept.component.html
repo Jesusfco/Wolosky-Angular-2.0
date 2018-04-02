@@ -1,62 +1,62 @@
 <div class="cardSpace" [@background]="state.background">
-    
-        <div class="closeCardBackground" (click)="closePop()">
-            <h5 class="closeIcon">
-                <mat-icon>close</mat-icon>
-            </h5>
-        </div>
-    
-        <div class="cardModule" [@card]="state.card">
-            <h2>Crear Recibo</h2>            
-    
-    
-            <div class="flexform">
-                <div>
-                    <label>Nombre de Alumno:</label><br>
-                    <input [(ngModel)]="payment.userName" name="userName" type="text" [matAutocomplete]="auto">
 
-                    <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let sugest of sugests" [value]="sugest.name">
-                          {{ sugest.name }}
-                        </mat-option>
-                    </mat-autocomplete>
+    <div class="closeCardBackground" (click)="closePop()">
+        <h5 class="closeIcon">
+            <mat-icon>close</mat-icon>
+        </h5>
+    </div>
 
-                </div>                    
-    
-                <div>
+    <div class="cardModule" [@card]="state.card">
+        <h2>Crear Recibo</h2>
 
-                    <label>Tipo de usuario:</label><br>
-                    <select [(ngModel)]="payment.type" name="type">
+
+        <div class="flexform">
+            <div>
+                <label>Nombre de Alumno:</label><br>
+                <input [(ngModel)]="payment.userName" name="userName" type="text" [matAutocomplete]="auto" (keyup)="searchSugest()">
+
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let sugest of sugests" [value]="sugest.name" (onSelectionChange)="getMonthlyFrom()">
+                        {{ sugest.name }}
+                    </mat-option>
+                </mat-autocomplete>
+
+            </div>
+
+            <div>
+
+                <label>Tipo de usuario:</label><br>
+                <select [(ngModel)]="payment.type" name="type">
                         <option value="1">Mensualidad</option> 
                         <option value="2">Inscripcion</option>
                         <option value="3">Días</option>                        
                   </select>
 
-                </div>
-                
-                <div *ngIf="payment.type == 1">
-                    <label>Monto:</label><br>
-                    <input [(ngModel)]="payment.monthlyAmount" name="monthlyAmount" type="number" disabled>
-                </div>
-                
-                <div *ngIf="payment.type > 1">
-                    <label>Monto:</label><br>
-                    <input [(ngModel)]="payment.amount" name="amount" type="number">
-                </div> 
+            </div>
 
-                <div *ngIf="payment.type == 1">
-                    <label>Mes:</label><br>
-                    <select [(ngModel)]="payment.month" name="month">
+            <div *ngIf="payment.type == 1">
+                <label>Monto:</label><br>
+                <input [(ngModel)]="payment.monthlyAmount" name="monthlyAmount" type="number" disabled>
+            </div>
+
+            <div *ngIf="payment.type > 1">
+                <label>Monto:</label><br>
+                <input [(ngModel)]="payment.amount" name="amount" type="number">
+            </div>
+
+            <div *ngIf="payment.type == 1">
+                <label>Mes:</label><br>
+                <select [(ngModel)]="payment.month" name="month">
                         <option *ngFor="let x of months" value="{{ x.value }}">{{ x.view}}</option>
                     </select>
-                </div> 
+            </div>
 
-                <div *ngIf="payment.type == 3">
-                    <label>Mes:</label><br>
-                    <input [(ngModel)]="payment.days" name="days" type="number" min="1" max="30">
-                        
-                </div> 
-                  
+            <div *ngIf="payment.type == 3">
+                <label>Mes:</label><br>
+                <input [(ngModel)]="payment.days" name="days" type="number" min="1" max="30">
+
+            </div>
+
         </div>
     </div>
-</div>    
+</div>

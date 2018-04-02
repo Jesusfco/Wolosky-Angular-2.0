@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BackgroundCard, Card } from '../../animations/card.animation';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReceiptService } from '../receipt.service';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-create-reciept',
@@ -38,7 +39,11 @@ export class CreateRecieptComponent implements OnInit {
     monthlyAmount: 0,
     month: undefined,
     days: 1,
-  }
+  };
+
+  public sugests: any = [];
+  
+  public timer: number = 0;
 
   constructor(private router: Router,
     private actRou: ActivatedRoute,
@@ -58,6 +63,31 @@ export class CreateRecieptComponent implements OnInit {
     this.state.background = 'initial';
     this.state.card = 'initial';
     
+  }
+
+  searchSugest(){
+    this.timer++;    
+
+    setTimeout(() => {      
+      this.timer--;      
+    }, 300);
+
+    setTimeout(() => {
+      
+      if(this.timer == 0){        
+      
+        this._http.sugestUserReceipt({search: this.payment.userName}).then(
+          data => {
+            this.sugests = data;
+          }, error => console.log(error)
+        );
+      } 
+
+    }, 350);
+  }
+
+  getMonthlyFrom(){
+    console.log('aquiii');
   }
 
 }

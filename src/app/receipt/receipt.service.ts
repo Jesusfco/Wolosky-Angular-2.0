@@ -32,4 +32,10 @@ export class ReceiptService {
               .toPromise();
   }
 
+  getMonthlyPayment(data){
+    return this._http.post(this.link.url + "receipt/getMonthlyPayment" + this.token.getTokenUrl(), data)
+              .map(data => data.json())
+              .toPromise();
+  }
+
 }
