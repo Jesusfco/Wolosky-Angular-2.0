@@ -1,0 +1,18 @@
+.notifyReceipt #debtors p {
+    padding: 10px;
+    cursor: pointer;
+    border-top: rgb(221, 221, 221) solid 1px;
+    margin: 0;
+    transition: .2s;
+}
+
+.notifyReceipt #debtors p:hover {
+    background: rgb(219, 219, 219);
+}
+
+.notifyReceipt span {
+    color: white;
+    padding: 5px;
+    background: rgb(199, 92, 5);
+    cursor: pointer;
+}

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { BackgroundCard, Card } from '../../animations/card.animation';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReceiptService } from '../receipt.service';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+// import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-create-reciept',
@@ -52,6 +52,21 @@ export class CreateRecieptComponent implements OnInit {
 
       let d = new Date();
       this.payment.month = d.getMonth() + 1;
+
+      this.checkDebtorLocalStorage();
+
+    }
+
+    checkDebtorLocalStorage(){
+      if(localStorage.getItem('debtorId') == undefined) return;
+
+      this._http.getMonthlyPayment({id: localStorage.getItem('debtorId')}).then(
+        data => {
+          this.payment.monthlyAmount = data.amount;
+          this.payment.userId = data.user.id;
+          this.payment.userName = data.user.name;
+        }, error => console.log(error)
+      );
     }
 
   ngOnInit() {
@@ -59,6 +74,13 @@ export class CreateRecieptComponent implements OnInit {
       this.state.background = 'final';
       this.state.card = 'final';
     }, 100);
+  }
+
+  ngOnDestroy(){
+    if(localStorage.getItem('debtorId') == undefined) return;
+
+    localStorage.removeItem('debtorId');
+    localStorage.removeItem('receiptStatus');
   }
 
   closePop(){    
@@ -107,7 +129,10 @@ export class CreateRecieptComponent implements OnInit {
 
   createReceipt(){
     this._http.postNewReceipt(this.payment).then(
-      data => console.log(data),
+      data => {
+        console.log(data);
+        this.closePop();
+      },
       error => console.log(error)
     );
   }

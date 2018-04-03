@@ -1,21 +1,32 @@
 <h3>Recibos de Alumnos </h3>
 
-<div *ngIf="notifications.on">
+<div *ngIf="notifications.on" class="notifyReceipt">
     <h5>Notificaciones</h5>
     <div>
-        <p>Hay #{{ notifications.debtorsMonthly }} alumnos con pagos pendientes de este mes.</p>
-        <p>Hay #{{ notifications.debtorsInscription }} alumnos con inscripciones pendientes de este mes.</p>
+        <p>Hay #{{ notifications.debtorsMonthly }} alumnos con pagos pendientes de este mes.
+            <span (click)="notifications.viewDebtors = !notifications.viewDebtors">Ver Alumnos</span>
+        </p>
+
+        <div *ngIf="notifications.viewDebtors" id="debtors">
+            <p *ngFor="let deb of notifications.debtors" (click)="debtorPay(deb.id)"> {{ deb.name }}</p>
+        </div>
+        <!-- <p>Hay #{{ notifications.debtorsInscription }} alumnos con inscripciones pendientes de este mes.</p> -->
     </div>
 
 </div>
 
+<input [(ngModel)]="search.from" name="from" type="date" (ngModelChange)="dt = $event">
+<input [(ngModel)]="search.to" name="to" type="date" (ngModelChange)="dt = $event">
+
 <div class="search">
 
-    <input [(ngModel)]="search.searchWord" name="searchWord" type="search" placeholder="Buscar Usuario" (keyup)="searchInput()">
-    <label *ngIf="search.searchWord == undefined || search.searchWord == ''"><mat-icon>search</mat-icon></label>
-    <label *ngIf="search.searchWord != undefined && search.searchWord != ''" (click)="searchWord = null">
-              <mat-icon>close</mat-icon>
-          </label>
+    <input [(ngModel)]="search.name" [matAutocomplete]="auto" name="name" type="search" placeholder="Buscar Usuario" (keyup)="searchInput()">
+
+    <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let sugest of sugests" [value]="sugest.name" (onSelectionChange)="searchReceiptId(sugest.id)">
+            {{ sugest.name }}
+        </mat-option>
+    </mat-autocomplete>
 </div>
 
 
