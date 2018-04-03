@@ -38,7 +38,7 @@ export class ReceiptComponent implements OnInit {
   constructor(private _http: ReceiptService, private router: Router) { 
     this.getNotifications();
     this.getDates();
-    console.log(this.search);
+    this.getReceipts();
   }
 
   ngOnInit() {
@@ -46,8 +46,17 @@ export class ReceiptComponent implements OnInit {
 
   getDates(){
     let d = new Date();
-      this.search.from = "01/0" + (d.getMonth() + 1 ) + "/" + d.getFullYear() ;
-      this.search.to = "01/0" + (d.getMonth() + 2 ) + "/" + d.getFullYear() ;
+
+    if(d.getMonth() <= 7){
+      this.search.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + "01";
+      this.search.to = d.getFullYear() + "-0" + (d.getMonth() + 2 ) + "-" + "01";
+    } else if (d.getMonth() == 8){
+      this.search.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + "01";
+      this.search.to = d.getFullYear() + "-" + (d.getMonth() + 2 ) + "-" + "01";
+    } else {
+      this.search.from = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-" + "01";
+      this.search.to = d.getFullYear() + "-" + (d.getMonth() + 2 ) + "-" + "01";
+    }
   }
 
   debtorPay(id){
@@ -113,11 +122,14 @@ export class ReceiptComponent implements OnInit {
   }
 
   getReceipts(){
-    this._http.getReceiptAnalisis().then(
+    if(this.search.name == '')
+      this.search.id = null;
+    this._http.getReceipt(this.search).then(
       data => {
-
-      }
-    )
+        this.receipts = data;
+        console.log(data);
+      }, error => console.log(error)
+    );
   }
 
 }
