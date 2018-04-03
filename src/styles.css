@@ -429,3 +429,48 @@ select:-webkit-autofill {
     background-image: none;
     color: rgb(0, 0, 0);
 }
+
+
+/* Boton flotador */
+
+.botonFloat {
+    width: 30px;
+    height: 30px;
+    background-color: rgb(255, 0, 200);
+    margin: 5px;
+    padding: 21px;
+    font-size: 11px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    float: left;
+    box-sizing: content-box;
+    /*font-size: 40px; 
+    text-align: center;
+    
+    line-height:32px;
+    */
+    position: fixed;
+    right: 15px;
+    bottom: 15px;
+    transition: .4s;
+}
+
+.botonFloat:hover {
+    opacity: 0.50;
+    -moz-opacity: .50;
+    filter: alpha (opacity=50);
+}
+
+.botonA {
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 5px 5px 0;
+}
+
+.material-icons {
+    font-size: 31px;
+    color: #ffffff;
+}

@@ -1,27 +1,27 @@
 <h3>Recibos de Alumnos </h3>
 
-<div *ngIf="notifications.on"> 
-  <h5>Notificaciones</h5>
-  <div>
-    <p>Hay #{{ notifications.debtorsMonthly }} alumnos con pagos pendientes de este mes.</p>
-    <p>Hay #{{ notifications.debtorsInscription }} alumnos con inscripciones pendientes de este mes.</p>
-  </div>
+<div *ngIf="notifications.on">
+    <h5>Notificaciones</h5>
+    <div>
+        <p>Hay #{{ notifications.debtorsMonthly }} alumnos con pagos pendientes de este mes.</p>
+        <p>Hay #{{ notifications.debtorsInscription }} alumnos con inscripciones pendientes de este mes.</p>
+    </div>
 
 </div>
 
 <div class="search">
 
-  <input [(ngModel)]="search.searchWord" name="searchWord" type="search" placeholder="Buscar Usuario" (keyup)="searchInput()">
-  <label *ngIf="search.searchWord == undefined || search.searchWord == ''"><mat-icon>search</mat-icon></label>
-  <label *ngIf="search.searchWord != undefined && search.searchWord != ''" (click)="searchWord = null">
+    <input [(ngModel)]="search.searchWord" name="searchWord" type="search" placeholder="Buscar Usuario" (keyup)="searchInput()">
+    <label *ngIf="search.searchWord == undefined || search.searchWord == ''"><mat-icon>search</mat-icon></label>
+    <label *ngIf="search.searchWord != undefined && search.searchWord != ''" (click)="searchWord = null">
               <mat-icon>close</mat-icon>
           </label>
 </div>
 
 
 <a [routerLink]="['/receipt/create']">
-    <div class="boton">
-        <a class="botonA" matTooltip="Crear"><i class="material-icons">add</i></a>
+    <div class="botonFloat">
+        <a class="botonA" matTooltip="Crear recibo"><i class="material-icons">add</i></a>
     </div>
 </a>
 

@@ -33,6 +33,7 @@ export class CreateRecieptComponent implements OnInit {
   };
 
   public payment = {
+    userId: null,
     userName: '',
     type: 1,
     amount: 500,
@@ -47,7 +48,11 @@ export class CreateRecieptComponent implements OnInit {
 
   constructor(private router: Router,
     private actRou: ActivatedRoute,
-    private _http: ReceiptService) { }
+    private _http: ReceiptService) { 
+
+      let d = new Date();
+      this.payment.month = d.getMonth() + 1;
+    }
 
   ngOnInit() {
     setTimeout(() => {
@@ -86,8 +91,25 @@ export class CreateRecieptComponent implements OnInit {
     }, 350);
   }
 
-  getMonthlyFrom(){
-    console.log('aquiii');
+  getMonthlyFrom(id){    
+    if(this.payment.type !== 1) return;
+
+    this.payment.monthlyAmount = 0;
+     this.payment.userId = id;
+
+        this._http.getMonthlyPayment({id: id}).then(
+          data => {
+            this.payment.monthlyAmount = data.amount;
+          }, error => console.log(error)
+        );
+
+  }
+
+  createReceipt(){
+    this._http.postNewReceipt(this.payment).then(
+      data => console.log(data),
+      error => console.log(error)
+    );
   }
 
 }
