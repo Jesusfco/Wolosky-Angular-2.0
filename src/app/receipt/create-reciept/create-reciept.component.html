@@ -1,3 +1,5 @@
+<mat-progress-bar mode="indeterminate" *ngIf="sendingData" class="barLoader"></mat-progress-bar>
+
 <div class="cardSpace" [@background]="state.background">
 
     <div class="closeCardBackground" (click)="closePop()">
@@ -11,6 +13,10 @@
 
         <form (submit)="createReceipt()">
             <div class="flexform">
+
+                <div *ngIf="payment.payment_type == false" class="checkBox"><input [(ngModel)]="payment.payment_type" name="payment_type" type="checkbox">Efectivo</div>
+                <div *ngIf="payment.payment_type == true" class="checkBox"><input [(ngModel)]="payment.payment_type" name="payment_type" type="checkbox">Tarjeta</div>
+
                 <div>
                     <label>Nombre de Alumno:</label><br>
                     <input [(ngModel)]="payment.userName" name="userName" type="search" [matAutocomplete]="auto" (keyup)="searchSugest()">
@@ -29,7 +35,9 @@
                     <select [(ngModel)]="payment.type" name="type">
                             <option value="1">Mensualidad</option> 
                             <option value="2">Inscripcion</option>
-                            <option value="3">Días</option>                        
+                            <option value="3">Días</option>
+                            <option value="4">Uniforme</option>                                                
+                            <option value="5">Evento/Viajes/Otros</option>                                                
                     </select>
 
                 </div>
@@ -37,21 +45,32 @@
                 <div>
                     <label>Monto:</label><br>
                     <input *ngIf="payment.type == 1" [(ngModel)]="payment.monthlyAmount" name="monthlyAmount" type="number" disabled>
-                    <input *ngIf="payment.type > 1" [(ngModel)]="payment.amount" name="amount" type="number">
+                    <input *ngIf="payment.type > 1" [(ngModel)]="payment.amount" name="amount" type="number" min="0">
+
+                    <small class="validate" *ngIf="validation.paymentDate == 1 && payment.type == 1">Descuento ${{desc}}.00</small>
+                    <small class="error" *ngIf="validation.paymentDate == 2 && payment.type == 1">Recargo ${{recharge}}.00</small>
+
                 </div>
 
 
 
                 <div *ngIf="payment.type == 1">
                     <label>Mes:</label><br>
-                    <select [(ngModel)]="payment.month" name="month">
-                        <option *ngFor="let x of months" value="{{ x.value }}">{{ x.view}}</option>
+                    <select [(ngModel)]="payment.month" name="month" (change)="validateMonthlyPayment()">
+                        <option  *ngFor="let x of months" value="{{ x.value }}">{{ x.view}}</option>
                     </select>
                 </div>
 
                 <div *ngIf="payment.type == 3">
                     <label>Dias:</label><br>
                     <input [(ngModel)]="payment.days" name="days" type="number" min="1" max="30">
+
+                </div>
+
+                <div *ngIf="payment.type == 5">
+                    <label>Descripción:</label><br>
+                    <input [(ngModel)]="payment.description" name="description" type="text">
+                    <small class="error" *ngIf="validation.description == 1">Campo requerido*</small>
 
                 </div>
 

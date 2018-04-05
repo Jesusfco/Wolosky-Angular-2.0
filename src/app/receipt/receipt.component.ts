@@ -35,6 +35,11 @@ export class ReceiptComponent implements OnInit {
   public timer = 0;
   public interval: any = 0;
 
+  public sendingData = {
+    notifications: false,
+    receipts: false,
+  };
+
   constructor(private _http: ReceiptService, private router: Router) { 
     this.getNotifications();
     this.getDates();
@@ -81,6 +86,7 @@ export class ReceiptComponent implements OnInit {
   }
 
   getNotifications(){
+    this.sendingData.notifications = true;
     this._http.getReceiptAnalisis().then(
       data => {
 
@@ -91,7 +97,9 @@ export class ReceiptComponent implements OnInit {
         this.notifications.debtors = data.users;        
 
       },
-      error => console.log(error)
+      error => console.log(error),
+    ).then(
+      () => this.sendingData.notifications = false,
     );
   }
 
@@ -105,11 +113,13 @@ export class ReceiptComponent implements OnInit {
     setTimeout(() => {
       
       if(this.timer == 0){        
-      
+        this.sendingData.receipts = true;
         this._http.sugestUserReceipt({search: this.search.name}).then(
           data => {
             this.sugests = data;
           }, error => console.log(error)
+        ).then(
+          () => this.sendingData.receipts = false,
         );
       } 
 
@@ -122,13 +132,14 @@ export class ReceiptComponent implements OnInit {
   }
 
   getReceipts(){
+    this.sendingData.receipts = true;
     if(this.search.name == '')
       this.search.id = null;
     this._http.getReceipt(this.search).then(
-      data => {
-        this.receipts = data;
-        console.log(data);
-      }, error => console.log(error)
+      data => this.receipts = data,
+      error => console.log(error)
+    ).then(
+      () => this.sendingData.receipts = false,
     );
   }
 

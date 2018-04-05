@@ -1,3 +1,5 @@
+<mat-progress-bar mode="indeterminate" *ngIf="sendingData.notifications" class="barLoader"></mat-progress-bar>
+<mat-progress-bar mode="indeterminate" *ngIf="sendingData.receipts" class="barLoader"></mat-progress-bar>
 <h3>Recibos de Alumnos </h3>
 
 <div *ngIf="notifications.on" class="notifyReceipt">
@@ -50,12 +52,14 @@
                 <td>$ {{ re.amount }}</td>
                 <td *ngIf="re.type == 1">Mensualidad</td>
                 <td *ngIf="re.type == 2">Inscripcion</td>
-                <td *ngIf="re.type == 3">Día</td>                
-                                
+                <td *ngIf="re.type == 3">Día</td>
+                <td *ngIf="re.type == 4">Uniforme</td>
+                <td *ngIf="re.type == 5">Evento</td>
+
             </tr>
         </tbody>
     </table>
-</div>    
+</div>
 
 
 <a [routerLink]="['/receipt/create']">

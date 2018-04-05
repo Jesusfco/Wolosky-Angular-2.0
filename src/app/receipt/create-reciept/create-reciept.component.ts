@@ -37,14 +37,25 @@ export class CreateRecieptComponent implements OnInit {
     userName: '',
     type: 1,
     amount: 500,
+    monthly: 0,
     monthlyAmount: 0,
     month: undefined,
     days: 1,
+    description: '',
+    payment_type: false,
   };
 
   public sugests: any = [];
-  
+  public sendingData: boolean = false;
   public timer: number = 0;
+  public desc: number = 50;
+  public recharge: number = 100;
+
+  public validation = {
+    paymentDate: 0,
+    description: 0,
+    form: true,
+  };
 
   constructor(private router: Router,
     private actRou: ActivatedRoute,
@@ -57,17 +68,18 @@ export class CreateRecieptComponent implements OnInit {
 
     }
 
-    checkDebtorLocalStorage(){
-      if(localStorage.getItem('debtorId') == undefined) return;
+  checkDebtorLocalStorage(){
+    if(localStorage.getItem('debtorId') == undefined) return;
 
-      this._http.getMonthlyPayment({id: localStorage.getItem('debtorId')}).then(
-        data => {
-          this.payment.monthlyAmount = data.amount;
-          this.payment.userId = data.user.id;
-          this.payment.userName = data.user.name;
-        }, error => console.log(error)
-      );
-    }
+    this._http.getMonthlyPayment({id: localStorage.getItem('debtorId')}).then(
+      data => {
+        this.payment.monthly = data.amount;
+        this.payment.userId = data.user.id;
+        this.payment.userName = data.user.name;
+        this.validateMonthlyPayment();
+      }, error => console.log(error)
+    );
+  }
 
   ngOnInit() {
     setTimeout(() => {
@@ -114,20 +126,62 @@ export class CreateRecieptComponent implements OnInit {
   }
 
   getMonthlyFrom(id){    
+    
+    this.payment.userId = id;
+    
     if(this.payment.type !== 1) return;
 
-    this.payment.monthlyAmount = 0;
-     this.payment.userId = id;
+    this.payment.monthlyAmount = 0;     
 
-        this._http.getMonthlyPayment({id: id}).then(
-          data => {
-            this.payment.monthlyAmount = data.amount;
-          }, error => console.log(error)
-        );
+    this._http.getMonthlyPayment({id: id}).then(
+      data => {
+        this.payment.monthly = data.amount;
+        this.validateMonthlyPayment();
+      },
+      error => console.log(error)
+    );
 
   }
 
+  validateDescription(){
+    if(this.payment.description == ''){
+      this.validation.description = 1;
+      this.validation.form = false;
+    }
+  }
+
+  validateMonthlyPayment(){
+    let d = new Date();    
+
+    if((d.getMonth() + 1) == this.payment.month){
+      if(d.getDay() <= 3){
+         this.payment.monthlyAmount = (this.payment.monthly - this.desc);
+         this.validation.paymentDate = 1;
+        }
+        else if(d.getDay() >= 11){
+          this.payment.monthlyAmount = (this.payment.monthly + this.recharge);
+          this.validation.paymentDate = 2;
+      } else {
+        this.payment.monthlyAmount = this.payment.monthly;
+      }
+
+    }
+
+    else if((d.getMonth() + 1) < this.payment.month){
+      this.payment.monthlyAmount = (this.payment.monthly - this.desc);
+      this.validation.paymentDate = 1;
+    } else {
+      this.payment.monthlyAmount = (this.payment.monthly + this.recharge);
+      this.validation.paymentDate = 2;
+    }
+  }
+
   createReceipt(){
+    
+    this.restoreValidations();
+    if(this.payment.type == 5) this.validateDescription();
+    if(this.validation.form == false) return;
+    
     this._http.postNewReceipt(this.payment).then(
       data => {
         console.log(data);
@@ -136,5 +190,16 @@ export class CreateRecieptComponent implements OnInit {
       error => console.log(error)
     );
   }
+
+  restoreValidations(){
+    
+    this.validation = {
+      paymentDate: this.validation.paymentDate,
+      description: 0,
+      form: true,
+    };
+
+  }
+
 
 }

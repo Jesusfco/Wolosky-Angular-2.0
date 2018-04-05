@@ -1,0 +1,13 @@
+.cardModule {
+    width: 70%;
+}
+
+.checkBox {
+    position: absolute;
+    right: 25px;
+    top: 25px;
+}
+
+.checkBox input {
+    width: inherit;
+}
