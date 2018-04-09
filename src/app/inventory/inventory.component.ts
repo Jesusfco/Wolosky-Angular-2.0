@@ -84,9 +84,9 @@ export class InventoryComponent implements OnInit {
   }
 
   update(data){
-    for(let i = 0; i < Object.keys(this.products).length; i++){
-      if(this.products[i].id == data.original.id){
-        this.products[i] = data.edited;
+    for(let i = 0; i < Object.keys(this.backProducts).length; i++){
+      if(this.backProducts[i].id == data.original.id){
+        this.backProducts[i] = data.edited;
         break;
       }
     }
