@@ -64,7 +64,7 @@ export const routes: Routes = [
 
     {
         path: 'events',
-        component: ReceiptComponent,
+        component: EventComponent,
         children: [
             { path: 'create', component: CreateEventComponent },
             { path: 'assign', component: AssignUserEventComponent },

@@ -103,9 +103,10 @@ nav button {
 #userInfSection #userTypeInf {
     font-size: 10px;
     position: absolute;
-    top: 15px;
-    right: 25px;
+    top: 10px;
+    right: 10px;
     margin: 0;
+    padding: 0
 }
 
 
@@ -120,6 +121,13 @@ nav button {
     min-height: 85vh;
     font-weight: 300px;
     position: ;
+}
+
+.notified {
+    color: rgb(160, 5, 5);
+    text-align: right;
+    position: absolute;
+    right: 13px;
 }
 
 @media screen and (max-width: 750px) {

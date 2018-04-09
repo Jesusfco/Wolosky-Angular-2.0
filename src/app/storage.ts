@@ -51,6 +51,9 @@ export class Storage {
         localStorage.setItem('token', data.token);
     }
 
+    storageCash(data){
+        localStorage.setItem('userCash', data);
+    }
     // SOBRE EL PUNTO DE VENTA
     storageInventory(data){
         if(data.length !== 0){

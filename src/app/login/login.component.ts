@@ -33,6 +33,8 @@ export class LoginComponent implements OnInit {
     validate: 0,
   };
 
+  storage: Storage = new Storage();
+  
   serverConection: boolean = false;
 
   constructor(
@@ -58,7 +60,16 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('userName', data.user.name);
           localStorage.setItem('userId', data.user.id);
           localStorage.setItem('userEmail', data.user.email);                    
-          localStorage.setItem('userType', data.user.user_type_id); 
+          localStorage.setItem('userType', data.user.user_type_id);
+          
+          localStorage.setItem('userCash', data.cash);
+
+          this._http.getProducts().then(
+            product => {
+                this.storage.storageInventory(product);
+            },
+            error => console.log(error)
+          );
           
           this.router.navigate(['/users']);
           

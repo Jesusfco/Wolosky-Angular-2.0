@@ -14,10 +14,14 @@
             <img src="http://www.woloskygimnasia.com/images/app/man_avatar.png">
             <p>{{userData.getUserName() | lowercase}}</p>
             <p id="emailInf">{{userData.getUserEmail() | lowercase}}</p>
-            <p *ngIf="userData.getUserType() == 1" id="userTypeInf">Alumno/a</p>
-            <p *ngIf="userData.getUserType() == 2" id="userTypeInf">Maestro/a</p>
-            <p *ngIf="userData.getUserType() == 3" id="userTypeInf">Cajera</p>
-            <p *ngIf="userData.getUserType() == 6" id="userTypeInf">Administrador</p>
+            <div id="userTypeInf">
+                <p *ngIf="userData.getUserType() == 1">Alumno/a</p>
+                <p *ngIf="userData.getUserType() == 2">Maestro/a</p>
+                <p *ngIf="userData.getUserType() == 3">Cajera</p>
+                <p *ngIf="userData.getUserType() == 6">Administrador</p>
+                <p> $ {{ userData.getCash() }}</p>
+            </div>
+
 
         </div>
     </div>
@@ -34,7 +38,7 @@
             <li><button mat-button>Eventos</button></li>
         </a>
         <a [routerLink]="['/sale-point']">
-            <li><button mat-button>Punto de Venta</button></li>
+            <li><button mat-button>Punto de Venta <span class="notified">{{ userData.getSalesErrorConnection() }}</span></button></li>
         </a>
 
         <a [routerLink]="['/inventory']">

@@ -72,6 +72,11 @@ export class SaleProcessComponent implements OnInit {
       },
       error => {
         console.log(error);
+        let x = parseInt(localStorage.getItem('userCash'));
+        x += this.sale.total;
+        localStorage.setItem('userCash', x.toString());
+
+        this.inventory.afterSale(this.sale.description);
         this.sale.storeSaleErrorConnection(this.sale);
       }
     );

@@ -43,6 +43,7 @@ export class SalePointComponent implements OnInit {
               private router: Router) {
 
                 this.inventory = this.storage.getInventory();
+                this.sendStoreSales();
 
                 if(this.sale.getLocalSale() != undefined){
                   this.sale.description = this.sale.getLocalSale();
@@ -134,11 +135,12 @@ export class SalePointComponent implements OnInit {
         let x = JSON.parse(localStorage.getItem('sales'));
         this._http.outServiceSales({sales: x}).then(
                 data => {
-                  // console.log(data);
+                  console.log('intervalos de ventas error terminado');
                     localStorage.removeItem('sales');
                     clearInterval(this.observerFailSales);
                 }, error => {
-                    console.log(error)
+                    console.log(error);
+                    console.log('intervalos de ventas error');
                 }
             );
     }

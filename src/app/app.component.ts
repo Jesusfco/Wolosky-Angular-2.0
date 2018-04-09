@@ -50,6 +50,7 @@ export class AppComponent {
       data => {
 
         this.localData.storageUserData(data.user);
+        this.localData.storageCash(data.cash);
         
         if(this.router.url == '/login') {
           
