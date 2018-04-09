@@ -1,0 +1,115 @@
+.btn {
+    width: 80%;
+}
+
+.btnSale {
+    background: rgb(12, 180, 12);
+    transition: 1s;
+}
+
+input {
+    margin: 0;
+}
+
+.btnSale:hover {
+    background: rgb(42, 255, 42);
+    transform: scale(1.05);
+}
+
+.btnCancel {
+    background: red;
+    transition: 1s;
+    width: initial;
+}
+
+.btnCancel:hover {
+    background: rgb(179, 0, 0);
+}
+
+.divSearch {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 7px;
+    width: fit-content;
+}
+
+#search {
+    background: white;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    height: 44px;
+    outline: none;
+    transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+    width: 350px;
+    padding-right: 35px;
+}
+
+#search:focus {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.16);
+}
+
+#search:hover {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.16);
+}
+
+#search+label {
+    position: absolute;
+    padding-top: 10px;
+    margin-left: -30px;
+}
+
+.btnSearch {
+    margin-top: 0;
+    background: rgb(12, 119, 241);
+    width: initial;
+    border-radius: 10px;
+    height: 30px;
+}
+
+.totalForm {
+    position: absolute;
+    right: 15px;
+    margin-top: -30px;
+}
+
+tbody {
+    max-height: 80vh;
+    overflow-y: scroll;
+}
+
+@media screen and (max-width: 750px) {
+    tbody {
+        max-height: 75vh;
+        overflow: scroll;
+    }
+    .totalForm {
+        position: fixed;
+        top: 10px;
+        color: white;
+        font-size: 18px;
+        z-index: 4;
+        margin: 0;
+    }
+    .divSearch {
+        width: ;
+    }
+    #search {
+        margin: 0 auto;
+        width: 85vw;
+        transition: 1s;
+        padding-left: 15px;
+    }
+    #search:focus {
+        width: 95vw;
+    }
+    .btnSearch {
+        display: none;
+    }
+    .btnSale {
+        width: 75%;
+    }
+    .btnSaleNone {
+        width: 75%;
+    }
+}

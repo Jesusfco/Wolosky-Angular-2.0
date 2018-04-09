@@ -64,9 +64,36 @@ import { ReceiptComponent } from './receipt/receipt.component';
 import { ReceiptService } from './receipt/receipt.service';
 import { CreateRecieptComponent } from './receipt/create-reciept/create-reciept.component';
 
+import { EventComponent } from './event/event.component';
+import { CreateEventComponent } from './event/create-event/create-event.component';
+import { AssignUserEventComponent } from './event/assign-user-event/assign-user-event.component';
+
+// COMPONENTE PUNTO DE VENTA
+import { InventoryComponent } from './inventory/inventory.component';
+import { NewProductComponent } from './inventory/new-product/new-product.component';
+import { EditProductComponent } from './inventory/edit-product/edit-product.component';
+import { InventoryService } from './inventory/inventory.service';
+import { FilterInventoryPipe } from './inventory/filter-inventory.pipe';
+
+import { SalePointComponent } from './sale-point/sale-point.component';
+import { SaleService } from './sale-point/sale.service';
+
+import { SaleProcessComponent } from './sale-point/sale-process/sale-process.component';
+import { SalesComponent } from './sales/sales.component';
+import { ShowSaleComponent } from './sales/show-sale/show-sale.component';
+
 @NgModule({
   declarations: [
     AppComponent,
+
+    InventoryComponent,
+    NewProductComponent,
+    EditProductComponent,
+    FilterInventoryPipe,
+    SalePointComponent,
+    SaleProcessComponent,
+    SalesComponent,
+    ShowSaleComponent,
 
     LoginComponent,
     StructureComponent,
@@ -84,6 +111,9 @@ import { CreateRecieptComponent } from './receipt/create-reciept/create-reciept.
     EditScheduleComponent,
     ReceiptComponent,
     CreateRecieptComponent,
+    EventComponent,
+    CreateEventComponent,
+    AssignUserEventComponent,
   ],
   imports: [
     BrowserModule,
@@ -129,7 +159,11 @@ import { CreateRecieptComponent } from './receipt/create-reciept/create-reciept.
     
     
   ],
-  providers: [ UserService, LoginService, ReceiptService ],
+  providers: [  UserService, 
+                LoginService, 
+                ReceiptService,
+                InventoryService,
+                SaleService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

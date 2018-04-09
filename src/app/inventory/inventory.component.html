@@ -1,0 +1,57 @@
+<h1 class="routeTitle">Inventario {{ countProduct()}}</h1>
+
+<input [(ngModel)]="search" name="search" type="text" id="search" (keyup)="searchWriting()" placeholder="Buscar Producto"><label><mat-icon>search</mat-icon></label>
+
+
+<!-- <button class="createBtn" (click)="createPro = !createPro">Agregar Producto</button> -->
+<div class="responsive-table">
+    <table>
+        <thead>
+            <tr>
+                <th (click)="sortName()" class="alignLeft">Nombre</th>
+                <th (click)="sortPrice()">Precio</th>
+                <th (click)="sortStock()">Cantidad</th>
+                <th>Reorden</th>
+                <th (click)="sortDepartment()">Departamento</th>
+                <th (click)="sortCode()">Codigo</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="storage.getUserType() > 1 && products != undefined">
+
+            <tr (click)="updateObservable()" [routerLink]="['/inventory/edit', product.id]" *ngFor="let product of products" [ngClass]="{ 'advice': product.stock < product.reorder && product.stock > 0, 'danger': product.stock < 1 }">
+                <td class="alignLeft">{{ product.name | lowercase }}</td>
+                <td>$ {{ product.price }}</td>
+                <td> {{ product.stock }}</td>
+                <td> {{ product.reorder }}</td>
+                <td> {{ product.department }}</td>
+                <td> {{ product.code }}</td>
+            </tr>
+        </tbody>
+
+        <tbody *ngIf="storage.getUserType() < 2 && products != undefined">
+
+            <tr *ngFor="let product of products" [ngClass]="{ 'advice': product.stock < product.reorder && product.stock > 0, 'danger': product.stock < 1 }">
+                <td class="alignLeft">{{ product.name | lowercase }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.stock }}</td>
+                <td>{{ product.reorder }}</td>
+                <td>{{ product.department }}</td>
+                <td>{{ product.code }}</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <mat-paginator (page)="testPage($event)" [length]="countProduct()" [pageSize]="25" [pageSizeOptions]="lenghtArrayOptions">
+    </mat-paginator>
+
+</div>
+
+<a (click)="createObservable()" [routerLink]="['/inventory/create']" *ngIf="storage.getUserType() > 1">
+    <button mat-fab id="createBtn" (click)="createPro = !createPro">
+        <mat-icon >add_shopping_cart</mat-icon>
+    </button>
+</a>
+
+<!-- <app-new-product *ngIf="createPro" (closeEvent)="createPro = false" (createEvent)="newProduct($event)"></app-new-product> -->
+<router-outlet></router-outlet>

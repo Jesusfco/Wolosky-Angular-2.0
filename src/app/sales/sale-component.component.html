@@ -1,0 +1,45 @@
+<mat-progress-bar mode="indeterminate" *ngIf="request" class="barLoader"></mat-progress-bar>
+
+<h1 class="routeTitle">Registro de Ventas</h1>
+<h3>Ganancia</h3>
+<p>${{ analize.neto }}</p>
+<h3>Total</h3>
+<p>${{ analize.total }}</p>
+<div *ngIf="analize.undefined.count > 0">
+    <h3>Productos costo compra indefinidos</h3>
+    <p>#{{ analize.undefined.count }}</p>
+</div>
+<form (submit)="search()">
+    <input type="date" [(ngModel)]="date.from" name="from" id="search"><label><mat-icon>date_range</mat-icon></label>
+    <input type="date" [(ngModel)]="date.to" name="to" id="search"><label><mat-icon>date_range</mat-icon></label>
+    <button type="submit">Buscar</button>
+</form>
+
+
+
+
+
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Total</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+        </tr>
+    </thead>
+
+    <tbody [ngClass]="{ 'loadingForm': request == true}">
+
+        <tr *ngFor="let sale of sales" [routerLink]="['/sales', sale.id]">
+            <td>{{ sale.id }}</td>
+            <td> ${{ sale.total }}</td>
+            <td>{{ sale.created_at | date: format }}</td>
+            <td>{{ sale.created_at | date: 'hh:mm a' }}</td>
+        </tr>
+
+
+    </tbody>
+</table>
+
+<router-outlet></router-outlet>

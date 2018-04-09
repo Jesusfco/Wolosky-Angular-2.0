@@ -1,0 +1,60 @@
+<mat-progress-bar mode="indeterminate" *ngIf="request" class="barLoader"></mat-progress-bar>
+
+<div class="cardSpace" [@background]="state.background">
+
+    <div class="closeCardBackground" (click)="closePop()">
+        <h5 class="closeIcon">
+            <mat-icon>close</mat-icon>
+        </h5>
+    </div>
+
+    <div class="cardModule" [@card]="state.card">
+        <h2>Nuevo Producto</h2>
+        <form (submit)="formSubmit()" autocomplete="off" [ngClass]="{ 'loadingForm': request == true}">
+
+
+            <div>
+                <label>Nombre</label><br>
+                <input [(ngModel)]="product.name" name="name" type="text" [ngClass]="{ 'inputError': form.name >= 1? 'inputVerified': form.name == -1 }"><br>
+                <small class="smallError" *ngIf="form.name == 1">Requerido</small>
+                <small class="smallError" *ngIf="form.name == 2">Nombre ya asignado</small>
+            </div>
+
+            <div>
+                <label>Codigo de barras</label><br>
+                <input [(ngModel)]="product.code" name="code" type="text" [ngClass]="{ 'inputError': form.code >= 1, 'inputVerified': form.code == -1 }"><br>
+                <small class="smallError" *ngIf="form.code == 2">Codigo ya asignado</small>
+            </div>
+
+            <div>
+                <label>Precio</label><br>
+                <input [(ngModel)]="product.price" name="price" type="number" [ngClass]="{ 'inputError': form.price >= 1}"><br>
+                <small class="smallError" *ngIf="form.price == 1">Requerido</small>
+            </div>
+
+            <div>
+                <label>Precio de compra</label><br>
+                <input [(ngModel)]="product.cost_price" name="cost_price" type="number" min="0"><br>
+            </div>
+
+            <div>
+                <label>Cantidad</label><br>
+                <input [(ngModel)]="product.stock" name="stock" type="number"><br>
+            </div>
+
+            <div>
+                <label>Departamento:</label><br>
+                <input [(ngModel)]="product.department" name="department" type="text"><br>
+            </div>
+
+            <div>
+                <label>Reorden</label><br>
+                <input [(ngModel)]="product.reorder" name="reorder" type="number"><br>
+            </div>
+
+            <button type="submit" class="btn btnAccept">Crear Producto</button>
+
+        </form>
+
+    </div>
+</div>

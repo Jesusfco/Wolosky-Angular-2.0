@@ -1,0 +1,69 @@
+<h1 class="routeTitle">Punto de Venta</h1>
+
+<form (submit)="identifyProduct()">
+    <div class="divSearch">
+        <input [(ngModel)]="search.name" [matAutocomplete]="auto" (keyup)="getSugest($event.keyCode)" placeholder="Codigo de barras / Nombre del producto" name="name" type="search" id="search">
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let product of sugests" [value]="product.name">
+                {{ product.name }}
+            </mat-option>
+        </mat-autocomplete>
+        <!-- <label *ngIf="search.name == undefined || search.name == ''"><mat-icon>search</mat-icon></label>
+        <label (click)="search.name = undefined" *ngIf="search.name !== undefined && search.name !== ''">
+            <mat-icon>close</mat-icon>
+            </label> -->
+
+
+    </div>
+
+
+
+    <!-- <button class="btn btnSearch" type="submit">Agregar</button> -->
+    <h3 class="totalForm">Total: {{ sale.total }}</h3>
+</form>
+
+
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Subtotal</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product of sale.description">
+            <td>{{ product.name | lowercase }}</td>
+            <td>{{ product.quantity }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.subtotal }}</td>
+            <td>
+                <!-- <mat-icon>add_shopping_cart</mat-icon>
+                <a [routerLink]="['/inventory/edit', product.id]">
+                    <mat-icon>edit</mat-icon>
+                </a> -->
+                <mat-icon (click)="sale.deleteProduct(product.product_id)">delete</mat-icon>
+            </td>
+
+        </tr>
+
+    </tbody>
+</table>
+
+<!-- <h3>Total: {{ sale.total }}</h3> -->
+<button class="btn btnCancel" (click)="restoreSale()">Cancelar</button>
+<button (click)="goSaleProcess()" *ngIf="sale.description.length != 0" class="btn btnSale">Vender</button>
+
+
+<button *ngIf="sale.description.length == 0" class="btn  btnSaleNone">Vender</button>
+<!-- <a [routerLink]="['/inventory/create']">
+    <button mat-fab color="pri" id="createBtn" (click)="createPro = !createPro">
+        <mat-icon >add_shopping_cart</mat-icon>
+    </button>
+</a> -->
+
+<router-outlet></router-outlet>

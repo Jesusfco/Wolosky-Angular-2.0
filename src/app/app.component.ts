@@ -17,9 +17,10 @@ export class AppComponent {
   stateLoader: string = "initial";
   
   localData: Storage = new Storage();
+  
 
   constructor(
-    private loginService: LoginService,
+    private _http: LoginService,
     private router: Router
   ){}
 
@@ -32,28 +33,29 @@ export class AppComponent {
       setTimeout(() => {
         this.loaderAnimation();
       }, 1000);
+    }, 100);
 
-      if(this.localData.getToken() != undefined ){ 
+    if(this.localData.getToken() != undefined ){ 
         // console.log(this.localData.getToken());
         this.checkLogin();
         return;
       }
-
-      
-    }, 100);
 
     this.router.navigate(['/login']);
 
   }
 
   checkLogin(){
-    this.loginService.checkAuth().then(
+    this._http.checkAuth().then(
       data => {
 
         this.localData.storageUserData(data.user);
         
-        if(this.router.url == '/login') 
+        if(this.router.url == '/login') {
+          
           this.router.navigate(['/users']);
+        }
+          this.storeInventoryHttp();
       },
       error =>  {
         localStorage.removeItem('token');
@@ -68,5 +70,14 @@ export class AppComponent {
   }
   loaderAnimation(){
     this.stateLoader = (this.stateLoader === 'initial' ? 'final' : 'initial');
+  }
+
+  storeInventoryHttp(){
+    this._http.getProducts().then(
+      data => {
+          this.localData.storageInventory(data);
+      },
+      error => console.log(error)
+    );
   }
 }

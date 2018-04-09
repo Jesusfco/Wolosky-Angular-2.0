@@ -1,0 +1,39 @@
+#search {
+    background: white;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    height: 44px;
+    outline: none;
+    transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+    width: 200px;
+    padding-left: 42px;
+}
+
+#search:focus {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.16);
+}
+
+#search:hover {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.16);
+}
+
+#search+label {
+    position: absolute;
+    padding-top: 5px;
+    margin-left: -190px;
+    margin-top: 5px;
+}
+
+tbody {
+    text-align: center;
+    display: table-row-group;
+}
+
+tbody div {
+    width: 98%;
+    height: 1px;
+    display: block;
+    margin: 0 auto;
+    background: rgb(180, 180, 180)
+}

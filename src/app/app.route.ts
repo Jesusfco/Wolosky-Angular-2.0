@@ -17,6 +17,19 @@ import { EditScheduleComponent } from './user/edit-user/edit-schedule/edit-sched
 import { ReceiptComponent } from './receipt/receipt.component';
 import { CreateRecieptComponent } from './receipt/create-reciept/create-reciept.component';
 
+import { EventComponent } from './event/event.component';
+import { CreateEventComponent } from './event/create-event/create-event.component';
+import { AssignUserEventComponent } from './event/assign-user-event/assign-user-event.component';
+
+// PUNTO DE VENTA
+import { InventoryComponent } from './inventory/inventory.component';
+import { NewProductComponent } from './inventory/new-product/new-product.component';
+import { EditProductComponent } from './inventory/edit-product/edit-product.component';
+import { SalePointComponent } from './sale-point/sale-point.component';
+import { SaleProcessComponent } from './sale-point/sale-process/sale-process.component';
+import { SalesComponent } from './sales/sales.component';
+import { ShowSaleComponent } from './sales/show-sale/show-sale.component';
+
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
@@ -48,6 +61,32 @@ export const routes: Routes = [
             { path: 'create', component: CreateRecieptComponent },
         ]
     },
+
+    {
+        path: 'events',
+        component: ReceiptComponent,
+        children: [
+            { path: 'create', component: CreateEventComponent },
+            { path: 'assign', component: AssignUserEventComponent },
+        ]
+    },
+
+    // PUNTO DE VENTA
+    { path: 'sales', component: SalesComponent,
+        children : [
+            { path: ':id', component: ShowSaleComponent },
+        ] },
+    { path: 'inventory', component: InventoryComponent,
+        children : [
+            { path: 'create', component: NewProductComponent },
+            { path: 'edit/:id', component: EditProductComponent },
+        ]
+    },
+    { path: 'sale-point', component: SalePointComponent,
+        children: [
+            { path: 'sale-process', component: SaleProcessComponent }
+    ]},
+
     {path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: '**', component:  PageNotFoundComponent },
 ]
