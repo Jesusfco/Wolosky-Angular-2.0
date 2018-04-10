@@ -2,6 +2,7 @@ import { Component, OnInit,OnDestroy } from '@angular/core';
 import { BackgroundCard, Card } from '../../animations/card.animation';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReceiptService } from '../receipt.service';
+import { Storage } from '../../storage';
 // import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
@@ -56,6 +57,8 @@ export class CreateRecieptComponent implements OnInit {
     description: 0,
     form: true,
   };
+
+  public storage: Storage =  new Storage();
 
   constructor(private router: Router,
     private actRou: ActivatedRoute,
@@ -152,13 +155,14 @@ export class CreateRecieptComponent implements OnInit {
 
   validateMonthlyPayment(){
     let d = new Date();    
+    console.log(d.getDate());
 
     if((d.getMonth() + 1) == this.payment.month){
-      if(d.getDay() <= 3){
+      if(d.getDate() <= 3){
          this.payment.monthlyAmount = (this.payment.monthly - this.desc);
          this.validation.paymentDate = 1;
         }
-        else if(d.getDay() >= 11){
+        else if(d.getDate() >= 11){
           this.payment.monthlyAmount = (this.payment.monthly + this.recharge);
           this.validation.paymentDate = 2;
       } else {
@@ -186,6 +190,8 @@ export class CreateRecieptComponent implements OnInit {
       data => {
         console.log(data);
         this.closePop();
+        if(this.payment.payment_type == false)
+          this.storage.updateCash(data.amount);
       },
       error => console.log(error)
     );

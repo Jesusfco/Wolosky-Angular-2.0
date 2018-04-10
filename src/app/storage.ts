@@ -133,6 +133,12 @@ export class Storage {
         localStorage.setItem('userCash', data.cash);
     }
 
+    updateCash(cash){
+        let x = parseInt(localStorage.getItem('userCash'));
+        x += cash;
+        localStorage.setItem('userCash', x.toString());
+    }
+
     storeServiceData(service){
         localStorage.setItem('products_limit', service.products_limit);
         localStorage.setItem('users_limit', service.users_limit);
