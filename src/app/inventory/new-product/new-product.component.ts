@@ -61,7 +61,7 @@ export class NewProductComponent implements OnInit {
       this.validateUniqueName();
     if(this.product.code !== null || this.product.code !== '')
       this.validateUniqueCode();
-    this.validatePrice();
+    // this.validatePrice();
 
     if(this.form.validate !== true){
       this.request = false;
@@ -136,15 +136,7 @@ export class NewProductComponent implements OnInit {
       this.form.code = -1;
     }
 
-  }//Function that validate Product => Code unique but enable to works if is it null
-
-  validatePrice(){
-    if(this.product.price == null){
-      this.form.price = 1;
-      this.form.validate = false;
-    } 
-    else { this.form.price = -1 }
-  }//Validacion del Precio requerido
+  }//Function that validate Product => Code unique but enable to works if is it null  
 
   restoreValidations(){
     this.form = {

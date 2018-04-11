@@ -19,14 +19,20 @@
                 <small class="smallError" *ngIf="form.name == 2">Nombre ya asignado</small>
             </div>
 
-            <div>
-                <label>Precio</label><br>
-                <input [(ngModel)]="productEditable.price" name="price" type="number" [ngClass]="{ 'inputError': form.price >= 1}" min="0"><br>
+            <div *ngIf="storage.getUserType() >= 6">
+                <label>Precio Público</label><br>
+                <input [(ngModel)]="productEditable.price_public" name="price_public" type="number" min="0"><br>
                 <small class="smallError" *ngIf="form.price == 1">Requerido</small>
             </div>
 
-            <div>
-                <label>Precio de compra</label><br>
+            <div *ngIf="storage.getUserType() >= 6">
+                <label>Precio Interno</label><br>
+                <input [(ngModel)]="productEditable.price_intern" name="price_inter" type="number" min="0"><br>
+                <!-- <small class="smallError" *ngIf="form.price == 1">Requerido</small> -->
+            </div>
+
+            <div *ngIf="storage.getUserType() >= 6">
+                <label>Costo de Compra</label><br>
                 <input [(ngModel)]="productEditable.cost_price" name="cost_price" type="number" min="0"><br>
             </div>
 

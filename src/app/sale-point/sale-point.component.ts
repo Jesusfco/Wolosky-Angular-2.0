@@ -79,11 +79,19 @@ export class SalePointComponent implements OnInit {
     for(let x of this.inventory){
 
       if(x.code == this.search.name || x.name == this.search.name.toUpperCase()){
-
+        if(this.sale.type == 1)
         this.sale.pushProduct({
             product_id: x.id,
             name: x.name,
-            price: x.price,
+            price: x.price_public,            
+            quantity: this.search.quantity,
+          });
+
+        if(this.sale.type > 1)
+        this.sale.pushProduct({
+            product_id: x.id,
+            name: x.name,            
+            price: x.price_intern,
             quantity: this.search.quantity,
           });
 
@@ -95,6 +103,31 @@ export class SalePointComponent implements OnInit {
     // this.sale.storageLocalSale();
 
   }
+
+  checkPrices(){
+
+    for(let pro of this.inventory){
+
+      for (let x = 0; x < Object.keys(this.sale.description).length; x++){
+
+        if(this.sale.description[x].product_id == pro.id){          
+          if(this.sale.type == 1)
+            this.sale.description[x].price = pro.price_public;
+          if(this.sale.type > 1)
+            this.sale.description[x].price = pro.price_intern;
+
+            break;
+
+        }
+
+      }
+
+    }
+
+    this.sale.setSubtotal();
+    this.sale.getTotal();
+
+  }//   CHECK PRICES() FUNCTION
 
   restoreFormValue(){
     this.form = {

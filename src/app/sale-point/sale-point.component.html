@@ -1,5 +1,17 @@
 <h1 class="routeTitle">Punto de Venta</h1>
 
+<div>
+
+    <label>Tipo de Venta:</label><br>
+    <select [(ngModel)]="sale.type" name="type" (change)="checkPrices()">
+            <option value="1">Público</option> 
+            <option value="2">Interno</option>
+            <option value="3">Interno Quincena</option>                                                           
+            
+    </select>
+
+</div>
+
 <form (submit)="identifyProduct()">
     <div class="divSearch">
         <input [(ngModel)]="search.name" [matAutocomplete]="auto" (keyup)="getSugest($event.keyCode)" placeholder="Codigo de barras / Nombre del producto" name="name" type="search" id="search">

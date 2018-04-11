@@ -3,13 +3,16 @@ import { SaleDescription } from './sale-description';
 export class Sale {
     public id: number;
     public total: number;
-    public user_id: number;
+    public creator_id: number;
+    public creator_name: string;
     public description: Array<any>= [];
     public clientMoney: number;
     public created_at: string;
+    public type: number;
 
     constructor(){
         this.total = 0;
+        this.type = 1;
     }
 
     storageLocalSale(){
@@ -40,7 +43,13 @@ export class Sale {
         return true;
     }
 
+    setSubtotal(){
+        for (let x = 0; x < Object.keys(this.description).length; x++){
+            this.description[x].subtotal = this.description[x].price * this.description[x].quantity;
+        }
+    }
     getTotal(){
+        
         this.total = 0;
         for(let x of this.description){
             this.total += x.subtotal;

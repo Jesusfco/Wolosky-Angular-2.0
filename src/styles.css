@@ -21,6 +21,10 @@ h5 {
     font-family: 'Oswald', sans-serif;
 }
 
+a {
+    color: black;
+}
+
 
 /* Estilo de buscadores Input */
 
@@ -164,6 +168,7 @@ th {
     border: none;
     cursor: pointer;
     margin-top: 20px;
+    background-color: rgb(255, 0, 200);
 }
 
 .btn:focus {}

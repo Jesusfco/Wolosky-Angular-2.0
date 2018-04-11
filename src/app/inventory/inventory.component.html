@@ -9,7 +9,8 @@
         <thead>
             <tr>
                 <th (click)="sortName()" class="alignLeft">Nombre</th>
-                <th (click)="sortPrice()">Precio</th>
+                <th (click)="sortPrice()">Precio P</th>
+                <th (click)="sortPrice()">Precio I</th>
                 <th (click)="sortStock()">Cantidad</th>
                 <th>Reorden</th>
                 <th (click)="sortDepartment()">Departamento</th>
@@ -20,7 +21,8 @@
 
             <tr (click)="updateObservable()" [routerLink]="['/inventory/edit', product.id]" *ngFor="let product of products" [ngClass]="{ 'advice': product.stock < product.reorder && product.stock > 0, 'danger': product.stock < 1 }">
                 <td class="alignLeft">{{ product.name | lowercase }}</td>
-                <td>$ {{ product.price }}</td>
+                <td>$ {{ product.price_public }}</td>
+                <td>$ {{ product.price_intern }}</td>
                 <td> {{ product.stock }}</td>
                 <td> {{ product.reorder }}</td>
                 <td> {{ product.department }}</td>
@@ -32,7 +34,8 @@
 
             <tr *ngFor="let product of products" [ngClass]="{ 'advice': product.stock < product.reorder && product.stock > 0, 'danger': product.stock < 1 }">
                 <td class="alignLeft">{{ product.name | lowercase }}</td>
-                <td>{{ product.price }}</td>
+                <td>$ {{ product.price_public }}</td>
+                <td>$ {{ product.price_intern }}</td>
                 <td>{{ product.stock }}</td>
                 <td>{{ product.reorder }}</td>
                 <td>{{ product.department }}</td>

@@ -3,15 +3,16 @@ export class Product {
     public id: number;
     public name: string;
     public code: string;
-    public price: number;
+    public price_public: number;
+    public price_intern: number;
     public cost_price: number;
     public reorder: number;
     public stock: number;
     public department: string;
     public created_at: string;
-    public edit:boolean;
-    public delete:boolean;
-    public add:boolean;
+    public edit: boolean;
+    public delete: boolean;
+    public add: boolean;
 
 
     constructor(){
@@ -22,6 +23,9 @@ export class Product {
         this.stock = 0;
         this.name = '';
         this.code = '';
+        this.price_intern = 0;
+        this.price_public = 0;
+        this.cost_price = 0;
     }
 
     afterSale(sale){

@@ -37,12 +37,13 @@
         <a [routerLink]="['/events']">
             <li><button mat-button>Eventos</button></li>
         </a>
-        <a [routerLink]="['/sale-point']">
-            <li><button mat-button>Punto de Venta <span class="notified">{{ userData.getSalesErrorConnection() }}</span></button></li>
-        </a>
 
         <a [routerLink]="['/inventory']">
             <li><button mat-button>Inventario</button></li>
+        </a>
+
+        <a [routerLink]="['/sale-point']">
+            <li><button mat-button>Punto de Venta <span class="notified">{{ userData.getSalesErrorConnection() }}</span></button></li>
         </a>
 
         <a [routerLink]="['/sales']">

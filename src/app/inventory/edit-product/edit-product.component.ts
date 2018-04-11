@@ -31,7 +31,7 @@ export class EditProductComponent implements OnInit {
 
   
   request: boolean = false;
-  
+  storage: Storage = new Storage();
   editProcess: boolean = true;
 
   form = {validate: true, name: 0, code: 0, price: 0}; 
@@ -75,7 +75,7 @@ export class EditProductComponent implements OnInit {
       this.validateUniqueName();
     if(this.validateCode())
       this.validateUniqueCode();
-    this.validatePrice();
+    // this.validatePrice();
 
     if(this.form.validate == false){
       this.request = false;
@@ -155,14 +155,6 @@ export class EditProductComponent implements OnInit {
       }      
     }    
   }
-
-  validatePrice(){
-    if(this.productEditable.price == null){
-      this.form.price = 1;
-      this.form.validate = false;
-    } 
-    else { this.form.price = -1 }
-  }//Validacion del Precio requerido
 
   restoreValidation(){
     this.form = {

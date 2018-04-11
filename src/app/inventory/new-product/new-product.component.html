@@ -26,14 +26,20 @@
                 <small class="smallError" *ngIf="form.code == 2">Codigo ya asignado</small>
             </div>
 
-            <div>
-                <label>Precio</label><br>
-                <input [(ngModel)]="product.price" name="price" type="number" [ngClass]="{ 'inputError': form.price >= 1}"><br>
+            <div *ngIf="storage.getUserType() >= 6">
+                <label>Precio Público</label><br>
+                <input [(ngModel)]="product.price_public" name="price_public" type="number" min="0"><br>
                 <small class="smallError" *ngIf="form.price == 1">Requerido</small>
             </div>
 
-            <div>
-                <label>Precio de compra</label><br>
+            <div *ngIf="storage.getUserType() >= 6">
+                <label>Precio Interno</label><br>
+                <input [(ngModel)]="product.price_intern" name="price_inter" type="number" min="0"><br>
+                <!-- <small class="smallError" *ngIf="form.price == 1">Requerido</small> -->
+            </div>
+
+            <div *ngIf="storage.getUserType() >= 6">
+                <label>Costo de Compra</label><br>
                 <input [(ngModel)]="product.cost_price" name="cost_price" type="number" min="0"><br>
             </div>
 
@@ -42,10 +48,10 @@
                 <input [(ngModel)]="product.stock" name="stock" type="number"><br>
             </div>
 
-            <div>
+            <!-- <div>
                 <label>Departamento:</label><br>
                 <input [(ngModel)]="product.department" name="department" type="text"><br>
-            </div>
+            </div> -->
 
             <div>
                 <label>Reorden</label><br>
