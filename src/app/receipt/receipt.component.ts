@@ -19,7 +19,10 @@ export class ReceiptComponent implements OnInit {
     from: "",
     to: "",
     name: null,
-    id: null
+    id: null,
+    items: 25,
+    page: 1,
+    total: 0,
   };
 
   public notifications = {
@@ -47,6 +50,13 @@ export class ReceiptComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  pageAction(data){
+    
+    this.search.items = data.pageSize;
+    this.search.page = data.pageIndex + 1;
+    this.getReceipts();
   }
 
   getDates(){
@@ -94,7 +104,7 @@ export class ReceiptComponent implements OnInit {
           this.notifications.on = true
 
         this.notifications.debtorsMonthly = data.count;
-        this.notifications.debtors = data.users;        
+        this.notifications.debtors = data.users;
 
       },
       error => console.log(error),
@@ -136,7 +146,10 @@ export class ReceiptComponent implements OnInit {
     if(this.search.name == '')
       this.search.id = null;
     this._http.getReceipt(this.search).then(
-      data => this.receipts = data,
+      data => {
+        this.receipts = data.data;
+        this.search.total = data.total;
+      },
       error => console.log(error)
     ).then(
       () => this.sendingData.receipts = false,

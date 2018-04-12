@@ -37,7 +37,7 @@ export class UserComponent implements OnInit {
   
 
   pageAction(data){
-    console.log(data);
+    
     this.search.items = data.pageSize;
     this.search.page = data.pageIndex + 1;
     this.searchRequest();

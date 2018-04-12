@@ -9,37 +9,37 @@
     <h3>Productos costo compra indefinidos</h3>
     <p>#{{ analize.undefined.count }}</p>
 </div>
-<form (submit)="search()">
-    <input type="date" [(ngModel)]="date.from" name="from" id="search"><label><mat-icon>date_range</mat-icon></label>
-    <input type="date" [(ngModel)]="date.to" name="to" id="search"><label><mat-icon>date_range</mat-icon></label>
+<form (submit)="getData()">
+    <input type="date" [(ngModel)]="search.from" name="from" id="search"><label><mat-icon>date_range</mat-icon></label>
+    <input type="date" [(ngModel)]="search.to" name="to" id="search"><label><mat-icon>date_range</mat-icon></label>
     <button type="submit">Buscar</button>
 </form>
 
+<div class="responsive-table">
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Total</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+            </tr>
+        </thead>
+
+        <tbody [ngClass]="{ 'loadingForm': request == true}">
+
+            <tr *ngFor="let sale of sales" [routerLink]="['/sales', sale.id]">
+                <td>{{ sale.id }}</td>
+                <td> ${{ sale.total }}</td>
+                <td>{{ sale.created_at | date: format }}</td>
+                <td>{{ sale.created_at | date: 'hh:mm a' }}</td>
+            </tr>
 
 
-
-
-<table>
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Total</th>
-            <th>Fecha</th>
-            <th>Hora</th>
-        </tr>
-    </thead>
-
-    <tbody [ngClass]="{ 'loadingForm': request == true}">
-
-        <tr *ngFor="let sale of sales" [routerLink]="['/sales', sale.id]">
-            <td>{{ sale.id }}</td>
-            <td> ${{ sale.total }}</td>
-            <td>{{ sale.created_at | date: format }}</td>
-            <td>{{ sale.created_at | date: 'hh:mm a' }}</td>
-        </tr>
-
-
-    </tbody>
-</table>
+        </tbody>
+    </table>
+    <mat-paginator (page)="pageAction($event)" [length]="search.total" [pageSize]="search.items" [pageSizeOptions]="[5, 10, 25, 50, 100]">
+    </mat-paginator>
+</div>
 
 <router-outlet></router-outlet>

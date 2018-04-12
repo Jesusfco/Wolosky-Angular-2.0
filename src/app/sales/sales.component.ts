@@ -11,9 +11,12 @@ export class SalesComponent implements OnInit {
   public sales: Array<Sale> = [];
   public sal: Sale =  new Sale();
 
-  public date = {
-    from: null,
-    to: null,
+  public search = {
+    from: "",
+    to: "",
+    items: 25,
+    page: 1,
+    total: 0,
   };
   
   public analize = {
@@ -30,7 +33,7 @@ export class SalesComponent implements OnInit {
 
   constructor(private _http: SaleService) {
     this.request = true;
-
+    this.getDates();
     this._http.getSales().then(
       data => {
 
@@ -50,31 +53,47 @@ export class SalesComponent implements OnInit {
   ngOnInit() {
   }
 
-  search(){
+  getData(){
     this.request = true;
-    this._http.getSalesParameter(this.date).then(
+    this._http.getSalesParameter(this.search).then(
       data => {
 
-        this.request = false;
-        this.sales = data;
-        this.analize = this.sal.getGrossProfit(data);
+        
+        this.sales = data.data;
+        this.search.total = data.total;
+        // this.analize = this.sal.getGrossProfit(data);
 
       },
       error => {
         console.log(error);
-        this.request = false;
+
       },
+    ).then(
+      () => {
+        this.request = false;
+      }
     );
 
-    if (this.date.from !== undefined && this.date.to === undefined){
+    if (this.search.from !== undefined && this.search.to === undefined){
 
       
 
     }
-    else if (this.date.from !== undefined && this.date.to !== undefined){
+    else if (this.search.from !== undefined && this.search.to !== undefined){
 
     }
 
   }
-}
 
+  getDates(){
+    let d = new Date();
+
+    if(d.getMonth() <= 8){
+      this.search.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + d.getDate();
+      // this.search.to = d.getFullYear() + "-0" + (d.getMonth() + 2 ) + "-" + "01";    
+    } else {
+      this.search.from = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-" + d.getDate();
+      // this.search.to = d.getFullYear() + "-" + (d.getMonth() + 2 ) + "-" + "01";
+    }
+  }
+}

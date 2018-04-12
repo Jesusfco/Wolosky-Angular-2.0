@@ -17,10 +17,15 @@ export class Sale {
 
     storageLocalSale(){
         localStorage.setItem('saleDescription', JSON.stringify(this.description));
+        localStorage.setItem('saleType', JSON.stringify(this.type));
     }
 
     getLocalSale(){
         return JSON.parse(localStorage.getItem('saleDescription'));
+    }
+
+    getSaleTypeStorage(){
+        return JSON.parse(localStorage.getItem('saleType'));
     }
 
     pushProduct(product){

@@ -47,6 +47,7 @@ export class SalePointComponent implements OnInit {
 
                 if(this.sale.getLocalSale() != undefined){
                   this.sale.description = this.sale.getLocalSale();
+                  this.sale.type = this.sale.getSaleTypeStorage();
                   this.sale.getTotal();
                 }
 

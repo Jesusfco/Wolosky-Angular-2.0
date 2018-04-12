@@ -7,6 +7,12 @@
     transition: 1s;
 }
 
+.type {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
 input {
     margin: 0;
 }

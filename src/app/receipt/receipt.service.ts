@@ -39,7 +39,7 @@ export class ReceiptService {
   }
 
   getReceipt(data){
-    return this._http.post(this.link.url + "receipt/get" + this.token.getTokenUrl(), data)
+    return this._http.post(this.link.url + "receipt/get" + this.token.getTokenUrl() + '&page=' + data.page, data)
               .map(data => data.json()) 
               .toPromise();
   }

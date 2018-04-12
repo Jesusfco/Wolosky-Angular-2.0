@@ -35,6 +35,7 @@ export class SaleProcessComponent implements OnInit {
     
 
     this.sale.description = this.sale.getLocalSale();
+    this.sale.type = this.sale.getSaleTypeStorage();
     this.sale.getTotal();
     let money = this.sale.total;
     this.sale.clientMoney = money;
@@ -60,7 +61,10 @@ export class SaleProcessComponent implements OnInit {
 
   confirmSale(){
     this.sale.setCreatedAt();
+
     localStorage.removeItem('saleDescription');
+    localStorage.removeItem('saleType');
+    
     this._http.postSale(this.sale).then(
       data => {
         let x = parseInt(localStorage.getItem('userCash'));

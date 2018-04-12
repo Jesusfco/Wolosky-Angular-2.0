@@ -17,7 +17,7 @@
                 <th (click)="sortCode()">Codigo</th>
             </tr>
         </thead>
-        <tbody *ngIf="storage.getUserType() > 1 && products != undefined">
+        <tbody *ngIf="storage.getUserType() >= 6 && products != undefined">
 
             <tr (click)="updateObservable()" [routerLink]="['/inventory/edit', product.id]" *ngFor="let product of products" [ngClass]="{ 'advice': product.stock < product.reorder && product.stock > 0, 'danger': product.stock < 1 }">
                 <td class="alignLeft">{{ product.name | lowercase }}</td>
@@ -30,7 +30,7 @@
             </tr>
         </tbody>
 
-        <tbody *ngIf="storage.getUserType() < 2 && products != undefined">
+        <tbody *ngIf="storage.getUserType() == 3 && products != undefined">
 
             <tr *ngFor="let product of products" [ngClass]="{ 'advice': product.stock < product.reorder && product.stock > 0, 'danger': product.stock < 1 }">
                 <td class="alignLeft">{{ product.name | lowercase }}</td>

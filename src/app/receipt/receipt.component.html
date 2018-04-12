@@ -59,6 +59,8 @@
             </tr>
         </tbody>
     </table>
+    <mat-paginator (page)="pageAction($event)" [length]="search.total" [pageSize]="search.items" [pageSizeOptions]="[5, 10, 25, 50, 100]">
+    </mat-paginator>
 </div>
 
 
