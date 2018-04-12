@@ -21,6 +21,8 @@ import { EventComponent } from './event/event.component';
 import { CreateEventComponent } from './event/create-event/create-event.component';
 import { AssignUserEventComponent } from './event/assign-user-event/assign-user-event.component';
 
+import { StatusUserComponent } from './user/status-user/status-user.component';
+
 // PUNTO DE VENTA
 import { InventoryComponent } from './inventory/inventory.component';
 import { NewProductComponent } from './inventory/new-product/new-product.component';
@@ -53,11 +55,12 @@ export const routes: Routes = [
             {path: 'create', component: CreateUserComponent},
             {path: 'show/:id', component: ShowUserComponent},
             {path: 'edit/:id', component: EditUserComponent,
-            children: [
-                { path: 'schedule/:id', component: EditScheduleComponent},
-                { path: 'references/:id', component: EditReferenceComponent},
-            ]
-        }
+                children: [
+                    { path: 'schedule/:id', component: EditScheduleComponent},
+                    { path: 'references/:id', component: EditReferenceComponent},
+                    { path: 'status/:id', component: StatusUserComponent},
+                ]
+            }
         ]
     },
 

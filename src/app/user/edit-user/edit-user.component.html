@@ -12,6 +12,7 @@
         <div>
             <button [routerLink]="['/users/edit/'+ user.id + '/schedule/' + user.id]">Horarios</button>
             <button>Referencias</button>
+            <button [routerLink]="['/users/edit/'+ user.id + '/status/' + user.id]">Status</button>
         </div>
 
         <form (submit)="sendProccess()" autocomplete="off" [ngClass]="{'loadingForm': sendingData == true}">

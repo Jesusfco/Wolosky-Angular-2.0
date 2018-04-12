@@ -63,4 +63,17 @@ export class UserService {
       .toPromise();
   }
 
+
+  getStatus(id) {
+    return this._http.get(this.link.url + 'user/status/' + id + this.token.getTokenUrl())
+    .map(data => data.json())
+    .toPromise();
+  }
+
+  postStatus(record){
+    return this._http.post(this.link.url + 'user/status' + this.token.getTokenUrl(), record)
+            .map(data => data.json())
+            .toPromise();
+  }
+
 }

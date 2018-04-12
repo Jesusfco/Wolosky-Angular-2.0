@@ -92,7 +92,7 @@ export class CreateRecieptComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    if(localStorage.getItem('debtorId') == undefined) return;
+    // if(localStorage.getItem('debtorId') == undefined) return;
 
     localStorage.removeItem('debtorId');
     localStorage.removeItem('receiptStatus');
@@ -145,6 +145,8 @@ export class CreateRecieptComponent implements OnInit {
     );
 
   }
+
+  
 
   validateDescription(){
     if(this.payment.description == ''){

@@ -1,0 +1,70 @@
+<mat-progress-bar mode="indeterminate" *ngIf="sendingData" class="barLoader"></mat-progress-bar>
+
+<div class="background" [@background]="backgroundState"></div>
+<div id="createCard" [@principal]="cardState">
+
+    <div id="cerrarBtn" (click)="close()"> Cerrar <i class="material-icons">close</i></div>
+
+    <h1 align="center">Status de usuario <br> {{ user.name }}</h1>
+
+    <div class="container flexRow" [ngClass]="{'loadingForm': sendingData == true}">
+
+
+        <form class="l6" (submit)="submitForm()">
+
+            <div>
+
+                <label>Status:</label><br>
+                <select [(ngModel)]="record.status" name="status" (change)="validateStatus()">
+                        <option value="1">Alta</option> 
+                        <option value="2">Baja temporal</option>                        
+                        <option value="3">Baja</option>                                                
+                        
+                </select>
+
+                <small class="error" *ngIf="validation.status == 1">Este status es el actual</small>
+
+            </div>
+            <div class="l12">
+                <label>Descripcion/Motivo:</label><br>
+                <textarea class="l12" [(ngModel)]="record.description" name="description"></textarea>
+            </div>
+
+
+            <button class="btn formBtn" type="submit">Modificar Status</button>
+        </form>
+
+        <div class="l6">
+            <h3>Historial de Estados</h3>
+            <div class="responsive-table">
+                <table align="center">
+                    <thead>
+                        <tr>
+                            <!-- <th class="left">Nombre</th> -->
+                            <th>Estado</th>
+                            <th>Descripcion</th>
+                            <th>Fecha</th>
+                        </tr>
+                        <!-- <th colspan="3">Opciones</th> -->
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let sta of status">
+                            <td *ngIf="sta.status == 1">Alta</td>
+                            <td *ngIf="sta.status == 2">Baja Temporal</td>
+                            <td *ngIf="sta.status == 3">Baja</td>
+
+                            <td>{{ sta.description }}</td>
+
+                            <td>{{ sta.created_at }}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+
+
+    </div>
+</div>

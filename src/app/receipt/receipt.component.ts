@@ -88,8 +88,11 @@ export class ReceiptComponent implements OnInit {
   intervalSaleLogic(){
     
     if(localStorage.getItem('receiptStatus') == undefined){
+      
       this.getNotifications();
+      this.getReceipts();
       clearInterval(this.interval);
+      
     } else if(localStorage.getItem('receiptStatus') == '0'){
       clearInterval(this.interval);
     }

@@ -84,6 +84,7 @@ import { ShowSaleComponent } from './sales/show-sale/show-sale.component';
 import { CashComponent } from './cash/cash.component';
 
 import { CashService } from './cash/cash.service';
+import { StatusUserComponent } from './user/status-user/status-user.component';
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import { CashService } from './cash/cash.service';
     CreateEventComponent,
     AssignUserEventComponent,
     CashComponent,
+    StatusUserComponent,
   ],
   imports: [
     BrowserModule,

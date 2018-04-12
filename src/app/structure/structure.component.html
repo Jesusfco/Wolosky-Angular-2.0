@@ -19,7 +19,8 @@
                 <p *ngIf="userData.getUserType() == 2">Maestro/a</p>
                 <p *ngIf="userData.getUserType() == 3">Cajera</p>
                 <p *ngIf="userData.getUserType() == 6">Administrador</p>
-                <p *ngIf="userData.getUserType() == 6" class="cash" [routerLink]="['/cash']"> $ {{ userData.getCash() }}</p>
+                <p *ngIf="userData.getUserType() == 7">Desarrollador</p>
+                <p *ngIf="userData.getUserType() >= 6" class="cash" [routerLink]="['/cash']"> $ {{ userData.getCash() }}</p>
                 <p *ngIf="userData.getUserType() == 3"> $ {{ userData.getCash() }}</p>
             </div>
 
