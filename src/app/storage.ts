@@ -138,6 +138,9 @@ export class Storage {
         x += cash;
         localStorage.setItem('userCash', x.toString());
     }
+    setCash(cash){
+        localStorage.setItem('userCash', cash.toString());
+    }
 
     storeServiceData(service){
         localStorage.setItem('products_limit', service.products_limit);

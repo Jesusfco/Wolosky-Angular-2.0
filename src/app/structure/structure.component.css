@@ -109,6 +109,15 @@ nav button {
     padding: 0
 }
 
+#userTypeInf .cash {
+    cursor: pointer;
+    transition: .25s;
+}
+
+#userTypeInf .cash:hover {
+    color: #00bb00 !important;
+}
+
 
 /* Area de Aplicacion principal */
 

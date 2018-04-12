@@ -81,6 +81,9 @@ import { SaleService } from './sale-point/sale.service';
 import { SaleProcessComponent } from './sale-point/sale-process/sale-process.component';
 import { SalesComponent } from './sales/sales.component';
 import { ShowSaleComponent } from './sales/show-sale/show-sale.component';
+import { CashComponent } from './cash/cash.component';
+
+import { CashService } from './cash/cash.service';
 
 @NgModule({
   declarations: [
@@ -114,6 +117,7 @@ import { ShowSaleComponent } from './sales/show-sale/show-sale.component';
     EventComponent,
     CreateEventComponent,
     AssignUserEventComponent,
+    CashComponent,
   ],
   imports: [
     BrowserModule,
@@ -163,7 +167,8 @@ import { ShowSaleComponent } from './sales/show-sale/show-sale.component';
                 LoginService, 
                 ReceiptService,
                 InventoryService,
-                SaleService ],
+                SaleService,
+                CashService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

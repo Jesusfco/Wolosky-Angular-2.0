@@ -31,12 +31,19 @@ import { SalesComponent } from './sales/sales.component';
 import { ShowSaleComponent } from './sales/show-sale/show-sale.component';
 
 
+import { CashComponent } from './cash/cash.component';
+
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 export const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent
+    },
+
+    {
+        path: 'cash',
+        component: CashComponent
     },
     
     {

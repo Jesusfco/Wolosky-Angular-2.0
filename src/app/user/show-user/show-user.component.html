@@ -8,7 +8,7 @@
 
     <div class="cardModule" [@card]="state.card">
         <h2>{{ user.name }}</h2>
-        <div>
+        <div class="options">
             <mat-icon [routerLink]="['/users/edit', user.id]">edit</mat-icon>
             <mat-icon>delete</mat-icon>
         </div>
