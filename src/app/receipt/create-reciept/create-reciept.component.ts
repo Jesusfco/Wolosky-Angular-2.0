@@ -76,7 +76,7 @@ export class CreateRecieptComponent implements OnInit {
 
     this._http.getMonthlyPayment({id: localStorage.getItem('debtorId')}).then(
       data => {
-        this.payment.monthly = data.amount;
+        this.payment.monthly = parseInt(data.amount);
         this.payment.userId = data.user.id;
         this.payment.userName = data.user.name;
         this.validateMonthlyPayment();
@@ -138,7 +138,7 @@ export class CreateRecieptComponent implements OnInit {
 
     this._http.getMonthlyPayment({id: id}).then(
       data => {
-        this.payment.monthly = data.amount;
+        this.payment.monthly = parseInt(data.amount);
         this.validateMonthlyPayment();
       },
       error => console.log(error)

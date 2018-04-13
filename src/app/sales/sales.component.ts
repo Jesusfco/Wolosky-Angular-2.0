@@ -85,6 +85,12 @@ export class SalesComponent implements OnInit {
 
   }
 
+  pageAction(data){
+    this.search.items = data.pageSize;
+    this.search.page = data.pageIndex + 1;
+    this.getData();
+  }
+
   getDates(){
     let d = new Date();
 
