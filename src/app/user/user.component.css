@@ -5,3 +5,11 @@ input {
     border-radius: 3px;
     margin-bottom: 15px;
 }
+
+.status2 {
+    background: #d2d2d2;
+}
+
+.status3 {
+    background: grey
+}
