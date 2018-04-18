@@ -34,6 +34,7 @@ import { ShowSaleComponent } from './sales/show-sale/show-sale.component';
 
 
 import { CashComponent } from './cash/cash.component';
+import { CutoutComponent } from './cutout/cutout.component';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
@@ -79,6 +80,11 @@ export const routes: Routes = [
             { path: 'create', component: CreateEventComponent },
             { path: 'assign', component: AssignUserEventComponent },
         ]
+    },
+
+    {
+        path: 'cutout',
+        component: CutoutComponent,
     },
 
     // PUNTO DE VENTA

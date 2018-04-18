@@ -85,6 +85,8 @@ import { CashComponent } from './cash/cash.component';
 
 import { CashService } from './cash/cash.service';
 import { StatusUserComponent } from './user/status-user/status-user.component';
+import { CutoutComponent } from './cutout/cutout.component';
+import { CutoutService } from './cutout/cutout.service';
 
 @NgModule({
   declarations: [
@@ -120,6 +122,7 @@ import { StatusUserComponent } from './user/status-user/status-user.component';
     AssignUserEventComponent,
     CashComponent,
     StatusUserComponent,
+    CutoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -165,12 +168,13 @@ import { StatusUserComponent } from './user/status-user/status-user.component';
     
     
   ],
-  providers: [  UserService, 
-                LoginService, 
+  providers: [  UserService,
+                LoginService,
                 ReceiptService,
                 InventoryService,
                 SaleService,
-                CashService ],
+                CashService,
+                CutoutService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

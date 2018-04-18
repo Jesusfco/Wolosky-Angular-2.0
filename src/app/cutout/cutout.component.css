@@ -1,0 +1,30 @@
+.receiptDiv {
+    display: block;
+    background: whitesmoke;
+    position: relative;
+}
+
+.receiptDiv h3 {
+    margin: 0;
+}
+
+.receiptDiv i {
+    color: black;
+    cursor: pointer;
+    /* height: 10px; */
+    position: absolute;
+    right: 0;
+    top: 0px;
+    transition: .3s ease-in
+}
+
+.iconActive {
+    transform: rotate(180deg);
+}
+
+.receiptDiv p {
+    position: absolute;
+    right: 35px;
+    top: 5px;
+    margin: 0;
+}
