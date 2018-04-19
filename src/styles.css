@@ -497,3 +497,23 @@ select:-webkit-autofill {
     font-size: 31px;
     color: #ffffff;
 }
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    body {
+        height: 100vh !important;
+    }
+    #reciboNew * {
+        visibility: visible !important;
+    }
+    #reciboNew {
+        position: absolute;
+        display: block !important;
+        left: 0 !important;
+        top: 0 !important;
+        z-index: 1000 !important;
+        visibility: visible !important;
+    }
+}

@@ -62,6 +62,7 @@ export class CreateRecieptComponent implements OnInit {
     form: true,
   };
   
+  public request: any = undefined;
 
   public storage: Storage =  new Storage();
 
@@ -73,6 +74,8 @@ export class CreateRecieptComponent implements OnInit {
       this.payment.month = d.getMonth() + 1;
 
       this.checkDebtorLocalStorage();
+
+      
 
     }
 
@@ -204,8 +207,8 @@ export class CreateRecieptComponent implements OnInit {
     this.sendingData.request = true;
     this._http.postNewReceipt(this.payment).then(
       data => {
-        console.log(data);
-        this.closePop();
+        this.request = data;
+        // this.closePop();
         if(this.payment.payment_type == false)
           this.storage.updateCash(data.amount);
       },
@@ -223,6 +226,10 @@ export class CreateRecieptComponent implements OnInit {
       form: true,
     };
 
+  }
+
+  printReceipt(){  
+      window.print();      
   }
 
 

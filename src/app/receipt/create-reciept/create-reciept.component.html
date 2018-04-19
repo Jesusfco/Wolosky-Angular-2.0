@@ -12,7 +12,7 @@
     <div class="cardModule" [@card]="state.card">
         <h2>Crear Recibo</h2>
 
-        <form (submit)="createReceipt()">
+        <form *ngIf="request == undefined" (submit)="createReceipt()">
             <div class="flexform">
 
                 <div *ngIf="payment.payment_type == false" class="checkBox"><input [(ngModel)]="payment.payment_type" name="payment_type" type="checkbox">Efectivo</div>
@@ -75,9 +75,22 @@
 
                 </div>
 
-                <button class="btn formBtn" style="background: rgb(238, 163, 0)" type="submit">Crear Recibo</button>
+                <button *ngIf="sendingData.request == false" class="btn formBtn" style="background: rgb(238, 163, 0)" type="submit">Crear Recibo</button>
+                <button *ngIf="sendingData.request == true" class="btn formBtn" style="background: rgb(209, 209, 209)" disabled>Crear Recibo</button>
 
             </div>
         </form>
+        <button class="btn" *ngIf="request != undefined" (click)="printReceipt()">Imprimir Recibo</button>
+
     </div>
+</div>
+
+<div *ngIf="request != undefined" id="reciboNew">
+    <h1>RECIBO # {{ request.id }}</h1>
+    <p>MONTO: $ {{ request.amount }}</p>
+    <p>ALUMNO/A: {{ payment.userName }}</p>
+    <p *ngIf="request.type == 1">TIPO DE PAGO: MENSUALIDAD</p>
+    <p *ngIf="request.type == 2">TIPO DE PAGO: INSCRIPCION</p>
+    <p>ATENTIDO POR: {{ storage.getUserName() }}</p>
+    <p>PAGADO EL: {{ request.created_at }}</p>
 </div>
