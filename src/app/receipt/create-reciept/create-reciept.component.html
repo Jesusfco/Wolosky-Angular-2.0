@@ -1,4 +1,5 @@
-<mat-progress-bar mode="indeterminate" *ngIf="sendingData" class="barLoader"></mat-progress-bar>
+<mat-progress-bar mode="indeterminate" *ngIf="sendingData.monthly" class="barLoader"></mat-progress-bar>
+<mat-progress-bar mode="indeterminate" *ngIf="sendingData.request" class="barLoader"></mat-progress-bar>
 
 <div class="cardSpace" [@background]="state.background">
 

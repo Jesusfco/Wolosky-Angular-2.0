@@ -47,7 +47,11 @@ export class CreateRecieptComponent implements OnInit {
   };
 
   public sugests: any = [];
-  public sendingData: boolean = false;
+  public sendingData: any = {
+    request: false,
+    sugest: false,
+    monthly: false
+  };
   public timer: number = 0;
   public desc: number = 50;
   public recharge: number = 100;
@@ -57,6 +61,7 @@ export class CreateRecieptComponent implements OnInit {
     description: 0,
     form: true,
   };
+  
 
   public storage: Storage =  new Storage();
 
@@ -74,6 +79,7 @@ export class CreateRecieptComponent implements OnInit {
   checkDebtorLocalStorage(){
     if(localStorage.getItem('debtorId') == undefined) return;
 
+    this.sendingData.monthly = true;
     this._http.getMonthlyPayment({id: localStorage.getItem('debtorId')}).then(
       data => {
         this.payment.monthly = parseInt(data.amount);
@@ -81,6 +87,8 @@ export class CreateRecieptComponent implements OnInit {
         this.payment.userName = data.user.name;
         this.validateMonthlyPayment();
       }, error => console.log(error)
+    ).then(
+      () => this.sendingData.monthly = false
     );
   }
 
@@ -116,12 +124,14 @@ export class CreateRecieptComponent implements OnInit {
 
     setTimeout(() => {
       
-      if(this.timer == 0){        
-      
+      if(this.timer == 0){
+        this.sendingData.sugest = true;
         this._http.sugestUserReceipt({search: this.payment.userName}).then(
           data => {
             this.sugests = data;
           }, error => console.log(error)
+        ).then(
+          () => this.sendingData.sugest = false
         );
       } 
 
@@ -134,7 +144,8 @@ export class CreateRecieptComponent implements OnInit {
     
     if(this.payment.type !== 1) return;
 
-    this.payment.monthlyAmount = 0;     
+    this.sendingData.monthly = true;
+    this.payment.monthlyAmount = 0;
 
     this._http.getMonthlyPayment({id: id}).then(
       data => {
@@ -142,6 +153,8 @@ export class CreateRecieptComponent implements OnInit {
         this.validateMonthlyPayment();
       },
       error => console.log(error)
+    ).then(
+      () => this.sendingData.monthly = false
     );
 
   }
@@ -188,6 +201,7 @@ export class CreateRecieptComponent implements OnInit {
     if(this.payment.type == 5) this.validateDescription();
     if(this.validation.form == false) return;
     
+    this.sendingData.request = true;
     this._http.postNewReceipt(this.payment).then(
       data => {
         console.log(data);
@@ -196,6 +210,8 @@ export class CreateRecieptComponent implements OnInit {
           this.storage.updateCash(data.amount);
       },
       error => console.log(error)
+    ).then(
+      () => this.sendingData.request = false
     );
   }
 
