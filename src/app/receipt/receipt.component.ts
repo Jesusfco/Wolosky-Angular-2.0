@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReceiptService } from './receipt.service';
 import { Router } from '@angular/router';
+import { Storage } from '../storage';
 
 @Component({
   selector: 'app-receipt',
@@ -43,6 +44,8 @@ export class ReceiptComponent implements OnInit {
     receipts: false,
   };
 
+  public storage: Storage = new Storage();
+  
   constructor(private _http: ReceiptService, private router: Router) { 
     this.getNotifications();
     this.getDates();

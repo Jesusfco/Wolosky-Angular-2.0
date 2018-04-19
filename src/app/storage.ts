@@ -1,3 +1,4 @@
+import { Url } from './url';
 export class Storage {
     public token:string;
     public tokenRequest:string;
@@ -5,6 +6,7 @@ export class Storage {
     public userEmail: string;
     public userId: number;
     public userType: number;
+    public url: Url = new Url();
 
     constructor(){
         if(localStorage.getItem('token') !== null){
@@ -23,7 +25,9 @@ export class Storage {
     getTokenUrl(){
         return '?token=' + this.getToken();
     }
-
+    getUrl() {
+        return this.url.url;
+    }
     getUserName(){
         return localStorage.getItem('userName');
     }
