@@ -25,6 +25,14 @@ a {
     color: black;
 }
 
+.pc {
+    display: flex !important;
+}
+
+.mov {
+    display: none !important;
+}
+
 .relative {
     position: relative;
 }
@@ -387,6 +395,12 @@ select {
     }
     .s6 {
         width: 49%;
+    }
+    .pc {
+        display: none !important;
+    }
+    .mov {
+        display: flex !important;
     }
 }
 
