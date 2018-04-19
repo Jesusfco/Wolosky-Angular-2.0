@@ -1,0 +1,11 @@
+export class Url {
+    public url: string;
+    
+        constructor() {
+            //serverlink
+            this.url = "http://www.yourwebpage.com/api/";
+
+            //localhost
+            this.url = "http://localhost/api/";
+        }
+}
