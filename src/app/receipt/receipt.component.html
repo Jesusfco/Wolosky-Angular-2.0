@@ -57,7 +57,7 @@
                 <!-- <th colspan="3">Opciones</th> -->
             </thead>
             <tbody>
-                <tr *ngFor="let re of receipts">
+                <tr *ngFor="let re of receipts" [routerLink]="['/receipt/edit', re.id]" (click)="updateStartObservable()">
                     <td class="left">{{ re.user_name }}</td>
                     <td>{{ re.created_at }}</td>
                     <td>$ {{ re.amount }}</td>

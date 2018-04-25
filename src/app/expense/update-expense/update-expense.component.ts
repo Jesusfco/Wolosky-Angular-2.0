@@ -76,7 +76,7 @@ export class UpdateExpenseComponent implements OnInit {
 
     this._http.updateExpense(this.expense).then(
       data => {
-        this.router.navigate(['/expenses']);
+        this.closePop();
         localStorage.removeItem('expenseUpdateStatus');
       },
 

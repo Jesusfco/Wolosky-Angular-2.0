@@ -61,8 +61,9 @@ import { EditReferenceComponent } from './user/edit-user/edit-reference/edit-ref
 import { EditScheduleComponent } from './user/edit-user/edit-schedule/edit-schedule.component';
 
 import { ReceiptComponent } from './receipt/receipt.component';
-import { ReceiptService } from './receipt/receipt.service';
 import { CreateRecieptComponent } from './receipt/create-reciept/create-reciept.component';
+import { EditReceiptComponent } from './receipt/edit-receipt/edit-receipt.component';
+import { ReceiptService } from './receipt/receipt.service';
 
 import { EventComponent } from './event/event.component';
 import { CreateEventComponent } from './event/create-event/create-event.component';
@@ -131,6 +132,7 @@ import { ExpenseService } from './expense/expense.service';
     ExpenseComponent,
     CreateExpenseComponent,
     UpdateExpenseComponent,
+    EditReceiptComponent,
   ],
   imports: [
     BrowserModule,

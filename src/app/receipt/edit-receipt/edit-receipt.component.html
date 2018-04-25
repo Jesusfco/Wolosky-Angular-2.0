@@ -1,0 +1,88 @@
+<mat-progress-bar mode="indeterminate" *ngIf="request" class="barLoader"></mat-progress-bar>
+
+<div class="cardSpace" [@background]="state.background">
+
+    <div class="closeCardBackground" (click)="closePop()">
+        <h5 class="closeIcon">
+            <mat-icon>close</mat-icon>
+        </h5>
+    </div>
+
+    <div class="cardModule" [@card]="state.card">
+        <h2>Crear Recibo</h2>
+
+        <mat-icon class="iconTrash" (click)="delete()">delete</mat-icon>
+
+        <form (submit)="update()">
+
+            <div class="flexform">
+
+                <div *ngIf="receipt.payment_type == false" class="checkBox"><input [(ngModel)]="receipt.payment_type" name="receipt_type" type="checkbox" disabled>Efectivo</div>
+                <div *ngIf="receipt.payment_type == true" class="checkBox"><input [(ngModel)]="receipt.payment_type" name="receipt_type" type="checkbox" disabled>Tarjeta</div>
+
+                <div>
+                    <label>Nombre de Alumno:</label><br>
+                    <input [(ngModel)]="receipt.user_id" name="userName" type="search" disabled>
+
+                </div>
+
+                <div>
+
+                    <label>Tipo de pago:</label><br>
+                    <select [(ngModel)]="receipt.type" name="type" disabled>
+                            <option value="1">Mensualidad</option> 
+                            <option value="2">Inscripcion</option>
+                            <!-- <option value="3">Días</option> -->
+                            <option value="4">Uniforme</option>                                                
+                            <!-- <option value="5">Evento/Viajes/Otros</option>                                                 -->
+                    </select>
+
+                </div>
+
+                <div>
+                    <label>Monto:</label><br>
+                    <input [(ngModel)]="receipt.amount" name="amount" type="number" min="0">
+
+                </div>
+
+
+
+                <div *ngIf="receipt.type == 1">
+                    <label>Mes:</label><br>
+                    <select [(ngModel)]="receipt.month" name="month" disabled>
+                        <option  *ngFor="let x of months" value="{{ x.value }}">{{ x.view}}</option>
+                    </select>
+                </div>
+
+                <div *ngIf="receipt.type == 3">
+                    <label>Dias:</label><br>
+                    <input [(ngModel)]="receipt.days" name="days" type="number" min="1" max="30">
+
+                </div>
+
+                <div *ngIf="receipt.type == 5">
+                    <label>Descripción:</label><br>
+                    <input [(ngModel)]="receipt.description" name="description" type="text">
+                    <small class="error" *ngIf="validation.description == 1">Campo requerido*</small>
+
+                </div>
+
+                <button *ngIf="request == false" class="btn formBtn" style="background: rgb(238, 163, 0)" type="submit">Editar Recibo</button>
+                <button *ngIf="request == true" class="btn formBtn" style="background: rgb(209, 209, 209)" disabled>Editar Recibo</button>
+
+            </div>
+        </form>
+        <button class="btn" *ngIf="request != undefined" (click)="printReceipt()">Imprimir Recibo</button>
+
+    </div>
+</div>
+
+<div id="reciboNew">
+    <h1>RECIBO # {{ receipt.id }}</h1>
+    <p>MONTO: $ {{ receipt.amount }}</p>
+    <p>ALUMNO/A: {{ receipt.userName }}</p>
+    <p *ngIf="receipt.type == 1">TIPO DE PAGO: MENSUALIDAD</p>
+    <p *ngIf="receipt.type == 2">TIPO DE PAGO: INSCRIPCION</p>
+    <p>ATENTIDO POR: {{ storage.getUserName() }}</p>
+    <p>PAGADO EL: {{ receipt.created_at }}</p>
+</div>

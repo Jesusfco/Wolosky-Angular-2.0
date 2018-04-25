@@ -16,6 +16,7 @@ import { EditScheduleComponent } from './user/edit-user/edit-schedule/edit-sched
 
 import { ReceiptComponent } from './receipt/receipt.component';
 import { CreateRecieptComponent } from './receipt/create-reciept/create-reciept.component';
+import { EditReceiptComponent } from './receipt/edit-receipt/edit-receipt.component';
 
 import { EventComponent } from './event/event.component';
 import { CreateEventComponent } from './event/create-event/create-event.component';
@@ -75,6 +76,7 @@ export const routes: Routes = [
         component: ReceiptComponent,
         children: [
             { path: 'create', component: CreateRecieptComponent },
+            { path: 'edit/:id',  component: EditReceiptComponent}
         ]
     },
 

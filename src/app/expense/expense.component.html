@@ -3,7 +3,7 @@
 <div class="relative">
     <h1 class="routeTitle">GASTOS</h1>
 
-    <a class="linkExcel" href="{{ storage.getUrl() + 'excel/expenses' + storage.getTokenUrl() }}
+    <a *ngIf="storage.getUserType() >= 6" class="linkExcel" href="{{ storage.getUrl() + 'excel/expenses' + storage.getTokenUrl() }}
     &from={{ search.from }}&to={{ search.to }}&id={{ search.id }}">
         <p>Exportar a Excel</p>
         <img src="http://icons.iconarchive.com/icons/graphicloads/filetype/256/excel-xls-icon.png">
@@ -29,8 +29,18 @@
                 <!-- <th colspan="3">Opciones</th> -->
             </thead>
 
-            <tbody>
+            <tbody *ngIf="storage.getUserType() >= 6">
                 <tr *ngFor="let ex of expenses" [routerLink]="['/expenses/edit', ex.$id]" (click)="updateStartObservable()">
+                    <td class="left">{{ ex.$id }}</td>
+                    <td>$ {{ ex.$amount }}</td>
+                    <td>{{ ex.$name }}</td>
+                    <td>{{ ex.$created_at | date: format}}</td>
+                    <td>{{ ex.$created_at | date: 'hh:mm a' }}</td>
+                </tr>
+            </tbody>
+
+            <tbody *ngIf="storage.getUserType == 3">
+                <tr *ngFor="let ex of expenses">
                     <td class="left">{{ ex.$id }}</td>
                     <td>$ {{ ex.$amount }}</td>
                     <td>{{ ex.$name }}</td>

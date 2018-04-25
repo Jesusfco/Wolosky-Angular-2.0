@@ -44,4 +44,22 @@ export class ReceiptService {
               .toPromise();
   }
 
+  showReceipt(receipt) {
+    return this._http.get(this.link.url + "receipt/show/" + receipt.id + this.token.getTokenUrl())
+              .map(data => data.json())
+              .toPromise();
+  }
+
+  updateReceipt(receipt) {
+    return this._http.post(this.link.url + "receipt/update"  + this.token.getTokenUrl(), receipt)
+            .map(data => data.json())
+            .toPromise();
+  }
+
+  deleteReceipt(receipt){
+    return this._http.delete(this.link.url + "receipt/delete/" + receipt.id + this.token.getTokenUrl())
+              .map(data => data.json())
+              .toPromise();
+  }
+
 }

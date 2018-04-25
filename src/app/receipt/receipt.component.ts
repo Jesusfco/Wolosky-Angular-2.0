@@ -162,4 +162,24 @@ export class ReceiptComponent implements OnInit {
     );
   }
 
+  updateStartObservable() {
+    localStorage.setItem('receiptStatus', '1');
+    this.interval = setInterval(() => this.intervalSaleLogic2(), 1000);
+  }
+
+  intervalSaleLogic2(){
+    
+    if(localStorage.getItem('receiptStatus') == undefined){
+      
+      this.getNotifications();
+      this.getReceipts();
+      clearInterval(this.interval);
+      
+    } else if(localStorage.getItem('receiptStatus') == '0'){
+      localStorage.removeItem('receiptStatus');
+      clearInterval(this.interval);
+    }
+  }
+  
+
 }
