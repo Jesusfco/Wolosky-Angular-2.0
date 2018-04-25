@@ -36,6 +36,11 @@ import { ShowSaleComponent } from './sales/show-sale/show-sale.component';
 import { CashComponent } from './cash/cash.component';
 import { CutoutComponent } from './cutout/cutout.component';
 
+//COMPONENTE DE GASTOS
+import { ExpenseComponent } from './expense/expense.component';
+import { CreateExpenseComponent } from './expense/create-expense/create-expense.component';
+import { UpdateExpenseComponent } from './expense/update-expense/update-expense.component';
+
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 export const routes: Routes = [
@@ -102,6 +107,16 @@ export const routes: Routes = [
         children: [
             { path: 'sale-process', component: SaleProcessComponent }
     ]},
+
+    //componente de gastos
+    {
+        path: 'expenses',
+        component: ExpenseComponent,
+        children: [
+            { path: 'create', component: CreateExpenseComponent },
+            { path: 'edit/:id', component: UpdateExpenseComponent },
+        ]
+    },
 
     {path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: '**', component:  PageNotFoundComponent },

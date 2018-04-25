@@ -1,0 +1,12 @@
+.iconTrash {
+    color: grey;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    transition: .4s;
+    cursor: pointer;
+}
+
+.iconTrash:hover {
+    color: firebrick;
+}

@@ -1,0 +1,45 @@
+<mat-progress-bar mode="indeterminate" *ngIf="request" class="barLoader"></mat-progress-bar>
+
+
+<div class="cardSpace" [@background]="state.background">
+
+    <div class="closeCardBackground" (click)="closePop()">
+        <h5 class="closeIcon">
+            <mat-icon>close</mat-icon>
+        </h5>
+    </div>
+
+    <div class="cardModule" [@card]="state.card">
+        <h2>Crear nuevo Gasto</h2>
+
+        <form (submit)="send()">
+            <div class="">
+
+                <div class="l12">
+                    <label>Nombre de Gasto:</label><br>
+                    <input class="l12" [(ngModel)]="expense.$name" name="$name" type="text">
+                    <small class="error" *ngIf="validation.name == 1">Se requieren por lo menos 7 caracteres.</small>
+                </div>
+
+                <div>
+                    <label>Monto:</label><br>
+                    <input [(ngModel)]="expense.$amount" name="$amount" type="number" min="0">
+                    <small class="error" *ngIf="validation.amount == 1">El valo no puede ser $0 o menos</small>
+
+                </div>
+
+                <div class="l12">
+                    <label>Descripción:</label><br>
+                    <textarea [(ngModel)]="expense.$description" name="$description"></textarea>
+                </div>
+
+
+
+                <button *ngIf="request == false" class="btn formBtn" style="background: rgb(238, 163, 0)" type="submit">Crear Gasto</button>
+                <button *ngIf="request == true" class="btn formBtn" style="background: rgb(209, 209, 209)" disabled>Crear Gasto</button>
+
+            </div>
+        </form>
+
+    </div>
+</div>

@@ -80,13 +80,18 @@ export class UserComponent implements OnInit {
   }
 
   intervalSaleLogic(){
-    console.log('intervalo');
+  
     if(localStorage.getItem('userCreationStatus') == undefined){
+
       this.searchRequest();
       clearInterval(this.interval);
+
     } else if(localStorage.getItem('userCreationStatus') == '0'){
+
       clearInterval(this.interval);
+
     }
+    
   }
 
   

@@ -88,6 +88,11 @@ import { StatusUserComponent } from './user/status-user/status-user.component';
 import { CutoutComponent } from './cutout/cutout.component';
 import { CutoutService } from './cutout/cutout.service';
 
+import { ExpenseComponent } from './expense/expense.component';
+import { CreateExpenseComponent } from './expense/create-expense/create-expense.component';
+import { UpdateExpenseComponent } from './expense/update-expense/update-expense.component';
+import { ExpenseService } from './expense/expense.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -123,6 +128,9 @@ import { CutoutService } from './cutout/cutout.service';
     CashComponent,
     StatusUserComponent,
     CutoutComponent,
+    ExpenseComponent,
+    CreateExpenseComponent,
+    UpdateExpenseComponent,
   ],
   imports: [
     BrowserModule,
@@ -168,13 +176,17 @@ import { CutoutService } from './cutout/cutout.service';
     
     
   ],
-  providers: [  UserService,
-                LoginService,
-                ReceiptService,
-                InventoryService,
-                SaleService,
-                CashService,
-                CutoutService ],
+  providers: [
+        UserService,
+        LoginService,
+        ReceiptService,
+        InventoryService,
+        SaleService,
+        CashService,
+        CutoutService,
+        ExpenseService
+      ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

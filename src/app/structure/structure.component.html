@@ -52,6 +52,10 @@
             <li><button mat-button>Registro de Ventas</button></li>
         </a>
 
+        <a [routerLink]="['/expenses']">
+            <li><button mat-button>Gastos</button></li>
+        </a>
+
         <a [routerLink]="['/cutout']" *ngIf="userData.getUserType() >= 6">
             <li><button mat-button>Recorte de Caja</button></li>
         </a>

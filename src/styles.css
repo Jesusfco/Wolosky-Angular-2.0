@@ -208,11 +208,16 @@ th {
 }
 
 input,
-select {
+textarea select {
     border: none;
     background: #ECECEC;
     padding: 10px;
     border-radius: 3px;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
 }
 
 .formData {
