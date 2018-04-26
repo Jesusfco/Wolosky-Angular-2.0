@@ -20,9 +20,9 @@ export class UpdateExpenseComponent implements OnInit {
   public observerRef: any;
   public expense: Expense;
 
-  private request: boolean = false;
+  public request: boolean = false;
 
-  private validation: any = {
+  public validation: any = {
     form: true,
     name: undefined,
     amount: undefined,
@@ -54,11 +54,11 @@ export class UpdateExpenseComponent implements OnInit {
       data => {
 
         this.expense = new Expense(
-              data.id,
+              parseInt(data.id),
               data.creator_id,
               data.name,
               data.description,
-              data.amount,
+              parseInt(data.amount),
               data.created_at,
               data.updated_at
             );

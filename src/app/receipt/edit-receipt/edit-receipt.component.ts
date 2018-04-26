@@ -18,10 +18,25 @@ export class EditReceiptComponent implements OnInit {
     card: 'initial',
   };
 
+  public months = [
+    {value: 1, view: 'Enero'},
+    {value: 2, view: 'Febrero'},
+    {value: 3, view: 'Marzo'},
+    {value: 4, view: 'Abril'},
+    {value: 5, view: 'Mayo'},
+    {value: 6, view: 'Junio'},
+    {value: 7, view: 'Julio'},
+    {value: 8, view: 'Agosto'},
+    {value: 9, view: 'Septiembre'},
+    {value: 10, view: 'Octubre'},
+    {value: 11, view: 'Noviembre'},
+    {value: 12, view: 'Diciembre'},
+  ];
+
   private observerRef: any;
-  private request: boolean = false;
-  private receipt: Receipt = new Receipt();
-  private storage: Storage = new Storage();
+  public request: boolean = false;
+  public receipt: Receipt = new Receipt();
+  public storage: Storage = new Storage();
 
   constructor(private _http: ReceiptService, private router: Router, private actRou: ActivatedRoute ) { 
 
@@ -108,6 +123,10 @@ export class EditReceiptComponent implements OnInit {
         () => this.request = false
 
       );
+  }
+
+  printReceipt(){  
+    window.print();      
   }
 
   closePop(){    

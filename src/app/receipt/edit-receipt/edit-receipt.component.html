@@ -15,21 +15,26 @@
 
         <form (submit)="update()">
 
-            <div class="flexform">
+            <div class="">
 
-                <div *ngIf="receipt.payment_type == false" class="checkBox"><input [(ngModel)]="receipt.payment_type" name="receipt_type" type="checkbox" disabled>Efectivo</div>
-                <div *ngIf="receipt.payment_type == true" class="checkBox"><input [(ngModel)]="receipt.payment_type" name="receipt_type" type="checkbox" disabled>Tarjeta</div>
+                <div *ngIf="receipt.payment_type == false" class="checkBox">Efectivo
+                    <mat-icon>monetization_on</mat-icon>
+                </div>
+                <div *ngIf="receipt.payment_type == true" class="checkBox">Tarjeta
+                    <mat-icon>credit_card</mat-icon>
+                </div>
+
 
                 <div>
                     <label>Nombre de Alumno:</label><br>
-                    <input [(ngModel)]="receipt.user_id" name="userName" type="search" disabled>
+                    <input class="l12" [(ngModel)]="receipt.user_id" name="user_id" type="search" disabled>
 
                 </div>
 
                 <div>
 
                     <label>Tipo de pago:</label><br>
-                    <select [(ngModel)]="receipt.type" name="type" disabled>
+                    <select class="l6" [(ngModel)]="receipt.type" name="type" disabled>
                             <option value="1">Mensualidad</option> 
                             <option value="2">Inscripcion</option>
                             <!-- <option value="3">Días</option> -->
@@ -49,7 +54,7 @@
 
                 <div *ngIf="receipt.type == 1">
                     <label>Mes:</label><br>
-                    <select [(ngModel)]="receipt.month" name="month" disabled>
+                    <select class="l6" [(ngModel)]="receipt.month" name="month" disabled>
                         <option  *ngFor="let x of months" value="{{ x.value }}">{{ x.view}}</option>
                     </select>
                 </div>
@@ -80,9 +85,9 @@
 <div id="reciboNew">
     <h1>RECIBO # {{ receipt.id }}</h1>
     <p>MONTO: $ {{ receipt.amount }}</p>
-    <p>ALUMNO/A: {{ receipt.userName }}</p>
+    <p>ALUMNO/A: {{ receipt.user_id }}</p>
     <p *ngIf="receipt.type == 1">TIPO DE PAGO: MENSUALIDAD</p>
     <p *ngIf="receipt.type == 2">TIPO DE PAGO: INSCRIPCION</p>
-    <p>ATENTIDO POR: {{ storage.getUserName() }}</p>
+    <p>ATENTIDO POR: {{ receipt.creator_id }}</p>
     <p>PAGADO EL: {{ receipt.created_at }}</p>
 </div>

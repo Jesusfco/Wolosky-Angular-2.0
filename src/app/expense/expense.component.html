@@ -39,7 +39,7 @@
                 </tr>
             </tbody>
 
-            <tbody *ngIf="storage.getUserType == 3">
+            <tbody *ngIf="storage.getUserType() == 3">
                 <tr *ngFor="let ex of expenses">
                     <td class="left">{{ ex.$id }}</td>
                     <td>$ {{ ex.$amount }}</td>

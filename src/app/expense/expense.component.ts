@@ -13,8 +13,8 @@ import { Storage } from '../storage';
 })
 export class ExpenseComponent implements OnInit {
 
-  private expenses: Array<Expense> = [];
-  private search: any  = {
+  public expenses: Array<Expense> = [];
+  public search: any  = {
     from: null,
     to: null,
     items: 20,
@@ -22,9 +22,9 @@ export class ExpenseComponent implements OnInit {
     total: 0,
   };
 
-  private request: boolean = false;
+  public request: boolean = false;
   private interval: any;
-  private storage: Storage = new Storage();
+  public storage: Storage = new Storage();
 
   constructor(private _http: ExpenseService, private router: Router) {
       this.getDates();
@@ -71,6 +71,13 @@ export class ExpenseComponent implements OnInit {
       () => this.request = false
 
     );
+  }
+
+  pageAction(data){
+    
+    this.search.items = data.pageSize;
+    this.search.page = data.pageIndex + 1;
+    this.get();
   }
 
   redirectCreate(){

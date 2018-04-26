@@ -12,10 +12,10 @@ import { BackgroundCard, Card } from '../../animations/card.animation';
 })
 export class CreateExpenseComponent implements OnInit {
 
-  private expense: Expense;
-  private request: boolean = false;
+  public expense: Expense;
+  public request: boolean = false;
 
-  private validation: any = {
+  public validation: any = {
     form: true,
     name: undefined,
     amount: undefined,

@@ -10,3 +10,17 @@
 .iconTrash:hover {
     color: firebrick;
 }
+
+.checkBox {
+    color: green;
+    position: absolute;
+    right: 20px;
+    top: 80px;
+}
+
+.checkBox mat-icon {
+    color: green;
+    transform: scale(.6);
+    position: relative;
+    top: 10px;
+}
