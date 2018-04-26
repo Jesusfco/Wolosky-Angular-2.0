@@ -44,6 +44,18 @@ export class SaleService {
     .toPromise();
   }
 
+  debtSale(data) {
+    return this._http.post(this.link.url + 'saleDebt' + this.storage.getTokenUrl(), data)
+                  .map(data => data.json())
+                  .toPromise();
+  }
+
+  getSugestMaster(keyword) {
+    return this._http.post(this.link.url + 'sales/sugestDebt' + this.storage.getTokenUrl(), keyword)
+                        .map(data => data.json())
+                        .toPromise();
+  }
+
 }
 
   

@@ -1,3 +1,5 @@
+<mat-progress-bar mode="indeterminate" *ngIf="request" class="barLoader"></mat-progress-bar>
+
 <div class="cardSpace" [@background]="state[0].background">
 
     <div class="closeCardBackground" (click)="closePop()">
@@ -7,17 +9,38 @@
     </div>
 
     <div class="cardModule" [@card]="state[0].card">
+
         <form *ngIf="form == 1" (submit)="checkClientMoney()">
             <h2>Dinero del Cliente</h2>
             <input type="number" [(ngModel)]="sale.clientMoney" name="clientMoney" value="{{sale.total}}" min="{{sale.total}}">
 
-            <button type="submit" class="btn btnAccept">Confirmar</button>
+            <button *ngIf="request == false" type="submit" class="btn btnAccept">Confirmar</button>
+            <button *ngIf="request == true" type="submit" class="btn btnAccept" disabled>Confirmar</button>
         </form>
 
         <form *ngIf="form == 2" (submit)="confirmSale()">
             <h2>Cambio: ${{ sale.clientMoney - sale.total }}</h2>
             <button type="submit" class="btn btnAccept">Confirmar</button>
         </form>
+
+        <form *ngIf="form == 3" (submit)="debtForm()">
+
+            <h2>Asignar credito a...</h2>
+            <div class="search">
+
+                <input [(ngModel)]="saleDebt.user_name" [matAutocomplete]="auto" name="user_name" type="search" placeholder="Buscar Usuario" (keyup)="searchInput()">
+
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let sugest of sugests" [value]="sugest.name" (onSelectionChange)="searchReceiptId(sugest.id)">
+                        {{ sugest.name }}
+                    </mat-option>
+                </mat-autocomplete>
+
+                <button *ngIf="request == false" type="submit" class="btn btnAccept">Confirmar</button>
+                <button *ngIf="request == true" type="submit" class="btn" disabled>Confirmar</button>
+            </div>
+        </form>
+
     </div>
 
 
