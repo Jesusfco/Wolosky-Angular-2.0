@@ -33,7 +33,10 @@ import { SaleProcessComponent } from './sale-point/sale-process/sale-process.com
 import { SalesComponent } from './sales/sales.component';
 import { ShowSaleComponent } from './sales/show-sale/show-sale.component';
 
+//DEUDORES
+import { SaleDebtComponent } from './sale-debt/sale-debt.component';
 
+//CORTE DE CAJA
 import { CashComponent } from './cash/cash.component';
 import { CutoutComponent } from './cutout/cutout.component';
 
@@ -109,6 +112,10 @@ export const routes: Routes = [
         children: [
             { path: 'sale-process', component: SaleProcessComponent }
     ]},
+
+    {
+        path: 'sale-debt', component: SaleDebtComponent
+    },
 
     //componente de gastos
     {

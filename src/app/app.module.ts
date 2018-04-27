@@ -94,6 +94,9 @@ import { CreateExpenseComponent } from './expense/create-expense/create-expense.
 import { UpdateExpenseComponent } from './expense/update-expense/update-expense.component';
 import { ExpenseService } from './expense/expense.service';
 
+import { SaleDebtComponent } from './sale-debt/sale-debt.component';
+import { SaleDebtService } from './sale-debt/sale-debt.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -133,6 +136,7 @@ import { ExpenseService } from './expense/expense.service';
     CreateExpenseComponent,
     UpdateExpenseComponent,
     EditReceiptComponent,
+    SaleDebtComponent,
   ],
   imports: [
     BrowserModule,
@@ -186,7 +190,8 @@ import { ExpenseService } from './expense/expense.service';
         SaleService,
         CashService,
         CutoutService,
-        ExpenseService
+        ExpenseService,
+        SaleDebtService
       ],
 
   bootstrap: [AppComponent]
