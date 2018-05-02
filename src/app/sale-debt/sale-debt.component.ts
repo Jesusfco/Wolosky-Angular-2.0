@@ -112,4 +112,55 @@ export class SaleDebtComponent implements OnInit {
 
   }
 
+  update(debt) {
+    debt.updating = true;
+    this._http.updateDebt(debt).then(
+      data => {
+
+        debt.status = data.status;
+
+      },
+
+      error => console.log(error)
+
+    ).then(
+
+      () =>  debt.updating = false
+
+    );
+  }
+
+  delete(debt) {
+
+    debt.updating = true;
+
+    this._http.deleteDebt(debt).then(
+      data => {
+        this.search.total -= 1;
+
+        for(let i = 0; i < this.debtors.length; i++) {
+
+          if(this.debtors[i].id == debt.id) {
+            
+            setTimeout(() => {
+              this.debtors.splice(i, 1);
+            }, 100);
+            
+            break;
+
+          }
+
+        }
+
+      },
+
+      () =>  debt.updating = false
+
+    ).then(
+
+      () =>  debt.updating = false
+
+    );
+  }
+
 }

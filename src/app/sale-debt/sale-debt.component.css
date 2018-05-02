@@ -2,6 +2,10 @@
     background: #f9dada;
 }
 
+.updating {
+    opacity: .75;
+}
+
 .linkExcel {
     position: absolute;
     top: 20px;

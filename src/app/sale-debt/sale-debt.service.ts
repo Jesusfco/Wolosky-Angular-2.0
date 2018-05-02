@@ -26,4 +26,16 @@ export class SaleDebtService {
               .toPromise();
   }
 
+  updateDebt(debt) {
+    return this._http.post(this.link.url + "debtors/update" + this.storage.getTokenUrl(), debt)
+              .map(data => data.json())
+              .toPromise();
+  }
+
+  deleteDebt(debt) {
+    return this._http.post(this.link.url + "debtors/delete" + this.storage.getTokenUrl(), debt)
+              .map(data => data.json())
+              .toPromise();
+  }
+
 }

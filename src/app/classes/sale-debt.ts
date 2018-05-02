@@ -8,7 +8,10 @@ export class SaleDebt {
     public total: number;
     public created_at: string;
     public updated_at: string;
+    public updating: boolean;
 
-    constructor() {}
+    constructor() {
+        this.updating = false;
+    }
 
 }

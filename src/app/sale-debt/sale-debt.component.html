@@ -39,19 +39,25 @@
                     <th>Status</th>
                     <th>Fecha</th>
                     <th>Hora</th>
+                    <th>Acciones</th>
                 </tr>
                 <!-- <th colspan="3">Opciones</th> -->
             </thead>
 
             <tbody *ngIf="storage.getUserType() >= 6">
-                <tr *ngFor="let debt of debtors" [routerLink]="['/expenses/edit', debt.id]" [ngClass]="{ 'status1': debt.status == 1 }">
+                <tr *ngFor="let debt of debtors" [ngClass]="{ 'status1': debt.status == 1 , 'updating': debt.updating}">
                     <td class="left">{{ debt.id }}</td>
                     <td> {{ debt.user_name }}</td>
                     <td>$ {{ debt.total }}</td>
-                    <td *ngIf="debt.status == 1">Pendiente</td>
-                    <td *ngIf="debt.status == 2">Pagado</td>
+                    <td *ngIf="debt.status == true">Pendiente</td>
+                    <td *ngIf="debt.status == false">Pagado</td>
                     <td>{{ debt.created_at | date: format}}</td>
                     <td>{{ debt.created_at | date: 'hh:mm a' }}</td>
+                    <td>
+                        <button *ngIf="!debt.updating" (click)="update(debt)">Pagar</button>
+                        <button *ngIf="debt.updating" disabled>Pagar</button>
+                        <button (click)="delete(debt)">Eliminar</button>
+                    </td>
                 </tr>
             </tbody>
 
@@ -60,8 +66,8 @@
                     <td class="left">{{ debt.id }}</td>
                     <td>{{ debt.user_name }}</td>
                     <td>${{ debt.total }}</td>
-                    <td *ngIf="debt.status == 1">Pendiente</td>
-                    <td *ngIf="debt.status == 2">Pagado</td>
+                    <td *ngIf="debt.status == true">Pendiente</td>
+                    <td *ngIf="debt.status == false">Pagado</td>
                     <td>{{ debt.created_at | date: format}}</td>
                     <td>{{ debt.created_at | date: 'hh:mm a' }}</td>
                 </tr>
