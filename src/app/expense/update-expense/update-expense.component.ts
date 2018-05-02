@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BackgroundCard, Card } from '../../animations/card.animation';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Expense } from '../../expense';
+import { Expense } from '../../classes/expense';
 import { ExpenseService } from '../expense.service';
 
 @Component({

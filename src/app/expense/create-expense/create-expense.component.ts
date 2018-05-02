@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Expense } from '../../expense';
+import { Expense } from '../../classes/expense';
 import { ExpenseService } from '../expense.service';
 import { BackgroundCard, Card } from '../../animations/card.animation';
+import { Cash } from '../../classes/cash';
 
 @Component({
   selector: 'app-create-expense',
@@ -14,6 +15,7 @@ export class CreateExpenseComponent implements OnInit {
 
   public expense: Expense;
   public request: boolean = false;
+  public cash: Cash = new Cash();
 
   public validation: any = {
     form: true,
@@ -53,6 +55,10 @@ export class CreateExpenseComponent implements OnInit {
 
     this._http.createExpense(this.expense).then(
       data => {
+        
+        if(this.expense.updateCash)
+          this.cash.substractCash(this.expense.$amount);
+
         this.router.navigate(['/expenses']);
         localStorage.removeItem('expenseCreateStatus');
       },

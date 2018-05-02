@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Expense  } from '../expense';
+import { Expense  } from '../classes/expense';
 import { PageEvent } from '@angular/material';
 import { ExpenseService } from './expense.service';
 import { Router } from '@angular/router';

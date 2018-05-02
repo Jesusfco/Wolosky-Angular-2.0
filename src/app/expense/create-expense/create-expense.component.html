@@ -13,6 +13,9 @@
         <h2>Crear nuevo Gasto</h2>
 
         <form (submit)="send()">
+
+            <div *ngIf="expense.updateCash == false" class="checkBox"><input [(ngModel)]="expense.updateCash" name="updateCash" type="checkbox">No reflejar en caja</div>
+            <div *ngIf="expense.updateCash == true" class="checkBox"><input [(ngModel)]="expense.updateCash" name="updateCash" type="checkbox">Reflejar en Caja</div>
             <div class="">
 
                 <div class="l12">

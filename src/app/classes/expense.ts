@@ -8,6 +8,7 @@ export class Expense {
     private amount: number;
     private created_at: string;
     private updated_at: string;
+    public updateCash: boolean;
 
 
     //public constructor(){}
@@ -21,6 +22,7 @@ export class Expense {
         this.amount = amount;
         this.created_at = created_at;
         this.updated_at = updated_at;
+        this.updateCash = false;
 
 	}
     
