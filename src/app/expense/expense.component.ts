@@ -3,7 +3,7 @@ import { Expense  } from '../classes/expense';
 import { PageEvent } from '@angular/material';
 import { ExpenseService } from './expense.service';
 import { Router } from '@angular/router';
-import { ExpandSubscriber } from 'rxjs/operator/expand';
+//import { ExpandSubscriber } from 'rxjs/operator/expand';
 import { Storage } from '../storage';
 
 @Component({

@@ -46,7 +46,7 @@ export class ReceiptComponent implements OnInit {
 
   public storage: Storage = new Storage();
   
-  constructor(private _http: ReceiptService, private router: Router) { 
+  constructor(private _http: ReceiptService) { 
     this.getNotifications();
     this.getDates();
     this.getReceipts();
@@ -83,7 +83,7 @@ export class ReceiptComponent implements OnInit {
   }
 
   redirectCreateUser(){
-    this.router.navigate(['/receipt/create']);
+    
     localStorage.setItem('receiptStatus', '1');
     this.interval = setInterval(() => this.intervalSaleLogic(), 1000);
   }
