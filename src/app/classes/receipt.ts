@@ -1,7 +1,8 @@
 export class Receipt {
 
     id: number;
-    user_id: any;
+    user_id: number;
+    user_name: string;
     creator_id: any;
     amount: number;
     date: string;

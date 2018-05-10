@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReceiptService } from './receipt.service';
 import { Router } from '@angular/router';
 import { Storage } from '../storage';
+import { Receipt } from '../classes/receipt';
 
 @Component({
   selector: 'app-receipt',
@@ -34,7 +35,7 @@ export class ReceiptComponent implements OnInit {
     debtors: undefined,
   };
 
-  public receipts: any = [];
+  public receipts: Array<Receipt> = [];
   public sugests = [];
   public timer = 0;
   public interval: any = 0;
@@ -77,45 +78,55 @@ export class ReceiptComponent implements OnInit {
     }
   }
 
-  debtorPay(id){
+  debtorPay(id){ 
+
     localStorage.setItem('debtorId', id);
     this.redirectCreateUser();
+    
   }
 
   redirectCreateUser(){
     
     localStorage.setItem('receiptStatus', '1');
     this.interval = setInterval(() => this.intervalSaleLogic(), 1000);
+
   }
 
   intervalSaleLogic(){
     
     if(localStorage.getItem('receiptStatus') == undefined){
       
-      this.getNotifications();
-      this.getReceipts();
+      this.getNewReceipt();
       clearInterval(this.interval);
       
     } else if(localStorage.getItem('receiptStatus') == '0'){
+      localStorage.removeItem('receiptStatus');
       clearInterval(this.interval);
     }
   }
 
   getNotifications(){
+
     this.sendingData.notifications = true;
+
     this._http.getReceiptAnalisis().then(
+
       data => {
 
         if(data.count > 0)                  
-          this.notifications.on = true
+          this.notifications.on = true;
 
         this.notifications.debtorsMonthly = data.count;
         this.notifications.debtors = data.users;
 
       },
+
       error => console.log(error),
+
     ).then(
+
       () => this.sendingData.notifications = false,
+
     );
   }
 
@@ -162,11 +173,14 @@ export class ReceiptComponent implements OnInit {
     );
   }
 
+  // ACTUALIZAR RECIBO
   updateStartObservable() {
     localStorage.setItem('receiptStatus', '1');
     this.interval = setInterval(() => this.intervalSaleLogic2(), 1000);
   }
 
+
+  //INTERVALO PARA ACTUALIZACION
   intervalSaleLogic2(){
     
     if(localStorage.getItem('receiptStatus') == undefined){
@@ -180,6 +194,43 @@ export class ReceiptComponent implements OnInit {
       clearInterval(this.interval);
     }
   }
-  
+
+  getNewReceipt() {
+
+    let newReceipt: Receipt = JSON.parse(localStorage.getItem('newReceipt'));
+
+    this.receipts.unshift(newReceipt);
+
+    let d = new Date();
+
+    let month = d.getMonth() + 1;
+
+    if(month == newReceipt.month &&  newReceipt.type == 1){
+
+      for(let i = 0; i < this.notifications.debtors.length; i++) {
+
+        if( this.notifications.debtors[i].id == newReceipt.user_id){
+
+          this.notifications.debtors.splice(i, 1);
+          this.notifications.debtorsMonthly--;
+          break;
+
+        }
+
+      }
+
+    }
+
+    if(this.receipts.length >  this.search.items ) {
+
+      this.receipts.pop();
+
+    }
+
+    this.search.total++;
+
+    localStorage.removeItem('newReceipt');
+
+  }
 
 }

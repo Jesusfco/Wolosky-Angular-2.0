@@ -503,12 +503,21 @@ select:-webkit-autofill {
     color: #ffffff;
 }
 
+@page {
+    margin: .25in;
+    padding: 0;
+    /* height: 100vh; */
+}
+
 @media print {
+    html {
+        height: 100vh !important;
+    }
     body * {
         visibility: hidden;
     }
     body {
-        height: 100vh !important;
+        height: 700px !important;
     }
     #reciboNew * {
         visibility: visible !important;
@@ -520,5 +529,6 @@ select:-webkit-autofill {
         top: 0 !important;
         z-index: 1000 !important;
         visibility: visible !important;
+        page-break-inside: avoid;
     }
 }

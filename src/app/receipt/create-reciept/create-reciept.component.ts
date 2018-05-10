@@ -80,18 +80,25 @@ export class CreateRecieptComponent implements OnInit {
     }
 
   checkDebtorLocalStorage(){
+
     if(localStorage.getItem('debtorId') == undefined) return;
 
     this.sendingData.monthly = true;
     this._http.getMonthlyPayment({id: localStorage.getItem('debtorId')}).then(
+
       data => {
+
         this.payment.monthly = parseInt(data.amount);
         this.payment.userId = data.user.id;
         this.payment.userName = data.user.name;
         this.validateMonthlyPayment();
+
       }, error => console.log(error)
+
     ).then(
+
       () => this.sendingData.monthly = false
+
     );
   }
 
@@ -103,10 +110,11 @@ export class CreateRecieptComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    // if(localStorage.getItem('debtorId') == undefined) return;
+
+    if(localStorage.getItem('receiptStatus') == undefined) return;
 
     localStorage.removeItem('debtorId');
-    localStorage.removeItem('receiptStatus');
+    localStorage.setItem('receiptStatus', '0');
   }
 
   closePop(){    
@@ -207,9 +215,18 @@ export class CreateRecieptComponent implements OnInit {
     this.sendingData.request = true;
     this._http.postNewReceipt(this.payment).then(
       data => {
+
         this.request = data;
-        // this.closePop();
-        if(this.payment.payment_type == false)
+
+        data.month = parseInt(data.month);
+        data.id = parseInt(data.id);
+        data.amount = parseInt(data.amount);
+        data.user_name = this.payment.userName;        
+
+        localStorage.setItem('newReceipt', JSON.stringify(data));
+        localStorage.removeItem("receiptStatus");
+        
+        if(this.payment.payment_type == false) 
           this.storage.updateCash(data.amount);
       },
       error => console.log(error)
@@ -228,8 +245,8 @@ export class CreateRecieptComponent implements OnInit {
 
   }
 
-  printReceipt(){  
-      window.print();      
+  printReceipt(){
+      window.print();
   }
 
 
