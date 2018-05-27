@@ -12,7 +12,7 @@ export class MonthlyPriceComponent implements OnInit {
   public monthlyPrices: Array<MonthlyPrice> = [];
 
   public intervalNewPrice: any;
-
+  public credential = parseInt(localStorage.getItem('userType'));
   public sort: number = 0;
 
   constructor(private _http: MonthlyPriceService) {

@@ -31,45 +31,26 @@
     <h5>APLICACIÓN</h5>
     <ul>
 
-        <a [routerLink]="['/users']">
-            <li><button mat-button>Usuarios</button></li>
-        </a>
 
-        <a [routerLink]="['/receipt']">
-            <li><button mat-button>Recibos</button></li>
-        </a>
+        <li [routerLink]="['/users']"><button mat-button>Usuarios</button></li>
 
-        <a [routerLink]="['/events']">
-            <li><button mat-button>Eventos</button></li>
-        </a>
+        <li [routerLink]="['/receipt']"><button mat-button>Recibos</button></li>
 
-        <a [routerLink]="['/inventory']">
-            <li><button mat-button>Inventario</button></li>
-        </a>
+        <li [routerLink]="['/events']"><button mat-button>Eventos</button></li>
 
-        <a [routerLink]="['/sale-point']">
-            <li><button mat-button>Punto de Venta <span class="notified">{{ userData.getSalesErrorConnection() }}</span></button></li>
-        </a>
+        <li [routerLink]="['/inventory']"><button mat-button>Inventario</button></li>
 
-        <a [routerLink]="['/sales']">
-            <li><button mat-button>Registro de Ventas</button></li>
-        </a>
+        <li [routerLink]="['/sale-point']"><button mat-button>Punto de Venta <span class="notified">{{ userData.getSalesErrorConnection() }}</span></button></li>
 
+        <li [routerLink]="['/sales']"><button mat-button>Registro de Ventas</button></li>
 
-        <a [routerLink]="['/sale-debt']">
-            <li><button mat-button>Deudores Abarrotería</button></li>
-        </a>
+        <li [routerLink]="['/sale-debt']"><button mat-button>Deudores Abarrotería</button></li>
 
+        <li [routerLink]="['/expenses']"><button mat-button>Gastos</button></li>
 
-        <a [routerLink]="['/expenses']">
-            <li><button mat-button>Gastos</button></li>
-        </a>
+        <li [routerLink]="['/cutout']" *ngIf="userData.getUserType() >= 6"><button mat-button>Recorte de Caja</button></li>
 
-        <a [routerLink]="['/cutout']" *ngIf="userData.getUserType() >= 6">
-            <li><button mat-button>Recorte de Caja</button></li>
-        </a>
-
-        <li [routerLink]="['monthly-cost']"><button>Costos por Hora</button></li>
+        <li [routerLink]="['/monthly-cost']"><button mat-button>Costos por Hora</button></li>
 
     </ul>
     <h5>USUARIO</h5>

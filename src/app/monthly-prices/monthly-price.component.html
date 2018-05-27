@@ -1,6 +1,8 @@
+<mat-progress-bar mode="indeterminate" *ngIf="request" class="barLoader"></mat-progress-bar>this.sortHoursUp();
+
 <div class="responsive-table">
 
-    <table>
+    <table *ngIf="credential >= 6">
         <thead>
             <tr>
 
@@ -35,6 +37,41 @@
                 <td>
                     <mat-icon (click)="deletePrice(x)">delete</mat-icon>
                     <mat-icon (click)="startModify(x)">edit</mat-icon>
+                </td>
+            </tr>
+
+
+        </tbody>
+    </table>
+
+    <table *ngIf="credential == 3">
+        <thead>
+            <tr>
+
+                <th *ngIf="sort == 0" (click)="sortHoursUp()">Horas
+                    <mat-icon>arrow_drop_down</mat-icon>
+                </th>
+
+                <th *ngIf="sort == 1" (click)="sortHoursDown()">Horas
+                    <mat-icon>arrow_drop_up</mat-icon>
+                </th>
+
+                <th>Costo</th>
+                <th>Fecha/Creacion</th>
+                <th>Ultima Actualización</th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="let x of monthlyPrices">
+                <td> {{ x.hours }}</td>
+
+                <td> ${{ x.cost }}</td>
+                <td>{{ x.created_at | date: format }} {{ x.created_at | date: 'hh:mm a' }}</td>
+                <td>{{ x.updated_at | date: format }} </td>
+
             </tr>
 
 
@@ -43,7 +80,7 @@
 
 </div>
 
-<a [routerLink]="['/monthly-cost/create']">
+<a *ngIf="credential >= 6" [routerLink]="['/monthly-cost/create']">
     <div class="botonFloat">
         <a class="botonA" matTooltip="Crear recibo"><i class="material-icons">add</i></a>
     </div>
