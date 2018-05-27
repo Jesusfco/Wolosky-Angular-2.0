@@ -8,6 +8,7 @@ import { Reference } from '../reference';
 import { Salary } from '../salary';
 import { MonthlyPayment } from '../../monthly-payment';
 import { FadeAnimation, SlideAnimation } from '../../animations/slide-in-out.animation';
+import { MonthlyPrice } from '../../classes/monthly-price';
 
 // @HostBinding('@principal') principal  = true;
 // @HostBinding('@background') background  = true;
@@ -32,16 +33,25 @@ export class CreateUserComponent implements OnInit {
   schedules = [];
   sche: Schedule =  new Schedule();
   references: Array<Reference> = [];
+  monthlyPrices: Array<MonthlyPrice> = [];
   salary: Salary =  new Salary();
-  monthlyPayment : MonthlyPayment =  new MonthlyPayment();
+  monthlyPayment: MonthlyPayment =  new MonthlyPayment();
 
   scheduleView: boolean = false;
   referenceView: boolean = false;
 
+  scheduleObservableInterval: any;
   constructor(private _http: UserService, private router: Router) { }
 
   ngOnInit() {
     this.schedules = this.sche.setArray();
+    this._http.getAllMonthlyPrices().then(
+      data => {
+        localStorage.setItem('monthlyPrices', JSON.stringify(data))
+        this.monthlyPrices = data;
+      },
+      error => localStorage.setItem('request', JSON.parse(error))
+    );
   }
 
   ngOnDestroy(){
@@ -78,7 +88,7 @@ export class CreateUserComponent implements OnInit {
                 .then(
                 data => {
                   localStorage.removeItem('userCreationStatus');
-                  
+
                   let not = {
                     status: 200,
                     title: 'Usuario Creado',
@@ -99,6 +109,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   assignSchedules(data){
+    this.setScheduleObservableInterval();
     this.schedules = data;
     this.scheduleView = false;
   }
@@ -261,5 +272,50 @@ export class CreateUserComponent implements OnInit {
     this.user.mailUpper();
     this.uniqueEmailWriting();
   }
+
+  setScheduleObservableInterval() {
+    this.scheduleObservableInterval = setInterval(() => this.intervalScheduleLogic(), 1000);
+  }
+
+  intervalScheduleLogic() {
+
+    if(localStorage.getItem('setUserMonthlyPrice') == '1') {
+
+      this.monthlyPayment.amount = 0;
+      let count = 0;
+
+      for(let x of this.schedules) {
+        
+        if(x.active == true) {
+          
+          let checkIn = new Date("2017-01-01 " + x.check_in);
+          let checkOut = new Date("2017-01-01 " + x.check_out);
+          count += checkOut.getHours() - checkIn.getHours();
+        }
+      }
+
+      for(let x of this.monthlyPrices) {
+        if(x.hours == count || x.hours > count) {
+          this.monthlyPayment.amount = x.cost;
+          break;
+        }
+      }
+
+      if(this.monthlyPayment.amount == 0) {
+        let i = this.monthlyPrices.length - 1;
+
+        this.monthlyPayment.amount = this.monthlyPrices[i].cost;
+
+      }
+
+      localStorage.removeItem('setUserMonthlyPrice');
+      clearInterval(this.scheduleObservableInterval);
+
+    } else if(localStorage.getItem('setUserMonthlyPrice') == '0') {
+      localStorage.removeItem('setUserMonthlyPrice');
+      clearInterval(this.scheduleObservableInterval);
+    }
+
+  }//FINAL FUNCTION
 
 }

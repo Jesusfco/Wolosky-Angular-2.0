@@ -4,7 +4,7 @@ export class MonthlyPayment {
     public description: string;
 
     constructor(){
-        this.amount = null;
+        this.amount = 0;
         this.description = null;
     }
 }

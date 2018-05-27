@@ -154,7 +154,8 @@
                         <h2 class="l12">Pago Mensual</h2>
                         <div class="formData l6 m6">
                             <label>Monto:</label><br>
-                            <input [(ngModel)]="monthlyPayment.amount" name="amount" type="number" min="0" placehoder="Monto" [ngClass]="{ 'inputError': user.validations.monthlyPaymentAmount > 0 }">
+                            <input [(ngModel)]="monthlyPayment.amount" name="amount" type="number" min="0" placehoder="Monto" *ngIf="credential >= 6">
+                            <input [(ngModel)]="monthlyPayment.amount" name="amount" type="number" placehoder="Monto" *ngIf="credential == 3" disabled>
                             <small class="error" *ngIf="user.validations.monthlyPaymentAmount > 0">Requerido</small>
                         </div>
 

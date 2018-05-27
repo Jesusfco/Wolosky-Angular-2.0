@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FadeAnimation, SlideAnimation } from '../../../animations/slide-in-out.animation';
+import { MonthlyPrice } from '../../../classes/monthly-price';
 @Component({
   selector: 'app-create-schedule',
   templateUrl: './create-schedule.component.html',
@@ -17,10 +18,14 @@ export class CreateScheduleComponent implements OnInit {
     format: 0
   };
 
+  monthlyPrices: Array<MonthlyPrice> = [];
+
   @Input() schedules;
   @Output() closeEventCreateSchedule = new EventEmitter();
 
-  constructor() { }
+  constructor() {
+    this.monthlyPrices = JSON.parse(localStorage.getItem('monthlyPrices'));
+   }
 
   ngOnInit() {
     
@@ -42,7 +47,8 @@ export class CreateScheduleComponent implements OnInit {
     // this.createView = false;
 
     setTimeout(() => {
-      this.closeEventCreateSchedule.emit(this.schedules);      
+      this.closeEventCreateSchedule.emit(this.schedules);
+      localStorage.setItem('setUserMonthlyPrice', '1');
     }, 400);
     
   }
@@ -65,7 +71,26 @@ export class CreateScheduleComponent implements OnInit {
   }
 
   form(){    
-    this.close(this.validateSchedules());    
+    // this.countHours();
+      this.close(this.validateSchedules());    
+  }
+
+  countHours(){
+
+    let count = 0;
+
+    for(let x of this.schedules) {
+      
+      if(x.active == true) {
+        
+        let checkIn = new Date("2017-01-01 " + x.check_in);
+        let checkOut = new Date("2017-01-01 " + x.check_out);
+        count += checkOut.getHours() - checkIn.getHours();
+      }
+    }
+
+    console.log(count);
+
   }
 
   validateSchedules(){    
@@ -94,6 +119,7 @@ export class CreateScheduleComponent implements OnInit {
     }
 
     if(this.validations.checkOut == 1 || this.validations.checkOut == 1 || this.validations.format == 1) this.validations.validate = false;
+
 
     return this.validations.validate;
   }

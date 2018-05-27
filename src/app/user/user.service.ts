@@ -76,4 +76,10 @@ export class UserService {
             .toPromise();
   }
 
+  getAllMonthlyPrices(){
+    return this._http.get(this.link.url + 'monthly-cost' + this.token.getTokenUrl())
+                .map(data => data.json())
+                .toPromise();
+  }
+
 }
