@@ -14,9 +14,11 @@ export class MonthlyPriceComponent implements OnInit {
   public intervalNewPrice: any;
   public credential = parseInt(localStorage.getItem('userType'));
   public sort: number = 0;
+  public request: boolean = false;
 
   constructor(private _http: MonthlyPriceService) {
 
+    this.request = true;
     _http.getAll().then(
       data => {
         for(let x of data){
@@ -31,6 +33,8 @@ export class MonthlyPriceComponent implements OnInit {
         this.localStoragePrices();
       },
       error => localStorage.setItem('request', JSON.stringify(error)),
+    ).then(
+      () => this.request = false
     );
 
     this.setIntervalNewPrice();
@@ -46,6 +50,7 @@ export class MonthlyPriceComponent implements OnInit {
 
   deletePrice(price) {
 
+    this.request = true;
     this._http.delete(price).then(
       data => {
 
@@ -71,6 +76,8 @@ export class MonthlyPriceComponent implements OnInit {
       },
 
       error => localStorage.setItem('request', JSON.stringify(error))
+    ).then(
+      () => this.request = false
     );
   }
 
@@ -89,7 +96,7 @@ export class MonthlyPriceComponent implements OnInit {
   pushEdit(price) {
 
     price.edit = false;
-
+    this.request = true;
     this._http.update(price).then(
 
       data => {
@@ -103,12 +110,13 @@ export class MonthlyPriceComponent implements OnInit {
         };
 
         localStorage.setItem('request', JSON.stringify(not));
-        
 
       },
 
       error => localStorage.setItem('request', JSON.stringify(error))
 
+    ).then(
+      () => this.request = false
     );
 
   }
