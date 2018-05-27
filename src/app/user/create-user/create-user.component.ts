@@ -26,7 +26,7 @@ export class CreateUserComponent implements OnInit {
   backgroundState: string = 'initial';
   sendingData:boolean = false;
   
-  public credential = localStorage.getItem('userType');
+  public credential = parseInt(localStorage.getItem('userType'));
 
   user: User = new User();
   schedules = [];
@@ -50,7 +50,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   createUser(){
-    this.sendingData = true;
+    
     this.logicValidations();
 
     setTimeout(() => {
@@ -64,6 +64,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   sendNewUser(){
+    this.sendingData = true;
     if(this.user.validations.validate == false){
       this.sendingData = false;
       return;
@@ -77,13 +78,23 @@ export class CreateUserComponent implements OnInit {
                 .then(
                 data => {
                   localStorage.removeItem('userCreationStatus');
-                  this.sendingData = false;
+                  
+                  let not = {
+                    status: 200,
+                    title: 'Usuario Creado',
+                    description: 'Datos cargados a la base de datos correctamente'
+                  };
+
+                  localStorage.setItem('request', JSON.stringify(not));
+
                   this.closeWindow();
                 },
                 error => {
                   localStorage.setItem('request', JSON.stringify(error));
-                  this.sendingData = false;
+                  
                 }
+                ).then(
+                  () => this.sendingData = false
                 );
   }
 

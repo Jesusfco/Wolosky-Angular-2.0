@@ -41,6 +41,18 @@
                 <small class="error" *ngIf="validations.email == 2">Formato incorrecto "@" / "."</small>
             </div>
 
+            <div class="formData l6 m6">
+                <label>Telefono 2:</label><br>
+                <input type="phone" [(ngModel)]="reference.phone2" (keyup)="reference.validatePhoneFormat()" name="phone2" placeholder="Telefono">
+                <small>{{ reference.phone2.length }} / 10, minimo 7</small>
+
+            </div>
+
+            <div class="formData l6 m6">
+                <label>Lugar de Trabajo:</label><br>
+                <input type="text" [(ngModel)]="reference.work_place" name="work_place" placeholder="Telefono">
+            </div>
+
             <button class="btn btnPrimary l12" type="submit">Aceptar</button>
 
         </form>
@@ -69,6 +81,18 @@
             <div class="formData l6 m6">
                 <label>Correo:</label>
                 <input type="mail" [(ngModel)]="referenceToModify.email" name="email" placeholder="Correo" (keydown)="mailModifyUpper()">
+            </div>
+
+            <div class="formData l6 m6">
+                <label>Telefono 2:</label><br>
+                <input type="phone" [(ngModel)]="referenceToModify.phone2" (keyup)="referenceToModify.validatePhoneFormat()" name="phone2" placeholder="Telefono">
+                <small>{{ referenceToModify.phone2.length }} / 10, minimo 7</small>
+
+            </div>
+
+            <div class="formData l6 m6">
+                <label>Lugar de Trabajo:</label><br>
+                <input type="text" [(ngModel)]="referenceToModify.work_place" name="work_place" placeholder="Telefono">
             </div>
 
 

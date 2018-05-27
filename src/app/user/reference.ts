@@ -5,12 +5,16 @@ export class Reference {
     public relationshipView: string;
     public name: string;
     public phone: string;
+    public phone2: string;
     public email: string;
+    public work_place: string;
 
     constructor(){
         this.name = '';
         this.phone = '';
+        this.phone2 = '';
         this.email = '';
+        this.work_place = '';
         this.relationship_id = 1;
     }
 
@@ -30,7 +34,7 @@ export class Reference {
     }
 
     validateLengthPhone(x){
-        if(this.phone.length < x){
+        if(this.phone.length < x){ 
             return false;
         } else { return true; }
     }
@@ -43,5 +47,6 @@ export class Reference {
 
     validatePhoneFormat(){
         this.phone =  this.phone.replace(/\D/g, '');
+        this.phone2 = this.phone2.replace(/\D/g, '');
     }
 }

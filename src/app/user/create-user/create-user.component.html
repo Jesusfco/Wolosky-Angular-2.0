@@ -38,7 +38,7 @@
 
                     <div class="formData l6 m6">
                         <label>Tipo de usuario:</label><br>
-                        <select [(ngModel)]="user.user_type_id" name="user_type_id" *ngIf="credential == '6'">
+                        <select [(ngModel)]="user.user_type_id" name="user_type_id" *ngIf="credential >= 6">
                             <option value="1">Alumno</option> 
                             <option value="2">Empleado</option>
                             <option value="3">Cajero</option>
@@ -46,7 +46,7 @@
                             <option value="5">Super escritor</option>
                             <option value="6">Administrador</option>
                         </select>
-                        <select [(ngModel)]="user.user_type_id" name="user_type_id" *ngIf="credential == '3'" disabled>
+                        <select [(ngModel)]="user.user_type_id" name="user_type_id" *ngIf="credential == 3" disabled>
                             <option value="1">Alumno</option>                             
                         </select>
                     </div>
