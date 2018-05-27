@@ -54,7 +54,7 @@ export class SaleDebtComponent implements OnInit {
         this.debtors = data.data;
         this.search.total = data.total;
       },
-      error => console.log(error)
+      error => localStorage.setItem('request', JSON.stringify(error))
     ).then(
       () => this.request = false
     );
@@ -121,7 +121,7 @@ export class SaleDebtComponent implements OnInit {
 
       },
 
-      error => console.log(error)
+      error => localStorage.setItem('request', JSON.stringify(error))
 
     ).then(
 
@@ -154,7 +154,7 @@ export class SaleDebtComponent implements OnInit {
 
       },
 
-      () =>  debt.updating = false
+      error =>  localStorage.setItem('request', JSON.stringify(error))
 
     ).then(
 

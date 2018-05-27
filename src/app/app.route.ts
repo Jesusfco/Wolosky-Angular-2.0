@@ -45,7 +45,12 @@ import { ExpenseComponent } from './expense/expense.component';
 import { CreateExpenseComponent } from './expense/create-expense/create-expense.component';
 import { UpdateExpenseComponent } from './expense/update-expense/update-expense.component';
 
+//COMPONENTE PRECIOS POR HORA
+import { MonthlyPriceComponent } from './monthly-prices/monthly-price.component';
+import { CreateMonthlyPriceComponent } from './monthly-prices/create-monthly-price/create-monthly-price.component';
+
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+
 
 export const routes: Routes = [
     {
@@ -127,6 +132,15 @@ export const routes: Routes = [
         ]
     },
 
-    {path: '', redirectTo: 'login', pathMatch: 'full' },
+    {
+        path: 'monthly-cost', component: MonthlyPriceComponent,
+        children: [
+            { path: 'create', component: CreateMonthlyPriceComponent }
+        ]
+    },
+
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
+
     { path: '**', component:  PageNotFoundComponent },
-]
+
+];

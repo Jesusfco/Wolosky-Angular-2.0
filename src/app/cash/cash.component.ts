@@ -24,7 +24,7 @@ export class CashComponent implements OnInit {
 
   constructor(private router: Router,
               private _http: CashService) { 
-    this.caja = parseInt(this.storage.getCash());
+    this.caja = parseFloat(this.storage.getCash());
   }
 
   ngOnInit() {
@@ -32,6 +32,12 @@ export class CashComponent implements OnInit {
       this.state.background = 'final';
       this.state.card = 'final';
     }, 100);
+
+    setTimeout(() => {
+    
+      document.getElementById('inputMoney').focus();
+
+    }, 400);
   }
 
   closePop(){    
@@ -48,12 +54,30 @@ export class CashComponent implements OnInit {
     this.sendingData = true;
 
     this._http.updateCash({cash: this.caja}).then(
-      data => this.storage.setCash(this.caja),
-      error => alert('no se pudo actualizar')
+      data => {
+        this.storage.setCash(this.caja);
+
+        let noti = {
+          status: 200,
+          title: 'Dinero en Caja',
+          description: 'Se ha actualizado el dinero en la base de datos'
+        };
+
+        localStorage.setItem('request', JSON.stringify(noti));
+      },
+      error => {
+        localStorage.setItem('request', JSON.stringify(error));
+      }
     ).then(
       () => this.sendingData = false
     );
     
+  }
+
+  detectEsc(x){
+    if(x.keyCode == 27) {
+      this.closePop();
+    }
   }
 
 }

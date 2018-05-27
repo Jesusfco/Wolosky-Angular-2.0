@@ -48,6 +48,11 @@ nav button {
     overflow-y: scroll; */
 }
 
+.sideNav:hover {
+    overflow-y: scroll;
+    width: 261.3px;
+}
+
 .sideNav h5 {
     padding: 6px 10px;
     color: #333333;
@@ -142,5 +147,11 @@ nav button {
 @media screen and (max-width: 750px) {
     .principalCard {
         width: 100%;
+    }
+    .sideNav {
+        overflow-y: scroll;
+    }
+    .sideNav:hover {
+        width: initial;
     }
 }

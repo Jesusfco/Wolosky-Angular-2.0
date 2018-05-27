@@ -499,8 +499,8 @@ select:-webkit-autofill {
 }
 
 .material-icons {
-    font-size: 31px;
-    color: #ffffff;
+    /* font-size: 31px; */
+    /* color: #ffffff; */
 }
 
 @page {

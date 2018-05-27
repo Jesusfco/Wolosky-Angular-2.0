@@ -52,7 +52,7 @@ export class EditUserComponent implements OnInit {
         this.user.setValues(data);
         this.user2.setValues(data);
       },
-      error => console.log(error)
+      error => localStorage.setItem('request', JSON.stringify(error))
     );
   }
 
@@ -69,11 +69,19 @@ export class EditUserComponent implements OnInit {
     this.sendingData = true;
     this._http.updateUser(this.user).then(
       data =>{
-        console.log(data);
+
         this.sendingData = false;
+
+        let noti = {
+          status: 200,
+          title: 'Datos de usuario actualizados',
+          description: 'Se ha actualizado el usuario' + this.user.name
+        };
+
+        localStorage.setItem('request', JSON.stringify(noti));
       },
       error => {
-        console.log(error);
+        localStorage.setItem('request', JSON.stringify(error));
         this.sendingData = false;
       }
     );

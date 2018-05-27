@@ -1,6 +1,6 @@
 <mat-progress-bar mode="indeterminate" *ngIf="sendingData" class="barLoader"></mat-progress-bar>
 
-<div class="cardSpace" [@background]="state.background">
+<div (keyup)="detectEsc($event)" class="cardSpace" [@background]="state.background">
 
     <div class="closeCardBackground" (click)="closePop()">
         <h5 class="closeIcon">
@@ -12,20 +12,12 @@
         <h2>Dinero en Caja</h2>
 
         <form (submit)="updateMoney()">
-            <div class="flexform">
 
+            <input id="inputMoney" [(ngModel)]="caja" name="caja" type="number" min="0">
 
-                <div>
-                    <label>Caja:</label><br>
+            <button class="btn formBtn" type="submit">Actualizar Cantidad</button>
 
-                    <input [(ngModel)]="caja" name="caja" type="number" min="0">
-
-                </div>
-
-
-                <button class="btn formBtn" type="submit">Actualizar Cantidad</button>
-
-            </div>
         </form>
+
     </div>
 </div>

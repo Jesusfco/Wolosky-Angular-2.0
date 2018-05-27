@@ -121,7 +121,7 @@ export class ReceiptComponent implements OnInit {
 
       },
 
-      error => console.log(error),
+      error => localStorage.setItem('request', JSON.stringify(error)),
 
     ).then(
 
@@ -144,7 +144,7 @@ export class ReceiptComponent implements OnInit {
         this._http.sugestUserReceipt({search: this.search.name}).then(
           data => {
             this.sugests = data;
-          }, error => console.log(error)
+          }, error => localStorage.setItem('request', JSON.stringify(error))
         ).then(
           () => this.sendingData.receipts = false,
         );
@@ -167,7 +167,7 @@ export class ReceiptComponent implements OnInit {
         this.receipts = data.data;
         this.search.total = data.total;
       },
-      error => console.log(error)
+      error => localStorage.setItem('request', JSON.stringify(error))
     ).then(
       () => this.sendingData.receipts = false,
     );

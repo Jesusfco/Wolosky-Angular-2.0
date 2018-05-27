@@ -1,0 +1,9 @@
+<div *ngIf="notifications.length > 0" class="notificationWrapper">
+
+    <div id="not{{ x.id }}" class="notification translate" *ngFor="let x of notifications" [ngClass]="{ 'correct': x.type == 1, 'alert': x.type == 2 }">
+        <mat-icon (click)="close(x.id)">close</mat-icon>
+        <h4>{{ x.title }}</h4>
+        <p>{{ x.description }}</p>
+    </div>
+
+</div>

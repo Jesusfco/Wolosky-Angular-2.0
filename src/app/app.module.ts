@@ -97,6 +97,12 @@ import { ExpenseService } from './expense/expense.service';
 import { SaleDebtComponent } from './sale-debt/sale-debt.component';
 import { SaleDebtService } from './sale-debt/sale-debt.service';
 
+import { NotificationComponent } from './notification/notification.component';
+
+import { MonthlyPriceComponent } from './monthly-prices/monthly-price.component';
+import { MonthlyPriceService } from './monthly-prices/monthly-price.service';
+import { CreateMonthlyPriceComponent } from './monthly-prices/create-monthly-price/create-monthly-price.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -137,6 +143,9 @@ import { SaleDebtService } from './sale-debt/sale-debt.service';
     UpdateExpenseComponent,
     EditReceiptComponent,
     SaleDebtComponent,
+    NotificationComponent,
+    MonthlyPriceComponent,
+    CreateMonthlyPriceComponent,
   ],
   imports: [
     BrowserModule,
@@ -191,7 +200,8 @@ import { SaleDebtService } from './sale-debt/sale-debt.service';
         CashService,
         CutoutService,
         ExpenseService,
-        SaleDebtService
+        SaleDebtService,
+        MonthlyPriceService
       ],
 
   bootstrap: [AppComponent]

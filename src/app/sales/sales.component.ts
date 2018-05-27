@@ -65,7 +65,7 @@ export class SalesComponent implements OnInit {
 
       },
       error => {
-        console.log(error);
+        localStorage.setItem('request', JSON.stringify(error));
 
       },
     ).then(

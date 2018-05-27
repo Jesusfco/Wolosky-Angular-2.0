@@ -1,0 +1,41 @@
+<mat-progress-bar mode="indeterminate" *ngIf="request" class="barLoader"></mat-progress-bar>
+
+
+<div class="cardSpace" [@background]="state.background">
+
+    <div class="closeCardBackground" (click)="closePop()">
+        <h5 class="closeIcon">
+            <mat-icon>close</mat-icon>
+        </h5>
+    </div>
+
+    <div class="cardModule" [@card]="state.card">
+        <h2>Crear Precio</h2>
+
+        <form (submit)="send()">
+
+
+            <div class="">
+
+                <div class="">
+                    <label>Horas:</label><br>
+                    <input id="inputHourMonthly" class="" [(ngModel)]="monthlyPrice.hours" name="hours" type="number" min="0">
+                    <small class="error" *ngIf="validation.hour == 1">Campo Requerido</small>
+                    <small class="error" *ngIf="validation.hour == 2">Ya Existe este registro</small>
+                </div>
+
+                <div>
+                    <label>Monto:</label><br>
+                    <input [(ngModel)]="monthlyPrice.cost" name="cost" type="number" min="0">
+                    <small class="error" *ngIf="validation.cost == 1">Campo Requerido</small>
+
+                </div>
+
+                <button *ngIf="request == false" class="btn formBtn" style="background: rgb(238, 163, 0)" type="submit">Crear Precio</button>
+                <button *ngIf="request == true" class="btn formBtn" style="background: rgb(209, 209, 209)" disabled>Crear Precio</button>
+
+            </div>
+        </form>
+
+    </div>
+</div>

@@ -64,8 +64,8 @@ export class UserComponent implements OnInit {
         this.users = data.data;
         this.search.total = data.total;
       },
-      error =>  console.log(error)
-    );  
+      error => localStorage.setItem('request', JSON.stringify(error))
+    );
   }
 
   selectUser(id){

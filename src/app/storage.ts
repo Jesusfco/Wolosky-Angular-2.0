@@ -56,7 +56,8 @@ export class Storage {
     }
 
     storageCash(data){
-        localStorage.setItem('userCash', data);
+        
+        localStorage.setItem('userCash', data.toString());
     }
     // SOBRE EL PUNTO DE VENTA
     storageInventory(data){
@@ -64,7 +65,7 @@ export class Storage {
 
             if( typeof data[0].id == 'string'){
                 for(let x = 0; x < data.length; x++){
-                    data[x].price = parseInt(data[x].price);
+                    data[x].price = parseFloat(data[x].price);
                     data[x].id = parseInt(data[x].id);
                     data[x].stock = parseInt(data[x].stock);
                     data[x].reorder = parseInt(data[x].reorder);
@@ -138,10 +139,11 @@ export class Storage {
     }
 
     updateCash(cash){
-        let x = parseInt(localStorage.getItem('userCash'));
+        let x = parseFloat(localStorage.getItem('userCash'));
         x += cash;
         localStorage.setItem('userCash', x.toString());
     }
+    
     setCash(cash){
         localStorage.setItem('userCash', cash.toString());
     }

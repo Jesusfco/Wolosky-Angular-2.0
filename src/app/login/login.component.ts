@@ -68,14 +68,14 @@ export class LoginComponent implements OnInit {
             product => {
                 this.storage.storageInventory(product);
             },
-            error => console.log(error)
+            error => localStorage.setItem('request', JSON.stringify(error))
           );
           
           this.router.navigate(['/users']);
           
         },
         error => {
-          console.log(error);
+          localStorage.setItem('request', JSON.stringify(error));
           this.serverConection = false;
         }
       );
@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
     checkAuth() {
       this._http.checkAuth().then(
         data => console.log(data),
-        error => console.log(error)
+        error => localStorage.setItem('request', JSON.stringify(error))
       );  
     }
   

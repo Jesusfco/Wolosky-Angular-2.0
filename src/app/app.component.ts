@@ -18,6 +18,7 @@ export class AppComponent {
   
   localData: Storage = new Storage();
   
+  loginObserverInterval: any;
 
   constructor(
     private _http: LoginService,
@@ -81,4 +82,27 @@ export class AppComponent {
       error => console.log(error)
     );
   }
+
+  setloginObserverInterval(){
+    this.loginObserverInterval = setInterval(() => this.loginObserverLogic(), 1000);
+  }
+
+  loginObserverLogic() {
+    
+    let login = parseInt(localStorage.getItem('login'));
+
+    if(login == -1 || login == 2) return;
+
+    if(login == 0) {
+      // this.clearAllIntervalApplication();
+      localStorage.setItem('login', '-1');
+    }
+
+    else if(login == 1) {
+      // this.restoreAllIntervalApplication();
+      localStorage.setItem('login', '2');
+    }
+
+  }
+
 }

@@ -1,0 +1,52 @@
+<div class="responsive-table">
+
+    <table>
+        <thead>
+            <tr>
+
+                <th *ngIf="sort == 0" (click)="sortHoursUp()">Horas
+                    <mat-icon>arrow_drop_down</mat-icon>
+                </th>
+
+                <th *ngIf="sort == 1" (click)="sortHoursDown()">Horas
+                    <mat-icon>arrow_drop_up</mat-icon>
+                </th>
+
+                <th>Costo</th>
+                <th>Fecha/Creacion</th>
+                <th>Ultima Actualización</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="let x of monthlyPrices">
+                <td> {{ x.hours }}</td>
+
+                <td *ngIf="x.edit == false"> ${{ x.cost }}</td>
+                <td *ngIf="x.edit == true">
+                    <form (submit)="pushEdit(x)">
+                        <input id="editPrice" [(ngModel)]="x.cost" name="cost" type="number">
+                    </form>
+                </td>
+                <td>{{ x.created_at | date: format }} {{ x.created_at | date: 'hh:mm a' }}</td>
+                <td>{{ x.updated_at | date: format }} </td>
+                <td>
+                    <mat-icon (click)="deletePrice(x)">delete</mat-icon>
+                    <mat-icon (click)="startModify(x)">edit</mat-icon>
+            </tr>
+
+
+        </tbody>
+    </table>
+
+</div>
+
+<a [routerLink]="['/monthly-cost/create']">
+    <div class="botonFloat">
+        <a class="botonA" matTooltip="Crear recibo"><i class="material-icons">add</i></a>
+    </div>
+</a>
+
+<router-outlet></router-outlet>

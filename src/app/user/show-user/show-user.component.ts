@@ -49,7 +49,7 @@ export class ShowUserComponent implements OnInit {
   getUserData(){
     this._http.getUser(this.user.id).then(
       data => this.user = data,
-      error => console.log(error)
+      error => localStorage.setItem('request', JSON.stringify(error))
     );
   }
 

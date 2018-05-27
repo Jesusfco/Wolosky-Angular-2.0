@@ -1,0 +1,60 @@
+.notificationWrapper {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 200;
+}
+
+.notification {
+    background: white;
+    padding: 10px;
+    width: 250px;
+    box-shadow: 7px 6px 23px -9px rgba(0, 0, 0, 0.75);
+    border-radius: 2px;
+    transition: all .5s ease;
+    position: absolute;
+    margin-top: 25px;
+    bottom: 0;
+    right: 0;
+}
+
+h4 {
+    margin: 0;
+}
+
+.smaller {
+    transform: scale(0);
+}
+
+.correct {
+    background: #c5ffcb;
+}
+
+.correct h4 {
+    color: #026502;
+}
+
+.correct p {
+    color: #026502;
+}
+
+.alert {
+    background: #fcbdb8;
+    color: red;
+}
+
+.alert h4 {
+    color: red;
+}
+
+mat-icon {
+    position: absolute;
+    right: 10px;
+    top: 7px;
+    cursor: pointer;
+}
+
+.translate {
+    transform: translateX(150%);
+    opacity: .1;
+}

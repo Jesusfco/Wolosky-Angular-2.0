@@ -81,7 +81,7 @@ export class CreateUserComponent implements OnInit {
                   this.closeWindow();
                 },
                 error => {
-                  console.log(error);
+                  localStorage.setItem('request', JSON.stringify(error));
                   this.sendingData = false;
                 }
                 );

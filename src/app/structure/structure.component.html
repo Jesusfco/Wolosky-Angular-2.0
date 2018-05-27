@@ -30,12 +30,15 @@
 
     <h5>APLICACIÓN</h5>
     <ul>
+
         <a [routerLink]="['/users']">
             <li><button mat-button>Usuarios</button></li>
         </a>
+
         <a [routerLink]="['/receipt']">
             <li><button mat-button>Recibos</button></li>
         </a>
+
         <a [routerLink]="['/events']">
             <li><button mat-button>Eventos</button></li>
         </a>
@@ -66,6 +69,8 @@
             <li><button mat-button>Recorte de Caja</button></li>
         </a>
 
+        <li [routerLink]="['monthly-cost']"><button>Costos por Hora</button></li>
+
     </ul>
     <h5>USUARIO</h5>
     <ul>
@@ -86,3 +91,6 @@
     </div>
 
 </div>
+
+
+<app-notification></app-notification>

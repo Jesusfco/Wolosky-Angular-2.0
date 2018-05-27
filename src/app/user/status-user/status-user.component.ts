@@ -65,6 +65,7 @@ export class StatusUserComponent implements OnInit {
     this.validateStatus();
     if(this.validation.status == 1)
       return;
+      
       this.sendingData = true;
 
       this._http.postStatus(this.record).then(
@@ -72,10 +73,21 @@ export class StatusUserComponent implements OnInit {
           this.user.status = data.status;
           this.status.unshift(data);
           this.record.description = '';
+
+          let noti = {
+            status: 200,
+            title: 'Status Actualizado',
+            description: 'Se ha cargado los datos correctamente'
+          };
+
+          localStorage.setItem('request', JSON.stringify(noti));
         },
-        error => alert('Error de conexion')
+        error => localStorage.setItem('request', JSON.stringify(error))
+
       ).then(
+
         () => this.sendingData = false
+
       );
 
 
