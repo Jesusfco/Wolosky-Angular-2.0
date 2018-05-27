@@ -76,7 +76,7 @@ export class CreateMonthlyPriceComponent implements OnInit {
 
       },
 
-      error => localStorage.setItem('request', JSON.parse(error))
+      error => localStorage.setItem('request', JSON.stringify(error))
 
     ).then(
       () => this.request = false

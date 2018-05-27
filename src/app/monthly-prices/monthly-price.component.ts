@@ -122,11 +122,11 @@ export class MonthlyPriceComponent implements OnInit {
   }
 
   setIntervalNewPrice() {
-    this.intervalNewPrice = setInterval(() => this.intervalNewPriceLogic(), 1000);
+    this.intervalNewPrice = setInterval(() => this.intervalNewPriceLogic(), 1112);
   }
 
   intervalNewPriceLogic() {
-
+    
     if(localStorage.getItem('newMonthlyPrice') == undefined) return;
 
     let newMonthly = new MonthlyPrice();
