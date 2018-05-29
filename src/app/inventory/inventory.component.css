@@ -61,3 +61,59 @@
         width: 98%;
     }
 }
+
+.floatOptions {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    /* overflow: hidden; */
+}
+
+.floatOptions:hover .moreOptions {
+    opacity: 1;
+    transform: translateY(0);
+    margin-bottom: 12px;
+}
+
+.floatOptionPrincipal:focus .moreOptions {
+    opacity: 1;
+    margin: 0;
+    transform: translateY(0);
+}
+
+.floatOptionPrincipal {
+    background: #ff0057;
+    color: white;
+    bottom: 0px;
+    right: 0px;
+}
+
+.moreOptions {
+    /* width: 50px; */
+    display: flex;
+    flex-wrap: wrap;
+    width: 55px;
+    margin-bottom: 10px;
+    transition: .5s;
+    opacity: 0;
+    margin-bottom: -150px;
+    /* transform: translateY(80%); */
+}
+
+.moreOptions button {
+    /* margin-bottom: 5px; */
+    transform: scale(.7);
+    margin-bottom: -10px;
+}
+
+#cancelButton {
+    background: #c62828;
+}
+
+#searchButton {
+    background: #4caf50;
+}
+
+#sellButton {
+    background: #039be5;
+}

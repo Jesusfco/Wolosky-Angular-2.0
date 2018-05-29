@@ -23,6 +23,10 @@ input {
     transform: scale(1.05);
 }
 
+.btnSaleNone {
+    background: #d7d7d7;
+}
+
 .type {
     position: absolute;
     top: 5px;

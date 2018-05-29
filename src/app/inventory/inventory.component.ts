@@ -4,6 +4,7 @@ import { Product } from '../product';
 import { Storage } from '../storage';
 import { FilterInventoryPipe } from './filter-inventory.pipe';
 import { PageEvent } from '@angular/material';
+import { Url } from '../url';
 // import { setInterval } from 'timers';
 
 @Component({
@@ -20,6 +21,7 @@ export class InventoryComponent implements OnInit {
   search: string = '';
   createPro: boolean =  false;
   storage: Storage = new Storage();
+  url: Url = new Url();
 
   lenghtArrayOptions: Array<number> = [ 10, 25, 50, 100, 200 ];
   pageOption: Array<number> = [];
