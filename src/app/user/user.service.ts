@@ -82,4 +82,22 @@ export class UserService {
                 .toPromise();
   }
 
+  getMonthlyPayment(id){
+    return this._http.get(this.link.url + 'monthlyPayment/' + id + this.token.getTokenUrl())
+              .map(data => data.json())
+              .toPromise();
+  }
+
+  getSalary(id) {
+    return this._http.get(this.link.url + 'salary/' + id + this.token.getTokenUrl())
+              .map(data => data.json())
+              .toPromise();
+  }
+
+  getReferences(id) {
+    return this._http.get(this.link.url + 'references/' + id + this.token.getTokenUrl())
+              .map(data => data.json())
+              .toPromise();
+  }
+
 }

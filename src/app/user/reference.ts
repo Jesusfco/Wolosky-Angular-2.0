@@ -8,6 +8,8 @@ export class Reference {
     public phone2: string;
     public email: string;
     public work_place: string;
+    public created_at: String;
+    public updated_at: String;
 
     constructor(){
         this.name = '';
@@ -48,5 +50,22 @@ export class Reference {
     validatePhoneFormat(){
         this.phone =  this.phone.replace(/\D/g, '');
         this.phone2 = this.phone2.replace(/\D/g, '');
+    }
+
+    setValuesFromData(x) {
+
+        this.id = x.id;
+        this.name = x.name;
+        this.user_id = x.user_id;
+        this.relationship_id = x.relationship_id;
+        this.phone = x.phone;
+        this.phone2 = x.phone2;
+        this.email = x.email;
+        this.work_place = x.work_place;
+        this.created_at = x.created_at;
+        this.updated_at = x.updated_at;
+
+        this.setRelationshipView();
+
     }
 }

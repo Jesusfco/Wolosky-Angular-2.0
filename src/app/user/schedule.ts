@@ -9,6 +9,8 @@ export class Schedule {
     public active: boolean;
     public error: number;
     public type: number;
+    public created_at: String;
+    public updated_at: String;
     
     public user_id: number;
 
@@ -40,5 +42,19 @@ export class Schedule {
           ];
 
         return x;
+    }
+
+    setValues(data){
+        
+        this.id = data.id;
+        this.day_id = data.day_id;
+        this.check_in = data.check_in;
+        this.check_out = data.check_out;
+        this.user_id = data.user_id;
+        this.type = data.type;
+        this.created_at = data.created_at;
+        this.updated_at = data.updated_at;
+;
+
     }
 }
