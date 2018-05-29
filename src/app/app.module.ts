@@ -77,6 +77,7 @@ import { InventoryService } from './inventory/inventory.service';
 import { FilterInventoryPipe } from './inventory/filter-inventory.pipe';
 
 import { SalePointComponent } from './sale-point/sale-point.component';
+import { SearchProductComponent } from './sale-point/search-product/search-product.component';
 import { SaleService } from './sale-point/sale.service';
 
 import { SaleProcessComponent } from './sale-point/sale-process/sale-process.component';
@@ -115,6 +116,7 @@ import { CreateMonthlyPriceComponent } from './monthly-prices/create-monthly-pri
     SaleProcessComponent,
     SalesComponent,
     ShowSaleComponent,
+    SearchProductComponent,
 
     LoginComponent,
     StructureComponent,

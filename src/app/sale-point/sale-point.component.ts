@@ -19,7 +19,7 @@ export class SalePointComponent implements OnInit {
   public sale: Sale = new Sale();
   public descripton: SaleDescription = new SaleDescription();
   public search = {
-    name: undefined,
+    name: '',
     quantity: 1,
   };
 
@@ -75,17 +75,25 @@ export class SalePointComponent implements OnInit {
   ngOnInit(){}
 
   identifyProduct(){
+
+    if(this.search.name == '' || this.search.name == null) return;
+
+    this.search.name = this.search.name.replace(/\s+$/, '');
+
     this.restoreFormValue();
+
     this.sugests = [];
+
     for(let x of this.inventory){
 
-      if(x.code == this.search.name || x.name == this.search.name.toUpperCase()){
+      if(x.code == this.search.name || x.name.toUpperCase() == this.search.name.toUpperCase()){
         if(this.sale.type == 1)
         this.sale.pushProduct({
             product_id: x.id,
             name: x.name,
             price: x.price_public,            
             quantity: this.search.quantity,
+            modify: false
           });
 
         if(this.sale.type > 1)
@@ -94,6 +102,7 @@ export class SalePointComponent implements OnInit {
             name: x.name,            
             price: x.price_intern,
             quantity: this.search.quantity,
+            modify: false
           });
 
         this.restoreSearch();
@@ -203,6 +212,39 @@ export class SalePointComponent implements OnInit {
     if(this.observerFailSales != undefined){ return; }
     this.observerFailSales = setInterval(() => this.sendStoreSales(), 30000);
     
+  }
+
+  changingQuantity(product) {
+    // console.log(event);
+    if(product.quantity <= 0 || product.quantity == null || product.quantity == undefined) {
+      return;
+    }
+
+    product.subtotal = product.quantity * product.price;
+    this.sale.getTotal();
+  }
+
+  startModify(product){
+    product.modify = true;
+
+    setTimeout(() => {
+    
+      document.getElementById('focusModify').focus();
+
+    }, 50);
+  }
+
+  finishModify(product){
+
+    if(product.quantity <= 0 || product == null){
+      product.quantity = 1;
+    }
+
+    product.subtotal = product.quantity * product.price;
+    this.sale.getTotal();
+
+    product.modify = false;
+
   }
 
 }

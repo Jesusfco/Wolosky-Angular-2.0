@@ -30,6 +30,7 @@ import { NewProductComponent } from './inventory/new-product/new-product.compone
 import { EditProductComponent } from './inventory/edit-product/edit-product.component';
 import { SalePointComponent } from './sale-point/sale-point.component';
 import { SaleProcessComponent } from './sale-point/sale-process/sale-process.component';
+import { SearchProductComponent } from './sale-point/search-product/search-product.component';
 import { SalesComponent } from './sales/sales.component';
 import { ShowSaleComponent } from './sales/show-sale/show-sale.component';
 
@@ -105,7 +106,7 @@ export const routes: Routes = [
     // PUNTO DE VENTA
     { path: 'sales', component: SalesComponent,
         children : [
-            { path: ':id', component: ShowSaleComponent },
+            { path: 'sale/:id', component: ShowSaleComponent },
         ] },
     { path: 'inventory', component: InventoryComponent,
         children : [
@@ -115,7 +116,8 @@ export const routes: Routes = [
     },
     { path: 'sale-point', component: SalePointComponent,
         children: [
-            { path: 'sale-process', component: SaleProcessComponent }
+            { path: 'sale-process', component: SaleProcessComponent },
+            { path: 'search', component: SearchProductComponent },
     ]},
 
     {

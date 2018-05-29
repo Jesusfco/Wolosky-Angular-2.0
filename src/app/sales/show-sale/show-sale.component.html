@@ -7,9 +7,11 @@
     </div>
 
     <div class="cardModule" [@card]="state.card">
-        <h2>Venta #{{sale.id}}</h2>
+        <h3>Ticket #{{sale.id}}</h3>
+        <h4>Total: ${{sale.total}}</h4>
+        <h4>Fecha/Hora: {{sale.created_at}}</h4>
 
-        <h3>Descripcion de venta</h3>
+        <h4>Descripcion de venta</h4>
         <div class="responsive-table">
             <table>
                 <thead>

@@ -1,34 +1,28 @@
 <mat-progress-bar mode="indeterminate" *ngIf="request" class="barLoader"></mat-progress-bar>
 
-<h1 class="routeTitle">Registro de Ventas</h1>
-<h3>Ganancia</h3>
-<p>${{ analize.neto }}</p>
-<h3>Total</h3>
-<p>${{ analize.total }}</p>
-<div *ngIf="analize.undefined.count > 0">
-    <h3>Productos costo compra indefinidos</h3>
-    <p>#{{ analize.undefined.count }}</p>
-</div>
-<form (submit)="getData()">
-    <input type="date" [(ngModel)]="search.from" name="from" id="search"><label><mat-icon>date_range</mat-icon></label>
-    <input type="date" [(ngModel)]="search.to" name="to" id="search"><label><mat-icon>date_range</mat-icon></label>
-    <button type="submit">Buscar</button>
+<h1 class="centerText">Registro de Ventas</h1>
+
+
+
+<form class="form">
+    <input (change)="search()" type="date" [(ngModel)]="date.from" name="from" id="search"><label><mat-icon>date_range</mat-icon></label>
+    <input (change)="search()" type="date" [(ngModel)]="date.to" name="to" id="search"><label><mat-icon>date_range</mat-icon></label>
 </form>
 
 <div class="responsive-table">
     <table>
         <thead>
             <tr>
-                <th>#</th>
-                <th>Total</th>
-                <th>Fecha</th>
-                <th>Hora</th>
+                <th (click)="sortById()">#</th>
+                <th (click)="sortByTotal()">Total</th>
+                <th (click)="sortByDate()">Fecha</th>
+                <th (click)="sortByDate()">Hora</th>
             </tr>
         </thead>
 
         <tbody [ngClass]="{ 'loadingForm': request == true}">
 
-            <tr *ngFor="let sale of sales" [routerLink]="['/sales', sale.id]">
+            <tr *ngFor="let sale of sales" [routerLink]="['/sales/sale', sale.id]">
                 <td>{{ sale.id }}</td>
                 <td> ${{ sale.total }}</td>
                 <td>{{ sale.created_at | date: format }}</td>
@@ -38,8 +32,36 @@
 
         </tbody>
     </table>
-    <mat-paginator (page)="pageAction($event)" [length]="search.total" [pageSize]="search.items" [pageSizeOptions]="[5, 10, 25, 50, 100]">
+
+    <mat-paginator (page)="testPage($event)" [length]="backSales.length" [pageSize]="25" [pageSizeOptions]="lenghtArrayOptions">
     </mat-paginator>
+
+</div>
+
+<div class="floatOptions">
+
+    <div class="moreOptions">
+
+        <a target="_blank" href="{{ url.url }}excel/sales{{ storage.getTokenUrl() }}&from={{date.from}}">
+            <button matTooltip="Descargar Ventas" matTooltipPosition="left" mat-fab id="cancelButton">
+                <mat-icon >archive</mat-icon>
+            </button>
+        </a>
+
+        <button [routerLink]="['/sales/analysis']" matTooltip="Obtener Analisis" matTooltipPosition="left" mat-fab id="searchButton">
+                <mat-icon >equalizer</mat-icon>
+            </button>
+
+        <button (click)="getToday()" matTooltip="Ventas de Hoy" matTooltipPosition="left" mat-fab id="sellButton">
+                <mat-icon >today</mat-icon>
+            </button>
+
+    </div>
+
+    <button matTooltip="Opciones de Ventas" matTooltipPosition="left" mat-fab color="pri" class="floatOptionPrincipal">
+            <mat-icon >settings</mat-icon>
+        </button>
+
 </div>
 
 <router-outlet></router-outlet>

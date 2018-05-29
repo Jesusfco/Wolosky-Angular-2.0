@@ -1,0 +1,51 @@
+<div class="cardSpace" [@background]="state.background">
+
+    <div class="closeCardBackground" (click)="closePop()">
+        <h5 class="closeIcon">
+            <mat-icon>close</mat-icon>
+        </h5>
+    </div>
+
+    <div class="cardModule" [@card]="state.card">
+        <h2 class="centerText">Buscar Producto</h2>
+
+        <form (submit)="identifyProduct()">
+            <div class="divSearch">
+
+                <input id="searchProductInput" [(ngModel)]="search" [matAutocomplete]="auto" (keyup)="getSugest($event.keyCode)" placeholder="Codigo de barras / Nombre del producto" name="search" type="search">
+
+                <br>
+                <mat-icon *ngIf="search == ''">search</mat-icon>
+                <mat-icon *ngIf="search !== ''" (click)="search = ''">close</mat-icon>
+
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let product of sugests" [value]="product.name">
+                        {{ product.name }}
+                    </mat-option>
+                </mat-autocomplete>
+
+
+            </div>
+
+
+        </form>
+
+        <div *ngIf="product != null">
+            <h3>{{ product.name }}</h3>
+            <p>Precio Publico: ${{ product.price_public}} </p>
+            <p>Precio Interno: ${{ product.price_intern}} </p>
+            <p>Cantidad: {{ product.stock}} </p>
+            <p>Codigo de Barras: {{ product.code}} </p>
+            <p>Alta: {{ product.created_at}} </p>
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+</div>

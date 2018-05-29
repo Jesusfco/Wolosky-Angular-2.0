@@ -20,7 +20,7 @@
 
                 <div>
                     <label>Nombre de Alumno:</label><br>
-                    <input [(ngModel)]="payment.userName" name="userName" type="search" [matAutocomplete]="auto" (keyup)="searchSugest()">
+                    <input [(ngModel)]="payment.userName" name="userName" type="search" [matAutocomplete]="auto" (keyup)="searchSugest($event)">
 
                     <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let sugest of sugests" [value]="sugest.name" (onSelectionChange)="getMonthlyFrom(sugest.id)">
@@ -46,21 +46,11 @@
                 <div>
                     <label>Monto:</label><br>
 
-                    <input *ngIf="payment.type == 1 && storage.getUserType() == 3" 
-                            [(ngModel)]="payment.monthlyAmount" 
-                            name="monthlyAmount" 
-                            type="number" disabled>
+                    <input *ngIf="payment.type == 1 && storage.getUserType() == 3" [(ngModel)]="payment.monthlyAmount" name="monthlyAmount" type="number" disabled>
 
-                    <input *ngIf="payment.type == 1 && storage.getUserType() >= 6" 
-                            [(ngModel)]="payment.monthlyAmount" 
-                            name="monthlyAmount" 
-                            type="number"
-                            min="0">
+                    <input *ngIf="payment.type == 1 && storage.getUserType() >= 6" [(ngModel)]="payment.monthlyAmount" name="monthlyAmount" type="number" min="0">
 
-                    <input *ngIf="payment.type > 1" [(ngModel)]="payment.amount" 
-                            name="amount" 
-                            type="number" 
-                            min="0">
+                    <input *ngIf="payment.type > 1" [(ngModel)]="payment.amount" name="amount" type="number" min="0">
 
                     <small class="validate" *ngIf="validation.paymentDate == 1 && payment.type == 1">Descuento ${{desc}}.00</small>
                     <small class="error" *ngIf="validation.paymentDate == 2 && payment.type == 1">Recargo ${{recharge}}.00</small>

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Sale } from '../sale-point/sale';
 import { SaleService } from '../sale-point/sale.service';
+import { Url } from '../url';
+import { Storage } from '../storage';
+import { PageEvent } from '@angular/material';
 
 @Component({
   selector: 'app-sale-component',
@@ -8,15 +11,14 @@ import { SaleService } from '../sale-point/sale.service';
   styleUrls: ['./sale-component.component.css']
 })
 export class SalesComponent implements OnInit {
+  
   public sales: Array<Sale> = [];
+  public backSales: Array<Sale> = [];
   public sal: Sale =  new Sale();
 
-  public search = {
-    from: "",
-    to: "",
-    items: 25,
-    page: 1,
-    total: 0,
+  public date = {
+    from: null,
+    to: null,
   };
   
   public analize = {
@@ -28,18 +30,39 @@ export class SalesComponent implements OnInit {
     },
   };
 
+  public sort: any = {
+    id: 0,
+    total: 0,
+    created: 0,
+  };
+
+  public lenghtArrayOptions: Array<number> = [ 10, 25, 50, 100, 200 ];
+
+  public pageEvent: PageEvent = {
+    pageIndex: 0,
+    pageSize: 25,
+    length: 0
+  };
+
   public request: boolean = false;
+
+  public storage: Storage = new Storage();
+  public url: Url = new Url();
 
 
   constructor(private _http: SaleService) {
+
     this.request = true;
     this.getDates();
+
     this._http.getSales().then(
       data => {
 
         this.request = false;
-        this.sales = data;
+        this.backSales = data;
+        this.refreshTable();
         this.analize = this.sal.getGrossProfit(data);
+        localStorage.setItem('salesComponent', JSON.stringify(data));
 
       },
       error => {
@@ -53,15 +76,15 @@ export class SalesComponent implements OnInit {
   ngOnInit() {
   }
 
-  getData(){
+  search(){
     this.request = true;
-    this._http.getSalesParameter(this.search).then(
-      data => {
 
-        
-        this.sales = data.data;
-        this.search.total = data.total;
-        // this.analize = this.sal.getGrossProfit(data);
+    this.validateFromTo();
+    this._http.getSalesParameter(this.date).then(
+      data => {
+        this.backSales = data;
+        this.refreshTable();
+        localStorage.setItem('salesComponent', JSON.stringify(data));
 
       },
       error => {
@@ -69,37 +92,177 @@ export class SalesComponent implements OnInit {
 
       },
     ).then(
-      () => {
-        this.request = false;
-      }
+      () => this.request = false
     );
 
-    if (this.search.from !== undefined && this.search.to === undefined){
+    if (this.date.from !== undefined && this.date.to === undefined){
 
       
 
     }
-    else if (this.search.from !== undefined && this.search.to !== undefined){
+    else if (this.date.from !== undefined && this.date.to !== undefined){
 
     }
 
   }
 
-  pageAction(data){
-    this.search.items = data.pageSize;
-    this.search.page = data.pageIndex + 1;
-    this.getData();
+  validateFromTo() {
+    let d = new Date(this.date.from);
+    let x = new Date(this.date.to);
+
+    if(d > x) {
+      let yy = this.date.from;
+      this.date.from = this.date.to;
+      this.date.to = yy;
+
+    }
   }
 
   getDates(){
     let d = new Date();
 
-    if(d.getMonth() <= 8){
-      this.search.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + d.getDate();
-      // this.search.to = d.getFullYear() + "-0" + (d.getMonth() + 2 ) + "-" + "01";    
+    if(d.getMonth() <= 7){
+      this.date.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + d.getDate();
+      this.date.to = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + d.getDate();
+    } else if (d.getMonth() == 8){
+      this.date.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + d.getDate();
+      this.date.to = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-" + d.getDate();
     } else {
-      this.search.from = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-" + d.getDate();
-      // this.search.to = d.getFullYear() + "-" + (d.getMonth() + 2 ) + "-" + "01";
+      this.date.from = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-" + d.getDate();
+      this.date.to = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-" + d.getDate();
     }
   }
+
+  getToday(){
+    this.getDates();
+    this.search();
+  }
+
+  testPage($event){
+    
+    this.pageEvent = $event;
+    this.refreshTable();
+
+  }
+
+  refreshTable() {
+
+    this.sales = [];
+
+    for(let i = 0; i < this.pageEvent.pageSize; i++){
+
+      if(i + (this.pageEvent.pageIndex * this.pageEvent.pageSize) == this.backSales.length) { break; }
+
+      this.sales.push(this.backSales[i + (this.pageEvent.pageIndex * this.pageEvent.pageSize)]);
+
+    }
+
+  }
+
+  sortById(){
+
+    if(this.sort.id == 0) {
+      
+      this.backSales.sort((a, b) => {
+        if(a.id < b.id) {
+          return -1;
+        } else if (a.id > b.id) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+
+      this.sort.id = 1;
+
+    } else if ( this.sort.id == 1 ) {
+
+      this.backSales.sort((a, b) => {
+        if(a.id > b.id) {
+          return -1;
+        } else if (a.id < b.id) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+
+      this.sort.id = 0;
+
+    }
+    
+    this.refreshTable();
+
+  }
+
+  sortByTotal(){
+
+    if(this.sort.total == 0) {
+      
+      this.backSales.sort((a, b) => {
+        if(a.total < b.total) {
+          return -1;
+        } else if (a.total > b.total) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+
+      this.sort.total = 1;
+
+    } else if ( this.sort.total == 1 ) {
+
+      this.backSales.sort((a, b) => {
+        if(a.total > b.total) {
+          return -1;
+        } else if (a.total < b.total) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+
+      this.sort.total = 0;
+
+    }
+    
+    this.refreshTable();
+
+  }
+
+  sortByDate(){
+    if(this.sort.created == 0) {
+      
+      this.backSales.sort((a, b) => {
+        if(a.created_at < b.created_at) {
+          return -1;
+        } else if (a.created_at > b.created_at) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+
+      this.sort.created = 1;
+
+    } else if ( this.sort.created == 1 ) {
+
+      this.backSales.sort((a, b) => {
+        if(a.created_at > b.created_at) {
+          return -1;
+        } else if (a.created_at < b.created_at) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+
+      this.sort.created = 0;
+
+    }
+    
+    this.refreshTable();
+  }
+
 }

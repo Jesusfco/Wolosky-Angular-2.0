@@ -51,10 +51,19 @@ export class SaleProcessComponent implements OnInit {
   }
 
   ngOnInit() {
+
     setTimeout(() => {
       this.state[0].background = 'final';
       this.state[0].card = 'final';
+
+      if(this.sale.type != 3) {
+        document.getElementById('saleClientMoney').focus(); 
+      } else {
+        document.getElementById('saleSearchUser').focus(); 
+      }
+
     }, 80);
+
   }
 
   ngOnDestroy() {    
@@ -65,6 +74,13 @@ export class SaleProcessComponent implements OnInit {
 
   checkClientMoney(){
     this.form = 2;
+
+    setTimeout(() => {
+      
+        document.getElementById('salesBtnConfirm').focus();
+
+    }, 10);
+
   }
 
   confirmSale(){
@@ -82,15 +98,27 @@ export class SaleProcessComponent implements OnInit {
 
         this.inventory.afterSale(this.sale.description);
         localStorage.removeItem('saleStatus');
+
+        let not = {
+          status: 200,
+          title: 'Venta Cargada con exito',
+          description: 'La venta se ha cargado al servidor'
+        };
+
+        localStorage.setItem('request', JSON.stringify(not));
+
       },
       error => {
-        console.log(error);
+
+        localStorage.setItem('request', JSON.stringify(error));
+
         let x = parseInt(localStorage.getItem('userCash'));
         x += this.sale.total;
         localStorage.setItem('userCash', x.toString());
 
         this.inventory.afterSale(this.sale.description);
         this.sale.storeSaleErrorConnection(this.sale);
+
       }
     ).then(
       () => this.request = false
@@ -119,15 +147,31 @@ export class SaleProcessComponent implements OnInit {
     this._http.debtSale({sale: this.sale, saleDebt: this.saleDebt}).then(
 
       data => {
-        alert("VENTA CONCRETADA");
+        
         localStorage.removeItem('saleDescription');
         localStorage.removeItem('saleType');
         localStorage.removeItem('saleStatus');
+        
         this.inventory.afterSale(this.sale.description);
+
+        let not = {
+          status: 200,
+          title: 'Venta Cargada con exito',
+          description: 'La venta se ha cargado al servidor'
+        };
+
+        localStorage.setItem('request', JSON.stringify(not));
+
         this.closePop();
+
       },
 
-      error => console.log(error)
+      error => {
+
+        localStorage.setItem('request', JSON.stringify(error));
+        this.sale.storeSaleErrorConnection(this.sale);
+
+      }
 
     ).then(
 
@@ -136,7 +180,10 @@ export class SaleProcessComponent implements OnInit {
     );
   }
 
-  searchInput() {
+  searchInput(key) {
+
+    if(key.keyCode >=37 && key.keyCode <= 40 || key.keyCode == 13) return;
+
     this.timer++;    
 
     setTimeout(() => {
@@ -163,7 +210,7 @@ export class SaleProcessComponent implements OnInit {
 
   validateDebt() {
     let form = false;
-
+    this.saleDebt.user_name = this.saleDebt.user_name.replace(/\s+$/, '');
     for(let x of this.sugests){
 
       if(this.saleDebt.user_name == x.name) {

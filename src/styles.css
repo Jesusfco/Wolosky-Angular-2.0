@@ -38,19 +38,16 @@ a {
     position: relative;
 }
 
-
-/* Estilo de buscadores Input */
-
-.search {
+.divSearch {
     display: block;
-    margin-left: 8px;
-    margin-bottom: 8px;
+    margin: 0 auto;
+    margin-bottom: 7px;
     width: fit-content;
     position: relative;
 }
 
-.search input {
-    background: white !important;
+.divSearch input {
+    background: white;
     border: none;
     border-radius: 2px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
@@ -58,22 +55,35 @@ a {
     outline: none;
     transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
     width: 350px;
-    padding-right: 35px;
-    margin: 0 !important;
+    max-width: 500px;
+    /* padding-right: 35px; */
 }
 
-.search input:focus {
+.divSearch input:focus {
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.16);
 }
 
-.search input:hover {
+.divSearch input:hover {
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.16);
 }
 
-.search label {
+.divSearch mat-icon {
     position: absolute;
+    padding-top: 10px;
+    top: 1px;
     right: 10px;
-    top: 8px;
+    cursor: pointer;
+    background: white;
+    height: 25px;
+}
+
+@media screen and (max-width: 700px) {
+    .divSearch {
+        width: 100%;
+    }
+    .divSearch input {
+        width: 100%;
+    }
 }
 
 
@@ -83,6 +93,15 @@ a {
     /* text-align: center;*/
     margin: 0;
     margin-left: 8px;
+}
+
+.center {
+    display: block;
+    margin: 0 auto;
+}
+
+.centerText {
+    text-align: center;
 }
 
 

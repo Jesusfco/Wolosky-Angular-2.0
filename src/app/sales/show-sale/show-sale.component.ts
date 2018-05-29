@@ -14,6 +14,7 @@ import { Storage } from '../../storage';
 export class ShowSaleComponent implements OnInit {
 
   public sale: Sale = new Sale();
+  public backSales: Array<Sale> = [];
   state = {
     background: 'initial',
     card: 'initial',
@@ -22,10 +23,20 @@ export class ShowSaleComponent implements OnInit {
   public observerRef;
   public storage: Storage = new Storage();
 
-  constructor(private router: Router, private _http: SaleService, private actRou: ActivatedRoute) {
+  constructor(private router: Router, 
+    private _http: SaleService, 
+    private actRou: ActivatedRoute) {
+
+      this.backSales = JSON.parse(localStorage.getItem('salesComponent'));
+      this.products = JSON.parse(localStorage.getItem('inventory'));
 
     this.observerRef = actRou.params.subscribe(params => {
       this.sale.id = params['id'];
+
+      this.setSaleWithBack();
+
+      if(this.sale.created_at != undefined) return;
+
       this._http.showSale(this.sale.id).then(
         data => {
           this.sale = this.storage.setNamesById(data);
@@ -56,4 +67,41 @@ export class ShowSaleComponent implements OnInit {
     
   }
 
+  setSaleWithBack(){
+    
+    for(let x of this.backSales){
+
+      if(this.sale.id == x.id) {
+
+        this.sale = x;
+
+        for(let i = 0; i < this.sale.description.length; i++) {
+          
+          if(this.sale.description[i].product_name == undefined || 
+            this.sale.description[i].product_name == null) {
+
+              for(let product of this.products){
+
+                if(product.id == this.sale.description[i].product_id) {
+
+                  this.sale.description[i].product_name = product.name;
+                  break;
+
+                }
+
+              }
+
+            }
+
+        }
+
+        break;
+
+      }
+
+    }
+
+  }
+
 }
+

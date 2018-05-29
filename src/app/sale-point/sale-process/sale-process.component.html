@@ -12,7 +12,7 @@
 
         <form *ngIf="form == 1" (submit)="checkClientMoney()">
             <h2>Dinero del Cliente</h2>
-            <input type="number" [(ngModel)]="sale.clientMoney" name="clientMoney" value="{{sale.total}}" min="{{sale.total}}">
+            <input id="saleClientMoney" type="number" [(ngModel)]="sale.clientMoney" name="clientMoney" value="{{sale.total}}" min="{{sale.total}}">
 
             <button *ngIf="request == false" type="submit" class="btn btnAccept">Confirmar</button>
             <button *ngIf="request == true" type="submit" class="btn btnAccept" disabled>Confirmar</button>
@@ -20,7 +20,7 @@
 
         <form *ngIf="form == 2" (submit)="confirmSale()">
             <h2>Cambio: ${{ sale.clientMoney - sale.total }}</h2>
-            <button type="submit" class="btn btnAccept">Confirmar</button>
+            <button id="salesBtnConfirm" type="submit" class="btn btnAccept">Confirmar</button>
         </form>
 
         <form *ngIf="form == 3" (submit)="debtForm()">
@@ -28,7 +28,7 @@
             <h2>Asignar credito a...</h2>
             <div class="search">
 
-                <input [(ngModel)]="saleDebt.user_name" [matAutocomplete]="auto" name="user_name" type="search" placeholder="Buscar Usuario" (keyup)="searchInput()">
+                <input id="saleSearchUser" [(ngModel)]="saleDebt.user_name" [matAutocomplete]="auto" name="user_name" type="search" placeholder="Buscar Usuario" (keyup)="searchInput($event)">
 
                 <mat-autocomplete #auto="matAutocomplete">
                     <mat-option *ngFor="let sugest of sugests" [value]="sugest.name" (onSelectionChange)="searchReceiptId(sugest.id)">

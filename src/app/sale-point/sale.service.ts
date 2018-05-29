@@ -33,7 +33,7 @@ export class SaleService {
   }
 
   getSalesParameter(data){
-    return this._http.post(this.link.url + 'sales' + this.storage.getTokenUrl() + '&page=' + data.page, data)
+    return this._http.post(this.link.url + 'sales' + this.storage.getTokenUrl(), data)
     .map(data => data.json())
     .toPromise();
   }
