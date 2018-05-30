@@ -39,6 +39,7 @@ export class EditScheduleComponent implements OnInit {
   };
 
   public userDataObserver: any;
+  public schedulesObserverData: any;
 
   @HostListener('document:keyup', ['$event']) sss($event) {
     
@@ -63,14 +64,24 @@ export class EditScheduleComponent implements OnInit {
       this.id = parseInt(localStorage.getItem('userShowId'));
 
       this.setUserDataObserver();
-
-      this.schedules = JSON.parse(localStorage.getItem('userSchedules'));
-
+      this.setSchedulesObserverData();
 
   }
 
   ngOnInit() {
 
+  }
+  
+
+  setSchedulesObserverData() {
+    this.schedulesObserverData = setInterval(() => this.logicSchedulesObserver(), 500);
+  }
+
+  logicSchedulesObserver() {
+    if(localStorage.getItem('userSchedules') == undefined) return;
+
+    this.schedules = JSON.parse(localStorage.getItem('userSchedules'));
+    clearInterval(this.schedulesObserverData);
   }
 
   getSchedulesData(){

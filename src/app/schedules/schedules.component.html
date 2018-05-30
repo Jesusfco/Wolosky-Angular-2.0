@@ -16,6 +16,8 @@
                 <ul>
                     <li *ngFor="let user of schedule.users">
                         {{ user.user_name }}
+
+                        <mat-icon routerLink="/users/show/{{ user.user_id }}/schedule" matTooltip="Editar Horario" matTooltipPosition="left">edit</mat-icon>
                     </li>
                 </ul>
 

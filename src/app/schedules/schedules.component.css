@@ -12,3 +12,16 @@ h5 {
 li {
     font-size: 12px;
 }
+
+li:hover mat-icon {
+    opacity: 1;
+}
+
+li mat-icon {
+    position: absolute;
+    transform: scale(.7);
+    margin-top: -6px;
+    opacity: 0;
+    transition: .5s;
+    cursor: pointer;
+}

@@ -17,6 +17,8 @@ export class UserComponent implements OnInit {
     page: 1,
     total: 0,
   };
+
+  public sendingData: Boolean = false;
   
   pageEvent: PageEvent;
 
@@ -58,6 +60,7 @@ export class UserComponent implements OnInit {
   }
 
   searchRequest(){
+    this.sendingData = true;
 
     this._http.search(this.search).then(
       data => {
@@ -65,6 +68,8 @@ export class UserComponent implements OnInit {
         this.search.total = data.total;
       },
       error => localStorage.setItem('request', JSON.stringify(error))
+    ).then(
+      () => this.sendingData = false
     );
   }
 

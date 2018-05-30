@@ -457,11 +457,16 @@ select {
     padding: 10px;
     background: black;
     color: white;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     cursor: pointer;
     transition: .25s;
+}
+
+#cerrarBtn i {
+    position: relative;
+    top: 5px;
 }
 
 .flex {
