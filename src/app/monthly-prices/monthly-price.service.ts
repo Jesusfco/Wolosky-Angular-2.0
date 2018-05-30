@@ -2,8 +2,8 @@ import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 import "rxjs";
 
-import { Url } from '../url';
-import { Storage } from '../storage';
+import { Url } from '../classes/url';
+import { Storage } from '../classes/storage';
 
 @Injectable()
 export class MonthlyPriceService {

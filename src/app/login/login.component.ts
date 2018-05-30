@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
-import { Storage } from '../storage';
+import { Storage } from '../classes/storage';
 
 
 @Component({

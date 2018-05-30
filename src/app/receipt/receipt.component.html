@@ -3,7 +3,7 @@
 
 <div class="relative">
 
-    <h3>Recibos de Alumnos </h3>
+    <h2 class="centerText">Recibos de Alumnos </h2>
 
     <a class="linkExcel" href="{{ storage.getUrl() + 'excel/receipt' +storage.getTokenUrl() }}
     &from={{ search.from }}&to={{ search.to }}&id={{ search.id }}">
@@ -28,21 +28,22 @@
 
     </div>
 
-    <input [(ngModel)]="search.from" name="from" type="date">
-    <input [(ngModel)]="search.to" name="to" type="date">
+    <form class="form" (submit)="getReceipts()">
+        <input (change)="getReceipts()" type="date" [(ngModel)]="search.from" name="from" id="search"><label><mat-icon>date_range</mat-icon></label>
+        <input (change)="getReceipts()" type="date" [(ngModel)]="search.to" name="to" id="search"><label><mat-icon>date_range</mat-icon></label>
 
-    <div class="search">
-
-        <input [(ngModel)]="search.name" [matAutocomplete]="auto" name="name" type="search" placeholder="Buscar Usuario" (keyup)="searchInput($event)">
+        <input [(ngModel)]="search.name" [matAutocomplete]="auto" name="name" id="search" type="search" placeholder="Buscar Usuario" (keyup)="searchInput($event)"><label><mat-icon>search</mat-icon></label>
 
         <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let sugest of sugests" [value]="sugest.name" (onSelectionChange)="searchReceiptId(sugest.id)">
                 {{ sugest.name }}
             </mat-option>
         </mat-autocomplete>
-    </div>
 
-    <button (click)="getReceipts()">BUSCAR</button>
+    </form>
+
+
+
 
     <div class="responsive-table">
         <table align="center">

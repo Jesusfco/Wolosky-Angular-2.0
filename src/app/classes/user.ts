@@ -1,7 +1,7 @@
-import { Reference } from './reference';
-import { Schedule } from './schedule';
-import { Payment } from './payment';
-import { Salary } from './salary';
+import { Reference } from '../classes/reference';
+import { Schedule } from '../classes/schedule';
+import { Payment } from '../classes/payment';
+import { Salary } from '../classes/salary';
 
 export class User {
 

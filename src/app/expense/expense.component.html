@@ -1,7 +1,7 @@
 <mat-progress-bar mode="indeterminate" *ngIf="request" class="barLoader"></mat-progress-bar>
 
 <div class="relative">
-    <h1 class="routeTitle">GASTOS</h1>
+    <h1 class="centerText">GASTOS</h1>
 
     <a *ngIf="storage.getUserType() >= 6" class="linkExcel" href="{{ storage.getUrl() + 'excel/expenses' + storage.getTokenUrl() }}
     &from={{ search.from }}&to={{ search.to }}&id={{ search.id }}">
@@ -9,10 +9,13 @@
         <img src="http://icons.iconarchive.com/icons/graphicloads/filetype/256/excel-xls-icon.png">
     </a>
 
-    <input [(ngModel)]="search.from" name="from" type="date">
-    <input [(ngModel)]="search.to" name="to" type="date">
 
-    <button (click)="get()">Buscar</button>
+    <form class="form">
+        <input (change)="get()" type="date" [(ngModel)]="search.from" name="from" id="search"><label><mat-icon>date_range</mat-icon></label>
+        <input (change)="get()" type="date" [(ngModel)]="search.to" name="to" id="search"><label><mat-icon>date_range</mat-icon></label>
+    </form>
+
+
 
     <div class="responsive-table">
 

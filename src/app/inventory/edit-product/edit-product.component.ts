@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { cardPop, backgroundOpacity } from '../../animations';
-import { Product } from '../../product';
+import { Product } from '../../classes/product';
 import { InventoryService } from '../inventory.service';
-import { Storage } from '../../storage';
+import { Storage } from '../../classes/storage';
 import { Router, ActivatedRoute } from '@angular/router';
 
 

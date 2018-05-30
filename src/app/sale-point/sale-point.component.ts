@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { InventoryService } from '../inventory/inventory.service';
 import { SaleService } from './sale.service';
-import { Product } from '../product';
-import { Storage } from '../storage';
-import { Sale } from './sale';
-import { SaleDescription } from './sale-description';
+import { Product } from '../classes/product';
+import { Storage } from '../classes/storage';
+import { Sale } from '../classes/sale';
+import { SaleDescription } from '../classes/sale-description';
 import { Observable } from 'rxjs/Observable';
 
 @Component({

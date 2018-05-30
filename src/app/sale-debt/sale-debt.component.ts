@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SaleDebt } from '../classes/sale-debt';
 import { SaleDebtService } from './sale-debt.service';
-import { Storage } from '../storage';
+import { Storage } from '../classes/storage';
 
 @Component({
   selector: 'app-sale-debt',
@@ -61,7 +61,10 @@ export class SaleDebtComponent implements OnInit {
 
   }
 
-  searchInput(){
+  searchInput(key){
+
+    if(key.keyCode >=37 && key.keyCode <= 40 || key.keyCode == 13) return;
+
     this.timer++;    
 
     setTimeout(() => {      
@@ -86,6 +89,7 @@ export class SaleDebtComponent implements OnInit {
 
   searchReceiptId(id){
     this.search.id = id;
+    this.get();
   }
 
   pageAction(data){

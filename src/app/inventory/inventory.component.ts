@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { InventoryService } from './inventory.service';
-import { Product } from '../product';
-import { Storage } from '../storage';
+import { Product } from '../classes/product';
+import { Storage } from '../classes/storage';
 import { FilterInventoryPipe } from './filter-inventory.pipe';
 import { PageEvent } from '@angular/material';
-import { Url } from '../url';
+import { Url } from '../classes/url';
 // import { setInterval } from 'timers';
 
 @Component({

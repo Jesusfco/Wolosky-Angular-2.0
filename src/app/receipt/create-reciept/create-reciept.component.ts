@@ -2,7 +2,7 @@ import { Component, OnInit,OnDestroy } from '@angular/core';
 import { BackgroundCard, Card } from '../../animations/card.animation';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReceiptService } from '../receipt.service';
-import { Storage } from '../../storage';
+import { Storage } from '../../classes/storage';
 import { Receipt } from '../../classes/receipt';
 // import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
@@ -174,6 +174,7 @@ export class CreateRecieptComponent implements OnInit {
   }
 
   validateMonthlyPayment(){
+
     let d = new Date();        
 
     if((d.getMonth() + 1) == this.payment.month){

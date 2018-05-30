@@ -1,16 +1,16 @@
 import { Component, OnInit, Input, Output, EventEmitter, HostListener, OnDestroy } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes} from '@angular/animations';
-import { User } from '../user';
+import { User } from '../../classes/user';
 import { UserService } from '../user.service';
-import { Schedule } from '../schedule';
-import { Reference } from '../reference';
-import { Salary } from '../salary';
-import { MonthlyPayment } from '../../monthly-payment';
+import { Schedule } from '../../classes/schedule';
+import { Reference } from '../../classes/reference';
+import { Salary } from '../../classes/salary';
+import { MonthlyPayment } from '../../classes/monthly-payment';
 import { MonthlyPrice } from '../../classes/monthly-price';
 import { FadeAnimation, SlideAnimation } from '../../animations/slide-in-out.animation';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Url } from '../../url';
-import { Storage } from '../../storage';
+import { Url } from '../../classes/url';
+import { Storage } from '../../classes/storage';
 
 @Component({
   selector: 'app-show-user',

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes} from '@angular/animations';
 import { LoginService } from './login/login.service';
-import { Storage } from './storage';
+import { Storage } from './classes/storage';
 import { Router } from '@angular/router';
 import { LogoPop, BackgroundLogo } from './animations/initial.animation';
 

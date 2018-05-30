@@ -49,9 +49,7 @@ import { UserComponent } from './user/user.component';
 import { CreateUserComponent } from './user/create-user/create-user.component';
 import { UserService } from './user/user.service';
 import { CreateScheduleComponent } from './user/create-user/create-schedule/create-schedule.component';
-import { SalaryComponent } from './user/create-user/salary/salary.component';
 import { ReferenceComponent } from './user/create-user/reference/reference.component';
-import { PaymentComponent } from './user/create-user/payment/payment.component';
 import { ShowUserComponent } from './user/show-user/show-user.component';
 
 import { routes } from './app.route';
@@ -103,6 +101,8 @@ import { NotificationComponent } from './notification/notification.component';
 import { MonthlyPriceComponent } from './monthly-prices/monthly-price.component';
 import { MonthlyPriceService } from './monthly-prices/monthly-price.service';
 import { CreateMonthlyPriceComponent } from './monthly-prices/create-monthly-price/create-monthly-price.component';
+import { SchedulesComponent } from './schedules/schedules.component';
+import { ScheduleService } from './schedules/schedule.service';
 
 @NgModule({
   declarations: [
@@ -123,10 +123,9 @@ import { CreateMonthlyPriceComponent } from './monthly-prices/create-monthly-pri
     FooterComponent,
     UserComponent,
     CreateUserComponent,
-    CreateScheduleComponent,
-    SalaryComponent,
+    CreateScheduleComponent,    
     ReferenceComponent,
-    PaymentComponent,
+    
     ShowUserComponent,
     PageNotFoundComponent,
         
@@ -148,6 +147,7 @@ import { CreateMonthlyPriceComponent } from './monthly-prices/create-monthly-pri
     NotificationComponent,
     MonthlyPriceComponent,
     CreateMonthlyPriceComponent,
+    SchedulesComponent,
   ],
   imports: [
     BrowserModule,
@@ -203,7 +203,8 @@ import { CreateMonthlyPriceComponent } from './monthly-prices/create-monthly-pri
         CutoutService,
         ExpenseService,
         SaleDebtService,
-        MonthlyPriceService
+        MonthlyPriceService,
+        ScheduleService
       ],
 
   bootstrap: [AppComponent]

@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { Product } from '../../product';
+import { Product } from '../../classes/product';
 import { cardPop, backgroundOpacity} from '../../animations';
 import { Router } from '@angular/router';
 

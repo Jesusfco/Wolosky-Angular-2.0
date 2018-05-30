@@ -1,12 +1,13 @@
-<h1 class="routeTitle">
-    Usuarios</h1>
+<h1 class="centerText">Usuarios</h1>
 
-<div class="search">
-    <input [(ngModel)]="search.searchWord" name="searchWord" type="search" placeholder="Buscar Usuario" (keyup)="searchInput()">
-    <label *ngIf="search.searchWord == undefined || search.searchWord == ''"><mat-icon>search</mat-icon></label>
-    <label *ngIf="search.searchWord != undefined && search.searchWord != ''" (click)="searchWord = null">
-                <mat-icon>close</mat-icon>
-            </label>
+
+
+<div class="divSearch">
+    <input [(ngModel)]="search.searchWord" (keyup)="searchInput()" placeholder="Buscar Usuario" name="search" type="search">
+
+    <br>
+    <mat-icon *ngIf="search.searchWord == ''">search</mat-icon>
+    <mat-icon *ngIf="search.searchWord !== ''" (click)="search.searchWord = ''">close</mat-icon>
 </div>
 
 <div class="responsive-table">

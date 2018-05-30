@@ -4,7 +4,7 @@ import { PageEvent } from '@angular/material';
 import { ExpenseService } from './expense.service';
 import { Router } from '@angular/router';
 //import { ExpandSubscriber } from 'rxjs/operator/expand';
-import { Storage } from '../storage';
+import { Storage } from '../classes/storage';
 
 @Component({
   selector: 'app-expense',

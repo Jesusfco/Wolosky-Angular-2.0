@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReceiptService } from './receipt.service';
 import { Router } from '@angular/router';
-import { Storage } from '../storage';
+import { Storage } from '../classes/storage';
 import { Receipt } from '../classes/receipt';
 
 @Component({

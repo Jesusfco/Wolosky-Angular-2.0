@@ -51,6 +51,8 @@ import { UpdateExpenseComponent } from './expense/update-expense/update-expense.
 import { MonthlyPriceComponent } from './monthly-prices/monthly-price.component';
 import { CreateMonthlyPriceComponent } from './monthly-prices/create-monthly-price/create-monthly-price.component';
 
+//SCHEDULES 
+import { SchedulesComponent } from './schedules/schedules.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
@@ -138,6 +140,10 @@ export const routes: Routes = [
         children: [
             { path: 'create', component: CreateMonthlyPriceComponent }
         ]
+    }, 
+    
+    {
+        path: 'schedules', component: SchedulesComponent,
     },
 
     { path: '', redirectTo: 'login', pathMatch: 'full' },

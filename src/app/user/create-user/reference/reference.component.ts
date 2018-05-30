@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes} from '@angular/animations';
-import { Reference } from '../../reference';
+import { Reference } from '../../../classes/reference';
 
 @Component({
   selector: 'app-reference-create',

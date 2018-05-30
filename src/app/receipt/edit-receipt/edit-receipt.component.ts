@@ -1,6 +1,6 @@
 import { Component, OnInit , OnDestroy} from '@angular/core';
 import { Receipt } from '../../classes/receipt';
-import { Storage } from '../../storage';
+import { Storage } from '../../classes/storage';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BackgroundCard, Card } from '../../animations/card.animation';
 import { ReceiptService } from '../receipt.service';

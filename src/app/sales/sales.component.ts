@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Sale } from '../sale-point/sale';
+import { Sale } from '../classes/sale';
 import { SaleService } from '../sale-point/sale.service';
-import { Url } from '../url';
-import { Storage } from '../storage';
+import { Url } from '../classes/url';
+import { Storage } from '../classes/storage';
 import { PageEvent } from '@angular/material';
 
 @Component({
@@ -81,7 +81,9 @@ export class SalesComponent implements OnInit {
 
     this.validateFromTo();
     this._http.getSalesParameter(this.date).then(
+
       data => {
+
         this.backSales = data;
         this.refreshTable();
         localStorage.setItem('salesComponent', JSON.stringify(data));

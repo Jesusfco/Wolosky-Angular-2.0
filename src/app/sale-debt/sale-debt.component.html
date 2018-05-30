@@ -2,7 +2,7 @@
 
 <div class="relative">
 
-    <h1 class="routeTitle">DEUDORES ABARROTERIA</h1>
+    <h1 class="centerText">DEUDORES ABARROTERIA</h1>
 
     <a class="linkExcel" href="{{ storage.getUrl() + 'excel/debtors' +storage.getTokenUrl() }}
     &from={{ search.from }}&to={{ search.to }}&id={{ search.id }}">
@@ -11,21 +11,23 @@
     </a>
 
 
-    <input [(ngModel)]="search.from" name="from" type="date">
-    <input [(ngModel)]="search.to" name="to" type="date">
 
-    <div class="search">
 
-        <input [(ngModel)]="search.name" [matAutocomplete]="auto" name="name" type="search" placeholder="Buscar Usuario" (keyup)="searchInput()">
+    <form class="form">
+        <input (change)="get()" type="date" [(ngModel)]="search.from" name="from" id="search"><label><mat-icon>date_range</mat-icon></label>
+        <input (change)="get()" type="date" [(ngModel)]="search.to" name="to" id="search"><label><mat-icon>date_range</mat-icon></label>
+
+        <input [(ngModel)]="search.name" [matAutocomplete]="auto" name="name" id="search" type="search" placeholder="Buscar Usuario" (keyup)="searchInput($event)" (submit)="get()"><label><mat-icon>search</mat-icon></label>
 
         <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let sugest of sugests" [value]="sugest.name" (onSelectionChange)="searchReceiptId(sugest.id)">
                 {{ sugest.name }}
             </mat-option>
         </mat-autocomplete>
-    </div>
 
-    <button (click)="get()">BUSCAR</button>
+    </form>
+
+
 
     <div class="responsive-table">
 

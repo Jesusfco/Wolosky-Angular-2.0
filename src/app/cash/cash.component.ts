@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BackgroundCard, Card } from '../animations/card.animation';
 import { Router, ActivatedRoute } from '@angular/router';
 // import { ReceiptService } from '../receipt.service';
-import { Storage } from '../storage';
+import { Storage } from '../classes/storage';
 import { CashService } from './cash.service';
 
 @Component({

@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Sale } from '../../sale-point/sale';
+import { Sale } from '../../classes/sale';
 import { SaleService } from '../../sale-point/sale.service';
 import { cardPop, backgroundOpacity } from '../../animations';
-import { Storage } from '../../storage';
+import { Storage } from '../../classes/storage';
 
 @Component({
   selector: 'app-show-sale',

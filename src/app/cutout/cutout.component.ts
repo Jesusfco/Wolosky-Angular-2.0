@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CutoutService } from './cutout.service';
-import { Storage } from '../storage';
+import { Storage } from '../classes/storage';
 
 @Component({
   selector: 'app-cutout',

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { cardPop, backgroundOpacity} from '../../animations';
 import { Router } from '@angular/router';
-import { Sale } from '../sale';
+import { Sale } from '../../classes/sale';
 import { SaleService } from '../sale.service';
-import { Product } from '../../product';
+import { Product } from '../../classes/product';
 import { SaleDebt } from '../../classes/sale-debt';
 
 @Component({

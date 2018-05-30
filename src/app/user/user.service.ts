@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import "rxjs";
 import { Observable } from "rxjs";
 
-import { Url } from '../url';
-import { Storage } from '../storage';
+import { Url } from '../classes/url';
+import { Storage } from '../classes/storage';
 
 @Injectable()
 export class UserService {
