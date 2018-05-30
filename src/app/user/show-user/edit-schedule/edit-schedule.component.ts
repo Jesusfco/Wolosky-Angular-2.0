@@ -84,17 +84,7 @@ export class EditScheduleComponent implements OnInit {
     clearInterval(this.schedulesObserverData);
   }
 
-  getSchedulesData(){
-
-    this._http.getSchedules(this.id).then(
-      data => {
-        this.schedules = data;
-        this.setDayView();
-      },
-      error => console.log(error)
-    );
-
-  }
+  
 
   close(){
 
@@ -265,7 +255,7 @@ export class EditScheduleComponent implements OnInit {
   startEditSche(x){
 
     x.edit = true;
-    console.log(x);
+    
 
     setTimeout(() => {
       document.getElementById('editCheckIn').focus();
