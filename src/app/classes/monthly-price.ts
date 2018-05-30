@@ -12,4 +12,14 @@ export class MonthlyPrice {
         this.cost = 0;
         this.edit = false;
     }
+
+    setData(data) {
+
+        this.id = parseInt(data.id);
+        this.hours = parseInt(data.hours);
+        this.cost = parseFloat(data.cost);
+        this.created_at = data.created_at;
+        this.updated_at = data.updated_at;
+
+    }
 }

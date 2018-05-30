@@ -47,8 +47,17 @@ export class CreateUserComponent implements OnInit {
     this.schedules = this.sche.setArray();
     this._http.getAllMonthlyPrices().then(
       data => {
-        localStorage.setItem('monthlyPrices', JSON.stringify(data))
-        this.monthlyPrices = data;
+
+        for(let i of data) {
+
+          let m  = new MonthlyPrice();
+          m.setData(i);
+          this.monthlyPrices.push(m);
+          
+        }
+
+        localStorage.setItem('monthlyPrices', JSON.stringify(this.monthlyPrices));
+        
       },
       error => localStorage.setItem('request', JSON.parse(error))
     );

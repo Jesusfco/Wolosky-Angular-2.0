@@ -1,0 +1,14 @@
+h4 {
+    display: block;
+    width: 100%;
+    font-size: 25px;
+}
+
+h5 {
+    font-size: 20px;
+    color: darkslategrey
+}
+
+li {
+    font-size: 12px;
+}

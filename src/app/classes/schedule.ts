@@ -16,6 +16,7 @@ export class Schedule {
     public edit: Boolean = false;
     
     public user_id: number;
+    public user_name: String;
 
     constructor(){
         // if(this.day != null || this.day != ""){
@@ -49,9 +50,9 @@ export class Schedule {
 
     setValues(data){
        
-        this.id = data.id;
+        this.id = parseInt(data.id);
         this.active = data.active;
-        this.day_id = data.day_id;
+        this.day_id = parseInt(data.day_id);
         if(this.active) {
 
             let check_in = data.check_in.split(':');
@@ -65,8 +66,8 @@ export class Schedule {
             this.check_out = null;
         }
         
-        this.user_id = data.user_id;
-        this.type = data.type;
+        this.user_id = parseInt(data.user_id);
+        this.type = parseInt(data.type);
         this.created_at = data.created_at;
         this.updated_at = data.updated_at;
 
