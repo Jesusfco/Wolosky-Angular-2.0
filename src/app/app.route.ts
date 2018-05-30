@@ -10,9 +10,10 @@ import { ReferenceComponent } from './user/create-user/reference/reference.compo
 import { PaymentComponent } from './user/create-user/payment/payment.component';
 import { ShowUserComponent } from './user/show-user/show-user.component';
 
-import { EditUserComponent } from './user/edit-user/edit-user.component';
-import { EditReferenceComponent } from './user/edit-user/edit-reference/edit-reference.component';
-import { EditScheduleComponent } from './user/edit-user/edit-schedule/edit-schedule.component';
+
+import { EditReferenceComponent } from './user/show-user/edit-reference/edit-reference.component';
+import { EditScheduleComponent } from './user/show-user/edit-schedule/edit-schedule.component';
+import { StatusUserComponent } from './user/status-user/status-user.component';
 
 import { ReceiptComponent } from './receipt/receipt.component';
 import { CreateRecieptComponent } from './receipt/create-reciept/create-reciept.component';
@@ -22,7 +23,7 @@ import { EventComponent } from './event/event.component';
 import { CreateEventComponent } from './event/create-event/create-event.component';
 import { AssignUserEventComponent } from './event/assign-user-event/assign-user-event.component';
 
-import { StatusUserComponent } from './user/status-user/status-user.component';
+
 
 // PUNTO DE VENTA
 import { InventoryComponent } from './inventory/inventory.component';
@@ -69,14 +70,12 @@ export const routes: Routes = [
         component: UserComponent,
         children: [
             {path: 'create', component: CreateUserComponent},
-            {path: 'show/:id', component: ShowUserComponent},
-            {path: 'edit/:id', component: EditUserComponent,
+            {path: 'show/:id', component: ShowUserComponent,
                 children: [
-                    { path: 'schedule/:id', component: EditScheduleComponent},
-                    { path: 'references/:id', component: EditReferenceComponent},
-                    { path: 'status/:id', component: StatusUserComponent},
-                ]
-            }
+                    { path: 'schedule', component: EditScheduleComponent},
+                    { path: 'references', component: EditReferenceComponent},
+                    { path: 'status', component: StatusUserComponent},
+            ]},
         ]
     },
 

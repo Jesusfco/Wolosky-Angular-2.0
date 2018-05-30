@@ -22,7 +22,7 @@ export class Storage {
         return localStorage.getItem('token');
     }
 
-    getTokenUrl(){
+    getTokenUrl() {
         return '?token=' + this.getToken();
     }
     getUrl() {

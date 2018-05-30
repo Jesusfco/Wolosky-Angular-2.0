@@ -51,6 +51,12 @@ export class UserService {
               .toPromise();
   }
 
+  updateMonthlyPayment(monthly) {
+    return this._http.post(this.link.url + 'user/monthlyPayment' + this.token.getTokenUrl(), monthly)
+              .map(data => data.json())
+              .toPromise();
+  }
+
   checkUniqueEmail(data){
     return this._http.post(this.link.url + 'user/uniqueEmail' + this.token.getTokenUrl(), {email: data})
       .map(data => data.json())

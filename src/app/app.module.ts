@@ -56,9 +56,9 @@ import { ShowUserComponent } from './user/show-user/show-user.component';
 
 import { routes } from './app.route';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { EditUserComponent } from './user/edit-user/edit-user.component';
-import { EditReferenceComponent } from './user/edit-user/edit-reference/edit-reference.component';
-import { EditScheduleComponent } from './user/edit-user/edit-schedule/edit-schedule.component';
+
+import { EditReferenceComponent } from './user/show-user/edit-reference/edit-reference.component';
+import { EditScheduleComponent } from './user/show-user/edit-schedule/edit-schedule.component';
 
 import { ReceiptComponent } from './receipt/receipt.component';
 import { CreateRecieptComponent } from './receipt/create-reciept/create-reciept.component';
@@ -129,7 +129,7 @@ import { CreateMonthlyPriceComponent } from './monthly-prices/create-monthly-pri
     PaymentComponent,
     ShowUserComponent,
     PageNotFoundComponent,
-    EditUserComponent,
+        
     EditReferenceComponent,
     EditScheduleComponent,
     ReceiptComponent,

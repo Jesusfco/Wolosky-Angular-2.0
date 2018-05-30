@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
 import { UserService } from '../user.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -32,17 +32,28 @@ export class StatusUserComponent implements OnInit {
     status: 0,
   }
 
+
+  @HostListener('document:keyup', ['$event']) sss($event) {
+    
+    if($event.keyCode == 27) {
+        this.close();
+    }
+
+  }
+
   constructor(private _http: UserService,
     private router: Router,
     private location: Location,
     private actRou: ActivatedRoute) { 
 
-      this.observerRef = actRou.params.subscribe(params => {
-        this.id = params['id'];
-        this.record.user_id = this.id;
-        this.getStatusData();
-      });
+      // this.observerRef = actRou.params.subscribe(params => {
+      //   this.id = params['id'];
+      //   this.record.user_id = this.id;
+      //   this.getStatusData();
+      // });
 
+      this.id = parseInt(localStorage.getItem('userShowId'));
+      this.getStatusData();
   }
 
   ngOnInit() {

@@ -16,7 +16,7 @@
         </div>
 
         <button (click)="selectLV()" class="btn LV">L-V</button>
-        <button (click)="x.active = !x.active" *ngFor="let x of schedules" class="btn" [ngClass]="{active: x.active}">{{ x.dayView }}</button>
+        <button (click)="changeActive(x)" *ngFor="let x of schedules" class="btn" [ngClass]="{active: x.active}">{{ x.dayView }}</button>
 
         <form (submit)="form()">
             <table>
@@ -29,17 +29,33 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let x of schedules" [ngClass]="{trNone: x.active == false}">
-                        <ng-container *ngIf="x.active">
+                        <ng-container *ngIf="x.active == true">
 
                             <th>{{ x.dayView }}</th>
-                            <th><input [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_in" name="check_in" type="time"></th>
-                            <th><input [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_out" name="check_out" type="time"></th>
+                            <th (click)="startEditSche(x)" *ngIf="x.edit == false"> {{ x.check_in }}</th>
+                            <th (click)="startEditSche(x)" *ngIf="x.edit == false"> {{ x.check_out }}</th>
+
+                            <th *ngIf="x.edit == true">
+                                <input id="editCheckIn" (change)="setResult()" [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_in" name="check_in" type="time">
+                            </th>
+                            <th *ngIf="x.edit == true"><input (change)="setResult()" [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_out" name="check_out" type="time">
+                            </th>
                         </ng-container>
                     </tr>
                 </tbody>
             </table>
+
+            <div *ngIf="result.hours != 0 && user.user_type_id == 1">
+                <p>Horas: {{result.hours}}</p>
+                <p>Monto: ${{result.amount}}</p>
+                <input type="number" min="0" [(ngModel)]="result.amount" name="amount" *ngIf="credential >= 6">
+
+            </div>
+
             <button type="submit" class="btn formBtn">Asignar Horarios</button>
         </form>
+
+
 
     </div>
 </div>

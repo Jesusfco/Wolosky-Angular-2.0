@@ -1,3 +1,5 @@
+import { MonthlyPrice } from "../classes/monthly-price";
+
 export class Schedule {
 
     public id: number;
@@ -11,6 +13,7 @@ export class Schedule {
     public type: number;
     public created_at: String;
     public updated_at: String;
+    public edit: Boolean = false;
     
     public user_id: number;
 
@@ -45,16 +48,67 @@ export class Schedule {
     }
 
     setValues(data){
-        
+       
         this.id = data.id;
+        this.active = data.active;
         this.day_id = data.day_id;
-        this.check_in = data.check_in;
-        this.check_out = data.check_out;
+        if(this.active) {
+
+            let check_in = data.check_in.split(':');
+            let check_out = data.check_out.split(':');
+
+            this.check_in = check_in[0] + ":" + check_in[1];
+            this.check_out = check_out[0] + ":" + check_out[1];
+
+        } else {
+            this.check_in = null;
+            this.check_out = null;
+        }
+        
         this.user_id = data.user_id;
         this.type = data.type;
         this.created_at = data.created_at;
         this.updated_at = data.updated_at;
-;
 
     }
+
+    countHours(schedules){
+
+        let count = 0;
+    
+        for(let x of schedules) {
+          
+          if(x.active == true) {
+            
+            let checkIn = new Date("2017-01-01 " + x.check_in);
+            let checkOut = new Date("2017-01-01 " + x.check_out);
+            count += checkOut.getHours() - checkIn.getHours();
+          }
+        }
+
+        let amount = 0
+        let monthlyPrices = JSON.parse(localStorage.getItem('monthlyPrices'));
+
+        for(let x of monthlyPrices) {
+            if(x.hours == count || x.hours > count) {
+              amount = x.cost;
+              break;
+            }
+          }
+    
+          if(amount == 0) {
+            let i = monthlyPrices.length - 1;
+    
+            amount = monthlyPrices[i].cost;
+    
+          }
+    
+
+        return {
+            hours: count,
+            amount: amount
+        };
+
+      }
+
 }
