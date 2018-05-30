@@ -130,7 +130,10 @@ export class ReceiptComponent implements OnInit {
     );
   }
 
-  searchInput(){
+  searchInput(key){
+
+    if(key.keyCode >=37 && key.keyCode <= 40 || key.keyCode == 13) return;
+
     this.timer++;    
 
     setTimeout(() => {      

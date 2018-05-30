@@ -59,6 +59,11 @@
                     </select>
                 </div>
 
+                <div>
+                    <label>Año:</label><br>
+                    <input class="l6" [(ngModel)]="receipt.year" name="year" disabled>
+                </div>
+
                 <div *ngIf="receipt.type == 3">
                     <label>Dias:</label><br>
                     <input [(ngModel)]="receipt.days" name="days" type="number" min="1" max="30">

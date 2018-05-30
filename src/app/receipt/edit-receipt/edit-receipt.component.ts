@@ -69,7 +69,7 @@ export class EditReceiptComponent implements OnInit {
         this.receipt.user_id = data.user_id;
         this.receipt.creator_id = data.creator_id;
         this.receipt.amount = data.amount;
-        this.receipt.date = data.date;
+        this.receipt.year = data.year;
         this.receipt.event_id = data.event_id;
         this.receipt.type = data.type;
         this.receipt.month = data.month;
@@ -78,7 +78,7 @@ export class EditReceiptComponent implements OnInit {
         this.receipt.updated_at = data.updated_at;
         
 
-      }, error => console.log(error)
+      }, error => localStorage.setItem('request', JSON.stringify(error))
 
     ).then(
 

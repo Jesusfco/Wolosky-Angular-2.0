@@ -62,4 +62,10 @@ export class ReceiptService {
               .toPromise();
   }
 
+  checkUnique(receipt) {
+    return this._http.post(this.link.url + "receipt/checkUnique" + this.token.getTokenUrl(), receipt)
+              .map(data => data.json())
+              .toPromise();
+  }
+
 }

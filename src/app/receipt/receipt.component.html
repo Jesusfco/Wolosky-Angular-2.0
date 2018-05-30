@@ -33,7 +33,7 @@
 
     <div class="search">
 
-        <input [(ngModel)]="search.name" [matAutocomplete]="auto" name="name" type="search" placeholder="Buscar Usuario" (keyup)="searchInput()">
+        <input [(ngModel)]="search.name" [matAutocomplete]="auto" name="name" type="search" placeholder="Buscar Usuario" (keyup)="searchInput($event)">
 
         <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let sugest of sugests" [value]="sugest.name" (onSelectionChange)="searchReceiptId(sugest.id)">

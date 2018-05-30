@@ -3,6 +3,7 @@ import { BackgroundCard, Card } from '../../animations/card.animation';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReceiptService } from '../receipt.service';
 import { Storage } from '../../storage';
+import { Receipt } from '../../classes/receipt';
 // import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
@@ -33,18 +34,8 @@ export class CreateRecieptComponent implements OnInit {
     card: 'initial',
   };
 
-  public payment = {
-    userId: null,
-    userName: '',
-    type: 1,
-    amount: 500,
-    monthly: 0,
-    monthlyAmount: 0,
-    month: undefined,
-    days: 1,
-    description: '',
-    payment_type: false,
-  };
+  public payment: Receipt = new Receipt();
+   
 
   public sugests: any = [];
   public sendingData: any = {
@@ -88,9 +79,9 @@ export class CreateRecieptComponent implements OnInit {
 
       data => {
 
-        this.payment.monthly = parseInt(data.amount);
-        this.payment.userId = data.user.id;
-        this.payment.userName = data.user.name;
+        this.payment.monthly = parseFloat(data.amount);
+        this.payment.user_id = data.user.id;
+        this.payment.user_name = data.user.name;
         this.validateMonthlyPayment();
 
       }, error => console.log(error)
@@ -140,7 +131,7 @@ export class CreateRecieptComponent implements OnInit {
       
       if(this.timer == 0){
         this.sendingData.sugest = true;
-        this._http.sugestUserReceipt({search: this.payment.userName}).then(
+        this._http.sugestUserReceipt({search: this.payment.user_name}).then(
           data => {
             this.sugests = data;
           }, error => console.log(error)
@@ -154,7 +145,7 @@ export class CreateRecieptComponent implements OnInit {
 
   getMonthlyFrom(id){    
     
-    this.payment.userId = id;
+    this.payment.user_id = id;
     
     if(this.payment.type !== 1) return;
 
@@ -166,7 +157,7 @@ export class CreateRecieptComponent implements OnInit {
         this.payment.monthly = parseInt(data.amount);
         this.validateMonthlyPayment();
       },
-      error => console.log(error)
+      error => localStorage.setItem('request', JSON.stringify(error))
     ).then(
       () => this.sendingData.monthly = false
     );
@@ -183,8 +174,7 @@ export class CreateRecieptComponent implements OnInit {
   }
 
   validateMonthlyPayment(){
-    let d = new Date();    
-    console.log(d.getDate());
+    let d = new Date();        
 
     if((d.getMonth() + 1) == this.payment.month){
       if(d.getDate() <= 3){
@@ -216,26 +206,33 @@ export class CreateRecieptComponent implements OnInit {
     if(this.validation.form == false) return;
     
     this.sendingData.request = true;
-    this._http.postNewReceipt(this.payment).then(
-      data => {
 
-        this.request = data;
+    if(this.payment.type == 1) {
 
-        data.month = parseInt(data.month);
-        data.id = parseInt(data.id);
-        data.amount = parseInt(data.amount);
-        data.user_name = this.payment.userName;        
+      this._http.checkUnique(this.payment).then(
+        data => {
+          
+          if(data == true) {
+            alert('Este Usuario ya realizo el pago del mes actual');
+          } else if (data == false) {
 
-        localStorage.setItem('newReceipt', JSON.stringify(data));
-        localStorage.removeItem("receiptStatus");
+            this.sendReceipt();
+
+          }
+
+        },
+
+        error => localStorage.setItem('request', JSON.stringify(error))
         
-        if(this.payment.payment_type == false) 
-          this.storage.updateCash(data.amount);
-      },
-      error => console.log(error)
-    ).then(
-      () => this.sendingData.request = false
-    );
+      ).then(
+        () => this.sendingData.request = false
+      );
+
+    } else {
+
+      this.sendReceipt();
+
+    }
   }
 
   restoreValidations(){
@@ -250,6 +247,39 @@ export class CreateRecieptComponent implements OnInit {
 
   printReceipt(){
       window.print();
+  }
+
+  sendReceipt(){
+    
+    this._http.postNewReceipt(this.payment).then(
+      data => {
+
+        this.request = data;
+
+        data.month = parseInt(data.month);
+        data.id = parseInt(data.id);
+        data.amount = parseFloat(data.amount);
+        data.user_name = this.payment.user_name;        
+
+        localStorage.setItem('newReceipt', JSON.stringify(data));
+        localStorage.removeItem("receiptStatus");
+        
+        if(this.payment.payment_type == false) 
+          this.storage.updateCash(data.amount);
+
+        let not = {
+          title: 'Recibo Creado',
+          description: 'Datos Guardados en el Servidor',
+          status: 200
+        };
+
+        localStorage.setItem('request', JSON.stringify(not))
+
+      },
+      error => localStorage.setItem('request', JSON.stringify(error))
+    ).then(
+      () => this.sendingData.request = false
+    );
   }
 
 

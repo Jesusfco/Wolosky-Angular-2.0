@@ -15,8 +15,8 @@ import { FadeAnimation, SlideAnimation } from '../../../animations/slide-in-out.
 })
 export class EditScheduleComponent implements OnInit {
 
-  cardState: string = 'initial';
-  backgroundState: string = 'initial';
+  cardState: String = 'initial';
+  backgroundState: String = 'initial';
   validations = {
     validate: true,
     checkIn: -1,
@@ -86,13 +86,14 @@ export class EditScheduleComponent implements OnInit {
   }
 
   close(){
+
     this.cardState = 'initial';
-    this.backgroundState = 'initial';
-    // this.createView = false;
+    this.backgroundState = 'initial';    
 
     setTimeout(() => {
       this.location.back();
     }, 400);
+    
   }
 
   
