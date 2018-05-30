@@ -149,7 +149,7 @@ export class SchedulesComponent implements OnInit {
     }
 
     this.sortDataOrder();
-  console.log(this.dataOrder);
+  
 
   }
 
@@ -218,7 +218,6 @@ export class SchedulesComponent implements OnInit {
         });
 
       }
-      
 
 
     }

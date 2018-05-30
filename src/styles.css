@@ -551,4 +551,10 @@ select:-webkit-autofill {
         visibility: visible !important;
         page-break-inside: avoid;
     }
+    .l4 {
+        width: 50%;
+    }
+    #toPrint {
+        visibility: visible !important;
+    }
 }
