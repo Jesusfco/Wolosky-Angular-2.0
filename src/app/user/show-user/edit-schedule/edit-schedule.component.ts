@@ -6,6 +6,9 @@ import { User } from '../../../classes/user';
 import { Schedule } from '../../../classes/schedule';
 import { FadeAnimation, SlideAnimation } from '../../../animations/slide-in-out.animation';
 
+import { Url } from '../../../classes/url';
+import { Storage } from '../../../classes/storage';
+
 @Component({
   selector: 'app-edit-schedule',
   templateUrl: './edit-schedule.component.html',
@@ -41,6 +44,8 @@ export class EditScheduleComponent implements OnInit {
   public userDataObserver: any;
   public schedulesObserverData: any;
 
+  public storage: Storage = new Storage();
+
   @HostListener('document:keyup', ['$event']) sss($event) {
     
     if($event.keyCode == 27) {
@@ -54,6 +59,8 @@ export class EditScheduleComponent implements OnInit {
     private location: Location,
     private actRou: ActivatedRoute) {
 
+      this.storage = new Storage();
+      
       // this.observerRef = actRou.params.subscribe(params => {
       //   this.id = params['id'];
       //   console.log(this.id);

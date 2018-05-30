@@ -8,6 +8,14 @@
     <div class="form" [ngClass]="{'loadingForm': sendingData == true}">
         <h1 align="center">Asignar Horarios</h1>
 
+        <div class="options">
+
+            <a href="{{ storage.getUrl() }}pdf/scheduleUser{{ storage.getTokenUrl() }}&id={{user.id}}" target="_blank">
+                <mat-icon matTooltip="Imprimir Horario de Usuario" matTooltipPosition="below">local_printshop</mat-icon>
+            </a>
+
+        </div>
+
         <div *ngIf="validations.validate == false" class="divErrors">
             <h5>Error/es:</h5>
             <p *ngIf="validations.checkIn == 1">No se ha asignado la hora de entrada en todos los campos</p>
