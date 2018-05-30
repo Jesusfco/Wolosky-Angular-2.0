@@ -51,8 +51,21 @@ export class Schedule {
     setValues(data){
        
         this.id = parseInt(data.id);
-        this.active = data.active;
+        this.active = false;
+        if(parseInt(data.active) == 1) {
+            this.active = true;
+        }
+        
         this.day_id = parseInt(data.day_id);
+
+        if(data.check_in == null) {
+            data.check_in = '00:00';
+        }
+
+        if(data.check_out == null) {
+            data.check_out = '00:00';
+        }
+
         if(this.active) {
 
             let check_in = data.check_in.split(':');

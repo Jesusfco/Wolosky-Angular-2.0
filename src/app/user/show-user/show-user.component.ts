@@ -161,6 +161,8 @@ export class ShowUserComponent implements OnInit {
 
         }
 
+        console.log(this.schedules);
+
         localStorage.setItem('userSchedules', JSON.stringify(this.schedules));
 
       },
@@ -231,7 +233,7 @@ export class ShowUserComponent implements OnInit {
 
   setMonthlyPrices() {
     this._http.getAllMonthlyPrices().then(
-      
+
       data => {
 
         for(let i of data) {
