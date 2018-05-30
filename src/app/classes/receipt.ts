@@ -6,7 +6,7 @@ export class Receipt {
     creator_id: any;
     amount: number;    
     event_id: any;
-    type: number = 1;
+    type: Number = 1;
     month: number;
     year: number;
     days: number;

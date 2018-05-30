@@ -106,4 +106,22 @@ export class UserService {
               .toPromise();
   }
 
+  postReference(reference) {
+    return this._http.post(this.link.url + 'references/create' + this.token.getTokenUrl(), reference)
+              .map(data => data.json())
+              .toPromise();
+  }
+
+  updateReference(reference) {
+    return this._http.post(this.link.url + 'references/update' + this.token.getTokenUrl(), reference)
+              .map(data => data.json())
+              .toPromise();
+  }
+
+  deleteReference(reference) {
+    return this._http.delete(this.link.url + 'references/delete/' + reference.id + this.token.getTokenUrl(), reference)
+              .map(data => data.json())
+              .toPromise();
+  }
+
 }

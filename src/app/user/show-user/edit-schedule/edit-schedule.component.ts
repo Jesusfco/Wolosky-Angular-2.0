@@ -28,7 +28,7 @@ export class EditScheduleComponent implements OnInit {
   };
 
   id: number;
-  observerRef: any;
+  
   sendingData: Boolean = false;
   schedules: Array<Schedule> = [];
   sche: Schedule = new Schedule();
@@ -60,7 +60,7 @@ export class EditScheduleComponent implements OnInit {
     private actRou: ActivatedRoute) {
 
       this.storage = new Storage();
-      
+
       // this.observerRef = actRou.params.subscribe(params => {
       //   this.id = params['id'];
       //   console.log(this.id);

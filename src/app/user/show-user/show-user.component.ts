@@ -43,6 +43,7 @@ export class ShowUserComponent implements OnInit {
 
   public userMonthlyObserver: any;
   public userScheduleObserver: any;
+  public userReferenceObserver: any;
 
 
   constructor(private _http: UserService,
@@ -85,22 +86,26 @@ export class ShowUserComponent implements OnInit {
         this.showUser.setValues(data);
         localStorage.setItem('userData', JSON.stringify(this.user));
 
-        if(this.user.user_type_id == 1) {
+        if(this.user.user_type_id <= 3) {
+
+          this.setSchedules();
+          this.setReferences();
+          this.setMonthlyPrices();
+          
+          this.setScheduleObserver();
+          this.setUserReferenceObserver();
+
+        } 
+        
+        if (this.user.user_type_id == 1) {
 
           this.setMonthlyPayment();
-          this.setSchedules();
-          this.setReferences();
-          this.setMonthlyPrices();
-          this.setScheduleObserver();
           this.setUserMonthlyObserver();
+          
 
-        } else if (this.user.user_type_id <= 3) {
+        } else if(this.user.user_type_id == 2 || this.user.user_type_id == 3) {
 
           this.setSalary();
-          this.setSchedules();
-          this.setReferences();
-          this.setMonthlyPrices();
-          this.setScheduleObserver();
 
         }
 
@@ -159,9 +164,7 @@ export class ShowUserComponent implements OnInit {
 
           this.schedules.push(schel);
 
-        }
-
-        console.log(this.schedules);
+        }        
 
         localStorage.setItem('userSchedules', JSON.stringify(this.schedules));
 
@@ -394,6 +397,21 @@ export class ShowUserComponent implements OnInit {
     ).then(
       () => this.sendingData = false
     );
+  }
+
+  setUserReferenceObserver() {
+    this.userReferenceObserver = setInterval(() => this.userReferenceObserverLogic(), 1000);
+  }
+
+  userReferenceObserverLogic() {
+    
+    if(localStorage.getItem('userReferencesUpdates') == undefined) {
+      return;
+    }
+
+    this.references = JSON.parse(localStorage.getItem('userReferences'));
+    localStorage.removeItem('userReferencesUpdates');
+
   }
 
 }

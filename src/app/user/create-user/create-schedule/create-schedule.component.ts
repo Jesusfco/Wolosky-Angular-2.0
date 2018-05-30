@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FadeAnimation, SlideAnimation } from '../../../animations/slide-in-out.animation';
 import { MonthlyPrice } from '../../../classes/monthly-price';
 @Component({
@@ -37,6 +37,13 @@ export class CreateScheduleComponent implements OnInit {
 
     if(Object.keys(this.schedules).length == 0) this.assignSchedulesNames();
     
+  }
+
+  ngOnDestroy(){
+    setTimeout(() => {      
+      this.cardState = 'final';
+      this.backgroundState = 'final';
+    }, 2000);
   }
 
   close(x){

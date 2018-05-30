@@ -45,32 +45,9 @@ export class ReferenceComponent implements OnInit {
   @Input() references;
 
   reference: Reference = new Reference();
-  toUpdate: boolean =  false;
-  referenceToModify: Reference;
+  referenceToModify: Reference = new Reference();
 
-    relationshipOptions = [
-      {
-        value: 1,
-        view: 'Padres/Madre'
-      },{
-        value: 2,
-        view: 'Hermano/a'
-      },{
-        value: 3,
-        view: 'Familiar'
-      },{
-        value: 4,
-        view: 'Otro'
-      }
-    ];
-
-  validations: any = {
-    validate: true,
-    name: 0,
-    nuMail: 0,
-    phone: 0,
-    email: 0,
-  };
+  public relationshipOptions = this.reference.setRelationshipOptions();
 
   arrayNumber = 1;
 
@@ -109,117 +86,23 @@ export class ReferenceComponent implements OnInit {
 
   form(){
 
-    this.restoreValidationValues();
-    this.validateForm();
 
-    if(this.validations.validate == true){
-
+    if(this.reference.validate()) {
+      
       this.reference.id =  this.arrayNumber;
+
       this.reference.setRelationshipView();
       this.references.push(this.reference);
+
       this.reference = new Reference();
+      this.reference.references = this.references;
+
       this.arrayNumber++;
-
-    } 
-
-  }
-
-  validateForm(){
-    if(this.validateName())
-
-    
-    if(this.validateMailNumber()){
-      console.log('valido');
-      return;
+      
     }
-
-    if(this.reference.email.length > 0){
-
-      if(!this.reference.validateLengthEmail(12)){
-        this.validations.email = 1;
-        this.validations.validate = false;
-      } else {
-        if(!this.reference.validateEmailFormat()){
-          this.validations.email = 2;
-          this.validations.validate = false;
-        }
-      }
-
-    }
-
-    if(this.reference.phone.length > 0){
-      if(!this.reference.validateLengthPhone(7)){
-        this.validations.phone = 1;
-        this.validations.validate = false;
-      } else if (this.reference.validateLengthPhone(11)){
-        this.validations.phone = 2;
-        this.validations.validate = false;
-      }
-    }
-
-    console.log(this.validations);
-
-  }
-
-  restoreValidationValues(){
-
-    this.validations = {
-      validate: true,
-      name: 0,
-      nuMail: 0,
-      email: 0,
-      phone: 0,
-    };
-
-  }
-
-  validateName(){
-    
-    if(this.reference.name.length > 6){
-      return true;
-    }
-    else if(this.reference.name.length == 0){
-      this.validations.name = 1;
-      this.validations.validate = false;
-      return false;
-    } else {
-      this.validations.name = 2;
-      this.validations.validate = false;
-      return false;
-    }
-
     
 
-  }
 
-  validateMailNumber(){
-
-    if(this.reference.phone.length > 0  || this.reference.email.length > 0){
-      console.log('segun hay algo en los campos');
-      return true;
-    } else {
-      this.validations.nuMail = 1;
-      this.validations.validate = false;
-      return false;
-    }
-  }
-
-  nameUpper(){
-    if(this.reference.name != null) 
-      this.reference.name = this.reference.name.toUpperCase();          
-  }
-  nameModifyUpper(){
-    if(this.referenceToModify.name != null) 
-      this.referenceToModify.name = this.referenceToModify.name.toUpperCase();
-  }
-  
-  mailUpper(){
-    if(this.reference.email != null)
-      this.reference.email =  this.reference.email.toUpperCase();
-  }
-  mailModifyUpper(){
-    if(this.referenceToModify.email != null)
-      this.referenceToModify.email =  this.referenceToModify.email.toUpperCase();
   }
 
   deleteReference(ref){    
@@ -227,13 +110,42 @@ export class ReferenceComponent implements OnInit {
   }
 
   selectReference(ref){
-    this.referenceToModify = ref;
-    this.toUpdate = true;
+
+    Object.assign(this.referenceToModify, ref);  
+    
+    this.referenceToModify.references = this.references;
+    this.referenceToModify.beforeUpdate = ref;
+    this.referenceToModify.updating = true;
+
   }
 
   update(){
-    console.log(this.referenceToModify);
-    this.toUpdate = false;
-    // let x = this.reference
+    
+    if (this.referenceToModify.validate()) { 
+          this.freshReferences();
+    }
+    
   }
+
+  freshReferences() {
+
+    for(let i = 0; i < this.references.length; i++) {
+
+      if(this.references[i].id == this.referenceToModify.id) {
+
+        this.referenceToModify.references = [];
+        this.referenceToModify.validations = null;
+
+        this.references[i] = this.referenceToModify;
+        this.referenceToModify = new Reference();
+        this.referenceToModify.references = this.references;
+
+        break;
+
+      }
+
+    }
+
+  }
+  
 }
