@@ -44,8 +44,8 @@ export class ReferenceComponent implements OnInit {
   @Output() closeReferenceEvent = new EventEmitter();
   @Input() references;
 
-  reference: Reference = new Reference();
-  referenceToModify: Reference = new Reference();
+  public reference: Reference = new Reference();
+  public referenceToModify: Reference = new Reference();
 
   public relationshipOptions = this.reference.setRelationshipOptions();
 
@@ -92,6 +92,10 @@ export class ReferenceComponent implements OnInit {
       this.reference.id =  this.arrayNumber;
 
       this.reference.setRelationshipView();
+
+      this.reference.references = [];
+      this.reference.validations = null;
+
       this.references.push(this.reference);
 
       this.reference = new Reference();
@@ -111,7 +115,12 @@ export class ReferenceComponent implements OnInit {
 
   selectReference(ref){
 
-    Object.assign(this.referenceToModify, ref);  
+    this.referenceToModify = new Reference();
+    
+    let data = JSON.parse(JSON.stringify(ref));
+
+    this.referenceToModify.setValuesFromData(data);
+    // Object.assign(this.referenceToModify, ref);  
     
     this.referenceToModify.references = this.references;
     this.referenceToModify.beforeUpdate = ref;
@@ -147,5 +156,5 @@ export class ReferenceComponent implements OnInit {
     }
 
   }
-  
+
 }

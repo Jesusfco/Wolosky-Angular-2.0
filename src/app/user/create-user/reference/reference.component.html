@@ -127,23 +127,36 @@
 
 
 
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Parentesco</th>
-                    <th>Nombre</th>
-                    <th>Eliminar</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let x of references">
-                    <th>{{ x.id }}</th>
-                    <th>{{ x.relationshipView }}</th>
-                    <th (click)="selectReference(x)">{{ x.name }}</th>
-                    <th><button (click)="deleteReference(x)">Eliminar</button></th>
-                </tr>
-            </tbody>
-        </table>
+        <div class="responsive-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Parentesco</th>
+                        <th>Nombre</th>
+                        <th>Tel1</th>
+                        <th>Tel2</th>
+                        <th>Correo</th>
+                        <th>Trabajo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let x of references">
+                        <th>{{ x.id }}</th>
+                        <th>{{ x.relationshipView }}</th>
+                        <th (click)="selectReference(x)">{{ x.name }}</th>
+                        <th (click)="selectReference(x)">{{ x.phone }}</th>
+                        <th (click)="selectReference(x)">{{ x.phone2 }}</th>
+                        <th (click)="selectReference(x)">{{ x.email }}</th>
+                        <th (click)="selectReference(x)">{{ x.work_place }}</th>
+                        <th>
+                            <mat-icon matTooltip="Eliminar Referencia" matTooltipPosition="left" (click)="deleteReference(x)">delete</mat-icon>
+                            <mat-icon matTooltip="Editar Referencia" matTooltipPosition="left" (click)="selectReference(x)">edit</mat-icon>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
     </div>
-</div>

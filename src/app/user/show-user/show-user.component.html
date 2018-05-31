@@ -20,7 +20,7 @@
                 <mat-icon matTooltip="Imprimir Informacion de Usuario" matTooltipPosition="below">local_printshop</mat-icon>
             </a>
 
-            <mat-icon matTooltip="Eliminar Usuario" matTooltipPosition="below">delete</mat-icon>
+            <mat-icon routerLink="/users/show/{{ user.id }}/delete" matTooltip="Eliminar Usuario" matTooltipPosition="below">delete</mat-icon>
         </div>
 
         <div class="container">

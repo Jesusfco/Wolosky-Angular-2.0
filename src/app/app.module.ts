@@ -103,6 +103,7 @@ import { MonthlyPriceService } from './monthly-prices/monthly-price.service';
 import { CreateMonthlyPriceComponent } from './monthly-prices/create-monthly-price/create-monthly-price.component';
 import { SchedulesComponent } from './schedules/schedules.component';
 import { ScheduleService } from './schedules/schedule.service';
+import { DeleteUserComponent } from './user/delete-user/delete-user.component';
 
 @NgModule({
   declarations: [
@@ -148,6 +149,7 @@ import { ScheduleService } from './schedules/schedule.service';
     MonthlyPriceComponent,
     CreateMonthlyPriceComponent,
     SchedulesComponent,
+    DeleteUserComponent,
   ],
   imports: [
     BrowserModule,

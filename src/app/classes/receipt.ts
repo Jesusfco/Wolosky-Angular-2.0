@@ -24,5 +24,7 @@ export class Receipt {
         this.year = d.getFullYear();
         this.month = d.getMonth() + 1;
 
+        this.payment_type = false;
+
     }
 }

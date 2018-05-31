@@ -1,0 +1,48 @@
+<mat-progress-bar mode="indeterminate" *ngIf="request" class="barLoader"></mat-progress-bar>
+
+<div class="cardSpace" [@background]="state.background">
+
+    <div class="closeCardBackground" (click)="closePop()">
+        <h5 class="closeIcon">
+            <mat-icon>close</mat-icon>
+        </h5>
+    </div>
+
+    <div class="cardModule" [@card]="state.card">
+        <h2 class="centerText">Eliminar Usuario</h2>
+
+        <form autocomplete="off">
+
+            <h4>¿Estas seguro de eliminar al usuario? <br> {{ user.name }}</h4>
+
+            <div *ngIf="safe != null">
+
+                <div *ngIf="!safe.secure">
+
+                    <p>No se recomienda eliminar al usuario, ya que posee registros relacionados</p>
+
+                    <div *ngIf="user.user_type_id == 1">
+                        <p>Recibos: # {{ safe.receipts }}</p>
+                        <p>Deudas de Abarroteria: # {{ safe.debts }}</p>
+                    </div>
+
+                    <div *ngIf="user.user_type_id == 2 || user.user_type_id == 3">
+                        <p>Pagos: # {{ safe.receipts }}</p>
+                        <p>Deudas de Abarroteria: # {{ safe.debts }}</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <button class="btn down" *ngIf="!request && user.status !== 3" (click)="changeStatus()">Dar de Baja</button>
+            <button class="btn alert" *ngIf="safe != null && !request" (click)="deleteUser()">Eliminar</button>
+
+            <button class="btn disabled" *ngIf="request || user.status == 3" disabled>Dar de Baja</button>
+            <button class="btn disabled" *ngIf="safe != null && request" disabled>Eliminar</button>
+
+
+        </form>
+
+    </div>
+</div>

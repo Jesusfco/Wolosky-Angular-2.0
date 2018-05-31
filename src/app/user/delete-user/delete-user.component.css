@@ -1,0 +1,19 @@
+.cardSpace {
+    z-index: 200;
+}
+
+button.btn {
+    width: 45%;
+}
+
+button.down {
+    background: orange;
+}
+
+button.alert {
+    background: darkred;
+}
+
+.btn.disabled {
+    background: #d7d6d5;
+}

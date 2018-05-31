@@ -53,6 +53,7 @@ export class StatusUserComponent implements OnInit {
       // });
 
       this.id = parseInt(localStorage.getItem('userShowId'));
+      this.record.user_id = this.id;
       this.getStatusData();
   }
 

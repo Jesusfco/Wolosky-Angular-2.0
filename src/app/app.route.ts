@@ -7,6 +7,7 @@ import { CreateUserComponent } from './user/create-user/create-user.component';
 import { CreateScheduleComponent } from './user/create-user/create-schedule/create-schedule.component';
 import { ReferenceComponent } from './user/create-user/reference/reference.component';
 import { ShowUserComponent } from './user/show-user/show-user.component';
+import { DeleteUserComponent } from './user/delete-user/delete-user.component';
 
 
 import { EditReferenceComponent } from './user/show-user/edit-reference/edit-reference.component';
@@ -75,6 +76,7 @@ export const routes: Routes = [
                     { path: 'schedule', component: EditScheduleComponent},
                     { path: 'references', component: EditReferenceComponent},
                     { path: 'status', component: StatusUserComponent},
+                    { path: 'delete', component: DeleteUserComponent}
             ]},
         ]
     },

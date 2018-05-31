@@ -17,160 +17,162 @@
         </div>
 
 
-        <form class="flexRow" (submit)="form()" *ngIf="!referenceToModify.updating" autocomplete="off">
+        <div class=" container">
+            <form class="flexRow" (submit)="form()" *ngIf="!referenceToModify.updating" autocomplete="off">
 
-            <br>
+                <br>
 
-            <div class="formData l6 m6">
-                <label>Nombre completo:</label><br>
-                <input type="text" [ngClass]="{'inputError': reference.validations.name > 0}" [(ngModel)]="reference.name" name="name" placeholder="Nombre Completo" (keyup)="reference.nameUpper()">
-                <small class="error" *ngIf="reference.validations.name == 1">Requerido</small>
-                <small class="error" *ngIf="reference.validations.name == 2">6 letras minimo</small>
-                <small class="error" *ngIf="reference.validations.name == 3">Nombre ya asignado</small>
-            </div>
+                <div class="formData l6 m6">
+                    <label>Nombre completo:</label><br>
+                    <input type="text" [ngClass]="{'inputError': reference.validations.name > 0}" [(ngModel)]="reference.name" name="name" placeholder="Nombre Completo" (keyup)="reference.nameUpper()">
+                    <small class="error" *ngIf="reference.validations.name == 1">Requerido</small>
+                    <small class="error" *ngIf="reference.validations.name == 2">6 letras minimo</small>
+                    <small class="error" *ngIf="reference.validations.name == 3">Nombre ya asignado</small>
+                </div>
 
-            <div class="formData l6 m6">
-                <label>Parentesco:</label><br>
-                <select [(ngModel)]="reference.relationship_id" name="relationship_id" placeholder="Parentesco">
+                <div class="formData l6 m6">
+                    <label>Parentesco:</label><br>
+                    <select [(ngModel)]="reference.relationship_id" name="relationship_id" placeholder="Parentesco">
                         <option *ngFor="let x of relationshipOptions" value="{{x.value}}">{{x.view}}</option>               
                     </select>
-            </div>
+                </div>
 
-            <div class="formData l6 m6">
-                <label>Telefono:</label><br>
-                <input type="phone" [ngClass]="{'inputError': reference.validations.phone > 0 || reference.validations.nuMail > 0}" [(ngModel)]="reference.phone" (keyup)="reference.phone1Format()" name="phone" placeholder="Telefono">
-                <small>{{ reference.phone.length }} / 10, minimo 7</small>
-                <small class="error" *ngIf="reference.validations.nuMail == 1">Se requiere el Correo/Telefono</small>
-                <small class="error" *ngIf="reference.validations.phone == 1">7 Dijitos minimo</small>
-                <small class="error" *ngIf="reference.validations.phone == 2">10 Dijitos maximo</small>
-            </div>
+                <div class="formData l6 m6">
+                    <label>Telefono:</label><br>
+                    <input type="phone" [ngClass]="{'inputError': reference.validations.phone > 0 || reference.validations.nuMail > 0}" [(ngModel)]="reference.phone" (keyup)="reference.phone1Format()" name="phone" placeholder="Telefono">
+                    <small>{{ reference.phone.length }} / 10, minimo 7</small>
+                    <small class="error" *ngIf="reference.validations.nuMail == 1">Se requiere el Correo/Telefono</small>
+                    <small class="error" *ngIf="reference.validations.phone == 1">7 Dijitos minimo</small>
+                    <small class="error" *ngIf="reference.validations.phone == 2">10 Dijitos maximo</small>
+                </div>
 
-            <div class="formData l6 m6">
-                <label>Correo</label><br>
-                <input type="mail" [ngClass]="{'inputError': reference.validations.email > 0 || reference.validations.nuMail > 0}" [(ngModel)]="reference.email" name="email" placeholder="Correo" (keyup)="reference.emailUpper()">
-                <small class="error" *ngIf="reference.validations.nuMail == 1">Se requiere el Correo/Telefono</small>
-                <small class="error" *ngIf="reference.validations.email == 1">13 caracteres minimo</small>
-                <small class="error" *ngIf="reference.validations.email == 2">Correo ya Asignado</small>
-                <small class="error" *ngIf="reference.validations.email == 3">Formato incorrecto "@" / "."</small>
-                <small class="validate" *ngIf="reference.validations.email == -1">Correcto</small>
+                <div class="formData l6 m6">
+                    <label>Correo</label><br>
+                    <input type="mail" [ngClass]="{'inputError': reference.validations.email > 0 || reference.validations.nuMail > 0}" [(ngModel)]="reference.email" name="email" placeholder="Correo" (keyup)="reference.emailUpper()">
+                    <small class="error" *ngIf="reference.validations.nuMail == 1">Se requiere el Correo/Telefono</small>
+                    <small class="error" *ngIf="reference.validations.email == 1">13 caracteres minimo</small>
+                    <small class="error" *ngIf="reference.validations.email == 2">Correo ya Asignado</small>
+                    <small class="error" *ngIf="reference.validations.email == 3">Formato incorrecto "@" / "."</small>
+                    <small class="validate" *ngIf="reference.validations.email == -1">Correcto</small>
 
-            </div>
+                </div>
 
-            <div class="formData l6 m6">
+                <div class="formData l6 m6">
 
-                <label>Telefono 2:</label><br>
-                <input type="phone" [(ngModel)]="reference.phone2" name="phone2" placeholder="Telefono" (keyup)="reference.phone2Format()">
-                <small>{{ reference.phone2.length }} / 10, minimo 7</small>
-                <small class="error" *ngIf="reference.validations.phone2 == 1">7 Dijitos minimo</small>
-                <small class="error" *ngIf="reference.validations.phone2 == 2">10 Dijitos maximo</small>
+                    <label>Telefono 2:</label><br>
+                    <input type="phone" [(ngModel)]="reference.phone2" name="phone2" placeholder="Telefono" (keyup)="reference.phone2Format()">
+                    <small>{{ reference.phone2.length }} / 10, minimo 7</small>
+                    <small class="error" *ngIf="reference.validations.phone2 == 1">7 Dijitos minimo</small>
+                    <small class="error" *ngIf="reference.validations.phone2 == 2">10 Dijitos maximo</small>
 
-            </div>
+                </div>
 
-            <div class="formData l6 m6">
-                <label>Lugar de Trabajo:</label><br>
-                <input type="text" [(ngModel)]="reference.work_place" name="work_place" placeholder="Telefono" (keyup)="reference.work_placeUpper()">
-            </div>
+                <div class="formData l6 m6">
+                    <label>Lugar de Trabajo:</label><br>
+                    <input type="text" [(ngModel)]="reference.work_place" name="work_place" placeholder="Telefono" (keyup)="reference.work_placeUpper()">
+                </div>
 
-            <button class="btn btnPrimary l12" type="submit">Aceptar</button>
+                <button class="btn btnPrimary l12" type="submit">Aceptar</button>
 
-        </form>
+            </form>
 
-        <!-- //SECCION PARA MODIFICAR REFERENCIA -->
-        <!-- //SECCION PARA MODIFICAR REFERENCIA -->
-
-
-        <form class="flexRow" (submit)="update()" *ngIf="referenceToModify.updating" autocomplete="off">
+            <!-- //SECCION PARA MODIFICAR REFERENCIA -->
+            <!-- //SECCION PARA MODIFICAR REFERENCIA -->
 
 
-            <div class="formData l6 m6">
-                <label>Nombre completo:</label><br>
-                <input type="text" [ngClass]="{'inputError': referenceToModify.validations.name > 0}" [(ngModel)]="referenceToModify.name" name="name" placeholder="Nombre Completo" (keyup)="referenceToModify.nameUpper()">
-                <small class="error" *ngIf="referenceToModify.validations.name == 1">Requerido</small>
-                <small class="error" *ngIf="referenceToModify.validations.name == 2">6 letras minimo</small>
-                <small class="error" *ngIf="referenceToModify.validations.name == 3">Nombre ya asignado</small>
-            </div>
+            <form class="flexRow" (submit)="update()" *ngIf="referenceToModify.updating" autocomplete="off">
 
-            <div class="formData l6 m6">
-                <label>Correo</label><br>
-                <input type="email" [(ngModel)]="referenceToModify.email" name="email" placeholder="Correo" (keydown)="referenceToModify.emailUpper()">
-                <small class="error" *ngIf="referenceToModify.validations.nuMail == 1">Se requiere el Correo/Telefono</small>
-                <small class="error" *ngIf="referenceToModify.validations.email == 1">13 caracteres minimo</small>
-                <small class="error" *ngIf="referenceToModify.validations.email == 2">Correo ya Asignado</small>
-                <small class="error" *ngIf="referenceToModify.validations.email == 3">Formato incorrecto "@" / "."</small>
-                <small class="validate" *ngIf="referenceToModify.validations.email == -1">Correcto</small>
-            </div>
 
-            <div class="formData l6 m6">
-                <label>Parentesco:</label><br>
-                <select [(ngModel)]="referenceToModify.relationship_id" name="relationship_id" placeholder="Parentesco">
+                <div class="formData l6 m6">
+                    <label>Nombre completo:</label><br>
+                    <input type="text" [ngClass]="{'inputError': referenceToModify.validations.name > 0}" [(ngModel)]="referenceToModify.name" name="name" placeholder="Nombre Completo" (keyup)="referenceToModify.nameUpper()">
+                    <small class="error" *ngIf="referenceToModify.validations.name == 1">Requerido</small>
+                    <small class="error" *ngIf="referenceToModify.validations.name == 2">6 letras minimo</small>
+                    <small class="error" *ngIf="referenceToModify.validations.name == 3">Nombre ya asignado</small>
+                </div>
+
+                <div class="formData l6 m6">
+                    <label>Correo</label><br>
+                    <input type="email" [(ngModel)]="referenceToModify.email" name="email" placeholder="Correo" (keydown)="referenceToModify.emailUpper()">
+                    <small class="error" *ngIf="referenceToModify.validations.nuMail == 1">Se requiere el Correo/Telefono</small>
+                    <small class="error" *ngIf="referenceToModify.validations.email == 1">13 caracteres minimo</small>
+                    <small class="error" *ngIf="referenceToModify.validations.email == 2">Correo ya Asignado</small>
+                    <small class="error" *ngIf="referenceToModify.validations.email == 3">Formato incorrecto "@" / "."</small>
+                    <small class="validate" *ngIf="referenceToModify.validations.email == -1">Correcto</small>
+                </div>
+
+                <div class="formData l6 m6">
+                    <label>Parentesco:</label><br>
+                    <select [(ngModel)]="referenceToModify.relationship_id" name="relationship_id" placeholder="Parentesco">
                     <option *ngFor="let x of relationshipOptions" value="{{x.value}}">{{x.view}}</option>               
                 </select>
+                </div>
+
+                <div class="formData l6 m6">
+                    <label>Telefono:</label><br>
+                    <input type="phone" (keyup)="referenceToModify.validatePhoneFormat()" [(ngModel)]="referenceToModify.phone" name="phone" placeholder="Telefono">
+                    <small>{{ referenceToModify.phone.length }} / 10, minimo 7</small>
+                    <small class="error" *ngIf="referenceToModify.validations.nuMail == 1">Se requiere el Correo/Telefono</small>
+                    <small class="error" *ngIf="referenceToModify.validations.phone == 1">7 Dijitos minimo</small>
+                    <small class="error" *ngIf="referenceToModify.validations.phone == 2">10 Dijitos maximo</small>
+                </div>
+
+
+                <div class="formData l6 m6">
+                    <label>Telefono 2:</label><br>
+                    <input type="phone" [(ngModel)]="referenceToModify.phone2" (keyup)="referenceToModify.validatePhoneFormat()" name="phone2" placeholder="Telefono2">
+                    <small>{{ referenceToModify.phone2.length }} / 10, minimo 7</small>
+                    <small class="error" *ngIf="referenceToModify.validations.phone2 == 1">7 Dijitos minimo</small>
+                    <small class="error" *ngIf="referenceToModify.validations.phone2 == 2">10 Dijitos maximo</small>
+
+                </div>
+
+                <div class="formData l6 m6">
+                    <label>Lugar de Trabajo:</label><br>
+                    <input type="text" [(ngModel)]="referenceToModify.work_place" name="work_place" placeholder="Lugar De Trabajo" (keyup)="referenceToModify.work_placeUpper()">
+                </div>
+
+
+                <button class="btn btnPrimary l12" type="submit">Aceptar</button>
+
+            </form>
+
+            <br><br>
+
+            <div class="responsive-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Parentesco</th>
+                            <th>Nombre</th>
+                            <th>Tel1</th>
+                            <th>Tel2</th>
+                            <th>Correo</th>
+                            <th>Trabajo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let x of references">
+                            <th>{{ x.id }}</th>
+                            <th>{{ x.relationshipView }}</th>
+                            <th (click)="selectReference(x)">{{ x.name }}</th>
+                            <th (click)="selectReference(x)">{{ x.phone }}</th>
+                            <th (click)="selectReference(x)">{{ x.phone2 }}</th>
+                            <th (click)="selectReference(x)">{{ x.email }}</th>
+                            <th (click)="selectReference(x)">{{ x.work_place }}</th>
+                            <th>
+                                <mat-icon matTooltip="Eliminar Referencia" matTooltipPosition="left" (click)="delete(x)">delete</mat-icon>
+                                <mat-icon matTooltip="Editar Referencia" matTooltipPosition="left" (click)="selectReference(x)">edit</mat-icon>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+
             </div>
-
-            <div class="formData l6 m6">
-                <label>Telefono:</label><br>
-                <input type="phone" (keyup)="referenceToModify.validatePhoneFormat()" [(ngModel)]="referenceToModify.phone" name="phone" placeholder="Telefono">
-                <small>{{ referenceToModify.phone.length }} / 10, minimo 7</small>
-                <small class="error" *ngIf="referenceToModify.validations.nuMail == 1">Se requiere el Correo/Telefono</small>
-                <small class="error" *ngIf="referenceToModify.validations.phone == 1">7 Dijitos minimo</small>
-                <small class="error" *ngIf="referenceToModify.validations.phone == 2">10 Dijitos maximo</small>
-            </div>
-
-
-            <div class="formData l6 m6">
-                <label>Telefono 2:</label><br>
-                <input type="phone" [(ngModel)]="referenceToModify.phone2" (keyup)="referenceToModify.validatePhoneFormat()" name="phone2" placeholder="Telefono2">
-                <small>{{ referenceToModify.phone2.length }} / 10, minimo 7</small>
-                <small class="error" *ngIf="referenceToModify.validations.phone2 == 1">7 Dijitos minimo</small>
-                <small class="error" *ngIf="referenceToModify.validations.phone2 == 2">10 Dijitos maximo</small>
-
-            </div>
-
-            <div class="formData l6 m6">
-                <label>Lugar de Trabajo:</label><br>
-                <input type="text" [(ngModel)]="referenceToModify.work_place" name="work_place" placeholder="Lugar De Trabajo" (keyup)="referenceToModify.work_placeUpper()">
-            </div>
-
-
-            <button class="btn btnPrimary l12" type="submit">Aceptar</button>
-
-        </form>
-
-        <br><br>
-
-        <div class="responsive-table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Parentesco</th>
-                        <th>Nombre</th>
-                        <th>Tel1</th>
-                        <th>Tel2</th>
-                        <th>Correo</th>
-                        <th>Trabajo</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let x of references">
-                        <th>{{ x.id }}</th>
-                        <th>{{ x.relationshipView }}</th>
-                        <th (click)="selectReference(x)">{{ x.name }}</th>
-                        <th (click)="selectReference(x)">{{ x.phone }}</th>
-                        <th (click)="selectReference(x)">{{ x.phone2 }}</th>
-                        <th (click)="selectReference(x)">{{ x.email }}</th>
-                        <th (click)="selectReference(x)">{{ x.work_place }}</th>
-                        <th>
-                            <mat-icon (click)="delete(x)">delete</mat-icon>
-                            <mat-icon (click)="selectReference(x)">edit</mat-icon>
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
 
         </div>
-
 
     </div>
 </div>

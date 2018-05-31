@@ -124,4 +124,16 @@ export class UserService {
               .toPromise();
   }
 
+  safeDeleteCheck(user){
+    return this._http.post(this.link.url + 'user/safeDelete/' + user.id + this.token.getTokenUrl(), user)
+            .map(data => data.json())
+            .toPromise();
+  }
+
+  deleteUser(user){
+    return this._http.delete(this.link.url + 'user/delete/' + user.id + this.token.getTokenUrl(), user)
+            .map(data => data.json())
+            .toPromise();
+  }
+
 }

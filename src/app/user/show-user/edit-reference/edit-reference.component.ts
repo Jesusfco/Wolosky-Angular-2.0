@@ -90,14 +90,15 @@ export class EditReferenceComponent implements OnInit {
     localStorage.setItem('userReferencesUpdates', '1');
   }
 
-  
-
   form(){
 
     if(this.reference.validate()) {
 
       this.sendingData = true;
 
+      this.reference.references = [];
+      this.reference.validations = null;
+      
       this._http.postReference(this.reference).then(
 
         data => {
@@ -168,7 +169,13 @@ export class EditReferenceComponent implements OnInit {
   selectReference(ref){
 
     // this.referenceToModify.setData(ref);
-    Object.assign(this.referenceToModify, ref);  
+
+    this.referenceToModify = new Reference();
+
+    let data = JSON.parse(JSON.stringify(ref));
+
+    this.referenceToModify.setValuesFromData(data);
+    // Object.assign(this.referenceToModify, ref);  
     
     this.referenceToModify.references = this.references;
     this.referenceToModify.beforeUpdate = ref;
@@ -219,7 +226,7 @@ export class EditReferenceComponent implements OnInit {
 
         this.referenceToModify.references = [];
         this.referenceToModify.validations = null;
-        
+
         this.references[i] = this.referenceToModify;
         this.referenceToModify = new Reference();
         this.referenceToModify.references = this.references;
