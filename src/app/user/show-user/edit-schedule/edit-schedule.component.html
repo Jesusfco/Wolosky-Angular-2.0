@@ -3,7 +3,7 @@
 <div class="background" [@background]="backgroundState"></div>
 <div id="createCard" [@principal]="cardState">
 
-    <div id="cerrarBtn" (click)="close()"> Cerrar <i class="material-icons">close</i></div>
+    <div id="cerrarBtn" [routerLink]="['../']"> Cerrar <i class="material-icons">close</i></div>
 
     <div class="form" [ngClass]="{'loadingForm': sendingData == true}">
         <h1 align="center">Asignar Horarios</h1>
@@ -55,8 +55,9 @@
 
             <div *ngIf="result.hours != 0 && user.user_type_id == 1">
                 <p>Horas: {{result.hours}}</p>
-                <p>Monto: ${{result.amount}}</p>
-                <input type="number" min="0" [(ngModel)]="result.amount" name="amount" *ngIf="credential >= 6">
+                <p>Precio Por Horas: ${{result.amount}}</p>
+                <p>Monto Anterior: ${{ result.amountActual }}</p>
+                <input type="number" min="0" [(ngModel)]="result.amountForce" name="amountForce" *ngIf="credential >= 6">
 
             </div>
 

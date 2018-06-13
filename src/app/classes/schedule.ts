@@ -100,7 +100,7 @@ export class Schedule {
           }
         }
 
-        let amount = 0
+        let amount = 0;
         let monthlyPrices = JSON.parse(localStorage.getItem('monthlyPrices'));
 
         for(let x of monthlyPrices) {
@@ -111,9 +111,13 @@ export class Schedule {
           }
     
           if(amount == 0) {
+
             let i = monthlyPrices.length - 1;
+            if( i >= 0) {
+                amount = monthlyPrices[i].cost;
+            }
     
-            amount = monthlyPrices[i].cost;
+            
     
           }
     

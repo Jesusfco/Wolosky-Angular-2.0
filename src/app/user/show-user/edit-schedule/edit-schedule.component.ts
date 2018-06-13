@@ -36,13 +36,16 @@ export class EditScheduleComponent implements OnInit {
 
   public credential = parseInt(localStorage.getItem('userType'));
 
-  result = {
+  public result = {
     hours: 0,
-    amount: 0
+    amount: 0,
+    amountActual: null,
+    amountForce: null
   };
 
   public userDataObserver: any;
   public schedulesObserverData: any;
+  public monthlyPaymentObserver: any;
 
   public storage: Storage = new Storage();
 
@@ -61,13 +64,6 @@ export class EditScheduleComponent implements OnInit {
 
       this.storage = new Storage();
 
-      // this.observerRef = actRou.params.subscribe(params => {
-      //   this.id = params['id'];
-      //   console.log(this.id);
-        // this.record.user_id = this.id;
-        // this.getStatusData();
-      // });
-
       this.id = parseInt(localStorage.getItem('userShowId'));
 
       this.setUserDataObserver();
@@ -79,6 +75,20 @@ export class EditScheduleComponent implements OnInit {
 
   }
   
+  setMonthlyPaymentObserver() {
+    this.monthlyPaymentObserver = setInterval(() => this.logicMonthlyPaymentObserver(), 1000);
+  }
+
+  logicMonthlyPaymentObserver() {
+
+    if(sessionStorage.getItem('monthlyPayment') == undefined) return;
+
+    let monthlyPayment = JSON.parse(sessionStorage.getItem('monthlyPayment'));
+    this.result.amountActual = monthlyPayment.amount;
+    this.result.amountForce = monthlyPayment.amount;
+    clearInterval(this.monthlyPaymentObserver);
+
+  }
 
   setSchedulesObserverData() {
     this.schedulesObserverData = setInterval(() => this.logicSchedulesObserver(), 500);
@@ -88,6 +98,7 @@ export class EditScheduleComponent implements OnInit {
     if(localStorage.getItem('userSchedules') == undefined) return;
 
     this.schedules = JSON.parse(localStorage.getItem('userSchedules'));
+    this.setResult();
     clearInterval(this.schedulesObserverData);
   }
 
@@ -126,15 +137,15 @@ export class EditScheduleComponent implements OnInit {
     
     if(!this.validateSchedules()) return;
 
-    this.result = this.sche.countHours(this.schedules);
-
     this.sendingData = true;
     // if(this.validateSchedules()){
 
-      this._http.updateSchedule(this.id, {schedules: this.schedules, amount: this.result.amount, user: this.user}).then(
+      this._http.updateSchedule(this.id, {schedules: this.schedules, amount: this.result.amountForce, user: this.user}).then(
 
         data => {
           
+          this.result.amountActual = this.result.amountForce;
+
           let not = {
             status: 200,
             title: 'Horario Actualizado',
@@ -144,7 +155,7 @@ export class EditScheduleComponent implements OnInit {
           localStorage.setItem('request', JSON.stringify(not));
 
           if(this.user.user_type_id == 1){
-            localStorage.setItem('userMonthly', this.result.amount.toString());
+            localStorage.setItem('userMonthly', this.result.amountForce.toString());
           }
 
           localStorage.setItem('userSchedules', JSON.stringify(this.schedules));
@@ -167,9 +178,26 @@ export class EditScheduleComponent implements OnInit {
 
   setResult() {
 
-    if(!this.validateSchedules() || this.user.user_type_id > 1) return;
+    if(this.validateSchedules()) {
+      
+      if(this.user.user_type_id == 1) {
 
-    this.result = this.sche.countHours(this.schedules);
+        const re = this.sche.countHours(this.schedules);
+
+        this.result.hours = re.hours;
+        this.result.amount = re.amount;
+        this.result.amountForce = re.amount;
+        
+        if(re.amount == 0) {
+          this.result.amountForce = this.result.amountActual;
+        }
+        
+
+      }
+
+    }
+
+    
 
   }
 
@@ -223,6 +251,11 @@ export class EditScheduleComponent implements OnInit {
     if(localStorage.getItem('userData') == undefined) return;
 
     this.user = JSON.parse(localStorage.getItem('userData'));
+    
+    if(this.user.user_type_id == 1) {
+      this.setMonthlyPaymentObserver();
+    }
+
     clearInterval(this.userDataObserver);
 
   }

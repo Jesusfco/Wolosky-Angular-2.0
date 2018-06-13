@@ -182,7 +182,10 @@ export class ShowUserComponent implements OnInit {
     this.sendingData = true;
 
     this._http.getMonthlyPayment(this.user.monthly_payment_id).then(
-      data => this.monthlyPayment = data,
+      data => {
+        this.monthlyPayment = data;
+        sessionStorage.setItem('monthlyPayment', JSON.stringify(this.monthlyPayment));
+      },
       error => localStorage.setItem('request', JSON.stringify(error))
     ).then(
       () => this.sendingData = false
