@@ -1,17 +1,17 @@
 <div id="reciboNew">
 
 
-    <h2 class="centerText">Horarios</h2>
+    <h2 class="centerText" (click)="sortDataOrder()">Horarios</h2>
 
     <div *ngFor="let day of dataOrder" class="flexRow">
 
-        <h4 class="centerText">Día: {{ day.day }}</h4>
+        <h4 class="centerText">Día: {{ day.day | dayPipe }}</h4>
 
         <div *ngFor="let schedule of day.schedules" class="l4">
 
             <div>
 
-                <h5 class="centerText">Horario: {{ schedule.check_in }} - {{ schedule.check_in + 1 }}</h5>
+                <h5 class="centerText">Horario: {{ schedule.check_in | scheduleComponentPipe }} - {{ schedule.check_in + 1 | scheduleComponentPipe}}</h5>
 
                 <ul>
                     <li *ngFor="let user of schedule.users">

@@ -104,6 +104,8 @@ import { CreateMonthlyPriceComponent } from './monthly-prices/create-monthly-pri
 import { SchedulesComponent } from './schedules/schedules.component';
 import { ScheduleService } from './schedules/schedule.service';
 import { DeleteUserComponent } from './user/delete-user/delete-user.component';
+import { DayPípePipe } from './day-pípe.pipe';
+import { ScheduleComponentPipePipe } from './schedule-component-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -150,6 +152,8 @@ import { DeleteUserComponent } from './user/delete-user/delete-user.component';
     CreateMonthlyPriceComponent,
     SchedulesComponent,
     DeleteUserComponent,
+    DayPípePipe,
+    ScheduleComponentPipePipe,
   ],
   imports: [
     BrowserModule,

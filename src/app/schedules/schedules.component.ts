@@ -36,19 +36,7 @@ export class SchedulesComponent implements OnInit {
 
         }
 
-        // let count = 0;
-
-        // for(let i = 0; i < 50000; i++){
-
-        //   count++;
-          
-        //   if(data.schedules[i] == null){
-        //     break;
-        //   }
-
-        // }
-
-        // console.log(count);
+   
 
         for(let i = 0; i < data.schedules.length; i++) {
 
@@ -67,6 +55,7 @@ export class SchedulesComponent implements OnInit {
           
         this.setNames();
         this.organizePerDay();
+        
 
       },
 
@@ -80,13 +69,11 @@ export class SchedulesComponent implements OnInit {
 
   organizePerDay() {
 
-    // let monday: Array<any> = [];
-
     for(let day of this.dataOrder) {
 
       for(let s of this.schedules ) {
 
-        if(s.day_id == day.day) { 
+        if(s.day_id == day.day) {
 
 
           let check_in = s.check_in.split(':');
@@ -98,6 +85,7 @@ export class SchedulesComponent implements OnInit {
           };
   
   
+          //Asignamos horarios en los que se asiste de acuerdo a los horarios obtenidos AGRUPACION
           let verified = true;
 
           for(let h of day.schedules) {
@@ -111,35 +99,14 @@ export class SchedulesComponent implements OnInit {
           }
   
           if(verified) {
+            
             let ho = {
               check_in: horario.check_in,
               users: []
             };
   
             day.schedules.push(ho);
-          }
 
-          for(let m of day.schedules){
-
-            for(let check = horario.check_in; check < horario.check_out; check++){
-  
-              if(m.check_in == check){
-  
-                let user = {
-                  user_name: s.user_name,
-                  user_id: s.user_id
-                };
-    
-                m.users.push(user);
-  
-                break;
-    
-              }
-  
-            }
-  
-            
-            
           }
 
         }
@@ -148,37 +115,78 @@ export class SchedulesComponent implements OnInit {
 
     }
 
+    this.setNameVisualSchedule();
     this.sortDataOrder();
   
 
   }
 
+  setNameVisualSchedule() {
+
+    for(let day of this.dataOrder) {
+
+      for(let s of this.schedules ) {
+
+        if(s.day_id == day.day) {
+
+
+          let check_in = s.check_in.split(':');
+          let check_out = s.check_out.split(':');
+  
+          let horario = {
+            check_in: parseInt(check_in[0]),
+            check_out: parseInt(check_out[0]),
+          };
+
+          for(let schedule of day.schedules) {
+
+            for(let check = horario.check_in; check < horario.check_out; check++) {
+      
+              if(schedule.check_in == check){
+      
+                let user = {
+                  user_name: s.user_name,
+                  user_id: s.user_id
+                };
+      
+                schedule.users.push(user);
+      
+              }
+      
+            }
+            
+          }
+
+        } 
+
+      }  
+
+    }
+
+  }
+
   setNames() {
 
-    
-
     for(let i of this.schedules) {
-
-      
 
       for(let u of this.users) {
 
         if(u.id == i.user_id) {
+
           i.user_name = u.name;
-          // console.log(u.name);
           break;
+
         }
 
       }
 
     }
 
-    // console.log(this.schedules[0]);
-
   }
 
   setDataOrder() {
-    for(let i = 0; i < 6; i++){
+
+    for(let i = 0; i < 6; i++) {
       
       let data = {
         day: i + 1,
@@ -187,13 +195,14 @@ export class SchedulesComponent implements OnInit {
 
       this.dataOrder.push(data);
     }
+
   }
 
   sortDataOrder() {
 
-    for(let day of this.dataOrder){
+    for(let i = 0; i < this.dataOrder.length; i++){
 
-      day.schedules.sort((a, b) => {
+      this.dataOrder[i].schedules.sort((a, b) => {
 
         if(a.check_in < b.check_in) {
           return -1;
@@ -204,13 +213,13 @@ export class SchedulesComponent implements OnInit {
         }
       });
 
-      for(let schedule of day.schedules) {
+      for(let y = 0; y < this.dataOrder[i].schedules.length; y++) {
         
-        schedule.users.sort((a, b) => {
+        this.dataOrder[i].schedules[y].users.sort((a, b) => {
 
-          if(a.name < b.name) {
+          if(a.name > b.name) {
             return -1;
-          } else if (a.name > b.name) {
+          } else if (a.name < b.name) {
             return 1;
           } else {
             return 0;
