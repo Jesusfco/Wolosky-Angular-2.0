@@ -334,7 +334,7 @@
                     </tbody>
                 </table>
 
-                <button routerLink="/users/show/{{ user.id }}/schedule" *ngIf="schedules.length > 1" class="btn horarioBtn" (click)="toModifySchedules()">Modificar Horario</button>
+                <button routerLink="/users/show/{{ user.id }}/schedule" class="btn horarioBtn" (click)="toModifySchedules()">Modificar Horario</button>
 
             </div>
             <div class="referencias" *ngIf="user.user_type_id <= 3">
