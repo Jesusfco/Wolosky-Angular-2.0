@@ -19,7 +19,7 @@
 
                 <div *ngIf="!safe.secure">
 
-                    <p>No se recomienda eliminar al usuario, ya que posee registros relacionados</p>
+                    <p>No se recomienda eliminar al usuario. Si elimina el usuario no podra saber a quien le pertenece los registros :(</p>
 
                     <div *ngIf="user.user_type_id == 1">
                         <p>Recibos: # {{ safe.receipts }}</p>
@@ -27,7 +27,7 @@
                     </div>
 
                     <div *ngIf="user.user_type_id == 2 || user.user_type_id == 3">
-                        <p>Pagos: # {{ safe.receipts }}</p>
+                        <p>Pagos: # {{ safe.payments }}</p>
                         <p>Deudas de Abarroteria: # {{ safe.debts }}</p>
                     </div>
 
