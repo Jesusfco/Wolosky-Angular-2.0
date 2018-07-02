@@ -35,6 +35,7 @@ export class EditScheduleComponent implements OnInit {
   public user: User = new User();
 
   public credential = parseInt(localStorage.getItem('userType'));
+  public days = [];
 
   public result = {
     hours: 0,
@@ -68,11 +69,18 @@ export class EditScheduleComponent implements OnInit {
 
       this.setUserDataObserver();
       this.setSchedulesObserverData();
+      this.setDays();
 
   }
 
   ngOnInit() {
 
+  }
+
+  setDays() {
+    let sche = new Schedule();
+    this.days = [];
+    this.days = sche.getWeekDays();
   }
   
   setMonthlyPaymentObserver() {
@@ -260,9 +268,28 @@ export class EditScheduleComponent implements OnInit {
 
   }
 
-  changeActive(schedule) {
+  changeActive(day) {
 
-    schedule.active = !schedule.active;
+    let validate = null;
+
+    for(let schedule of this.schedules) {
+
+      if(schedule.day_id == day.day_id) {
+
+        if(validate == null) {
+
+          schedule.active = !schedule.active;
+          validate = schedule.active;
+
+        } else {
+
+          schedule.active = validate;
+
+        }
+
+      }
+
+    }
 
     setTimeout(() => {
       // this.chronomize();

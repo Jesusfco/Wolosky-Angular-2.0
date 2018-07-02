@@ -129,4 +129,17 @@ export class Schedule {
 
       }
 
+    getWeekDays() {
+
+        return [            
+            { day: 'Lunes', day_id: 1 },
+            { day: 'Martes', day_id: 2 },
+            { day: 'Miércoles', day_id: 3 },
+            { day: 'Jueves', day_id: 4 },
+            { day: 'Viernes', day_id: 5 },
+            { day: 'Sábado', day_id: 6 },
+        ];
+
+    }
+
 }

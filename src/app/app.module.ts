@@ -106,6 +106,7 @@ import { ScheduleService } from './schedules/schedule.service';
 import { DeleteUserComponent } from './user/delete-user/delete-user.component';
 import { DayPípePipe } from './day-pípe.pipe';
 import { ScheduleComponentPipePipe } from './schedule-component-pipe.pipe';
+import { TimePipe } from './time.pipe';
 
 @NgModule({
   declarations: [
@@ -154,6 +155,7 @@ import { ScheduleComponentPipePipe } from './schedule-component-pipe.pipe';
     DeleteUserComponent,
     DayPípePipe,
     ScheduleComponentPipePipe,
+    TimePipe,
   ],
   imports: [
     BrowserModule,

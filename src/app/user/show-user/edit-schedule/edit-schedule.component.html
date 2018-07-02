@@ -24,7 +24,8 @@
         </div>
 
         <button (click)="selectLV()" class="btn LV">L-V</button>
-        <button (click)="changeActive(x)" *ngFor="let x of schedules" class="btn" [ngClass]="{active: x.active}">{{ x.dayView }}</button>
+        <!-- [ngClass]="{active: x.active}" -->
+        <button (click)="changeActive(day)" *ngFor="let day of days" class="btn">{{ day.day }}</button>
 
         <form (submit)="form()">
             <table>
@@ -40,8 +41,8 @@
                         <ng-container *ngIf="x.active == true">
 
                             <th>{{ x.dayView }}</th>
-                            <th (click)="startEditSche(x)" *ngIf="x.edit == false"> {{ x.check_in }}</th>
-                            <th (click)="startEditSche(x)" *ngIf="x.edit == false"> {{ x.check_out }}</th>
+                            <th (click)="startEditSche(x)" *ngIf="x.edit == false"> {{ x.check_in | time }}</th>
+                            <th (click)="startEditSche(x)" *ngIf="x.edit == false"> {{ x.check_out | time }}</th>
 
                             <th *ngIf="x.edit == true">
                                 <input id="editCheckIn" (change)="setResult()" [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_in" name="check_in" type="time">
