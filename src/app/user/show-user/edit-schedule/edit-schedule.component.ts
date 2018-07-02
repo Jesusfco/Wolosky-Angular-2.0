@@ -106,6 +106,7 @@ export class EditScheduleComponent implements OnInit {
     if(localStorage.getItem('userSchedules') == undefined) return;
 
     this.schedules = JSON.parse(localStorage.getItem('userSchedules'));
+    this.sortSchedulesByDay();
     this.setResult();
     clearInterval(this.schedulesObserverData);
   }
@@ -133,6 +134,7 @@ export class EditScheduleComponent implements OnInit {
       else if(this.schedules[x].day_id == 4 ) this.schedules[x].dayView = 'Jueves';
       else if(this.schedules[x].day_id == 5 ) this.schedules[x].dayView = 'Viernes';
       else if(this.schedules[x].day_id == 6 ) this.schedules[x].dayView = 'Sabado';
+      else if(this.schedules[x].day_id == 7 ) this.schedules[x].dayView = 'Domingo';
     }
   }
   selectLV(){
@@ -152,7 +154,11 @@ export class EditScheduleComponent implements OnInit {
 
         data => {
           
-          this.result.amountActual = this.result.amountForce;
+          if(this.user.user_type_id == 1) {
+            this.result.amountActual = this.result.amountForce;
+            localStorage.setItem('userMonthly', this.result.amountForce.toString());
+          }
+          
 
           let not = {
             status: 200,
@@ -162,9 +168,18 @@ export class EditScheduleComponent implements OnInit {
   
           localStorage.setItem('request', JSON.stringify(not));
 
-          if(this.user.user_type_id == 1){
-            localStorage.setItem('userMonthly', this.result.amountForce.toString());
+          this.schedules = [];
+          
+          for(let d of data) {
+
+            let sh = new Schedule();
+            sh.setValues(d);
+            sh.setDayView(); 
+            this.schedules.push(sh);
+
           }
+
+          this.sortSchedulesByDay();
 
           localStorage.setItem('userSchedules', JSON.stringify(this.schedules));
           localStorage.setItem('scheduleChange', '1');
@@ -271,10 +286,13 @@ export class EditScheduleComponent implements OnInit {
   changeActive(day) {
 
     let validate = null;
+    let count = 0;
 
     for(let schedule of this.schedules) {
 
       if(schedule.day_id == day.day_id) {
+
+        count++;
 
         if(validate == null) {
 
@@ -288,6 +306,21 @@ export class EditScheduleComponent implements OnInit {
         }
 
       }
+
+    }
+
+    if(count == 0) {
+
+      let schedule = new Schedule();
+
+      schedule.user_id = this.user.id;
+      schedule.day_id = day.day_id;
+      schedule.dayView = day.day;
+      schedule.active = true;
+
+      this.schedules.push(schedule);
+
+      this.sortSchedulesByDay();
 
     }
 
@@ -338,6 +371,122 @@ export class EditScheduleComponent implements OnInit {
     
   }
 
+  deleteSchedule(sche) {
+
+    if(sche.id != null) {
+
+      this._http.deleteSchedule(sche).then(
+        data => this.splitSchedule(sche),
+        error => localStorage.setItem('request', JSON.stringify(error))
+      );
+
+    } else {
+      this.splitSchedule(sche);
+    }
+
+  }
+
+  splitSchedule(schedule) {
+
+    let i = this.schedules.indexOf(schedule);
+    this.schedules.splice(i, 1);
+
+    if(schedule.id != null) {
+
+      i = 0;
+
+      let userSchedules: Array<Schedule> = [];
+      userSchedules = JSON.parse(localStorage.getItem('userSchedules'));
+
+      for(let x = 0; x < userSchedules.length; x++) {
+
+        if(userSchedules[x].id == schedule.id) {
+
+          i = x;
+          break;
+
+        }
+
+      }
+
+      if(i != 0) {
+
+        userSchedules.splice(i, 1);
+
+        localStorage.setItem('userSchedules', JSON.stringify(this.schedules));
+        localStorage.setItem('scheduleChange', '1');
+
+      }
+
+    }
+
+  }
+
+  createNewSchedule(sche) {
+
+    let count = 0;
+
+    for(let s of this.schedules) {
+
+      if(s.day_id == sche.day_id) {
+
+        if(s.check_in == null || s.check_out == null) {
+
+          count++;
+
+        }
+
+      }
+
+    }
+
+    if(count > 0) return;
+
+    let schedule: Schedule = new Schedule();
+    schedule.user_id = sche.user_id;
+    schedule.day_id = sche.day_id;
+    schedule.dayView = sche.dayView;
+    schedule.active = true;
+
+    this.schedules.push(schedule);
+
+    this.sortSchedulesByDay();
+
+  }
+
+  sortSchedulesByDay() {
+
+
+    this.schedules.sort((a, b) => {
+
+      if(a.day_id < b.day_id) {
+        return -1;
+      } else if (a.day_id > b.day_id) {
+        return 1;
+      } else if (a.day_id == b.day_id) {
+
+        if(a.check_in < b.check_in) {
+
+          return -1;
+
+        } else if (a.check_in > b.check_in) {
+
+          return 1;
+
+        } else {
+
+          return 0;
+
+        }
+        
+      } else {
+
+        return 0;
+
+      }
+    });
+
+  }
   
 
 }

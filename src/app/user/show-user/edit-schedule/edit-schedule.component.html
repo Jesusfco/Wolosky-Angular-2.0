@@ -34,20 +34,25 @@
                         <th>Día</th>
                         <th>Hora de Entrada</th>
                         <th>Hora de Salida</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let x of schedules" [ngClass]="{trNone: x.active == false}">
                         <ng-container *ngIf="x.active == true">
 
-                            <th>{{ x.dayView }}</th>
-                            <th (click)="startEditSche(x)" *ngIf="x.edit == false"> {{ x.check_in | time }}</th>
-                            <th (click)="startEditSche(x)" *ngIf="x.edit == false"> {{ x.check_out | time }}</th>
+                            <th (click)="createNewSchedule(x)">{{ x.dayView }}</th>
+                            <th (click)="startEditSche(x)" *ngIf="x.edit == false" [ngClass]="{inputError: x.error == 1}"> {{ x.check_in | time }}</th>
+                            <th (click)="startEditSche(x)" *ngIf="x.edit == false" [ngClass]="{inputError: x.error == 1}"> {{ x.check_out | time }}</th>
 
                             <th *ngIf="x.edit == true">
                                 <input id="editCheckIn" (change)="setResult()" [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_in" name="check_in" type="time">
                             </th>
                             <th *ngIf="x.edit == true"><input (change)="setResult()" [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_out" name="check_out" type="time">
+                            </th>
+
+                            <th (click)="deleteSchedule(x)">
+                                <div class="btn btnCancel">Eliminar</div>
                             </th>
                         </ng-container>
                     </tr>

@@ -136,4 +136,10 @@ export class UserService {
             .toPromise();
   }
 
+  deleteSchedule(schedule) {
+    return this._http.delete(this.link.url + 'user/schedules/delete/' + schedule.id + this.token.getTokenUrl())
+            .map(data => data.json())
+            .toPromise();
+  }
+
 }

@@ -7,6 +7,8 @@ export class TimePipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
 
+    if(value == null) return null;
+
     let time = value.split(':');
 
     if(time.lenght == 0) {
