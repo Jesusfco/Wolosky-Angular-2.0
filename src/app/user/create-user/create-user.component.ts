@@ -234,13 +234,11 @@ export class CreateUserComponent implements OnInit {
           this.user.validations.validate = false;
         } 
         else {this.user.validations.name = -1;}
-        if(this.sendingData == true)
-        this.sendNewUser();
+        
       },
       error => {
         console.log(error);
-        if(this.sendingData == true)
-        this.sendNewUser();
+        
       }
     );
   }
