@@ -29,7 +29,7 @@
     </div>
 
     <h5>APLICACIÓN</h5>
-    <ul>
+    <ul *ngIf="userData.getUserType() == 3 || userData.getUserType() > 6">
 
 
         <li [routerLink]="['/users']"><button mat-button>Usuarios</button></li>
@@ -55,6 +55,32 @@
         <li [routerLink]="['/monthly-cost']"><button mat-button>Costos por Hora</button></li>
 
     </ul>
+
+    <ul *ngIf="userData.getUserType() == 4">
+
+
+        <li [routerLink]="['/users']"><button mat-button>Usuarios</button></li>
+
+        <li [routerLink]="['/schedules']"><button mat-button>Horarios</button></li>
+
+        <li [routerLink]="['/receipt']"><button mat-button>Recibos</button></li>
+
+        <li [routerLink]="['/events']"><button mat-button>Eventos</button></li>
+
+        <!-- <li [routerLink]="['/inventory']"><button mat-button>Inventario</button></li> -->
+
+        <li [routerLink]="['/sales']"><button mat-button>Registro de Ventas</button></li>
+
+        <li [routerLink]="['/sale-debt']"><button mat-button>Deudores Abarrotería</button></li>
+
+        <li [routerLink]="['/expenses']"><button mat-button>Gastos</button></li>
+
+        <li [routerLink]="['/cutout']" *ngIf="userData.getUserType() >= 6"><button mat-button>Recorte de Caja</button></li>
+
+        <li [routerLink]="['/monthly-cost']"><button mat-button>Costos por Hora</button></li>
+
+    </ul>
+
     <h5>USUARIO</h5>
     <ul>
         <li><button mat-button (click)="cerrarSesion()">Cerrar Sesión</button></li>

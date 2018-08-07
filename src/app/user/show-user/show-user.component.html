@@ -23,6 +23,11 @@
             <mat-icon routerLink="/users/show/{{ user.id }}/delete" matTooltip="Eliminar Usuario" matTooltipPosition="below">delete</mat-icon>
         </div>
 
+        <div class="imgUser">
+            <img src="{{ user.img }}">
+            <input type="file" (change)="getFile($event.target.files)" accept="image/*">
+        </div>
+
         <div class="container">
             <form class="flexRow" [ngClass]="{'loadingForm': sendingData == true}" (submit)="updateUser()" enctype="multipart/form-data" autocomplete="off" *ngIf="modify">
                 <div class="flexRow l6">
@@ -50,7 +55,7 @@
                             <option value="1">Alumno</option> 
                             <option value="2">Empleado</option>
                             <option value="3">Cajero</option>
-                            <option value="4">Escritor</option>
+                            <option value="4">Contador</option>
                             <option value="5">Super escritor</option>
                             <option value="6">Administrador</option>
                         </select>
@@ -132,7 +137,7 @@
                     </div>
 
 
-                    <div class="flexRow l12" *ngIf="user.user_type_id == 2 || user.user_type_id == 3">
+                    <div class="flexRow l12" *ngIf="user.user_type_id >= 2 && user.user_type_id <= 4">
                         <h2 class="l12">Salario</h2>
                         <div class="formData l6 m6">
                             <label> Monto:</label><br>
@@ -200,7 +205,7 @@
                             <option value="1">Alumno</option> 
                             <option value="2">Empleado</option>
                             <option value="3">Cajero</option>
-                            <option value="4">Escritor</option>
+                            <option value="4">Contador</option>
                             <option value="5">Super escritor</option>
                             <option value="6">Administrador</option>
                         </select>
@@ -272,7 +277,7 @@
                     </div>
 
 
-                    <div class="flexRow l12" *ngIf="showUser.user_type_id == 2 || showUser.user_type_id == 3">
+                    <div class="flexRow l12" *ngIf="showUser.user_type_id >= 2 && showUser.user_type_id <= 4">
                         <h2 class="l12">Salario</h2>
                         <div class="formData l6 m6">
                             <label> Monto:</label><br>
@@ -313,7 +318,7 @@
 
             </form>
 
-            <div class="horarios" *ngIf="user.user_type_id <= 3">
+            <div class="horarios" *ngIf="user.user_type_id <= 4">
                 <h2>Horarios</h2>
                 <table>
                     <thead>
@@ -337,7 +342,7 @@
                 <button routerLink="/users/show/{{ user.id }}/schedule" class="btn horarioBtn" (click)="toModifySchedules()">Modificar Horario</button>
 
             </div>
-            <div class="referencias" *ngIf="user.user_type_id <= 3">
+            <div class="referencias" *ngIf="user.user_type_id <= 4">
                 <h2>Referencias</h2>
                 <table>
                     <thead>

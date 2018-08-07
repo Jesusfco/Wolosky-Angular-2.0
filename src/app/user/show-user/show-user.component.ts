@@ -28,6 +28,7 @@ export class ShowUserComponent implements OnInit {
   public monthlyPayment: MonthlyPayment = new MonthlyPayment();
   
   public salary: Salary =  new Salary();
+  public formats = ['image/png', 'image/jpeg', 'image/jpg'];
 
   cardState: String = 'initial';
   backgroundState: String = 'initial';
@@ -86,7 +87,7 @@ export class ShowUserComponent implements OnInit {
         this.showUser.setValues(data);
         localStorage.setItem('userData', JSON.stringify(this.user));
 
-        if(this.user.user_type_id <= 3) {
+        if(this.user.user_type_id <= 4) {
 
           this.setSchedules();
           this.setReferences();
@@ -103,7 +104,7 @@ export class ShowUserComponent implements OnInit {
           this.setUserMonthlyObserver();
           
 
-        } else if(this.user.user_type_id == 2 || this.user.user_type_id == 3) {
+        } else if(this.user.user_type_id >= 2 && this.user.user_type_id <= 4) {
 
           this.setSalary();
 
@@ -415,6 +416,49 @@ export class ShowUserComponent implements OnInit {
     this.references = JSON.parse(localStorage.getItem('userReferences'));
     localStorage.removeItem('userReferencesUpdates');
 
+  }
+
+  getFile(files: FileList) {
+    
+    for (let i = 0; i < files.length; i++) {
+
+        if (this.validateImageFile(files[i]) ) { continue; }
+
+        this.getElementsFromFile(files[i]);
+
+    }
+
+    // this.input = null;
+
+  }
+
+  validateImageFile(file: File) {
+  
+    let validation = true;
+  
+    for (let i of this.formats) {
+        if (i == file.type) {
+            validation = false;
+            break;
+        }
+    }
+    return validation;
+  
+  }
+
+  getElementsFromFile(file) {
+  
+  
+    let reader = new FileReader();
+    reader.onload = (e: any) => {
+
+      this.user.img =e.target.result;
+        // jso.bits = e.target.result;
+        // this.pushFile(jso);
+    };
+  
+    reader.readAsDataURL(file);
+  
   }
 
 }

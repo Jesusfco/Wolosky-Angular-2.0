@@ -2,6 +2,7 @@ import { Reference } from '../classes/reference';
 import { Schedule } from '../classes/schedule';
 import { Payment } from '../classes/payment';
 import { Salary } from '../classes/salary';
+import { Url } from './url';
 
 export class User {
 
@@ -29,7 +30,7 @@ export class User {
     public monthly_payment_id: number;
     public user_type_id: number;
     public salary_id: number;
-    public status:number;    
+    public status: number;    
     public created_at: string;
     public updated_at: string;    
 
@@ -87,6 +88,23 @@ export class User {
         this.creator_user_id = data.creator_user_id;
         this.status = data.status;
         this.salary_id = data.salary_id;
+
+        let y: Url = new Url();
+        
+        if(data.img != null) {
+            
+            this.img = y.basic + 'images/app/users/' + data.img;
+
+        } else {
+
+            this.img = y.basic + 'images/app/';
+
+            if( this.gender == 1) {
+                this.img = this.img + 'man_avatar.png';
+            } else {
+                this.img = this.img + 'woman_avatar.png';
+            }
+        }
     }
 
     validatePhoneFormat(){

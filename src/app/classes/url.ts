@@ -1,8 +1,11 @@
 export class Url {
     public url: string;
+    public basic: string;
     
         constructor() {
-            this.url = "http://www.woloskygimnasia.com/api/";
-            this.url = "http://localhost:8000/api/";
+            this.basic = "http://www.woloskygimnasia.com/";
+            this.basic = "http://localhost:8000/";
+
+            this.url = this.basic + 'api/';
         }
 }

@@ -142,7 +142,7 @@ export class CreateUserComponent implements OnInit {
       this.salaryAmountValidation();
     }
 
-    else if( this.user.user_type_id == 3){
+    else if( this.user.user_type_id == 3 || this.user.user_type_id == 4){
       this.salaryAmountValidation();
       this.passwordValidation();
     }

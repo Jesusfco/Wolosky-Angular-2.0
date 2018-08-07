@@ -10,3 +10,15 @@ input:disabled {
 .scheduleInactive {
     display: none;
 }
+
+.imgUser {
+    display: block;
+    margin: 0 auto;
+    max-width: 250px;
+}
+
+.imgUser img {
+    max-width: 250px;
+    max-height: 250px;
+    display: block;
+}

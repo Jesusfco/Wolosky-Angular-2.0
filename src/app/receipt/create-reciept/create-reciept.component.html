@@ -46,7 +46,7 @@
                 <div>
                     <label>Monto:</label><br>
 
-                    <input *ngIf="payment.type == 1 && storage.getUserType() == 3" [(ngModel)]="payment.monthlyAmount" name="monthlyAmount" type="number" disabled>
+                    <input *ngIf="payment.type == 1 && storage.getUserType() <= 4" [(ngModel)]="payment.monthlyAmount" name="monthlyAmount" type="number" disabled>
 
                     <input *ngIf="payment.type == 1 && storage.getUserType() >= 6" [(ngModel)]="payment.monthlyAmount" name="monthlyAmount" type="number" min="0">
 

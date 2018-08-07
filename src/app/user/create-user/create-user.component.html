@@ -42,8 +42,8 @@
                             <option value="1">Alumno</option> 
                             <option value="2">Empleado</option>
                             <option value="3">Cajero</option>
-                            <option value="4">Escritor</option>
-                            <option value="5">Super escritor</option>
+                            <option value="4">Contador</option>
+                            <!-- <option value="5">Super escritor</option> -->
                             <option value="6">Administrador</option>
                         </select>
                         <select [(ngModel)]="user.user_type_id" name="user_type_id" *ngIf="credential == 3" disabled>
@@ -52,7 +52,7 @@
                     </div>
 
                     <div class="formData l6 m6">
-                        <label>Genero:</label><br>
+                        <label>Género:</label><br>
                         <select [(ngModel)]="user.gender" name="gender">
                             <option value="1">Masculino</option> 
                             <option value="2">Femenino</option>
@@ -63,8 +63,6 @@
                         <label>Telefono:</label><br>
                         <input [(ngModel)]="user.phone" name="phone" type="tel" placeholder="Telefono" (keyup)="user.validatePhoneFormat()">
                     </div>
-
-
 
                     <div class="formData l6 m6">
                         <label>Fecha de nacimiento:</label><br>
@@ -103,7 +101,7 @@
 
 
                 <div class="flexRow l6 ">
-                    <h2 class="l12">Direccion</h2>
+                    <h2 class="l12">Dirección</h2>
 
                     <div class="formData l6 m6">
                         <label>Calle:</label><br>
@@ -126,7 +124,7 @@
                     </div>
 
 
-                    <div class="flexRow l12" *ngIf="user.user_type_id == 2 || user.user_type_id == 3">
+                    <div class="flexRow l12" *ngIf="user.user_type_id >= 2 && user.user_type_id <= 4">
                         <h2 class="l12">Salario</h2>
                         <div class="formData l6 m6">
                             <label> Monto:</label><br>
@@ -167,7 +165,7 @@
 
             </form>
 
-            <div class="horarios" *ngIf="user.user_type_id <= 3">
+            <div class="horarios" *ngIf="user.user_type_id <= 4">
                 <h2>Horarios</h2>
                 <table>
                     <thead>
@@ -191,7 +189,7 @@
                 <button class="btn horarioBtn" (click)="scheduleView = true">Asignar Horario</button>
 
             </div>
-            <div class="referencias" *ngIf="user.user_type_id <= 3">
+            <div class="referencias" *ngIf="user.user_type_id <= 4">
                 <h2>Referencias</h2>
                 <table>
                     <thead>
@@ -216,7 +214,7 @@
         </div>
 
 
-        <button *ngIf="user.user_type_id <= 3" type="submit" class="btn formBtn">Crear Usuario</button>
+        <button *ngIf="user.user_type_id <= 4" type="submit" class="btn formBtn">Crear Usuario</button>
 
 
     </div>
