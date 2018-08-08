@@ -14,6 +14,7 @@ export class SchedulesComponent implements OnInit {
 
   public schedules: Array<Schedule> = [];
   public users: Array<User> = [];
+  public filter: number = 1;
 
   public dataOrder: Array<any> = [];
 
@@ -21,9 +22,23 @@ export class SchedulesComponent implements OnInit {
 
     this.setDataOrder();
 
-    _http.getStudents().then(
+    this.getSchel();
+
+   }
+
+  ngOnInit() {
+  }
+
+  getSchel() {
+
+
+    this._http.getShcedules({type: this.filter}).then(
 
       data => {
+
+        this.users = [];
+        this.schedules = [];
+        this.setDataOrder();
 
         for(let user of data.users) {
 
@@ -35,8 +50,6 @@ export class SchedulesComponent implements OnInit {
           this.users.push(u);
 
         }
-
-   
 
         for(let i = 0; i < data.schedules.length; i++) {
 
@@ -52,19 +65,14 @@ export class SchedulesComponent implements OnInit {
 
         }
 
-          
         this.setNames();
         this.organizePerDay();
         
-
       },
 
       error => localStorage.setItem('request', JSON.stringify(error))
     );
 
-   }
-
-  ngOnInit() {
   }
 
   organizePerDay() {
@@ -83,7 +91,6 @@ export class SchedulesComponent implements OnInit {
             check_in: parseInt(check_in[0]),
             check_out: parseInt(check_out[0]),
           };
-  
   
           //Asignamos horarios en los que se asiste de acuerdo a los horarios obtenidos AGRUPACION
           let verified = true;
@@ -185,6 +192,8 @@ export class SchedulesComponent implements OnInit {
   }
 
   setDataOrder() {
+
+    this.dataOrder = [];
 
     for(let i = 0; i < 6; i++) {
       

@@ -39,13 +39,12 @@ export class ShowUserComponent implements OnInit {
   public observerRef: any;
   public url: Url = new Url();
   public storage: Storage;
-
+  public outletOutput: any;
   public credential = parseInt(localStorage.getItem('userType'));
 
   public userMonthlyObserver: any;
   public userScheduleObserver: any;
   public userReferenceObserver: any;
-
 
   constructor(private _http: UserService,
     private router: Router,
@@ -57,6 +56,24 @@ export class ShowUserComponent implements OnInit {
         this.user.id = params['id'];
         localStorage.setItem('userShowId', this.user.id.toString());
         this.getUserData();
+      });
+
+      this.outletOutput = this._http.getData().subscribe(x => {
+      
+        if (x.action == 'SCHEDULES') {
+  
+          this.updateSchedules(x.data);
+  
+        } else if(x.action ==  'REFERENCES') {
+
+          this.updateReferences(x.data);
+
+        } else if(x.action == 'MONTHLY') {
+
+          this.updateMonthly(x.data);
+
+        }
+        
       });
       
      }
@@ -73,8 +90,6 @@ export class ShowUserComponent implements OnInit {
 
     localStorage.removeItem('userShowId');
     localStorage.removeItem('userData');
-    localStorage.removeItem('userSchedules');
-    localStorage.removeItem('userReferences');
     localStorage.removeItem('monthlyPrices');
 
   }
@@ -83,6 +98,7 @@ export class ShowUserComponent implements OnInit {
     this.sendingData = true;
     this._http.getUser(this.user.id).then(
       data => {
+
         this.user.setValues(data);
         this.showUser.setValues(data);
         localStorage.setItem('userData', JSON.stringify(this.user));
@@ -93,16 +109,12 @@ export class ShowUserComponent implements OnInit {
           this.setReferences();
           this.setMonthlyPrices();
           
-          this.setScheduleObserver();
-          this.setUserReferenceObserver();
 
         } 
         
         if (this.user.user_type_id == 1) {
 
           this.setMonthlyPayment();
-          this.setUserMonthlyObserver();
-          
 
         } else if(this.user.user_type_id >= 2 && this.user.user_type_id <= 4) {
 
@@ -110,17 +122,19 @@ export class ShowUserComponent implements OnInit {
 
         }
 
-      },
-      error => localStorage.setItem('request', JSON.stringify(error))
-    ).then(
-      () => this.sendingData = false
-    );
+      }, error => localStorage.setItem('request', JSON.stringify(error)))
+      
+      .then( () => this.sendingData = false );
   }
 
-  closePop(){    
+  closePop() {
+
     setTimeout(() => {
+
       this.router.navigate(['/users']);
+
     }, 450);
+
     this.cardState = 'initial';
     this.backgroundState = 'initial';
     
@@ -262,7 +276,6 @@ export class ShowUserComponent implements OnInit {
     this.modify = !this.modify;
   }
 
-
   uniqueNameWriting(x) {
 
     let  l = x.keyCode;
@@ -288,7 +301,7 @@ export class ShowUserComponent implements OnInit {
 
   }
 
-  uniqueName(){
+  uniqueName() {
 
     let name = this.user.name.replace(/\s+$/, '');
     this._http.checkUniqueName(name).then(
@@ -344,39 +357,23 @@ export class ShowUserComponent implements OnInit {
       },
       error => console.log(error)
     )
-  }
+  } 
 
-  toModifySchedules() {
+  updateMonthly(data) {
 
-  }
-
-  toModifyReferences() {
+    this.monthlyPayment.amount = parseFloat(data);
 
   }
 
-  setUserMonthlyObserver() {
-    this.userMonthlyObserver = setInterval(() => this.userMonthlyObserverLogic(), 1000);
-  }
+  updateSchedules(data){    
 
-  userMonthlyObserverLogic() {
-    
-    if(localStorage.getItem('userMonthly') == undefined) return;
-
-    this.monthlyPayment.amount = parseFloat(localStorage.getItem('userMonthly'));
-    localStorage.removeItem('userMonthly');
+    this.schedules = data;    
 
   }
 
-  setScheduleObserver() {
-    this.userScheduleObserver = setInterval(() => this.sheduleObserverLogic(), 1000);
-  }
+  updateReferences(data) {
 
-  sheduleObserverLogic(){
-
-    if(localStorage.getItem('scheduleChange') == undefined) return;
-
-    this.schedules = JSON.parse(localStorage.getItem('userSchedules'));
-    localStorage.removeItem('scheduleChange');
+    this.references = data;
 
   }
 
@@ -384,9 +381,11 @@ export class ShowUserComponent implements OnInit {
 
     this.sendingData = true;
     this._http.updateMonthlyPayment(this.monthlyPayment).then(
+
       data => {
 
         this.monthlyPayment = data;
+
         let not = {
           title: 'Mensualidad Actualizada',
           description: 'Datos cargados al servidor correctamente',
@@ -398,26 +397,12 @@ export class ShowUserComponent implements OnInit {
       },
 
       error => localStorage.setItem('request', JSON.stringify(error))
-    ).then(
-      () => this.sendingData = false
-    );
-  }
 
-  setUserReferenceObserver() {
-    this.userReferenceObserver = setInterval(() => this.userReferenceObserverLogic(), 1000);
-  }
-
-  userReferenceObserverLogic() {
-    
-    if(localStorage.getItem('userReferencesUpdates') == undefined) {
-      return;
-    }
-
-    this.references = JSON.parse(localStorage.getItem('userReferences'));
-    localStorage.removeItem('userReferencesUpdates');
+    ).then( () => this.sendingData = false );
 
   }
 
+  // SEND FILE IMAGE LOGIC  
   getFile(files: FileList) {
     
     for (let i = 0; i < files.length; i++) {

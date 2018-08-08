@@ -3,6 +3,19 @@
 
     <h2 class="centerText" (click)="sortDataOrder()">Horarios</h2>
 
+    <div class="flexform">
+        <div>
+
+            <label>Tipo de Usuarios:</label><br>
+            <select [(ngModel)]="filter" name="filter" (change)="getSchel()">
+                    <option value="1">Alumnos</option> 
+                    <option value="2">Trabajadores</option>                    
+            </select>
+
+        </div>
+
+    </div>
+
     <div *ngFor="let day of dataOrder" class="flexRow">
 
         <h4 class="centerText">Día: {{ day.day | dayPipe }}</h4>

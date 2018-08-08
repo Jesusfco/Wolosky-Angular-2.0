@@ -156,7 +156,12 @@ export class EditScheduleComponent implements OnInit {
           
           if(this.user.user_type_id == 1) {
             this.result.amountActual = this.result.amountForce;
-            localStorage.setItem('userMonthly', this.result.amountForce.toString());
+
+            this._http.sendData({
+              data: this.result.amountForce,
+              action: 'MONTHLY'
+            });
+
           }
           
 
@@ -181,8 +186,10 @@ export class EditScheduleComponent implements OnInit {
 
           this.sortSchedulesByDay();
 
-          localStorage.setItem('userSchedules', JSON.stringify(this.schedules));
-          localStorage.setItem('scheduleChange', '1');
+          this._http.sendData({
+            data: this.schedules,
+            action: 'SCHEDULES'
+          });          
 
         }, error => {
 
@@ -220,8 +227,6 @@ export class EditScheduleComponent implements OnInit {
 
     }
 
-    
-
   }
 
   validateSchedules(){    
@@ -255,14 +260,19 @@ export class EditScheduleComponent implements OnInit {
     return this.validations.validate;
   }
 
-  defaultValidationValue(){
+  defaultValidationValue() {
+
     this.validations.validate = true;
     this.validations.checkIn = 0;
     this.validations.checkOut = 0;
     this.validations.format = 0;
+
     for(let x of this.schedules){
+
       x.error = 0;
+      
     }
+
   }
 
   setUserDataObserver() {
@@ -354,8 +364,7 @@ export class EditScheduleComponent implements OnInit {
 
   startEditSche(x){
 
-    x.edit = true;
-    
+    x.edit = true;    
 
     setTimeout(() => {
       document.getElementById('editCheckIn').focus();
@@ -376,7 +385,16 @@ export class EditScheduleComponent implements OnInit {
     if(sche.id != null) {
 
       this._http.deleteSchedule(sche).then(
-        data => this.splitSchedule(sche),
+        data => { 
+          
+          this.splitSchedule(sche);
+
+          this._http.sendData({
+            data: this.schedules,
+            action: 'SCHEDULES'
+          });
+
+        } ,
         error => localStorage.setItem('request', JSON.stringify(error))
       );
 
