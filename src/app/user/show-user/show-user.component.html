@@ -51,7 +51,16 @@
 
                     <div class="formData l6 m6">
                         <label>Tipo de usuario:</label><br>
-                        <select [(ngModel)]="user.user_type_id" name="user_type_id" disabled>
+                        <select [(ngModel)]="user.user_type_id" name="user_type_id" *ngIf="credential >= 6">
+                            <option value="1">Alumno</option> 
+                            <option value="2">Empleado</option>
+                            <option value="3">Cajero</option>
+                            <option value="4">Contador</option>
+                            <option value="5">Super escritor</option>
+                            <option value="6">Administrador</option>
+                        </select>
+
+                        <select [(ngModel)]="user.user_type_id" name="user_type_id" *ngIf="credential < 6" disabled>
                             <option value="1">Alumno</option> 
                             <option value="2">Empleado</option>
                             <option value="3">Cajero</option>
@@ -155,7 +164,7 @@
                             <label>Tipo de Salario:</label>
                             <select [(ngModel)]="salary.salary_type_id" name="salary_type_id">
                                 <option value="1">Hora</option>
-                                <option value="2">Día</option>
+                                <option value="2">Quincena</option>
                             </select>
                         </div>
 

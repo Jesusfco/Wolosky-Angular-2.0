@@ -39,6 +39,12 @@ export class UserService {
             .toPromise();
   }
 
+  updateSalary(salary) {
+    return this._http.post(this.link.url + 'user/updateSalary' + this.token.getTokenUrl() , salary)
+            .map(data => data.json())
+            .toPromise();
+  }
+
   search(data) {
     return this._http.post(this.link.url + 'userSearch' + this.token.getTokenUrl() + '&page=' + data.page, data)
             .map(data => data.json())

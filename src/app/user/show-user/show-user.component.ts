@@ -76,7 +76,7 @@ export class ShowUserComponent implements OnInit {
         
       });
       
-     }
+  }
 
   ngOnInit() {
     setTimeout(() => {
@@ -146,6 +146,10 @@ export class ShowUserComponent implements OnInit {
 
     this.sendingData = true;
 
+    if (this.user.user_type_id > 1  && this.user.user_type_id < 5) {
+      this.updateSalary();
+    }
+
     this._http.updateUser(this.user).then(
 
       data => {
@@ -161,6 +165,28 @@ export class ShowUserComponent implements OnInit {
     ).then(
       () => this.sendingData = false
     );
+  }
+
+  updateSalary() {
+
+    this._http.updateSalary(this.salary).then(
+
+      data => {
+
+          let not = {
+          title: 'Salario Actualizado',
+          description: 'Los datos han sido cargados al servidor',
+          status: 200
+        };
+
+        localStorage.setItem('request', JSON.stringify(not));
+
+      }, error => {
+
+      }
+
+    );
+
   }
 
   setSchedules() {
@@ -401,6 +427,10 @@ export class ShowUserComponent implements OnInit {
     ).then( () => this.sendingData = false );
 
   }
+
+  toModifySchedules() { }
+
+  toModifyReferences() { }
 
   // SEND FILE IMAGE LOGIC  
   getFile(files: FileList) {
