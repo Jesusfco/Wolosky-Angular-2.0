@@ -18,10 +18,11 @@
                 <p *ngIf="userData.getUserType() == 1">Alumno/a</p>
                 <p *ngIf="userData.getUserType() == 2">Maestro/a</p>
                 <p *ngIf="userData.getUserType() == 3">Cajera</p>
+                <p *ngIf="userData.getUserType() == 4">Contador</p>
                 <p *ngIf="userData.getUserType() == 6">Administrador</p>
                 <p *ngIf="userData.getUserType() == 7">Desarrollador</p>
                 <p *ngIf="userData.getUserType() >= 6" class="cash" [routerLink]="['/cash']"> $ {{ userData.getCash() }}</p>
-                <p *ngIf="userData.getUserType() == 3"> $ {{ userData.getCash() }}</p>
+                <p *ngIf="userData.getUserType() < 5 && userData.getUserType() > 1"> $ {{ userData.getCash() }}</p>
             </div>
 
 
@@ -29,7 +30,7 @@
     </div>
 
     <h5>APLICACIÓN</h5>
-    <ul *ngIf="userData.getUserType() == 3 || userData.getUserType() > 6">
+    <ul *ngIf="userData.getUserType() == 3 || userData.getUserType() >= 6">
 
 
         <li [routerLink]="['/users']"><button mat-button>Usuarios</button></li>

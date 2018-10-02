@@ -66,7 +66,7 @@ export class SchedulesComponent implements OnInit {
         }
 
         this.setNames();
-        this.organizePerDay();
+        this.organizePerDay();        
         
       },
 
@@ -81,42 +81,57 @@ export class SchedulesComponent implements OnInit {
 
       for(let s of this.schedules ) {
 
-        if(s.day_id == day.day) {
+        if(s.day_id != day.day) continue;
 
+        let check_in = s.check_in.split(':');
+        let check_out = s.check_out.split(':');
 
-          let check_in = s.check_in.split(':');
-          let check_out = s.check_out.split(':');
-  
-          let horario = {
-            check_in: parseInt(check_in[0]),
-            check_out: parseInt(check_out[0]),
-          };
-  
-          //Asignamos horarios en los que se asiste de acuerdo a los horarios obtenidos AGRUPACION
+        let horario = {
+          check_in: parseInt(check_in[0]),
+          check_out: parseInt(check_out[0]),
+        };
+
+        //Asignamos horarios en los que se asiste de acuerdo a los horarios obtenidos AGRUPACION
+        
+
+        let arrayPosibleHorario = [];
+
+        for(let i = 0; (i + horario.check_in) < horario.check_out; i++ ) { 
+
+          arrayPosibleHorario.push(i + horario.check_in);
+
+        } 
+
+        for(let i = 0; i < arrayPosibleHorario.length; i++) {
+        
           let verified = true;
 
-          for(let h of day.schedules) {
-  
-            if(h.check_in == horario.check_in || h.check_in == (horario.check_out - 1)){
-  
+          for(let object of day.schedules) {
+
+            if(object.check_in == arrayPosibleHorario[i]) {
+
               verified = false;
   
-            }
-  
+            }  
+
           }
-  
+          
           if(verified) {
-            
+        
             let ho = {
-              check_in: horario.check_in,
+              check_in: arrayPosibleHorario[i],
               users: []
             };
   
             day.schedules.push(ho);
-
+  
           }
 
         }
+
+        
+
+        
 
       }
 
@@ -124,6 +139,8 @@ export class SchedulesComponent implements OnInit {
 
     this.setNameVisualSchedule();
     this.sortDataOrder();
+
+    console.log(this.dataOrder);
   
 
   }
@@ -147,7 +164,7 @@ export class SchedulesComponent implements OnInit {
 
           for(let schedule of day.schedules) {
 
-            for(let check = horario.check_in; check < horario.check_out; check++) {
+            for(let check = horario.check_in; check <= horario.check_out; check++) {
       
               if(schedule.check_in == check){
       
@@ -155,13 +172,13 @@ export class SchedulesComponent implements OnInit {
                   user_name: s.user_name,
                   user_id: s.user_id
                 };
-      
+
                 schedule.users.push(user);
-      
+
               }
-      
+
             }
-            
+
           }
 
         } 
