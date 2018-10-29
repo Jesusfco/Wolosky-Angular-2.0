@@ -1,6 +1,6 @@
 <app-structure></app-structure>
 
-<div class="loader" [@loader]="stateLoader">
+<div class="loader" [@loader]="stateLoader" *ngIf="webCharger == 0">
     <img [@loaderImg]="stateLoaderImg" src="http://www.woloskygimnasia.com/images/Wolosky-Logo.png">
     <!-- <button #btnAnimation (click)="loaderAnimation()" style="position: absolute; top: 0">CHANGE</button>
     <button #btnAnimation (click)="test()" style="position: absolute; top: 20px">2323</button> -->

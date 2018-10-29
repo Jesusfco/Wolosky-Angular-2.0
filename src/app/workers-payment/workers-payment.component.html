@@ -1,0 +1,29 @@
+<h2 class="centerText">Pagos a trabajadores</h2>
+<div class="responsive-table">
+    <table align="center">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th class="left">Trabajador</th>
+                <th>Monto</th>
+
+            </tr>
+            <!-- <th colspan="3">Opciones</th> -->
+        </thead>
+        <tbody>
+            <tr *ngFor="let payment of payments" [routerLink]="['/pago-trabajadores/show', payment.id]">
+                <td>{{ payment.id }}</td>
+                <td class="left">{{ payment.user.name }}</td>
+                <td>{{ payment.amount }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <mat-paginator (page)="pageAction($event)" [length]="search.total" [pageSize]="search.items" [pageSizeOptions]="[5, 10, 25, 50, 100]">
+    </mat-paginator>
+</div>
+
+<a [routerLink]="['/pago-trabajadores/crear']">
+    <div class="botonFloat" matTooltip="Crear Pagos para los trabajadores">
+        <a class="botonA"><i class="material-icons">add</i></a>
+    </div>
+</a>

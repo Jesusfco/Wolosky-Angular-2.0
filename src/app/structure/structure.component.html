@@ -53,6 +53,8 @@
 
         <li [routerLink]="['/cutout']" *ngIf="userData.getUserType() >= 6"><button mat-button>Recorte de Caja</button></li>
 
+        <li [routerLink]="['/pago-trabajadores']" *ngIf="userData.getUserType() >= 6"><button mat-button>Pago Trabajadores</button></li>
+
         <li [routerLink]="['/monthly-cost']"><button mat-button>Costos por Hora</button></li>
 
     </ul>

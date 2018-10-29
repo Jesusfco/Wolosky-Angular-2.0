@@ -1,3 +1,4 @@
+import { WorkersPaymentComponent } from './workers-payment/workers-payment.component';
 import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { StructureComponent } from './structure/structure.component';
@@ -93,6 +94,15 @@ export const routes: Routes = [
     {
         path: 'events',
         component: EventComponent,
+        children: [
+            { path: 'create', component: CreateEventComponent },
+            { path: 'assign', component: AssignUserEventComponent },
+        ]
+    },
+
+    {
+        path: 'pago-trabajadores',
+        component: WorkersPaymentComponent,
         children: [
             { path: 'create', component: CreateEventComponent },
             { path: 'assign', component: AssignUserEventComponent },

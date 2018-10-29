@@ -15,6 +15,7 @@ export class AppComponent {
 
   stateLoaderImg: string = "initial";
   stateLoader: string = "initial";
+  public webCharger = 0;
   
   localData: Storage = new Storage();
   
@@ -27,14 +28,23 @@ export class AppComponent {
 
   ngOnInit(){
 
-    //INICIA LA ANIMACION DE ENTRADA
-    setTimeout(() => {  
-      this.loaderAnimationImg();
-      //APAGA LA ANIMACION
-      setTimeout(() => {
-        this.loaderAnimation();
-      }, 1000);
-    }, 100);
+    this.webChargerLogic();
+
+    if(this.webCharger == 0) {
+
+      //ANIMACION
+      setTimeout(() => {  
+        this.loaderAnimationImg();
+        
+        setTimeout(() => {
+
+          this.loaderAnimation();
+
+        }, 1000);
+
+      }, 100);
+    }
+    
 
     if(this.localData.getToken() != undefined ){ 
         // console.log(this.localData.getToken());
@@ -103,6 +113,25 @@ export class AppComponent {
       localStorage.setItem('login', '2');
     }
 
+  }
+
+  webChargerLogic() {
+    if(localStorage.getItem('webCharger') == undefined) {
+
+      localStorage.setItem('webCharger', '10');
+
+    } else if (parseInt(localStorage.getItem('webCharger')) == 0) {
+
+      localStorage.setItem('webCharger', '10');
+
+    } else {
+      
+      let x = parseInt(localStorage.getItem('webCharger'));
+      x = x - 1;
+      this.webCharger = x;
+
+      localStorage.setItem('webCharger', x.toString());
+    }
   }
 
 }

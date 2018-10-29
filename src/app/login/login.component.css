@@ -23,7 +23,9 @@
 }
 
 .cardSpace {
-    background: black url(https://acrofitgymnastics-sarasota.com/wp-content/uploads/alt-BACKGROUND-GYMNAST-COLLAGE.jpg);
+    background: black;
+    background-size: cover;
+    background-position: center;
 }
 
 #logo {

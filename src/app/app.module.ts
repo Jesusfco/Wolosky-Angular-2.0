@@ -107,6 +107,8 @@ import { DeleteUserComponent } from './user/delete-user/delete-user.component';
 import { DayPípePipe } from './day-pípe.pipe';
 import { ScheduleComponentPipePipe } from './schedule-component-pipe.pipe';
 import { TimePipe } from './time.pipe';
+import { WorkersPaymentComponent } from './workers-payment/workers-payment.component';
+import { WorkPaymentService } from './workers-payment/work-payment.service';
 
 @NgModule({
   declarations: [
@@ -156,6 +158,7 @@ import { TimePipe } from './time.pipe';
     DayPípePipe,
     ScheduleComponentPipePipe,
     TimePipe,
+    WorkersPaymentComponent,
   ],
   imports: [
     BrowserModule,
@@ -212,7 +215,8 @@ import { TimePipe } from './time.pipe';
         ExpenseService,
         SaleDebtService,
         MonthlyPriceService,
-        ScheduleService
+        ScheduleService,
+        WorkPaymentService
       ],
 
   bootstrap: [AppComponent]
