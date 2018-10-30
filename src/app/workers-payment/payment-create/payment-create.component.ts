@@ -31,6 +31,8 @@ export class PaymentCreateComponent implements OnInit {
     {value: 12, view: 'Diciembre'},
   ];
 
+  public daysAnalized: Array<any> = [];
+
   public periodOptions = [
     {from: null, to: null, value: 0},
     {from: null, to: null, value: 1},
@@ -40,7 +42,7 @@ export class PaymentCreateComponent implements OnInit {
   public users: Array<User> = [];
   public period = {
     month: null,
-    option: 1,
+    option: 0,
     from: null,
     to: null,
   };
@@ -52,8 +54,8 @@ export class PaymentCreateComponent implements OnInit {
 
   constructor(private _http: WorkPaymentService, private router: Router) { }
 
-  ngOnInit() {
-    
+  ngOnInit() {    
+        
     let d = new Date();    
     this.period.month = d.getMonth() + 1;
     this.setPeriodsOption();
@@ -75,11 +77,11 @@ export class PaymentCreateComponent implements OnInit {
 
   setPeriodsOption() {
     let d = new Date();
-    this.periodOptions[0].from = d.getFullYear() + '-' + (this.period.month) + '-01';
-    this.periodOptions[0].to = d.getFullYear() + '-' + (this.period.month) + '-15';
+    this.periodOptions[0].from = d.getFullYear() + '-' + this.period.month + '-01';
+    this.periodOptions[0].to = d.getFullYear() + '-' + this.period.month + '-15';
 
     let next = new Date(d.getFullYear(), this.period.month, 0);
-    this.periodOptions[1].from = d.getFullYear() + '-' + (this.period.month) + '-16';
+    this.periodOptions[1].from = d.getFullYear() + '-' + this.period.month + '-16';
     this.periodOptions[1].to = d.getFullYear() + '-' + this.period.month + '-' + next.getDate();
     
   }
@@ -108,7 +110,7 @@ export class PaymentCreateComponent implements OnInit {
           this.users.push(object);
         }
 
-        console.log(this.users);
+        this.analiceRecord();
 
       },
       error => localStorage.setItem('request', JSON.stringify(error))
@@ -116,6 +118,257 @@ export class PaymentCreateComponent implements OnInit {
       () => this.sendingData--
     );
 
+
+  }
+
+  nextWorkerAnalice() {
+
+    if(this.users[this.userSelect + 1] != undefined) {
+      this.userSelect++;
+      this.analiceRecord();
+    }
+  }
+
+  analiceRecord() {
+
+    let d = new Date();
+    let from = new Date();
+    let to = new Date();
+    if(this.period.option == 0) {
+      from = new Date( d.getFullYear(), this.period.month - 1, 1);
+      to = new Date( d.getFullYear(), this.period.month - 1, 15);
+    } else {
+      from = new Date( d.getFullYear(), this.period.month - 1, 16);
+      to = new Date( d.getFullYear(), this.period.month, 0);
+    }
+        
+    this.daysAnalized = [];
+
+    for(let i = 0; i < to.getDate(); i++) {
+
+        let dateCheck = new Date(from.getFullYear(), this.period.month - 1, (from.getDate() + i));
+        // console.log(dateCheck);
+
+        let dayAnalized = {
+          day: dateCheck,
+          records: [],
+          schedules: [],
+          timeToWork: {
+            hours: 0,
+            minutes: 0,
+            seconds: 0,
+          },
+          timeWorked: {
+            hours: 0,
+            minutes: 0,
+            seconds: 0,
+          },
+          status: 0,
+          message: "",
+          timeNotWorked: {
+            hours: 0,
+            minutes: 0,
+            seconds: 0,
+          },
+        };
+
+         // RECOLECTAR HORARIOS DEL DIA
+         let scheduleCollectionDay = [];
+         for(let schedule of this.users[this.userSelect].schedules) {
+ 
+           if(schedule.day_id == dateCheck.getDay()) {
+ 
+             scheduleCollectionDay.push(schedule);
+ 
+           }
+ 
+         }
+
+        if(scheduleCollectionDay.length == 0) continue;
+
+        //RECOLECTAR ASISTENCIA DE ESE DIA
+        let recordCollectionDay = [];
+        for(let record of this.records) {
+
+          if(record.user_id == this.users[this.userSelect].id) {
+
+            let dateRecord = new Date(record.date.toString() + ' 00:00:00');
+            
+
+            if(dateRecord.getTime() == dateCheck.getTime()) {
+                     
+              recordCollectionDay.push(record);
+
+            }
+            
+
+          }
+
+        }
+
+        dayAnalized.records = recordCollectionDay;
+        dayAnalized.schedules = scheduleCollectionDay;
+
+        if(recordCollectionDay.length == 0) continue;
+
+        //Analisis de horas trabajadas y por trabajar
+        for(let sche of dayAnalized.schedules) {
+          
+          let checkInSchedule = new Date("2017-01-01 " + sche.check_in);
+          let checkOutSchedule = new Date("2017-01-01 " + sche.check_out);
+
+          dayAnalized.timeToWork = this.calculateTimeToWork(checkInSchedule, checkOutSchedule, dayAnalized.timeToWork);          
+
+          for(let record of dayAnalized.records) {
+            
+            let checkInRecord = new Date("2017-01-01 " + record.checkIn);
+            let checkOutRecord = new Date("2017-01-01 " + record.checkOut);
+
+            if((checkInRecord <= checkInSchedule && checkOutRecord >= checkOutSchedule) ||
+                (checkInRecord > checkInSchedule && checkInRecord < checkOutSchedule) ||
+                (checkInRecord <= checkInSchedule && checkOutRecord < checkOutSchedule)
+            ) {
+
+              let timeNotWorked1;
+              let timeNotWorked2;              
+
+              //Si llega puntual
+              if(checkInRecord <= checkInSchedule && checkOutRecord >= checkOutSchedule) {              
+                dayAnalized.status = 1;
+              }
+
+              //Si llega tarde
+              if(checkInRecord > checkInSchedule) {
+                timeNotWorked1 = this.getTimeNotWorked(checkInRecord, checkInSchedule);
+                dayAnalized.status = 2;
+              }
+
+              //si se va temprano
+              if(checkOutRecord < checkOutSchedule) {
+                timeNotWorked2 = this.getTimeNotWorked(checkOutSchedule, checkOutRecord);
+                dayAnalized.status = 2;
+              }
+
+              dayAnalized.timeNotWorked = this.calculateTotalTimeNotWorked(timeNotWorked1, timeNotWorked2, dayAnalized.timeNotWorked);
+
+              }
+
+
+            
+          }// FOR RECORDS IN DAY ANALIZED
+          
+        }
+
+        dayAnalized.timeWorked = this.calculateTimeWorked(dayAnalized);
+        this.daysAnalized.push(dayAnalized);
+
+
+    }//FOR DATES PERIOD
+
+    console.log(this.daysAnalized);
+
+  }
+
+  getTimeNotWorked(x, y) {
+
+    let timeNotWorked = {
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    };
+
+    timeNotWorked.hours = x.getHours() - y.getHours();
+    timeNotWorked.minutes = x.getMinutes() - y.getMinutes();
+    timeNotWorked.seconds = x.getSeconds() - y.getSeconds();
+
+    return timeNotWorked;
+
+  }
+
+  calculateTotalTimeNotWorked(x, y, timeNotWorked) {    
+
+    if(x != null) {
+      timeNotWorked.hours += x.hours;
+      timeNotWorked.minutes += x.minutes;
+      timeNotWorked.seconds += x.seconds;  
+    }
+
+    if(y != null) {
+      timeNotWorked.hours += y.hours;
+      timeNotWorked.minutes += y.minutes;
+      timeNotWorked.seconds += y.seconds;
+    } 
+
+    while(timeNotWorked.seconds >= 60) {
+      timeNotWorked.minutes++;
+      timeNotWorked.seconds -= 60;
+    }
+
+    while(timeNotWorked.minutes >= 60) {
+      timeNotWorked.hours++;
+      timeNotWorked.minutes -= 60;
+    }
+
+    while(timeNotWorked.minutes < 0) {
+      timeNotWorked.hours--;
+      timeNotWorked.minutes += 60;
+    }
+
+    while(timeNotWorked.seconds < 0) {
+      timeNotWorked.minutes--;
+      timeNotWorked.seconds += 60;
+    }
+
+    return timeNotWorked;
+
+  }
+
+  calculateTimeToWork(checkInSchedule, checkOutSchedule, timeToWork) {    
+
+    timeToWork.hours += checkOutSchedule.getHours() - checkInSchedule.getHours();
+    timeToWork.minutes += checkOutSchedule.getMinutes() - checkInSchedule.getMinutes();
+    timeToWork.seconds += checkOutSchedule.getSeconds() - checkInSchedule.getSeconds();
+
+    while(timeToWork.seconds >= 60) {
+      timeToWork.minutes++;
+      timeToWork.seconds -= 60;
+    }
+
+    while(timeToWork.minutes >= 60) {
+      timeToWork.hours++;
+      timeToWork.minutes -= 60;
+    }
+
+    while(timeToWork.minutes < 0) {
+      timeToWork.hours--;
+      timeToWork.minutes += 60;
+    }
+
+    while(timeToWork.seconds < 0) {
+      timeToWork.minutes--;
+      timeToWork.seconds += 60;
+    }
+
+    return timeToWork;
+
+  }
+
+  calculateTimeWorked(dayAnalized) {
+    dayAnalized.timeWorked.hours = dayAnalized.timeToWork.hours - dayAnalized.timeNotWorked.hours;
+    dayAnalized.timeWorked.minutes = dayAnalized.timeToWork.minutes - dayAnalized.timeNotWorked.minutes;
+    dayAnalized.timeWorked.seconds = dayAnalized.timeToWork.seconds - dayAnalized.timeNotWorked.seconds;
+
+    while(dayAnalized.timeWorked.minutes < 0) {
+      dayAnalized.timeWorked.hours--;
+      dayAnalized.timeWorked.minutes += 60;
+    }
+
+    while(dayAnalized.timeWorked.seconds < 0) {
+      dayAnalized.timeWorked.minutes--;
+      dayAnalized.timeWorked.seconds += 60;
+    }
+
+    return dayAnalized.timeWorked;
 
   }
 

@@ -29,9 +29,33 @@
 
         </form>
 
-        <form *ngIf="window == 2">
+        <form *ngIf="window == 2" (submit)="nextWorkerAnalice()">
             <h3>Periodo {{ period.from }} / {{ period.to }}</h3>
             <h5>{{ users[userSelect].name }}</h5>
+
+            <div class="responsive-table">
+                <table align="center">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Dia</th>
+                            <th>Tiempo de trabajo</th>
+                            <th>Tiempo no Trabajado</th>
+
+                        </tr>
+                        <!-- <th colspan="3">Opciones</th> -->
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let analized of daysAnalized">
+                            <td>{{ analized.day }}</td>
+                            <td>{{ analized.day.getDay() }}</td>
+                            <td>{{ analized.timeToWork.hours }}:{{ analized.timeToWork.minutes }}</td>
+                            <td>{{ analized.timeNotWorked.hours }}:{{ analized.timeNotWorked.minutes }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn btnPrimary"> Continuar</button>
         </form>
 
     </div>

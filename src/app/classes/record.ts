@@ -18,6 +18,7 @@ export class Record {
         if(data.user != undefined) {
             this.user.setValues(data.user);
         }
+        this.date = data.date;
         this.checkIn = data.checkIn;
         this.checkOut = data.checkOut;
     }
