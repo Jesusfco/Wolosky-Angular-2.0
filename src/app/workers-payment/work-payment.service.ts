@@ -28,5 +28,11 @@ export class WorkPaymentService {
             .map(data => data.json())
             .toPromise();
   }
+
+  getDataToProcess(period) {
+    return this._http.post(this.token.getUrl() + 'workers-payment/dataToProcess' + this.token.getTokenUrl(), period )
+            .map(data => data.json())
+            .toPromise();
+  }
   
 }

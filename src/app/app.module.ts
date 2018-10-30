@@ -109,6 +109,8 @@ import { ScheduleComponentPipePipe } from './schedule-component-pipe.pipe';
 import { TimePipe } from './time.pipe';
 import { WorkersPaymentComponent } from './workers-payment/workers-payment.component';
 import { WorkPaymentService } from './workers-payment/work-payment.service';
+import { PaymentCreateComponent } from './workers-payment/payment-create/payment-create.component';
+import { PaymentShowComponent } from './workers-payment/payment-show/payment-show.component';
 
 @NgModule({
   declarations: [
@@ -159,6 +161,8 @@ import { WorkPaymentService } from './workers-payment/work-payment.service';
     ScheduleComponentPipePipe,
     TimePipe,
     WorkersPaymentComponent,
+    PaymentCreateComponent,
+    PaymentShowComponent,
   ],
   imports: [
     BrowserModule,

@@ -54,6 +54,8 @@ import { CreateMonthlyPriceComponent } from './monthly-prices/create-monthly-pri
 //SCHEDULES 
 import { SchedulesComponent } from './schedules/schedules.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PaymentCreateComponent } from './workers-payment/payment-create/payment-create.component';
+import { PaymentShowComponent } from './workers-payment/payment-show/payment-show.component';
 
 
 export const routes: Routes = [
@@ -104,8 +106,8 @@ export const routes: Routes = [
         path: 'pago-trabajadores',
         component: WorkersPaymentComponent,
         children: [
-            { path: 'create', component: CreateEventComponent },
-            { path: 'assign', component: AssignUserEventComponent },
+            { path: 'crear', component: PaymentCreateComponent },
+            { path: 'show/:id', component: PaymentShowComponent },
         ]
     },
 

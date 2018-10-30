@@ -1,0 +1,33 @@
+<mat-progress-bar mode="indeterminate" *ngIf="request" class="barLoader"></mat-progress-bar>
+
+<div class="cardSpace" [@background]="state.background">
+
+    <div class="closeCardBackground" (click)="closePop()">
+        <h5 class="closeIcon">
+            <mat-icon>close</mat-icon>
+        </h5>
+    </div>
+
+    <div class="cardModule" [@card]="state.card">
+        <h2>Crear pagos</h2>
+        <form autocomplete="off" (submit)="getDataToProcess()" [ngClass]="{ 'loadingForm': sendingData > 1}">
+
+            <div>
+                <label>Mes:</label><br>
+                <select [(ngModel)]="period.month" name="month" (change)="setPeriodsOption()">
+                    <option  *ngFor="let x of months" value="{{ x.value }}">{{ x.view}}</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Periodo:</label><br>
+                <select [(ngModel)]="period.option" name="option">
+                    <option  *ngFor="let x of periodOptions" value="{{ x.value }}">{{ x.from}} - {{ x.to }}</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btnAccept">Comenzar</button>
+
+        </form>
+
+    </div>
+</div>
