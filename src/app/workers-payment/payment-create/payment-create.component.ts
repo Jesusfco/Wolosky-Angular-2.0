@@ -172,10 +172,10 @@ export class PaymentCreateComponent implements OnInit {
           },
         };
 
-         // RECOLECTAR HORARIOS DEL DIA
-         let scheduleCollectionDay = [];
-         for(let schedule of this.users[this.userSelect].schedules) {
- 
+          // RECOLECTAR HORARIOS DEL DIA
+          let scheduleCollectionDay = [];
+          for(let schedule of this.users[this.userSelect].schedules) {
+            if(schedule.active != true) continue;
            if(schedule.day_id == dateCheck.getDay()) {
  
              scheduleCollectionDay.push(schedule);
@@ -209,7 +209,7 @@ export class PaymentCreateComponent implements OnInit {
         dayAnalized.records = recordCollectionDay;
         dayAnalized.schedules = scheduleCollectionDay;
 
-        if(recordCollectionDay.length == 0) continue;
+        // if(recordCollectionDay.length == 0) continue;
 
         //Analisis de horas trabajadas y por trabajar
         for(let sche of dayAnalized.schedules) {
@@ -218,6 +218,10 @@ export class PaymentCreateComponent implements OnInit {
           let checkOutSchedule = new Date("2017-01-01 " + sche.check_out);
 
           dayAnalized.timeToWork = this.calculateTimeToWork(checkInSchedule, checkOutSchedule, dayAnalized.timeToWork);          
+
+          
+          let timeNotWorked1;
+          let timeNotWorked2;     
 
           for(let record of dayAnalized.records) {
             
@@ -228,9 +232,7 @@ export class PaymentCreateComponent implements OnInit {
                 (checkInRecord > checkInSchedule && checkInRecord < checkOutSchedule) ||
                 (checkInRecord <= checkInSchedule && checkOutRecord < checkOutSchedule)
             ) {
-
-              let timeNotWorked1;
-              let timeNotWorked2;              
+         
 
               //Si llega puntual
               if(checkInRecord <= checkInSchedule && checkOutRecord >= checkOutSchedule) {              
@@ -249,7 +251,7 @@ export class PaymentCreateComponent implements OnInit {
                 dayAnalized.status = 2;
               }
 
-              dayAnalized.timeNotWorked = this.calculateTotalTimeNotWorked(timeNotWorked1, timeNotWorked2, dayAnalized.timeNotWorked);
+              
 
               }
 
@@ -257,6 +259,8 @@ export class PaymentCreateComponent implements OnInit {
             
           }// FOR RECORDS IN DAY ANALIZED
           
+          dayAnalized.timeNotWorked = this.calculateTotalTimeNotWorked(timeNotWorked1, timeNotWorked2, dayAnalized.timeNotWorked);
+
         }
 
         dayAnalized.timeWorked = this.calculateTimeWorked(dayAnalized);
@@ -285,7 +289,7 @@ export class PaymentCreateComponent implements OnInit {
 
   }
 
-  calculateTotalTimeNotWorked(x, y, timeNotWorked) {    
+  calculateTotalTimeNotWorked(x, y, timeNotWorked) {       
 
     if(x != null) {
       timeNotWorked.hours += x.hours;
