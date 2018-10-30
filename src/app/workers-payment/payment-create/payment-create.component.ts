@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { cardPop, backgroundOpacity} from '../../animations';
 import { WorkPaymentService } from '../work-payment.service';
+import { Record } from '../../classes/record';
+import { User } from '../../classes/user';
 
 @Component({
   selector: 'app-payment-create',
@@ -12,7 +14,8 @@ import { WorkPaymentService } from '../work-payment.service';
 export class PaymentCreateComponent implements OnInit {
 
   public sendingData: number = 0;
-
+  public window = 1;
+  public userSelect = 0;
   public months = [
     {value: 1, view: 'Enero'},
     {value: 2, view: 'Febrero'},
@@ -33,6 +36,8 @@ export class PaymentCreateComponent implements OnInit {
     {from: null, to: null, value: 1},
   ];
 
+  public records: Array<Record> = [];
+  public users: Array<User> = [];
   public period = {
     month: null,
     option: 1,
@@ -82,9 +87,35 @@ export class PaymentCreateComponent implements OnInit {
   setDataToProcess() {
     
     this.period.from = this.periodOptions[this.period.option].from;
-    this.period.from = this.periodOptions[this.period.option].to;
+    this.period.to = this.periodOptions[this.period.option].to;
 
-    this._http.getDataToProcess(this.period).then()
+    this.sendingData++;
+
+    this._http.getDataToProcess(this.period).then(
+      data => {
+        this.window = 2;
+        this.users = [];
+        this.records = [];
+        for(let record of data.records) {
+          let object = new Record();
+          object.setValues(record);
+          this.records.push(object);
+        }
+
+        for(let user of data.users) {
+          let object = new User();
+          object.setValues(user);
+          this.users.push(object);
+        }
+
+        console.log(this.users);
+
+      },
+      error => localStorage.setItem('request', JSON.stringify(error))
+    ).then(
+      () => this.sendingData--
+    );
+
 
   }
 

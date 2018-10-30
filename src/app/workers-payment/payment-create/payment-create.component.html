@@ -10,7 +10,7 @@
 
     <div class="cardModule" [@card]="state.card">
         <h2>Crear pagos</h2>
-        <form autocomplete="off" (submit)="getDataToProcess()" [ngClass]="{ 'loadingForm': sendingData > 1}">
+        <form autocomplete="off" (submit)="setDataToProcess()" [ngClass]="{ 'loadingForm': sendingData > 1}" *ngIf="window == 1">
 
             <div>
                 <label>Mes:</label><br>
@@ -27,6 +27,11 @@
             </div>
             <button type="submit" class="btn btnAccept">Comenzar</button>
 
+        </form>
+
+        <form *ngIf="window == 2">
+            <h3>Periodo {{ period.from }} / {{ period.to }}</h3>
+            <h5>{{ users[userSelect].name }}</h5>
         </form>
 
     </div>

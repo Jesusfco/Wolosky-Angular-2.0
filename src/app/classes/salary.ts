@@ -17,6 +17,16 @@ export class Salary {
 
     }
 
+    setValues(data) {
+        this.id = parseInt(data.id);
+        this.description = data.description;
+        this.amount = parseFloat(data.amount);
+        this.bonus = parseFloat(data.bonus);
+        this.salary_type_id = parseInt(data.salary_type_id);
+        this.salaryTypeView = this.returnSalaryView();
+
+    }
+
     returnSalaryView(){
         if(this.salary_type_id == 1) return 'Hora';
         else if(this.salary_type_id == 2) return 'Día';

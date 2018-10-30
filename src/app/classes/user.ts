@@ -1,3 +1,4 @@
+
 import { Reference } from '../classes/reference';
 import { Schedule } from '../classes/schedule';
 import { Payment } from '../classes/payment';
@@ -30,9 +31,13 @@ export class User {
     public monthly_payment_id: number;
     public user_type_id: number;
     public salary_id: number;
+    
     public status: number;    
     public created_at: string;
     public updated_at: string;    
+
+    public salary: Salary;
+    public schedules: Array<Schedule> = [];
 
     constructor(){
         this.name = '';
@@ -67,10 +72,10 @@ export class User {
     }
 
     setValues(data){
-        if(data.name != undefined)
-            this.name = data.name;
-        if(data.email != undefined)
-            this.email = data.email;
+
+        
+        this.name = data.name;        
+        this.email = data.email;
         this.birthday =  data.birthday;
         this.id = data.id;
         this.phone = data.phone;
@@ -105,6 +110,21 @@ export class User {
                 this.img = this.img + 'woman_avatar.png';
             }
         }
+
+        if(data.salary != undefined) {
+            let object = new Salary();
+            object.setValues(data.salary);
+            this.salary = object;
+        }
+
+        if(data.schedules != undefined) {
+            for(let sche of data.schedules) {
+                let object = new Schedule();
+                object.setValues(sche);
+                this.schedules.push(object);
+            }
+        }
+
     }
 
     validatePhoneFormat(){
