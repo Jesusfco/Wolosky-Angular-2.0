@@ -300,6 +300,8 @@ select {
     padding: 25px;
     z-index: 10;
     position: relative;
+    max-height: 80vh;
+    overflow-y: scroll;
 }
 
 @media screen and (max-width: 750px) {

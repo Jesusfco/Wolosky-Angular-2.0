@@ -264,6 +264,9 @@ export class PaymentCreateComponent implements OnInit {
         }
 
         dayAnalized.timeWorked = this.calculateTimeWorked(dayAnalized);
+        if(dayAnalized.records.length == 0) {          
+          dayAnalized.timeNotWorked = dayAnalized.timeToWork;    
+        }
         this.daysAnalized.push(dayAnalized);
 
 
@@ -358,6 +361,7 @@ export class PaymentCreateComponent implements OnInit {
   }
 
   calculateTimeWorked(dayAnalized) {
+
     dayAnalized.timeWorked.hours = dayAnalized.timeToWork.hours - dayAnalized.timeNotWorked.hours;
     dayAnalized.timeWorked.minutes = dayAnalized.timeToWork.minutes - dayAnalized.timeNotWorked.minutes;
     dayAnalized.timeWorked.seconds = dayAnalized.timeToWork.seconds - dayAnalized.timeNotWorked.seconds;
