@@ -7,4 +7,10 @@ export class MonthlyPayment {
         this.amount = 0;
         this.description = null;
     }
+
+    setValues(data) {
+        this.id = parseInt(data.id);
+        this.amount = parseFloat(data.amount);
+        this.description = data.description;
+    }
 }

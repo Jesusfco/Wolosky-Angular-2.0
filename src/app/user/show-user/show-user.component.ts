@@ -147,13 +147,15 @@ export class ShowUserComponent implements OnInit {
     this.sendingData = true;
 
     if (this.user.user_type_id > 1  && this.user.user_type_id < 5) {
-      this.updateSalary();
+      this.user.salary = this.salary;
+      if(this.salary.id != null)
+        this.updateSalary();  
     }
 
     this._http.updateUser(this.user).then(
 
       data => {
-        let not = {
+        let not = { 
           title: 'Datos de Usuario Actualizado',
           description: 'Los datos han sido cargados al servidor',
           status: 200

@@ -1,4 +1,5 @@
 
+import { MonthlyPayment } from './monthly-payment';
 import { Reference } from '../classes/reference';
 import { Schedule } from '../classes/schedule';
 import { Payment } from '../classes/payment';
@@ -37,7 +38,10 @@ export class User {
     public updated_at: string;    
 
     public salary: Salary;
+    public monthlyPayment: MonthlyPayment;
     public schedules: Array<Schedule> = [];
+    public references: Array<Reference> = [];
+    public payments: Array<Payment> = [];
 
     constructor(){
         this.name = '';
@@ -93,6 +97,31 @@ export class User {
         this.creator_user_id = data.creator_user_id;
         this.status = data.status;
         this.salary_id = data.salary_id;
+        if(data.salary != undefined) {
+            let sal = new Salary();
+            sal.setValues(data.salary);
+            this.salary = sal;
+        }
+
+        if(data.monthlyPayment != undefined) {
+            let monthlyPayment = new MonthlyPayment();
+            monthlyPayment.setValues(data.monthlyPayment);
+            this.monthlyPayment = monthlyPayment;
+        }
+
+        if(data.schedules != undefined) {
+
+            this.schedules = [];
+
+            for(let sche of data.schedules) {
+
+                let schedule = new Schedule();
+                schedule.setValues(sche);
+                this.schedules.push(sche);
+
+            }
+
+        }
 
         let y: Url = new Url();
         
