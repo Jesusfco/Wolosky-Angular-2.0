@@ -322,6 +322,16 @@ select {
     overflow-y: scroll;
 }
 
+.cardModule .options {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.cardModule .options i {
+    cursor: pointer;
+}
+
 @media screen and (max-width: 750px) {
     .cardModule {
         width: 90%;

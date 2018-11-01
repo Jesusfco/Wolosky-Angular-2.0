@@ -7,13 +7,14 @@
     </div>
 
     <div class="cardModule" [@card]="state.card">
-        <div>
+        <div class="options">
             <i class="material-icons" *ngIf="payment.status == 1" (click)="payEmploy()" matTooltip="Pagar a Empleado">attach_money</i>
             <i class="material-icons" matTooltip="Eliminar Pago" (click)="windowChange()">delete</i>
         </div>
 
         <div [ngClass]="{ 'loadingForm': sendingData > 0}" *ngIf="window == 1">
-            <h4>Pago del periodo: {{ payment.date_from }} / {{ payment.date_to }}</h4>
+            <h4>Pago del periodo: <br>{{ payment.date_from }} / {{ payment.date_to }}</h4>
+            <h4>{{ payment.user.name }}</h4>
             <form class="flexRow" (submit)="updatePaymentData()">
 
                 <div class="formData l6 m6">
