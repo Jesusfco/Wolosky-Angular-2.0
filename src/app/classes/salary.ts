@@ -29,7 +29,7 @@ export class Salary {
 
     returnSalaryView(){
         if(this.salary_type_id == 1) return 'Hora';
-        else if(this.salary_type_id == 2) return 'Día';
+        else if(this.salary_type_id == 2) return 'Quincenal';
     }
 
     

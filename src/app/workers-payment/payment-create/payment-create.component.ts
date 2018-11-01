@@ -1,9 +1,11 @@
+import { DayAnalized } from './../../classes/dayAnalized';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { cardPop, backgroundOpacity} from '../../animations';
 import { WorkPaymentService } from '../work-payment.service';
 import { Record } from '../../classes/record';
 import { User } from '../../classes/user';
+import { Payment } from '../../classes/payment';
 
 @Component({
   selector: 'app-payment-create',
@@ -31,7 +33,8 @@ export class PaymentCreateComponent implements OnInit {
     {value: 12, view: 'Diciembre'},
   ];
 
-  public daysAnalized: Array<any> = [];
+  public analizedArray: Array<any> = [];
+  public daysAnalized: Array<DayAnalized> = [];
 
   public periodOptions = [
     {from: null, to: null, value: 0},
@@ -64,9 +67,11 @@ export class PaymentCreateComponent implements OnInit {
       this.state.background = 'final';
       this.state.card = 'final';
     }, 10);
+
   }
 
-  closePop(){    
+  closePop() {
+
     setTimeout(() => {
       this.router.navigate(['/pago-trabajadores']);
     }, 450);
@@ -88,6 +93,7 @@ export class PaymentCreateComponent implements OnInit {
 
   setDataToProcess() {
     
+    if(this.sendingData > 0) return;
     this.period.from = this.periodOptions[this.period.option].from;
     this.period.to = this.periodOptions[this.period.option].to;
 
@@ -121,11 +127,13 @@ export class PaymentCreateComponent implements OnInit {
 
   }
 
-  nextWorkerAnalice() {
+  changeWorkToAnalize(i) {
 
-    if(this.users[this.userSelect + 1] != undefined) {
-      this.userSelect++;
-      this.analiceRecord();
+    if(this.users[this.userSelect + i] != undefined) {
+      this.userSelect += i;
+
+      if(this.analizedArray[this.userSelect] == undefined)       
+        this.analiceRecord();
     }
   }
 
@@ -149,30 +157,10 @@ export class PaymentCreateComponent implements OnInit {
         let dateCheck = new Date(from.getFullYear(), this.period.month - 1, (from.getDate() + i));
         // console.log(dateCheck);
 
-        let dayAnalized = {
-          day: dateCheck,
-          records: [],
-          schedules: [],
-          timeToWork: {
-            hours: 0,
-            minutes: 0,
-            seconds: 0,
-          },
-          timeWorked: {
-            hours: 0,
-            minutes: 0,
-            seconds: 0,
-          },
-          status: 0,
-          message: "",
-          timeNotWorked: {
-            hours: 0,
-            minutes: 0,
-            seconds: 0,
-          },
-        };
+        let dayAnalized = new DayAnalized();
+        dayAnalized.day = dateCheck;        
 
-          // RECOLECTAR HORARIOS DEL DIA
+        // RECOLECTAR HORARIOS DEL DIA
           let scheduleCollectionDay = [];
           for(let schedule of this.users[this.userSelect].schedules) {
             if(schedule.active != true) continue;
@@ -209,174 +197,128 @@ export class PaymentCreateComponent implements OnInit {
         dayAnalized.records = recordCollectionDay;
         dayAnalized.schedules = scheduleCollectionDay;
 
-        // if(recordCollectionDay.length == 0) continue;
-
         //Analisis de horas trabajadas y por trabajar
-        for(let sche of dayAnalized.schedules) {
-          
-          let checkInSchedule = new Date("2017-01-01 " + sche.check_in);
-          let checkOutSchedule = new Date("2017-01-01 " + sche.check_out);
-
-          dayAnalized.timeToWork = this.calculateTimeToWork(checkInSchedule, checkOutSchedule, dayAnalized.timeToWork);          
-
-          
-          let timeNotWorked1;
-          let timeNotWorked2;     
-
-          for(let record of dayAnalized.records) {
-            
-            let checkInRecord = new Date("2017-01-01 " + record.checkIn);
-            let checkOutRecord = new Date("2017-01-01 " + record.checkOut);
-
-            if((checkInRecord <= checkInSchedule && checkOutRecord >= checkOutSchedule) ||
-                (checkInRecord > checkInSchedule && checkInRecord < checkOutSchedule) ||
-                (checkInRecord <= checkInSchedule && checkOutRecord < checkOutSchedule)
-            ) {
-         
-
-              //Si llega puntual
-              if(checkInRecord <= checkInSchedule && checkOutRecord >= checkOutSchedule) {              
-                dayAnalized.status = 1;
-              }
-
-              //Si llega tarde
-              if(checkInRecord > checkInSchedule) {
-                timeNotWorked1 = this.getTimeNotWorked(checkInRecord, checkInSchedule);
-                dayAnalized.status = 2;
-              }
-
-              //si se va temprano
-              if(checkOutRecord < checkOutSchedule) {
-                timeNotWorked2 = this.getTimeNotWorked(checkOutSchedule, checkOutRecord);
-                dayAnalized.status = 2;
-              }
-
-              
-
-              }
-
-
-            
-          }// FOR RECORDS IN DAY ANALIZED
-          
-          dayAnalized.timeNotWorked = this.calculateTotalTimeNotWorked(timeNotWorked1, timeNotWorked2, dayAnalized.timeNotWorked);
-
-        }
-
-        dayAnalized.timeWorked = this.calculateTimeWorked(dayAnalized);
-        if(dayAnalized.records.length == 0) {          
-          dayAnalized.timeNotWorked = dayAnalized.timeToWork;    
-        }
+        dayAnalized.getAnalisis();
+        dayAnalized.setTimeWorked();        
         this.daysAnalized.push(dayAnalized);
 
+    }//FOR DATES PERIOD    
 
-    }//FOR DATES PERIOD
+    this.analizedArray.push({
+      daysAnalized: this.daysAnalized,
+      payment: new Payment(),
+      user: this.users[this.userSelect],      
+      daysLate: this.getDaysLate(),
+      daysAbsent: this.getDaysAbsent(),
+      paymentSugest: 0,
+      paymentReal: 0,
+    });
 
-    console.log(this.daysAnalized);
-
-  }
-
-  getTimeNotWorked(x, y) {
-
-    let timeNotWorked = {
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-    };
-
-    timeNotWorked.hours = x.getHours() - y.getHours();
-    timeNotWorked.minutes = x.getMinutes() - y.getMinutes();
-    timeNotWorked.seconds = x.getSeconds() - y.getSeconds();
-
-    return timeNotWorked;
+    this.setPaymentSugest();
 
   }
 
-  calculateTotalTimeNotWorked(x, y, timeNotWorked) {       
-
-    if(x != null) {
-      timeNotWorked.hours += x.hours;
-      timeNotWorked.minutes += x.minutes;
-      timeNotWorked.seconds += x.seconds;  
+  getHourPayment(analized) {
+    let salary = 0;    
+    let hours = 0;      
+    if(analized.daysLate == 0 && analized.daysAbsent == 0) {
+      salary = analized.user.salary.amount + analized.user.salary.bonus;
+    } else {
+      salary = analized.user.salary.amount;
     }
 
-    if(y != null) {
-      timeNotWorked.hours += y.hours;
-      timeNotWorked.minutes += y.minutes;
-      timeNotWorked.seconds += y.seconds;
-    } 
+    for(let day of analized.daysAnalized) {
 
-    while(timeNotWorked.seconds >= 60) {
-      timeNotWorked.minutes++;
-      timeNotWorked.seconds -= 60;
+      hours += day.timeWorked.hours;
+
+      if(day.status == 2 && day.timeNotWorked.minutes <= 15) {
+
+        hours++;
+
+      }
+
     }
-
-    while(timeNotWorked.minutes >= 60) {
-      timeNotWorked.hours++;
-      timeNotWorked.minutes -= 60;
-    }
-
-    while(timeNotWorked.minutes < 0) {
-      timeNotWorked.hours--;
-      timeNotWorked.minutes += 60;
-    }
-
-    while(timeNotWorked.seconds < 0) {
-      timeNotWorked.minutes--;
-      timeNotWorked.seconds += 60;
-    }
-
-    return timeNotWorked;
+    
+    return salary * hours;
 
   }
 
-  calculateTimeToWork(checkInSchedule, checkOutSchedule, timeToWork) {    
+  setPaymentSugest() {
 
-    timeToWork.hours += checkOutSchedule.getHours() - checkInSchedule.getHours();
-    timeToWork.minutes += checkOutSchedule.getMinutes() - checkInSchedule.getMinutes();
-    timeToWork.seconds += checkOutSchedule.getSeconds() - checkInSchedule.getSeconds();
+    if(this.users[this.userSelect].salary == undefined) return;
 
-    while(timeToWork.seconds >= 60) {
-      timeToWork.minutes++;
-      timeToWork.seconds -= 60;
+    //PAGO TIPO QUINCENAL
+    if(this.users[this.userSelect].salary.salary_type_id == 2) {
+
+      if(this.analizedArray[this.userSelect].daysLate == 0 && this.analizedArray[this.userSelect].daysAbsent == 0) {
+
+        this.analizedArray[this.userSelect].paymentSugest = 
+                this.users[this.userSelect].salary.amount + 
+                this.users[this.userSelect].salary.bonus;
+
+      } else {
+
+        this.analizedArray[this.userSelect].paymentSugest = this.users[this.userSelect].salary.amount;
+
+      }
+
+    } else if(this.users[this.userSelect].salary.salary_type_id == 1) { 
+
+      this.analizedArray[this.userSelect].paymentSugest = this.getHourPayment(this.analizedArray[this.userSelect]);
+
     }
 
-    while(timeToWork.minutes >= 60) {
-      timeToWork.hours++;
-      timeToWork.minutes -= 60;
+    this.analizedArray[this.userSelect].paymentReal = this.analizedArray[this.userSelect].paymentSugest;
+    
+  }
+
+  getDaysLate() {
+    
+    let i = 0;
+    for(let x of this.daysAnalized){
+      if(x.status == 2)
+        i++;
     }
 
-    while(timeToWork.minutes < 0) {
-      timeToWork.hours--;
-      timeToWork.minutes += 60;
-    }
-
-    while(timeToWork.seconds < 0) {
-      timeToWork.minutes--;
-      timeToWork.seconds += 60;
-    }
-
-    return timeToWork;
+    return i;
 
   }
 
-  calculateTimeWorked(dayAnalized) {
+  getDaysAbsent() {
 
-    dayAnalized.timeWorked.hours = dayAnalized.timeToWork.hours - dayAnalized.timeNotWorked.hours;
-    dayAnalized.timeWorked.minutes = dayAnalized.timeToWork.minutes - dayAnalized.timeNotWorked.minutes;
-    dayAnalized.timeWorked.seconds = dayAnalized.timeToWork.seconds - dayAnalized.timeNotWorked.seconds;
-
-    while(dayAnalized.timeWorked.minutes < 0) {
-      dayAnalized.timeWorked.hours--;
-      dayAnalized.timeWorked.minutes += 60;
+    let i = 0;
+    for(let x of this.daysAnalized){
+      if(x.status == 0)
+        i++;
     }
 
-    while(dayAnalized.timeWorked.seconds < 0) {
-      dayAnalized.timeWorked.minutes--;
-      dayAnalized.timeWorked.seconds += 60;
-    }
+    return i;
 
-    return dayAnalized.timeWorked;
+  }
+
+  generateReceipt() {
+    if(this.sendingData > 0) return;
+
+    let payment: Payment = new Payment();
+    payment.date_from = this.period.from;
+    payment.date_to = this.period.to;
+    payment.amount = this.analizedArray[this.userSelect].paymentReal;
+    payment.user_id = this.users[this.userSelect].id;
+
+    this.sendingData++;
+    this._http.storePayment(payment).then(
+      data => {
+        payment.setValues(data);
+        this.analizedArray[this.userSelect].payment = payment;
+        this._http.sendData({
+          data: payment,
+          action: 'new'
+        });
+      },
+      error => localStorage.setItem('request', JSON.stringify(error))
+      ).then(
+        () => this.sendingData--
+      );
 
   }
 

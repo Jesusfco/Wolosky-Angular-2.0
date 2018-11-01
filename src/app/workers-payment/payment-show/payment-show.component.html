@@ -1,3 +1,44 @@
-<p>
-  payment-show works!
-</p>
+<div class="cardSpace" [@background]="state.background">
+
+    <div class="closeCardBackground" (click)="closePop()">
+        <h5 class="closeIcon">
+            <mat-icon>close</mat-icon>
+        </h5>
+    </div>
+
+    <div class="cardModule" [@card]="state.card">
+        <div>
+            <i class="material-icons" *ngIf="payment.status == 1" (click)="payEmploy()" matTooltip="Pagar a Empleado">attach_money</i>
+            <i class="material-icons" matTooltip="Eliminar Pago" (click)="windowChange()">delete</i>
+        </div>
+
+        <div [ngClass]="{ 'loadingForm': sendingData > 0}" *ngIf="window == 1">
+            <h4>Pago del periodo: {{ payment.date_from }} / {{ payment.date_to }}</h4>
+            <form class="flexRow" (submit)="updatePaymentData()">
+
+                <div class="formData l6 m6">
+                    <label>Monto:</label><br>
+                    <input type="number" [(ngModel)]="payment.amount" name="amount" min="0">
+                </div>
+
+                <div class="formData l6 m6">
+                    <label>Status:</label><br>
+                    <select [(ngModel)]="payment.status" name="status">
+                <option value="1">Por pagar</option> 
+                <option value="2">Pagado</option>                
+            </select>
+                </div>
+
+                <button class="btn btnPrimary"> Actualizar</button>
+            </form>
+        </div>
+        <div *ngIf="window == 2">
+            <h3>¿Estas seguro/a que desea borrar este pago?</h3>
+            <p>Una vez eliminado ya no se podra recuperar</p>
+            <div class="confirmCancel">
+                <button class="btn btnCancel" (click)="windowChange()">Cancelar</button>
+                <button class="btn btnDelete" (click)="deletePay()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>

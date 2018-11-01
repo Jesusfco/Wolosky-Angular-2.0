@@ -228,7 +228,8 @@ th {
 }
 
 input,
-textarea select {
+textarea,
+select {
     border: none;
     background: #ECECEC;
     padding: 10px;
@@ -271,6 +272,23 @@ select {
 
 .formData .inputValidate {
     background: rgb(175, 255, 195);
+}
+
+.confirmCancel {
+    display: flex;
+    justify-content: space-between;
+}
+
+.confirmCancel button {
+    width: 45%;
+}
+
+.btnCancel {
+    background: rgb(160, 160, 160);
+}
+
+.btnDelete {
+    background: rgb(163, 19, 19);
 }
 
 

@@ -1,0 +1,11 @@
+.tarde {
+    background: rgb(255, 225, 179) !important;
+}
+
+.ausente {
+    background: rgb(255, 177, 177) !important;
+}
+
+tbody>tr {
+    background: rgb(188, 255, 188);
+}

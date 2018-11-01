@@ -1,4 +1,4 @@
-<mat-progress-bar mode="indeterminate" *ngIf="request" class="barLoader"></mat-progress-bar>
+<mat-progress-bar mode="indeterminate" *ngIf="sendingData > 0" class="barLoader"></mat-progress-bar>
 
 <div class="cardSpace" [@background]="state.background">
 
@@ -10,7 +10,7 @@
 
     <div class="cardModule" [@card]="state.card">
         <h2>Crear pagos</h2>
-        <form autocomplete="off" (submit)="setDataToProcess()" [ngClass]="{ 'loadingForm': sendingData > 1}" *ngIf="window == 1">
+        <form autocomplete="off" (submit)="setDataToProcess()" [ngClass]="{ 'loadingForm': sendingData > 0}" *ngIf="window == 1">
 
             <div>
                 <label>Mes:</label><br>
@@ -29,34 +29,49 @@
 
         </form>
 
-        <form *ngIf="window == 2" (submit)="nextWorkerAnalice()">
-            <h3>Periodo {{ period.from }} / {{ period.to }}</h3>
-            <h5>{{ users[userSelect].name }}</h5>
+        <div *ngIf="window == 2" [ngClass]="{ 'loadingForm': sendingData > 0}">
 
-            <div class="responsive-table">
-                <table align="center">
-                    <thead>
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Dia</th>
-                            <th>Tiempo de trabajo</th>
-                            <th>Tiempo no Trabajado</th>
+            <div *ngIf="analizedArray.length > 0 ">
 
-                        </tr>
-                        <!-- <th colspan="3">Opciones</th> -->
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let analized of daysAnalized">
-                            <td>{{ analized.day }}</td>
-                            <td>{{ analized.day.getDay() }}</td>
-                            <td>{{ analized.timeToWork.hours }}:{{ analized.timeToWork.minutes }}</td>
-                            <td>{{ analized.timeNotWorked.hours }}:{{ analized.timeNotWorked.minutes }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <h4>Periodo {{ period.from }} / {{ period.to }}</h4>
+
+                <button (click)="changeWorkToAnalize(-1)">Regresar</button>
+                <button *ngIf="users[userSelect].salary != undefined && analizedArray[userSelect].payment.id == null" (click)="generateReceipt()">Generar Recibo</button>
+
+
+                <p>Trabajador: {{ users[userSelect].name }}</p>
+                <div *ngIf="users[userSelect].salary != undefined ">
+                    <p *ngIf="analizedArray[userSelect].daysLate > 0" matTooltip="Días con retraso"><i class="material-icons">watch_later</i> {{ analizedArray[userSelect].daysLate }}</p>
+                    <p *ngIf="analizedArray[userSelect].daysAbsent > 0" matTooltip="Días de inasistencia"><i class="material-icons">warning</i> {{ analizedArray[userSelect].daysAbsent }}</p>
+                    <p>Tipo de Pago: {{ users[userSelect].salary.returnSalaryView() }}</p>
+                    <p>Monto: ${{ users[userSelect].salary.amount }} - Bono: ${{ users[userSelect].salary.bonus }}</p>
+                    <p>Pago Sugerido: ${{ analizedArray[userSelect].paymentSugest }}</p>
+                    <input [(ngModel)]="analizedArray[userSelect].paymentReal" name="paymentReal">
+                </div>
+
+                <div class="responsive-table">
+                    <table align="center">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Tiempo de trabajo</th>
+                                <th>Tiempo no Trabajado</th>
+
+                            </tr>
+                            <!-- <th colspan="3">Opciones</th> -->
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let analized of analizedArray[userSelect].daysAnalized" [ngClass]="{ 'tarde': analized.status == 2, 'ausente': analized.status == 0 }">
+                                <td>{{ analized.day.getDay() | dayPipe }} {{ analized.day.getDate() }}</td>
+                                <td>{{ analized.timeToWork.hours }}:{{ analized.timeToWork.minutes }}</td>
+                                <td>{{ analized.timeNotWorked.hours }}:{{ analized.timeNotWorked.minutes }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button *ngIf="users[userSelect + 1] != undefined" (click)="changeWorkToAnalize(1)" class="btn btnPrimary"> Continuar</button>
             </div>
-            <button class="btn btnPrimary"> Continuar</button>
-        </form>
+        </div>
 
     </div>
 </div>

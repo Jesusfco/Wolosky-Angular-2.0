@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NotificationService } from './notification.service';
 
 @Component({
   selector: 'app-notification',
@@ -10,33 +11,48 @@ export class NotificationComponent implements OnInit {
 
   public showNotifications: boolean = false;
   public notifications = [];
+  public outletOutput: any;
   
   public interval: any;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private _http: NotificationService) {
 
     this.interval = setInterval(() => this.checkStorage(), 1000);
 
-   }
+    this.outletOutput = this._http.getData().subscribe(x => {
+      console.log(x);
+      if (x.action === 'notification') {
+        console.log(x);
+        this.logicNotification(x.data);
+      }
+
+    });
+    
+
+  }
 
   ngOnInit() {
   }
 
-  checkStorage(){
-
+  checkStorage() {
     let request = localStorage.getItem('request');
     localStorage.removeItem('request');
 
     if(request == undefined) return;
+    let x = JSON.parse(request);
+    this.logicNotification(x);
+  }
 
+  logicNotification(x){
+    
     let message = {
       title: null,
       description: null,
       type: 1,
-      id: null
+      id: null,      
     };
 
-    let x = JSON.parse(request);
+    
 
     // console.log(x);
 
@@ -142,26 +158,28 @@ export class NotificationComponent implements OnInit {
       }
     }
 
-    // setTimeout(() => {
+    if(x.time == undefined) return;
+    
+    setTimeout(() => {
 
       setTimeout(() => {
-    //     if(this.notifications.length > 0) 
+        if(this.notifications.length > 0) 
 
-    //     for(let i = 0; i < this.notifications.length; i++) {
-    //       if(this.notifications[i].id == message.id){
-    //         this.notifications.splice(i, 1);
-              // this.setPositionNotification();
-    //         break;
+        for(let i = 0; i < this.notifications.length; i++) {
+          if(this.notifications[i].id == message.id){
+            this.notifications.splice(i, 1);
+              this.setPositionNotification();
+            break;
     
-    //       }
-    //     }
+          }
+        }
         
         
       }, 700);
 
-    //   this.addClasses(message.id);
+      this.addClasses(message.id);
 
-    // }, 10000);
+    }, x.time);
 
   }
 

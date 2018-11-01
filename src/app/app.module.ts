@@ -111,6 +111,7 @@ import { WorkersPaymentComponent } from './workers-payment/workers-payment.compo
 import { WorkPaymentService } from './workers-payment/work-payment.service';
 import { PaymentCreateComponent } from './workers-payment/payment-create/payment-create.component';
 import { PaymentShowComponent } from './workers-payment/payment-show/payment-show.component';
+import { NotificationService } from './notification/notification.service';
 
 @NgModule({
   declarations: [
@@ -220,7 +221,8 @@ import { PaymentShowComponent } from './workers-payment/payment-show/payment-sho
         SaleDebtService,
         MonthlyPriceService,
         ScheduleService,
-        WorkPaymentService
+        WorkPaymentService,
+        NotificationService
       ],
 
   bootstrap: [AppComponent]
