@@ -44,7 +44,7 @@
                     <i class="material-icons" *ngIf="users[userSelect - 1] != undefined" (click)="changeWorkToAnalize(-1)" matTooltip="Anterior empleado">arrow_back</i>
                     <i class="material-icons" *ngIf="users[userSelect + 1] != undefined" (click)="changeWorkToAnalize(1)" matTooltip="Siguiente empleado">arrow_forward</i>
                     <i class="material-icons green-text" *ngIf="users[userSelect].salary != undefined && analizedArray[userSelect].payment.id == null" (click)="generateReceipt()" matTooltip="Generar Recibo">receipt</i>
-                    <i class="material-icons blue-text" *ngIf="users[userSelect + 1] != undefined" (click)="changeWorkToAnalize(1)" matTooltip="Analisis Completo">playlist_add_check</i>
+                    <i class="material-icons blue-text" (click)="changeWorkToAnalize(1)" matTooltip="Analisis Completo">playlist_add_check</i>
                 </div>
 
                 <p>{{ users[userSelect].name }}</p>

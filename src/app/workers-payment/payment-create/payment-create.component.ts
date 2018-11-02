@@ -1,5 +1,5 @@
 import { DayAnalized } from './../../classes/dayAnalized';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { cardPop, backgroundOpacity} from '../../animations';
 import { WorkPaymentService } from '../work-payment.service';
@@ -14,6 +14,25 @@ import { Payment } from '../../classes/payment';
   animations: [cardPop, backgroundOpacity],
 })
 export class PaymentCreateComponent implements OnInit {
+
+  @HostListener('document:keyup', ['$event']) sss($event) {
+    
+    if($event.keyCode === 27) {
+      this.closePop();
+    }
+    
+    if(this.window == 2) {
+    
+      if($event.keyCode == 39 ) {
+        this.changeWorkToAnalize(1);
+      } else if($event.keyCode == 37 ) {
+        this.changeWorkToAnalize(-1);
+      } 
+
+    }
+      
+
+  }
 
   public sendingData: number = 0;
   public window = 1;
