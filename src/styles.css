@@ -605,3 +605,19 @@ select:-webkit-autofill {
         visibility: visible !important;
     }
 }
+
+.red-text {
+    color: rgb(175, 0, 0);
+}
+
+.orange-text {
+    color: orange;
+}
+
+.green-text {
+    color: rgb(0, 194, 0);
+}
+
+.blue-text {
+    color: rgb(5, 104, 197);
+}

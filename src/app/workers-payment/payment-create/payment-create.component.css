@@ -9,3 +9,12 @@
 tbody>tr {
     background: rgb(188, 255, 188);
 }
+
+.daysIcons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.daysIcons div {
+    cursor: pointer;
+}

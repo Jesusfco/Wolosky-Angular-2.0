@@ -116,7 +116,17 @@ export class PaymentCreateComponent implements OnInit {
           this.users.push(object);
         }
 
-        this.analiceRecord();
+        this.userSelect = 0;
+
+        for(let user of this.users){
+          
+          this.analiceRecords();
+          this.userSelect++;
+
+        }
+
+        this.userSelect = 0;
+        
 
       },
       error => localStorage.setItem('request', JSON.stringify(error))
@@ -130,15 +140,12 @@ export class PaymentCreateComponent implements OnInit {
   changeWorkToAnalize(i) {
 
     if(this.users[this.userSelect + i] != undefined) {
-      this.userSelect += i;
-
-      if(this.analizedArray[this.userSelect] == undefined)       
-        this.analiceRecord();
+      this.userSelect += i;      
     }
   }
 
-  analiceRecord() {
-
+  analiceRecords() {
+    
     let d = new Date();
     let from = new Date();
     let to = new Date();
