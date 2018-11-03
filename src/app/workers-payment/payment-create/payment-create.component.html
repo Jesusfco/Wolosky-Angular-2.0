@@ -50,10 +50,10 @@
                 <p>{{ users[userSelect].name }}</p>
                 <div class="flexRow" *ngIf="users[userSelect].salary != undefined ">
                     <div class="l12 daysIcons">
-                        <div *ngIf="analizedArray[userSelect].daysLate > 0" matTooltip="Días con retraso">
+                        <div matTooltip="Días con retraso">
                             <i class="material-icons orange-text">watch_later</i> {{ analizedArray[userSelect].daysLate }}
                         </div>
-                        <div *ngIf="analizedArray[userSelect].daysAbsent > 0" matTooltip="Días de inasistencia">
+                        <div matTooltip="Días de inasistencia">
                             <i class="material-icons red-text">warning</i> {{ analizedArray[userSelect].daysAbsent }}
                         </div>
                     </div>

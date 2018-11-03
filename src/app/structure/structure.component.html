@@ -55,6 +55,8 @@
 
         <li [routerLink]="['/pago-trabajadores']" *ngIf="userData.getUserType() >= 6"><button mat-button>Pago Trabajadores</button></li>
 
+        <li [routerLink]="['/asistencias']" *ngIf="userData.getUserType() >= 6"><button mat-button>Asistencias</button></li>
+
         <li [routerLink]="['/monthly-cost']"><button mat-button>Costos por Hora</button></li>
 
     </ul>

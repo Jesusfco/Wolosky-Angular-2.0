@@ -112,6 +112,8 @@ import { WorkPaymentService } from './workers-payment/work-payment.service';
 import { PaymentCreateComponent } from './workers-payment/payment-create/payment-create.component';
 import { PaymentShowComponent } from './workers-payment/payment-show/payment-show.component';
 import { NotificationService } from './notification/notification.service';
+import { RecordsComponent } from './records/records.component';
+import { RecordService } from './records/record.service';
 
 @NgModule({
   declarations: [
@@ -164,6 +166,7 @@ import { NotificationService } from './notification/notification.service';
     WorkersPaymentComponent,
     PaymentCreateComponent,
     PaymentShowComponent,
+    RecordsComponent,
   ],
   imports: [
     BrowserModule,
@@ -222,6 +225,7 @@ import { NotificationService } from './notification/notification.service';
         MonthlyPriceService,
         ScheduleService,
         WorkPaymentService,
+        RecordService,
         NotificationService
       ],
 

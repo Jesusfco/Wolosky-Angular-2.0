@@ -56,6 +56,7 @@ import { SchedulesComponent } from './schedules/schedules.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PaymentCreateComponent } from './workers-payment/payment-create/payment-create.component';
 import { PaymentShowComponent } from './workers-payment/payment-show/payment-show.component';
+import { RecordsComponent } from './records/records.component';
 
 
 export const routes: Routes = [
@@ -109,6 +110,10 @@ export const routes: Routes = [
             { path: 'crear', component: PaymentCreateComponent },
             { path: 'show/:id', component: PaymentShowComponent },
         ]
+    },
+    {
+        path: 'asistencias',
+        component: RecordsComponent,
     },
 
     {
