@@ -21,7 +21,7 @@
             </p>
 
             <div *ngIf="notifications.viewDebtors" id="debtors">
-                <p *ngFor="let deb of notifications.debtors" (click)="debtorPay(deb.id)" [routerLink]="['/receipt/create']"> {{ deb.name }}</p>
+                <p *ngFor="let deb of notifications.debtors" (click)="debtorPay(deb)" [routerLink]="['/receipt/create']"> {{ deb.name }}</p>
             </div>
             <!-- <p>Hay #{{ notifications.debtorsInscription }} alumnos con inscripciones pendientes de este mes.</p> -->
         </div>
@@ -58,7 +58,7 @@
                 <!-- <th colspan="3">Opciones</th> -->
             </thead>
             <tbody *ngIf="storage.getUserType() >= 6">
-                <tr *ngFor="let re of receipts" [routerLink]="['/receipt/edit', re.id]" (click)="updateStartObservable()">
+                <tr *ngFor="let re of receipts" [routerLink]="['/receipt/edit', re.id]">
                     <td class="left">{{ re.user_name }}</td>
                     <td>{{ re.created_at }}</td>
                     <td>$ {{ re.amount }}</td>

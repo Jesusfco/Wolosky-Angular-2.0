@@ -1,5 +1,5 @@
 import { NotificationService } from './../../notification/notification.service';
-import { Component, OnInit,OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BackgroundCard, Card } from '../../animations/card.animation';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReceiptService } from '../receipt.service';
@@ -67,34 +67,10 @@ export class CreateRecieptComponent implements OnInit {
       let d = new Date();
       this.payment.month = d.getMonth() + 1;
 
-      this.checkDebtorLocalStorage();
-
-      
 
     }
 
-  checkDebtorLocalStorage(){
-
-    if(localStorage.getItem('debtorId') == undefined) return;
-
-    this.sendingData.monthly = true;
-    this._http.getMonthlyPayment({id: localStorage.getItem('debtorId')}).then(
-
-      data => {
-
-        this.payment.monthly = parseFloat(data.amount);
-        this.payment.user_id = data.user.id;
-        this.payment.user_name = data.user.name;
-        this.validateMonthlyPayment();
-
-      }, error => console.log(error)
-
-    ).then(
-
-      () => this.sendingData.monthly = false
-
-    );
-  }
+  
 
   ngOnInit() {
     setTimeout(() => {
@@ -103,13 +79,7 @@ export class CreateRecieptComponent implements OnInit {
     }, 100);
   }
 
-  ngOnDestroy(){
-
-    if(localStorage.getItem('receiptStatus') == undefined) return;
-
-    localStorage.removeItem('debtorId');
-    localStorage.setItem('receiptStatus', '0');
-  }
+ 
 
   closePop(){    
     setTimeout(() => {

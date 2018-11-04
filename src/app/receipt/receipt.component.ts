@@ -172,6 +172,10 @@ export class ReceiptComponent implements OnInit {
     );
   }  
 
+  debtorPay(deb) {
+    
+  }
+
   newReceipt(data) {
 
     let newReceipt: Receipt = data;
