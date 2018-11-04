@@ -12,7 +12,7 @@
     <div class="cardModule" [@card]="state.card">
         <h2 class="centerText">Crear Recibo</h2>
 
-        <form *ngIf="request == undefined" (submit)="createReceipt()">
+        <form *ngIf="window == 1" (submit)="createReceipt()">
             <div class="flexform">
 
                 <div *ngIf="payment.payment_type == false" class="checkBox"><input [(ngModel)]="payment.payment_type" name="payment_type" type="checkbox">Efectivo</div>
@@ -74,7 +74,7 @@
 
                 <div *ngIf="payment.type <= 3">
                     <label>Año:</label><br>
-                    <input [(ngModel)]="payment.year" name="year" type="number" min="2000" max="9999">
+                    <input [(ngModel)]="payment.year" name="year" type="number" min="2000" max="9999" (change)="validateMonthlyPayment()">
 
                 </div>
 
@@ -90,12 +90,16 @@
 
             </div>
         </form>
-        <button class="btn" *ngIf="request != undefined" (click)="printReceipt()">Imprimir Recibo</button>
+
+        <div *ngIf="window == 2">
+            <button class="btn" *ngIf="request != undefined" (click)="printReceipt()">Imprimir Recibo</button>
+        </div>
+
 
     </div>
 </div>
 
-<div *ngIf="request != undefined" id="reciboNew">
+<div *ngIf="window == 2" id="reciboNew">
     <h1>RECIBO # {{ request.id }}</h1>
     <p>MONTO: $ {{ request.amount }}</p>
     <p>ALUMNO/A: {{ payment.user_name }}</p>

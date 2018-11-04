@@ -17,5 +17,33 @@ export class NotificationService {
   sendData(message: any) {
     this.subject.next(message);
   }
+
+  sendNotification(title: String, description: String, time: Number) {
+
+    let message = {
+      title: title,
+      description: description,
+      time: time,
+      status: 200,
+    };
+
+    
+    let notification = {
+      action: 'notification',
+      data: message
+    };
+
+    this.subject.next(notification);
+  }
+
+  sendError(message:any) {
+    
+    let data = {
+      action: 'notification',
+      data: message
+    };
+
+    this.subject.next(data);
+  }
   
 }

@@ -31,6 +31,7 @@ export class CreateRecieptComponent implements OnInit {
     {value: 12, view: 'Diciembre'},
   ];
 
+  public window: number = 1;
   public state = {
     background: 'initial',
     card: 'initial',
@@ -143,21 +144,34 @@ export class CreateRecieptComponent implements OnInit {
 
     let d = new Date();        
 
+    // si el año es mayor al actual
+    if(d.getFullYear() < this.payment.year) {
+        this.payment.monthlyAmount = (this.payment.monthly - this.desc);
+        this.validation.paymentDate = 1;
+        return;
+    }
+
     if((d.getMonth() + 1) == this.payment.month){
+
       if(d.getDate() <= 3){
          this.payment.monthlyAmount = (this.payment.monthly - this.desc);
          this.validation.paymentDate = 1;
         }
-        else if(d.getDate() >= 11){
+
+        else if(d.getDate() >= 11) {
+
           this.payment.monthlyAmount = (this.payment.monthly + this.recharge);
           this.validation.paymentDate = 2;
+
       } else {
+
         this.payment.monthlyAmount = this.payment.monthly;
+        
       }
 
     }
 
-    else if((d.getMonth() + 1) < this.payment.month){
+    else if((d.getMonth() + 1) < this.payment.month) {
       this.payment.monthlyAmount = (this.payment.monthly - this.desc);
       this.validation.paymentDate = 1;
     } else {
@@ -227,18 +241,13 @@ export class CreateRecieptComponent implements OnInit {
         this._http.sendData({action: 'new', data: receipt});
         
         if(this.payment.payment_type == false) 
-          this.storage.updateCash(data.amount);
+          this.storage.updateCash(data.amount);        
 
-        let not = {
-          title: 'Recibo Creado',
-          description: 'Datos Guardados en el Servidor',
-          status: 200
-        };
-
-        this.notification.sendData({notification: 'notification', data: not});
+        this.notification.sendNotification('Recibo Creado', 'Datos guardados en el servidor', 2500);
+        this.window++;
 
       },
-      error => this.notification.sendData({notification: 'notification', data: error})
+      error => this.notification.sendError(error)
     ).then(
       () => this.sendingData.request = false
     );
