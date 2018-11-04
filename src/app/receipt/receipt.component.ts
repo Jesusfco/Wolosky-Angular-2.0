@@ -40,6 +40,7 @@ export class ReceiptComponent implements OnInit {
   public timer = 0;
   public interval: any = 0;
 
+  public outletOutput: any;
   public sendingData = {
     notifications: false,
     receipts: false,
@@ -51,6 +52,18 @@ export class ReceiptComponent implements OnInit {
     this.getNotifications();
     this.getDates();
     this.getReceipts();
+
+    this.outletOutput = this._http.getData().subscribe(x => {
+      
+      if (x.action == 'new') {
+        this.newReceipt(x.data);        
+
+      } else if(x.action == "update")
+        this.update(x.data);
+        else if(x.action == 'delete')
+        this.delete(x.data);
+      
+    });
   }
 
   ngOnInit() {
@@ -75,33 +88,6 @@ export class ReceiptComponent implements OnInit {
     } else {
       this.search.from = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-" + "01";
       this.search.to = d.getFullYear() + "-" + (d.getMonth() + 2 ) + "-" + "01";
-    }
-  }
-
-  debtorPay(id){ 
-
-    localStorage.setItem('debtorId', id);
-    this.redirectCreateUser();
-    
-  }
-
-  redirectCreateUser(){
-    
-    localStorage.setItem('receiptStatus', '1');
-    this.interval = setInterval(() => this.intervalSaleLogic(), 1000);
-
-  }
-
-  intervalSaleLogic(){
-    
-    if(localStorage.getItem('receiptStatus') == undefined){
-      
-      this.getNewReceipt();
-      clearInterval(this.interval);
-      
-    } else if(localStorage.getItem('receiptStatus') == '0'){
-      localStorage.removeItem('receiptStatus');
-      clearInterval(this.interval);
     }
   }
 
@@ -167,40 +153,28 @@ export class ReceiptComponent implements OnInit {
       this.search.id = null;
     this._http.getReceipt(this.search).then(
       data => {
-        this.receipts = data.data;
+
+        this.receipts = [];
+
+        for(let da of data.data) {
+
+          let receipt = new Receipt();
+          receipt.setData(da);
+          this.receipts.push(receipt);
+
+        }
+        
         this.search.total = data.total;
       },
       error => localStorage.setItem('request', JSON.stringify(error))
     ).then(
       () => this.sendingData.receipts = false,
     );
-  }
+  }  
 
-  // ACTUALIZAR RECIBO
-  updateStartObservable() {
-    localStorage.setItem('receiptStatus', '1');
-    this.interval = setInterval(() => this.intervalSaleLogic2(), 1000);
-  }
+  newReceipt(data) {
 
-
-  //INTERVALO PARA ACTUALIZACION
-  intervalSaleLogic2(){
-    
-    if(localStorage.getItem('receiptStatus') == undefined){
-      
-      this.getNotifications();
-      this.getReceipts();
-      clearInterval(this.interval);
-      
-    } else if(localStorage.getItem('receiptStatus') == '0'){
-      localStorage.removeItem('receiptStatus');
-      clearInterval(this.interval);
-    }
-  }
-
-  getNewReceipt() {
-
-    let newReceipt: Receipt = JSON.parse(localStorage.getItem('newReceipt'));
+    let newReceipt: Receipt = data;
 
     this.receipts.unshift(newReceipt);
 
@@ -232,8 +206,36 @@ export class ReceiptComponent implements OnInit {
 
     this.search.total++;
 
-    localStorage.removeItem('newReceipt');
+    
 
+  }
+
+  update(data: Receipt) {
+    
+    for(let receipt of this.receipts) {
+      if(receipt.id == data.id) {
+        receipt = data;
+        break;
+      }
+    }
+  }
+
+  delete(data) {
+
+    let i = 0;
+
+    for(let receipt of this.receipts) {
+
+      if(receipt.id == data.id) {
+
+        this.receipts.splice(i, 1);
+        break;
+
+      }
+
+      i++;
+
+    }
   }
 
 }

@@ -1,9 +1,11 @@
+import { NotificationService } from './../../notification/notification.service';
 import { Component, OnInit,OnDestroy } from '@angular/core';
 import { BackgroundCard, Card } from '../../animations/card.animation';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReceiptService } from '../receipt.service';
 import { Storage } from '../../classes/storage';
 import { Receipt } from '../../classes/receipt';
+import { User } from '../../classes/user';
 // import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
@@ -37,7 +39,7 @@ export class CreateRecieptComponent implements OnInit {
   public payment: Receipt = new Receipt();
    
 
-  public sugests: any = [];
+  public sugests: Array<User> = [];
   public sendingData: any = {
     request: false,
     sugest: false,
@@ -59,7 +61,8 @@ export class CreateRecieptComponent implements OnInit {
 
   constructor(private router: Router,
     private actRou: ActivatedRoute,
-    private _http: ReceiptService) { 
+    private _http: ReceiptService,
+    private notification: NotificationService) { 
 
       let d = new Date();
       this.payment.month = d.getMonth() + 1;
@@ -133,7 +136,17 @@ export class CreateRecieptComponent implements OnInit {
         this.sendingData.sugest = true;
         this._http.sugestUserReceipt({search: this.payment.user_name}).then(
           data => {
-            this.sugests = data;
+
+            this.sugests = [];
+
+            for(let d of data) {
+
+              let user = new User();
+              user.setValues(d);
+              this.sugests.push(user);
+
+            }
+             
           }, error => console.log(error)
         ).then(
           () => this.sendingData.sugest = false
@@ -143,34 +156,17 @@ export class CreateRecieptComponent implements OnInit {
     }, 350);
   }
 
-  getMonthlyFrom(id){    
-    
-    this.payment.user_id = id;
-    
+  setMonthlyPayment(user: User){
+
     if(this.payment.type !== 1) return;
 
-    this.sendingData.monthly = true;
+    this.payment.user_id = user.id;
+    
     this.payment.monthlyAmount = 0;
+    this.payment.monthly = user.monthly_payment.amount;
+    this.payment.user = user;
+    this.validateMonthlyPayment();    
 
-    this._http.getMonthlyPayment({id: id}).then(
-      data => {
-        this.payment.monthly = parseInt(data.amount);
-        this.validateMonthlyPayment();
-      },
-      error => localStorage.setItem('request', JSON.stringify(error))
-    ).then(
-      () => this.sendingData.monthly = false
-    );
-
-  }
-
-  
-
-  validateDescription(){
-    if(this.payment.description == ''){
-      this.validation.description = 1;
-      this.validation.form = false;
-    }
   }
 
   validateMonthlyPayment(){
@@ -203,7 +199,7 @@ export class CreateRecieptComponent implements OnInit {
   createReceipt(){
     
     this.restoreValidations();
-    if(this.payment.type == 5) this.validateDescription();
+    // if(this.payment.type == 5) this.validateDescription();
     if(this.validation.form == false) return;
     
     this.sendingData.request = true;
@@ -255,15 +251,10 @@ export class CreateRecieptComponent implements OnInit {
     this._http.postNewReceipt(this.payment).then(
       data => {
 
-        this.request = data;
+        let receipt: Receipt = new Receipt();
+        receipt.setData(data);
 
-        data.month = parseInt(data.month);
-        data.id = parseInt(data.id);
-        data.amount = parseFloat(data.amount);
-        data.user_name = this.payment.user_name;        
-
-        localStorage.setItem('newReceipt', JSON.stringify(data));
-        localStorage.removeItem("receiptStatus");
+        this._http.sendData({action: 'new', data: receipt});
         
         if(this.payment.payment_type == false) 
           this.storage.updateCash(data.amount);
@@ -274,10 +265,10 @@ export class CreateRecieptComponent implements OnInit {
           status: 200
         };
 
-        localStorage.setItem('request', JSON.stringify(not))
+        this.notification.sendData({notification: 'notification', data: not});
 
       },
-      error => localStorage.setItem('request', JSON.stringify(error))
+      error => this.notification.sendData({notification: 'notification', data: error})
     ).then(
       () => this.sendingData.request = false
     );

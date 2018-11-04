@@ -38,7 +38,7 @@ export class User {
     public updated_at: string;    
 
     public salary: Salary;
-    public monthlyPayment: MonthlyPayment;
+    public monthly_payment: MonthlyPayment = new MonthlyPayment();
     public schedules: Array<Schedule> = [];
     public references: Array<Reference> = [];
     public payments: Array<Payment> = [];
@@ -103,10 +103,10 @@ export class User {
             this.salary = sal;
         }
 
-        if(data.monthlyPayment != undefined) {
-            let monthlyPayment = new MonthlyPayment();
-            monthlyPayment.setValues(data.monthlyPayment);
-            this.monthlyPayment = monthlyPayment;
+        if(data.monthly_payment != undefined) {
+            
+            this.monthly_payment.setValues(data.monthly_payment);
+            
         }
 
         if(data.schedules != undefined) {

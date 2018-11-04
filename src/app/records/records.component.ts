@@ -16,6 +16,7 @@ export class RecordsComponent implements OnInit {
   public search = {
     from: '',
     to: '',
+    name: 'caro',
     items: 20,
     page: 1,
     total: 0,
@@ -52,7 +53,7 @@ export class RecordsComponent implements OnInit {
         this.records.push(record);
 
       }
-      
+
     }, error => this.notification.sendData(error)
   ).then(() => this.sendingData-- );
 

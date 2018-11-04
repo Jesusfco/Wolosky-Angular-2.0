@@ -23,8 +23,8 @@
                     <input [(ngModel)]="payment.user_name" name="user_name" type="search" [matAutocomplete]="auto" (keyup)="searchSugest($event)">
 
                     <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let sugest of sugests" [value]="sugest.name" (onSelectionChange)="getMonthlyFrom(sugest.id)">
-                            {{ sugest.name }}
+                        <mat-option *ngFor="let user of sugests" [value]="user.name" (onSelectionChange)="setMonthlyPayment(user)">
+                            {{ user.name }}
                         </mat-option>
                     </mat-autocomplete>
 

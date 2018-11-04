@@ -73,7 +73,7 @@
 
             <tbody *ngIf="storage.getUserType() == 3">
                 <tr *ngFor="let re of receipts">
-                    <td class="left">{{ re.user_name }}</td>
+                    <td class="left">{{ re.user.name }}</td>
                     <td>{{ re.created_at }}</td>
                     <td>$ {{ re.amount }}</td>
                     <td *ngIf="re.type == 1">Mensualidad</td>
@@ -94,7 +94,7 @@
 
 </div>
 
-<a (click)="redirectCreateUser()" [routerLink]="['/receipt/create']">
+<a [routerLink]="['/receipt/create']">
     <div class="botonFloat">
         <a class="botonA" matTooltip="Crear recibo"><i class="material-icons">add</i></a>
     </div>

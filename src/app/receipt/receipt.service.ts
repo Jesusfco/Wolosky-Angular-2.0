@@ -2,6 +2,7 @@ import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 import "rxjs";
 import { Observable } from "rxjs";
+import { Subject } from 'rxjs/Subject';
 
 import { Url } from '../classes/url';
 import { Storage } from '../classes/storage';
@@ -11,8 +12,17 @@ export class ReceiptService {
 
   public link: Url = new Url();
   public token: Storage = new Storage();
+  private subject = new Subject<any>();  
 
   constructor(private _http: Http) { }
+
+  getData(): Observable<any> {
+    return this.subject.asObservable();
+  }
+
+  sendData(message: any) {
+    this.subject.next(message);
+  }
 
   getReceiptAnalisis(){
     return this._http.get(this.link.url + "receipt/analisis" + this.token.getTokenUrl())
