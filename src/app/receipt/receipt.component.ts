@@ -49,9 +49,9 @@ export class ReceiptComponent implements OnInit {
   public storage: Storage = new Storage();
   
   constructor(private _http: ReceiptService) { 
-    this.getNotifications();
+    // this.getNotifications();
     this.getDates();
-    this.getReceipts();
+    // this.getReceipts();
 
     this.outletOutput = this._http.getData().subscribe(x => {
       

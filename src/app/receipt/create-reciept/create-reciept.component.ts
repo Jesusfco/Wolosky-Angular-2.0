@@ -53,6 +53,7 @@ export class CreateRecieptComponent implements OnInit {
   public validation = {
     paymentDate: 0,
     description: 0,
+    uniquePaymentMonthly: 0,
     form: true,
   };
   
@@ -128,21 +129,23 @@ export class CreateRecieptComponent implements OnInit {
   }
 
   setMonthlyPayment(user: User){
-
-    if(this.payment.type !== 1) return;
+    
+    if(this.payment.type !== 1) return;    
 
     this.payment.user_id = user.id;
     
     this.payment.monthlyAmount = 0;
     this.payment.monthly = user.monthly_payment.amount;
     this.payment.user = user;
+    
     this.validateMonthlyPayment();    
 
   }
 
-  validateMonthlyPayment(){
+  validateMonthlyPayment(){    
 
     let d = new Date();        
+    this.validation.paymentDate = 0;
 
     // si el año es mayor al actual
     if(d.getFullYear() < this.payment.year) {
@@ -151,7 +154,8 @@ export class CreateRecieptComponent implements OnInit {
         return;
     }
 
-    if((d.getMonth() + 1) == this.payment.month){
+    //DENTRO DEL MISMO MES
+    if((d.getMonth() + 1) == this.payment.month){      
 
       if(d.getDate() <= 3){
          this.payment.monthlyAmount = (this.payment.monthly - this.desc);
@@ -163,8 +167,8 @@ export class CreateRecieptComponent implements OnInit {
           this.payment.monthlyAmount = (this.payment.monthly + this.recharge);
           this.validation.paymentDate = 2;
 
-      } else {
-
+      } else {        
+        
         this.payment.monthlyAmount = this.payment.monthly;
         
       }
@@ -194,7 +198,7 @@ export class CreateRecieptComponent implements OnInit {
         data => {
           
           if(data == true) {
-            alert('Este Usuario ya realizo el pago del mes actual');
+            this.validation.uniquePaymentMonthly = 1;
           } else if (data == false) {
 
             this.sendReceipt();
@@ -222,6 +226,7 @@ export class CreateRecieptComponent implements OnInit {
       paymentDate: this.validation.paymentDate,
       description: 0,
       form: true,
+      uniquePaymentMonthly: 0,
     };
 
   }

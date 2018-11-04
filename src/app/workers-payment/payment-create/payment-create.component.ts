@@ -190,7 +190,7 @@ export class PaymentCreateComponent implements OnInit {
           let scheduleCollectionDay = [];
           for(let schedule of this.users[this.userSelect].schedules) {
             if(schedule.active != true) continue;
-           if(schedule.day_id == dateCheck.getDay()) {
+            if(schedule.day_id == dateCheck.getDay()) {
  
              scheduleCollectionDay.push(schedule);
  

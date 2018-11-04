@@ -17,7 +17,7 @@
 
                 <div *ngIf="payment.payment_type == false" class="checkBox"><input [(ngModel)]="payment.payment_type" name="payment_type" type="checkbox">Efectivo</div>
                 <div *ngIf="payment.payment_type == true" class="checkBox"><input [(ngModel)]="payment.payment_type" name="payment_type" type="checkbox">Tarjeta</div>
-
+                <p class="l12" *ngIf="validation.uniquePaymentMonthly == 1">Ya se realizo el pago de este mes</p><br>
                 <div>
                     <label>Nombre de Alumno:</label><br>
                     <input [(ngModel)]="payment.user_name" name="user_name" type="search" [matAutocomplete]="auto" (keyup)="searchSugest($event)">
