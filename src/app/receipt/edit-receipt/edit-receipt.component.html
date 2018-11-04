@@ -11,30 +11,38 @@
     <div class="cardModule" [@card]="state.card">
         <h2>Crear Recibo</h2>
 
-        <mat-icon class="iconTrash" (click)="delete()">delete</mat-icon>
-
-        <form (submit)="update()">
-
-            <div class="">
-
-                <div *ngIf="receipt.payment_type == false" class="checkBox">Efectivo
-                    <mat-icon>monetization_on</mat-icon>
-                </div>
-                <div *ngIf="receipt.payment_type == true" class="checkBox">Tarjeta
-                    <mat-icon>credit_card</mat-icon>
-                </div>
+        <div class="options">
+            <i class="material-icons" (click)="printReceipt()" matTooltip="Imprimir recibo">print</i>
+            <i class="material-icons" (click)="windowChange()" matTooltip="Eliminar Recibo">delete</i>
+        </div>
 
 
-                <div>
-                    <label>Nombre de Alumno:</label><br>
-                    <input class="l12" [(ngModel)]="receipt.user_id" name="user_id" type="search" disabled>
+        <form class="flex" (submit)="update()" *ngIf="window == 1">
 
-                </div>
 
-                <div>
 
-                    <label>Tipo de pago:</label><br>
-                    <select class="l6" [(ngModel)]="receipt.type" name="type" disabled>
+            <div *ngIf="receipt.payment_type == false" class="checkBox">Efectivo
+                <mat-icon>monetization_on</mat-icon>
+            </div>
+            <div *ngIf="receipt.payment_type == true" class="checkBox">Tarjeta
+                <mat-icon>credit_card</mat-icon>
+            </div>
+
+
+            <div class="formData l12">
+                <label>Nombre de Alumno:</label><br>
+                <input class="l12" [(ngModel)]="receipt.user.name" name="user.name" type="search" disabled>
+            </div>
+
+            <div class="formData l12">
+                <label>Creador:</label><br>
+                <input class="l12" [(ngModel)]="receipt.creator.name" name="creator.name" type="search" disabled>
+            </div>
+
+            <div class="formData l6">
+
+                <label>Tipo de pago:</label><br>
+                <select [(ngModel)]="receipt.type" name="type" disabled>
                             <option value="1">Mensualidad</option> 
                             <option value="2">Inscripcion</option>
                             <!-- <option value="3">Días</option> -->
@@ -42,47 +50,56 @@
                             <!-- <option value="5">Evento/Viajes/Otros</option>                                                 -->
                     </select>
 
-                </div>
+            </div>
 
-                <div>
-                    <label>Monto:</label><br>
-                    <input [(ngModel)]="receipt.amount" name="amount" type="number" min="0">
-
-                </div>
-
-
-
-                <div *ngIf="receipt.type == 1">
-                    <label>Mes:</label><br>
-                    <select class="l6" [(ngModel)]="receipt.month" name="month" disabled>
-                        <option  *ngFor="let x of months" value="{{ x.value }}">{{ x.view}}</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label>Año:</label><br>
-                    <input class="l6" [(ngModel)]="receipt.year" name="year" disabled>
-                </div>
-
-                <div *ngIf="receipt.type == 3">
-                    <label>Dias:</label><br>
-                    <input [(ngModel)]="receipt.days" name="days" type="number" min="1" max="30">
-
-                </div>
-
-                <div *ngIf="receipt.type == 5">
-                    <label>Descripción:</label><br>
-                    <input [(ngModel)]="receipt.description" name="description" type="text">
-                    <small class="error" *ngIf="validation.description == 1">Campo requerido*</small>
-
-                </div>
-
-                <button *ngIf="request == false" class="btn formBtn" style="background: rgb(238, 163, 0)" type="submit">Editar Recibo</button>
-                <button *ngIf="request == true" class="btn formBtn" style="background: rgb(209, 209, 209)" disabled>Editar Recibo</button>
+            <div class="formData l6">
+                <label>Monto:</label><br>
+                <input [(ngModel)]="receipt.amount" name="amount" type="number" min="0">
 
             </div>
+
+
+
+            <div *ngIf="receipt.type == 1" class="formData l6">
+                <label>Mes:</label><br>
+                <select [(ngModel)]="receipt.month" name="month" disabled>
+                        <option  *ngFor="let x of months" value="{{ x.value }}">{{ x.view}}</option>
+                    </select>
+            </div>
+
+            <div class="formData l6">
+                <label>Año:</label><br>
+                <input class="l6" [(ngModel)]="receipt.year" name="year" disabled>
+            </div>
+
+            <div *ngIf="receipt.type == 3" class="formData l6">
+                <label>Dias:</label><br>
+                <input [(ngModel)]="receipt.days" name="days" type="number" min="1" max="30">
+
+            </div>
+
+            <div *ngIf="receipt.type == 5" class="formData l6">
+                <label>Descripción:</label><br>
+                <input [(ngModel)]="receipt.description" name="description" type="text">
+                <small class="error" *ngIf="validation.description == 1">Campo requerido*</small>
+
+            </div>
+
+            <button *ngIf="request == false" class="btn" type="submit">Editar Recibo</button>
+            <button *ngIf="request == true" class="btn formBtn" style="background: rgb(209, 209, 209)" disabled>Editar Recibo</button>
+
+
         </form>
-        <button class="btn" *ngIf="request != undefined" (click)="printReceipt()">Imprimir Recibo</button>
+
+        <div *ngIf="window == 2">
+            <h3>¿Estas seguro/a que desea borrar este Recibo?</h3>
+            <p>Una vez eliminado ya no se podra recuperar</p>
+            <div class="confirmCancel">
+                <button class="btn btnCancel" (click)="windowChange()">Cancelar</button>
+                <button class="btn btnDelete" (click)="delete()">Aceptar</button>
+            </div>
+        </div>
+
 
     </div>
 </div>

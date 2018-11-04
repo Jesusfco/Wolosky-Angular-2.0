@@ -243,7 +243,7 @@ export class CreateRecieptComponent implements OnInit {
         let receipt: Receipt = new Receipt();
         receipt.setData(data);
 
-        this._http.sendData({action: 'new', data: receipt});
+        this._http.sendData('new', receipt);
         
         if(this.payment.payment_type == false) 
           this.storage.updateCash(data.amount);        

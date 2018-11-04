@@ -49,15 +49,16 @@ export class ReceiptComponent implements OnInit {
   public storage: Storage = new Storage();
   
   constructor(private _http: ReceiptService) { 
-    // this.getNotifications();
+    this.getNotifications();
     this.getDates();
-    // this.getReceipts();
+    this.getReceipts();
 
     this.outletOutput = this._http.getData().subscribe(x => {
+
+      console.log(x);
       
       if (x.action == 'new') {
         this.newReceipt(x.data);        
-
       } else if(x.action == "update")
         this.update(x.data);
         else if(x.action == 'delete')
@@ -173,7 +174,7 @@ export class ReceiptComponent implements OnInit {
   }  
 
   debtorPay(deb) {
-    
+
   }
 
   newReceipt(data) {
@@ -216,16 +217,20 @@ export class ReceiptComponent implements OnInit {
 
   update(data: Receipt) {
     
-    for(let receipt of this.receipts) {
-      if(receipt.id == data.id) {
-        receipt = data;
+    for(let i = 0; i < this.receipts.length; i++) {
+
+      if(this.receipts[i].id == data.id) {
+        this.receipts[i] = data;
         break;
       }
+
     }
+
   }
 
-  delete(data) {
+  delete(data: Receipt) {
 
+    
     let i = 0;
 
     for(let receipt of this.receipts) {
@@ -233,6 +238,7 @@ export class ReceiptComponent implements OnInit {
       if(receipt.id == data.id) {
 
         this.receipts.splice(i, 1);
+        console.log(data);
         break;
 
       }

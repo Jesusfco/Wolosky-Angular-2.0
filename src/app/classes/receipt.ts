@@ -51,7 +51,7 @@ export class Receipt {
             this.user_name = data.user.name;
         }
         if(data.creator != undefined) {
-            this.creator.setValues(data.user);            
+            this.creator.setValues(data.creator);            
         }
 
     }

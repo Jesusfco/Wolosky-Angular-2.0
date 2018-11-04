@@ -15,9 +15,12 @@
         <form *ngIf="window == 1" (submit)="createReceipt()">
             <div class="flexform">
 
-                <div *ngIf="payment.payment_type == false" class="checkBox"><input [(ngModel)]="payment.payment_type" name="payment_type" type="checkbox">Efectivo</div>
-                <div *ngIf="payment.payment_type == true" class="checkBox"><input [(ngModel)]="payment.payment_type" name="payment_type" type="checkbox">Tarjeta</div>
+
                 <p class="l12" *ngIf="validation.uniquePaymentMonthly == 1">Ya se realizo el pago de este mes</p><br>
+                <h2 class="l12 credit">
+                    <i class="material-icons" [ngClass]="{ 'green-text': payment.payment_type == false}" (click)="payment.payment_type = false" matTooltip="Pago en efectivo">attach_money</i>
+                    <i class="material-icons" [ngClass]="{ 'green-text': payment.payment_type == true}" (click)="payment.payment_type = true" matTooltip="Pago con tarjeta">credit_card</i>
+                </h2>
                 <div>
                     <label>Nombre de Alumno:</label><br>
                     <input [(ngModel)]="payment.user_name" name="user_name" type="search" [matAutocomplete]="auto" (keyup)="searchSugest($event)">
