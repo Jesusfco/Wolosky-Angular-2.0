@@ -32,6 +32,10 @@ export class Storage {
         return localStorage.getItem('userName');
     }
 
+    getUserImg() {
+        return localStorage.getItem('userImg');
+    }
+
     getUserEmail(){
         return localStorage.getItem('userEmail');
     }
@@ -44,11 +48,33 @@ export class Storage {
         return parseInt(localStorage.getItem('userType'));
     }
 
-    storageUserData(data){
+    storageUserData(data) {
+        
         localStorage.setItem('userName', data.name);
         localStorage.setItem('userId', data.id);
         localStorage.setItem('userEmail', data.email);
         localStorage.setItem('userType', data.user_type_id);
+
+        let path = '';
+        
+        let y: Url = new Url();
+            
+        if(data.img != null) {
+                
+            path = y.basic + 'images/app/users/' + data.img;
+    
+        } else {
+    
+            path = y.basic + 'images/app/';
+
+            if( parseInt(data.gender) == 1) {
+                path = path + 'man_avatar.png';
+            } else {
+                path = path + 'woman_avatar.png';
+            }
+        }    
+
+        localStorage.setItem('userImg', path);
     }
     
     storageToken(data){
