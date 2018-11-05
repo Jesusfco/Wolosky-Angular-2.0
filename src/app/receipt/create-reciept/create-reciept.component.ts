@@ -129,11 +129,8 @@ export class CreateRecieptComponent implements OnInit {
   }
 
   setMonthlyPayment(user: User){
-    
-    if(this.payment.type !== 1) return;    
 
-    this.payment.user_id = user.id;
-    
+    this.payment.user_id = user.id;            
     this.payment.monthlyAmount = 0;
     this.payment.monthly = user.monthly_payment.amount;
     this.payment.user = user;

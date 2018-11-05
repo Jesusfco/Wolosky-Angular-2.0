@@ -95,7 +95,7 @@
         </form>
 
         <div *ngIf="window == 2">
-            <button class="btn" *ngIf="request != undefined" (click)="printReceipt()">Imprimir Recibo</button>
+            <button class="btn" (click)="printReceipt()">Imprimir Recibo</button>
         </div>
 
 
@@ -103,11 +103,11 @@
 </div>
 
 <div *ngIf="window == 2" id="reciboNew">
-    <h1>RECIBO # {{ request.id }}</h1>
-    <p>MONTO: $ {{ request.amount }}</p>
-    <p>ALUMNO/A: {{ payment.user_name }}</p>
-    <p *ngIf="request.type == 1">TIPO DE PAGO: MENSUALIDAD</p>
-    <p *ngIf="request.type == 2">TIPO DE PAGO: INSCRIPCION</p>
+    <h1>RECIBO # {{ payment.id }}</h1>
+    <p>MONTO: $ {{ payment.amount }}</p>
+    <p>ALUMNO/A: {{ payment.user.name }}</p>
+    <p *ngIf="payment.type == 1">TIPO DE PAGO: MENSUALIDAD</p>
+    <p *ngIf="payment.type == 2">TIPO DE PAGO: INSCRIPCION</p>
     <p>ATENTIDO POR: {{ storage.getUserName() }}</p>
-    <p>PAGADO EL: {{ request.created_at }}</p>
+    <p>PAGADO EL: {{ payment.created_at }}</p>
 </div>

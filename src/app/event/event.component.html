@@ -1,3 +1,36 @@
-<p>
-  event works!
-</p>
+<mat-progress-bar mode="indeterminate" *ngIf="sendingData > 0" class="barLoader"></mat-progress-bar>
+
+<h2 class="centerText">Eventos</h2>
+<div class="responsive-table">
+    <table align="center">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th class="left">Nombre</th>
+                <th>Monto</th>
+                <th>Periodo</th>
+                <th>Status</th>
+            </tr>
+            <!-- <th colspan="3">Opciones</th> -->
+        </thead>
+        <tbody>
+            <tr *ngFor="let event of events" [routerLink]="['events/show', event.id]" (click)="send(event)">
+                <td>{{ event.id }}</td>
+                <td class="left">{{ event.name }}</td>
+                <td>{{ event.cost }}</td>
+                <td>{{ event.date }} <span *ngIf="event.date_to != null"> / {{ event.date_to }}</span></td>
+                <td>{{ event.statusView() }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <mat-paginator (page)="pageAction($event)" [length]="search.total" [pageSize]="search.items" [pageSizeOptions]="[5, 10, 25, 50, 100]">
+    </mat-paginator>
+</div>
+
+<a [routerLink]="['/pago-trabajadores/crear']">
+    <div class="botonFloat" matTooltip="Crear Pagos para los trabajadores">
+        <a class="botonA"><i class="material-icons">add</i></a>
+    </div>
+</a>
+
+<router-outlet></router-outlet>

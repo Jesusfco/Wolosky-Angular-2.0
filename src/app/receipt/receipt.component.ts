@@ -53,9 +53,9 @@ export class ReceiptComponent implements OnInit {
     this.getDates();
     this.getReceipts();
 
-    this.outletOutput = this._http.getData().subscribe(x => {
+    
 
-      console.log(x);
+    this.outletOutput = this._http.getData().subscribe(x => {      
       
       if (x.action == 'new') {
         this.newReceipt(x.data);        
@@ -65,6 +65,7 @@ export class ReceiptComponent implements OnInit {
         this.delete(x.data);
       
     });
+    
   }
 
   ngOnInit() {
@@ -264,8 +265,7 @@ export class ReceiptComponent implements OnInit {
 
       if(receipt.id == data.id) {
 
-        this.receipts.splice(i, 1);
-        console.log(data);
+        this.receipts.splice(i, 1);        
         break;
 
       }
