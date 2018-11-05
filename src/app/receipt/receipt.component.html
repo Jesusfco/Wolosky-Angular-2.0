@@ -71,7 +71,7 @@
                 </tr>
             </tbody>
 
-            <tbody *ngIf="storage.getUserType() == 3">
+            <tbody *ngIf="storage.getUserType() >= 3 && storage.getUserType() <= 5">
                 <tr *ngFor="let re of receipts">
                     <td class="left">{{ re.user.name }}</td>
                     <td>{{ re.created_at }}</td>

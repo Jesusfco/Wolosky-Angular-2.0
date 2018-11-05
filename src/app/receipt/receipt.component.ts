@@ -81,15 +81,37 @@ export class ReceiptComponent implements OnInit {
     let d = new Date();
 
     if(d.getMonth() <= 7){
-      this.search.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + "01";
-      this.search.to = d.getFullYear() + "-0" + (d.getMonth() + 2 ) + "-" + "01";
+      this.search.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-";
+      this.search.to = d.getFullYear() + "-0" + (d.getMonth() + 2 ) + "-";
     } else if (d.getMonth() == 8){
-      this.search.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + "01";
-      this.search.to = d.getFullYear() + "-" + (d.getMonth() + 2 ) + "-" + "01";
+      this.search.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-";
+      this.search.to = d.getFullYear() + "-" + (d.getMonth() + 2 ) + "-";
     } else {
-      this.search.from = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-" + "01";
-      this.search.to = d.getFullYear() + "-" + (d.getMonth() + 2 ) + "-" + "01";
+      this.search.from = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-";
+      this.search.to = d.getFullYear() + "-" + (d.getMonth() + 2 ) + "-";
     }
+
+    if(this.storage.getUserType() >= 6) {
+
+      this.search.from += '01';
+      this.search.to += '01';
+
+    } else {
+
+      if(d.getDate() < 10) {
+
+        this.search.from += "0" + d.getDate();        
+
+      } else {
+
+        this.search.from += d.getDate();
+        
+      }
+
+      this.search.to = this.search.from;
+
+    }
+
   }
 
   getNotifications(){
