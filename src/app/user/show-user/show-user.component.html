@@ -24,8 +24,8 @@
         </div>
 
         <div class="imgUser">
-            <img src="{{ user.img }}">
-            <input type="file" (change)="getFile($event.target.files)" accept="image/*">
+            <img src="{{ user.img }}" id="imgUser">
+            <input id="imgInput" type="file" (change)="getFile($event.target.files)" accept="image/*">
         </div>
 
         <div class="container">

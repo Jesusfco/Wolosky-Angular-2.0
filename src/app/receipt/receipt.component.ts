@@ -171,6 +171,11 @@ export class ReceiptComponent implements OnInit {
   }
 
   getReceipts(){
+
+    if(this.storage.getUserType() < 6){
+      this.getDates();
+      return;
+    }
     this.sendingData.receipts = true;
     if(this.search.name == '')
       this.search.id = null;

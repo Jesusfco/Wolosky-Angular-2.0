@@ -92,6 +92,7 @@ export class User {
         this.houseNumber = data.houseNumber;
         this.colony = data.colony;
         this.city = data.city;
+        this.img = data.img;
 
         this.monthly_payment_id = data.monthly_payment_id;
         this.creator_user_id = data.creator_user_id;
@@ -124,11 +125,16 @@ export class User {
 
         }
 
+        this.setImg();        
+
+    }
+
+    setImg() {
         let y: Url = new Url();
         
-        if(data.img != null) {
+        if(this.img != null) {
             
-            this.img = y.basic + 'images/app/users/' + data.img;
+            this.img = y.basic + 'images/app/users/' + this.img;
 
         } else {
 
@@ -140,7 +146,6 @@ export class User {
                 this.img = this.img + 'woman_avatar.png';
             }
         }    
-
     }
 
     validatePhoneFormat(){

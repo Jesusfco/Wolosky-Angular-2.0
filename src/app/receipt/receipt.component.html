@@ -30,7 +30,7 @@
 
     <form class="form" (submit)="getReceipts()">
         <input (change)="getReceipts()" type="date" [(ngModel)]="search.from" name="from" id="search"><label><mat-icon>date_range</mat-icon></label>
-        <input (change)="getReceipts()" type="date" [(ngModel)]="search.to" name="to" id="search"><label><mat-icon>date_range</mat-icon></label>
+        <input *ngIf="storage.getUserType() >= 6" (change)="getReceipts()" type="date" [(ngModel)]="search.to" name="to" id="search"><label *ngIf="storage.getUserType() >= 6"><mat-icon>date_range</mat-icon></label>
 
         <input [(ngModel)]="search.name" [matAutocomplete]="auto" name="name" id="search" type="search" placeholder="Buscar Usuario" (keyup)="searchInput($event)"><label><mat-icon>search</mat-icon></label>
 
