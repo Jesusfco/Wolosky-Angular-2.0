@@ -120,9 +120,11 @@ export class PaymentCreateComponent implements OnInit {
 
     this._http.getDataToProcess(this.period).then(
       data => {
+
         this.window = 2;
         this.users = [];
         this.records = [];
+
         for(let record of data.records) {
           let object = new Record();
           object.setValues(record);
@@ -145,6 +147,7 @@ export class PaymentCreateComponent implements OnInit {
         }
 
         this.userSelect = 0;
+        console.log(this.users[2].schedules);
         
 
       },
@@ -189,9 +192,15 @@ export class PaymentCreateComponent implements OnInit {
         // RECOLECTAR HORARIOS DEL DIA
           let scheduleCollectionDay = [];
           for(let schedule of this.users[this.userSelect].schedules) {
+
+
             if(schedule.active != true) continue;
+
             if(schedule.day_id == dateCheck.getDay()) {
  
+              if(this.userSelect == 2 && i == 0) {
+                console.log(schedule);
+              }
              scheduleCollectionDay.push(schedule);
  
            }
