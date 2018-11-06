@@ -4,7 +4,7 @@ export class Url {
     
         constructor() {
             this.basic = "http://www.woloskygimnasia.com/";
-            this.basic = "http://localhost:8000/";
+            // this.basic = "http://localhost:8000/";
 
             this.url = this.basic + 'api/';
         }

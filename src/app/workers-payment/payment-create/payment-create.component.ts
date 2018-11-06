@@ -197,10 +197,7 @@ export class PaymentCreateComponent implements OnInit {
             if(schedule.active != true) continue;
 
             if(schedule.day_id == dateCheck.getDay()) {
- 
-              if(this.userSelect == 2 && i == 0) {
-                console.log(schedule);
-              }
+             
              scheduleCollectionDay.push(schedule);
  
            }
