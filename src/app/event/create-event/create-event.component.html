@@ -1,3 +1,48 @@
-<p>
-  create-event works!
-</p>
+<mat-progress-bar mode="indeterminate" *ngIf="sendingData > 0" class="barLoader"></mat-progress-bar>
+
+<div class="cardSpace" [@background]="state.background">
+
+    <div class="closeCardBackground" (click)="closePop()">
+        <h5 class="closeIcon">
+            <mat-icon>close</mat-icon>
+        </h5>
+    </div>
+
+    <div class="cardModule" [@card]="state.card">
+        <h2>Nuevo Evento</h2>
+
+        <form class="flex">
+
+            <div class="formData l12">
+                <label>Nombre:</label><br>
+                <input [(ngModel)]="event.name" name="name" type="text">
+            </div>
+
+            <div class="formData l4">
+                <label>Costo:</label><br>
+                <input [(ngModel)]="event.name" name="name" type="text">
+            </div>
+
+            <div class="formData l4">
+                <label>Fecha inicio:</label><br>
+                <input [(ngModel)]="event.date" name="date" type="date">
+            </div>
+
+            <div class="formData l4">
+                <label>Fecha Final *Opcional:</label><br>
+                <input [(ngModel)]="event.date_to" name="date_to" type="date">
+            </div>
+
+            <div class="formData l12">
+                <label>Description *Opcional:</label><br>
+                <textarea [(ngModel)]="event.description" name="description"></textarea>
+            </div>
+
+
+            <div class="formData 12">
+                <button class="btn">Crear Evento</button>
+            </div>
+        </form>
+
+    </div>
+</div>

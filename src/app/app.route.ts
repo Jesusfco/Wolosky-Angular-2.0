@@ -83,7 +83,7 @@ export const routes: Routes = [
                     { path: 'delete', component: DeleteUserComponent}
             ]},
         ]
-    },
+    },    
 
     {
         path: 'receipt',
