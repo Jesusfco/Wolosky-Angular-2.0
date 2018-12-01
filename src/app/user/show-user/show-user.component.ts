@@ -42,9 +42,7 @@ export class ShowUserComponent implements OnInit {
   public outletOutput: any;
   public credential = parseInt(localStorage.getItem('userType'));
 
-  public userMonthlyObserver: any;
-  public userScheduleObserver: any;
-  public userReferenceObserver: any;
+
 
   constructor(private _http: UserService,
     private router: Router,
