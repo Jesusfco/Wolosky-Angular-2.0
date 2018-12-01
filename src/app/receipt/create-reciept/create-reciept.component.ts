@@ -129,11 +129,8 @@ export class CreateRecieptComponent implements OnInit {
   }
 
   setMonthlyPayment(user: User){
-    
-    if(this.payment.type !== 1) return;    
 
-    this.payment.user_id = user.id;
-    
+    this.payment.user_id = user.id;            
     this.payment.monthlyAmount = 0;
     this.payment.monthly = user.monthly_payment.amount;
     this.payment.user = user;
@@ -243,7 +240,7 @@ export class CreateRecieptComponent implements OnInit {
         let receipt: Receipt = new Receipt();
         receipt.setData(data);
 
-        this._http.sendData({action: 'new', data: receipt});
+        this._http.sendData('new', receipt);
         
         if(this.payment.payment_type == false) 
           this.storage.updateCash(data.amount);        

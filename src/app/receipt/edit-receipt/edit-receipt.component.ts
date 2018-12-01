@@ -4,6 +4,7 @@ import { Storage } from '../../classes/storage';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BackgroundCard, Card } from '../../animations/card.animation';
 import { ReceiptService } from '../receipt.service';
+import { NotificationService } from '../../notification/notification.service';
 
 @Component({
   selector: 'app-edit-receipt',
@@ -33,12 +34,16 @@ export class EditReceiptComponent implements OnInit {
     {value: 12, view: 'Diciembre'},
   ];
 
+  public window = 1;
   private observerRef: any;
   public request: boolean = false;
   public receipt: Receipt = new Receipt();
   public storage: Storage = new Storage();
 
-  constructor(private _http: ReceiptService, private router: Router, private actRou: ActivatedRoute ) { 
+  constructor(private _http: ReceiptService, 
+    private router: Router, 
+    private actRou: ActivatedRoute,
+    private notificationService: NotificationService ) { 
 
     this.observerRef = actRou.params.subscribe(params => {
       this.receipt.id = params['id'];
@@ -52,11 +57,14 @@ export class EditReceiptComponent implements OnInit {
       this.state.background = 'final';
       this.state.card = 'final';
     }, 100);
-  }
+  }  
 
-  ngOnDestroy() {
-    if(localStorage.getItem('receiptUpdateStatus') == undefined) return;
-    localStorage.setItem('receiptUpdateStatus', '1');
+  windowChange() {
+    if(this.window == 1) {
+      this.window = 2;
+    } else {
+      this.window = 1;
+    }
   }
 
   getReceipt(){
@@ -64,21 +72,8 @@ export class EditReceiptComponent implements OnInit {
     this.request = true;
 
     this._http.showReceipt(this.receipt).then(
-      data => {
-
-        this.receipt.user_id = data.user_id;
-        this.receipt.creator_id = data.creator_id;
-        this.receipt.amount = data.amount;
-        this.receipt.year = data.year;
-        this.receipt.event_id = data.event_id;
-        this.receipt.type = data.type;
-        this.receipt.month = data.month;
-        this.receipt.payment_type = data.payment_type;
-        this.receipt.created_at = data.created_at;
-        this.receipt.updated_at = data.updated_at;
-        
-
-      }, error => localStorage.setItem('request', JSON.stringify(error))
+      data => this.receipt.setData(data), 
+      error => this.notificationService.sendData(error)
 
     ).then(
 
@@ -94,10 +89,11 @@ export class EditReceiptComponent implements OnInit {
     
       data => {
 
-        localStorage.removeItem('receiptUpdateStatus');
+        this.notificationService.sendNotification('Recibo Actualizado', 'Los datos han sido actualizado correctamente', 2500);
+        this._http.sendData('update', this.receipt);
         this.closePop();
 
-      }, error => console.log(error)
+      }, error => this.notificationService.sendData(error)
 
       ).then(
 
@@ -113,10 +109,11 @@ export class EditReceiptComponent implements OnInit {
     
       data => {
 
-        localStorage.removeItem('receiptUpdateStatus');
+        this._http.sendData('delete', this.receipt);
+        this.notificationService.sendNotification('Recibo Eliminado', 'Los datos han sido actualizado correctamente', 2500);
         this.closePop();
 
-      }, error => console.log(error)
+      }, error => this.notificationService.sendData(error)
 
       ).then(
 

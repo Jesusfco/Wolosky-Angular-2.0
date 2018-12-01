@@ -123,16 +123,22 @@ export class SalesComponent implements OnInit {
   getDates(){
     let d = new Date();
 
-    if(d.getMonth() <= 7){
-      this.date.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + d.getDate();
-      this.date.to = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + d.getDate();
-    } else if (d.getMonth() == 8){
-      this.date.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + d.getDate();
-      this.date.to = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-" + d.getDate();
+    if(d.getMonth() <= 8){
+      this.date.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-";
+      this.date.to = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-";
     } else {
-      this.date.from = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-" + d.getDate();
-      this.date.to = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-" + d.getDate();
+      this.date.from = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-";
+      this.date.to = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-";
     }
+
+    if(d.getDate() < 10) {
+      this.date.from += "0" + d.getDate();
+      this.date.to += "0" + d.getDate();
+    } else {
+      this.date.from += d.getDate();
+      this.date.to += d.getDate();
+    }
+
   }
 
   getToday(){

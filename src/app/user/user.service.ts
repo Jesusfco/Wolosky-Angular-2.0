@@ -6,6 +6,7 @@ import { Subject } from 'rxjs/Subject';
 
 import { Url } from '../classes/url';
 import { Storage } from '../classes/storage';
+import { User } from '../classes/user';
 
 @Injectable()
 export class UserService {
@@ -156,6 +157,17 @@ export class UserService {
 
   deleteSchedule(schedule) {
     return this._http.delete(this.link.url + 'user/schedules/delete/' + schedule.id + this.token.getTokenUrl())
+            .map(data => data.json())
+            .toPromise();
+  }
+
+  saveUserImg(file: File, user: User) {
+
+    const formData = new FormData();
+    formData.append('image', file, file.name);
+    formData.append('id', user.id.toString());
+
+    return this._http.post(this.link.url + 'user/saveUserImg' + this.token.getTokenUrl(), formData)
             .map(data => data.json())
             .toPromise();
   }

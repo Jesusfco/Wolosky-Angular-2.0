@@ -1,3 +1,4 @@
+import { NotificationService } from './../../notification/notification.service';
 import { Component, OnInit, Input, Output, EventEmitter, HostListener, OnDestroy } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes} from '@angular/animations';
 import { User } from '../../classes/user';
@@ -43,9 +44,9 @@ export class ShowUserComponent implements OnInit {
   public credential = parseInt(localStorage.getItem('userType'));
 
 
-
   constructor(private _http: UserService,
     private router: Router,
+    private notificationS: NotificationService,
     private actRou: ActivatedRoute) {
 
       this.storage = new Storage();
@@ -461,19 +462,35 @@ export class ShowUserComponent implements OnInit {
   
   }
 
-  getElementsFromFile(file) {
-  
+  getElementsFromFile(file: File) {
+    
+    this.userImgFile = file;
   
     let reader = new FileReader();
     reader.onload = (e: any) => {
 
-      this.user.img =e.target.result;
+      this.user.img = e.target.result;
         // jso.bits = e.target.result;
         // this.pushFile(jso);
     };
   
     reader.readAsDataURL(file);
+
+    this.updateUserImage();
   
   }
 
+  updateUserImage() {
+
+    this._http.saveUserImg(this.userImgFile, this.user).then(
+      data => {
+
+        this.user.img = data;
+        this.user.setImg();
+        this.notificationS.sendNotification('Imagen Actualizada', 'La imagen a sido cargada correctamente', 2500);
+        
+      }, error => this.notificationS.sendData(error)
+    )
+    
+  }
 }

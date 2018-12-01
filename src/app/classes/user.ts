@@ -92,11 +92,13 @@ export class User {
         this.houseNumber = data.houseNumber;
         this.colony = data.colony;
         this.city = data.city;
+        this.img = data.img;
 
         this.monthly_payment_id = data.monthly_payment_id;
         this.creator_user_id = data.creator_user_id;
         this.status = data.status;
         this.salary_id = data.salary_id;
+
         if(data.salary != undefined) {
             let sal = new Salary();
             sal.setValues(data.salary);
@@ -108,14 +110,14 @@ export class User {
             this.monthly_payment.setValues(data.monthly_payment);
             
         }
-
+       
         if(data.schedules != undefined) {
 
             this.schedules = [];
 
             for(let sche of data.schedules) {
-
-                let schedule = new Schedule();
+                
+                let schedule: Schedule = new Schedule();
                 schedule.setValues(sche);
                 this.schedules.push(sche);
 
@@ -123,11 +125,16 @@ export class User {
 
         }
 
+        this.setImg();        
+
+    }
+
+    setImg() {
         let y: Url = new Url();
         
-        if(data.img != null) {
+        if(this.img != null) {
             
-            this.img = y.basic + 'images/app/users/' + data.img;
+            this.img = y.basic + 'images/app/users/' + this.img;
 
         } else {
 
@@ -138,22 +145,7 @@ export class User {
             } else {
                 this.img = this.img + 'woman_avatar.png';
             }
-        }
-
-        if(data.salary != undefined) {
-            let object = new Salary();
-            object.setValues(data.salary);
-            this.salary = object;
-        }
-
-        if(data.schedules != undefined) {
-            for(let sche of data.schedules) {
-                let object = new Schedule();
-                object.setValues(sche);
-                this.schedules.push(object);
-            }
-        }
-
+        }    
     }
 
     validatePhoneFormat(){

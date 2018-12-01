@@ -6,6 +6,7 @@ import { Subject } from 'rxjs/Subject';
 
 import { Url } from '../classes/url';
 import { Storage } from '../classes/storage';
+import { Action } from 'rxjs/scheduler/Action';
 
 @Injectable()
 export class ReceiptService {
@@ -20,7 +21,11 @@ export class ReceiptService {
     return this.subject.asObservable();
   }
 
-  sendData(message: any) {
+  sendData(action: String, data: any) {
+    let message = {
+      action: action,
+      data: data
+    };
     this.subject.next(message);
   }
 

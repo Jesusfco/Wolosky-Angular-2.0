@@ -49,21 +49,23 @@ export class ReceiptComponent implements OnInit {
   public storage: Storage = new Storage();
   
   constructor(private _http: ReceiptService) { 
-    // this.getNotifications();
+    this.getNotifications();
     this.getDates();
-    // this.getReceipts();
+    this.getReceipts();
 
-    this.outletOutput = this._http.getData().subscribe(x => {
+    
+
+    this.outletOutput = this._http.getData().subscribe(x => {      
       
       if (x.action == 'new') {
         this.newReceipt(x.data);        
-
       } else if(x.action == "update")
         this.update(x.data);
         else if(x.action == 'delete')
         this.delete(x.data);
       
     });
+    
   }
 
   ngOnInit() {
@@ -80,15 +82,37 @@ export class ReceiptComponent implements OnInit {
     let d = new Date();
 
     if(d.getMonth() <= 7){
-      this.search.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + "01";
-      this.search.to = d.getFullYear() + "-0" + (d.getMonth() + 2 ) + "-" + "01";
+      this.search.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-";
+      this.search.to = d.getFullYear() + "-0" + (d.getMonth() + 2 ) + "-";
     } else if (d.getMonth() == 8){
-      this.search.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + "01";
-      this.search.to = d.getFullYear() + "-" + (d.getMonth() + 2 ) + "-" + "01";
+      this.search.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-";
+      this.search.to = d.getFullYear() + "-" + (d.getMonth() + 2 ) + "-";
     } else {
-      this.search.from = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-" + "01";
-      this.search.to = d.getFullYear() + "-" + (d.getMonth() + 2 ) + "-" + "01";
+      this.search.from = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-";
+      this.search.to = d.getFullYear() + "-" + (d.getMonth() + 2 ) + "-";
     }
+
+    if(this.storage.getUserType() >= 6) {
+
+      this.search.from += '01';
+      this.search.to += '01';
+
+    } else {
+
+      if(d.getDate() < 10) {
+
+        this.search.from += "0" + d.getDate();        
+
+      } else {
+
+        this.search.from += d.getDate();
+        
+      }
+
+      this.search.to = this.search.from;
+
+    }
+
   }
 
   getNotifications(){
@@ -148,6 +172,11 @@ export class ReceiptComponent implements OnInit {
   }
 
   getReceipts(){
+
+    if(this.storage.getUserType() < 6){
+      this.getDates();
+      return;
+    }
     this.sendingData.receipts = true;
     if(this.search.name == '')
       this.search.id = null;
@@ -173,7 +202,7 @@ export class ReceiptComponent implements OnInit {
   }  
 
   debtorPay(deb) {
-    
+
   }
 
   newReceipt(data) {
@@ -216,23 +245,27 @@ export class ReceiptComponent implements OnInit {
 
   update(data: Receipt) {
     
-    for(let receipt of this.receipts) {
-      if(receipt.id == data.id) {
-        receipt = data;
+    for(let i = 0; i < this.receipts.length; i++) {
+
+      if(this.receipts[i].id == data.id) {
+        this.receipts[i] = data;
         break;
       }
+
     }
+
   }
 
-  delete(data) {
+  delete(data: Receipt) {
 
+    
     let i = 0;
 
     for(let receipt of this.receipts) {
 
       if(receipt.id == data.id) {
 
-        this.receipts.splice(i, 1);
+        this.receipts.splice(i, 1);        
         break;
 
       }

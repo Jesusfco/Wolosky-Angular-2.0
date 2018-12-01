@@ -1,3 +1,4 @@
+import { EventService } from './event/event.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -226,7 +227,8 @@ import { RecordService } from './records/record.service';
         ScheduleService,
         WorkPaymentService,
         RecordService,
-        NotificationService
+        EventService,
+        NotificationService,
       ],
 
   bootstrap: [AppComponent]
