@@ -23,7 +23,7 @@
                 </h2>
                 <div>
                     <label>Nombre de Alumno:</label><br>
-                    <input [(ngModel)]="payment.user_name" name="user_name" type="search" [matAutocomplete]="auto" (keyup)="searchSugest($event)">
+                    <input [(ngModel)]="payment.user.name" name="name" type="search" [matAutocomplete]="auto" (keyup)="searchSugest($event)">
 
                     <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let user of sugests" [value]="user.name" (onSelectionChange)="setMonthlyPayment(user)">

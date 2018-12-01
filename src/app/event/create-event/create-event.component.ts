@@ -25,6 +25,7 @@ export class CreateEventComponent implements OnInit {
   }
 
   public event: Event = new Event();
+  public sendingData: number = 0;
 
   constructor(private _http: EventService, private router: Router) { }
 

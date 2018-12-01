@@ -125,6 +125,20 @@ export class User {
 
         }
 
+        if(data.references != undefined) {
+
+            this.references = [];
+
+            for(let re of data.references) {
+
+                let r = new Reference();
+                r.setValues(re);
+                this.references.push(r);
+
+            }
+
+        }
+
         this.setImg();        
 
     }

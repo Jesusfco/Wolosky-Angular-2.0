@@ -43,6 +43,7 @@ export class ShowUserComponent implements OnInit {
   public outletOutput: any;
   public credential = parseInt(localStorage.getItem('userType'));
 
+  public userImgFile: any;
 
   constructor(private _http: UserService,
     private router: Router,
@@ -143,13 +144,15 @@ export class ShowUserComponent implements OnInit {
 
     if(this.user.validations.validate == false) return;
 
-    this.sendingData = true;
-
     if (this.user.user_type_id > 1  && this.user.user_type_id < 5) {
+
       this.user.salary = this.salary;
       if(this.salary.id != null)
         this.updateSalary();  
+        
     }
+
+    this.sendingData = true;
 
     this._http.updateUser(this.user).then(
 

@@ -3,8 +3,7 @@ import { User } from "./user";
 export class Receipt {
 
     id: number;
-    user_id: number;
-    user_name: string;
+    user_id: number;    
     user: User = new User();
     creator_id: any;
     creator: User = new User();
@@ -47,8 +46,7 @@ export class Receipt {
         this.updated_at = data.updated_at;
 
         if(data.user != undefined) {
-            this.user.setValues(data.user);
-            this.user_name = data.user.name;
+            this.user.setValues(data.user);            
         }
         if(data.creator != undefined) {
             this.creator.setValues(data.creator);            

@@ -36,6 +36,20 @@ export class Reference {
         this.restoreValidationValues();
     }
 
+    setValues(data) {
+        this.id = parseInt(data.id);
+        this.user_id = parseInt(data.user_id);
+        this.relationship_id = parseInt(data.relationship_id);
+        this.name = data.name;
+        this.phone = data.phone;
+        this.phone2 = data.phone2;
+        this.email = data.email;
+        this.work_place = data.work_place;
+        this.created_at = data.created_at;
+        this.updated_at = data.updated_at;
+        this.setRelationshipView();
+    }
+
     setRelationshipView(){
         if(this.relationship_id == 1) this.relationshipView = 'Padres/Madre';
         else if(this.relationship_id == 2) this.relationshipView = 'Hermano/a';

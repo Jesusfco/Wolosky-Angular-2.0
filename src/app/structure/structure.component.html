@@ -61,7 +61,7 @@
 
     </ul>
 
-    <ul *ngIf="userData.getUserType() == 4">
+    <ul *ngIf="userData.getUserType() <= 5 && userData.getUserType() >= 2">
 
 
         <li [routerLink]="['/users']"><button mat-button>Usuarios</button></li>
@@ -74,13 +74,13 @@
 
         <!-- <li [routerLink]="['/inventory']"><button mat-button>Inventario</button></li> -->
 
+        <li [routerLink]="['/sale-point']"><button mat-button>Punto de Venta <span class="notified">{{ userData.getSalesErrorConnection() }}</span></button></li>
+
         <li [routerLink]="['/sales']"><button mat-button>Registro de Ventas</button></li>
 
         <li [routerLink]="['/sale-debt']"><button mat-button>Deudores Abarrotería</button></li>
 
         <li [routerLink]="['/expenses']"><button mat-button>Gastos</button></li>
-
-        <li [routerLink]="['/cutout']" *ngIf="userData.getUserType() >= 6"><button mat-button>Recorte de Caja</button></li>
 
         <li [routerLink]="['/monthly-cost']"><button mat-button>Costos por Hora</button></li>
 

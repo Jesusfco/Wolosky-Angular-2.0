@@ -7,6 +7,13 @@ export class Salary {
     public salary_type_id: number;   
     public salaryTypeView: string; 
 
+    public validations = {
+        amount: 0,
+        bonus: 0,
+        type: 0,
+        validate: true
+    };
+
     constructor(){
 
         this.description = null;
@@ -32,6 +39,52 @@ export class Salary {
         else if(this.salary_type_id == 2) return 'Quincenal';
     }
 
-    
+    restoreValidations() {
+        this.validations = {
+            amount: 0,
+            bonus: 0,
+            type: 0,
+            validate: true
+        };
+    }
+
+    validate() {
+        this.restoreValidations();
+        this.validateAmount();
+        this.validateBonus();
+        this.validateType();
+        return this.validations.validate;
+    }
+
+    validateAmount() {
+        if(this.amount >= 0) {
+
+        } else {
+            this.validations.amount = 1;
+            this.validations.validate = false;
+        }
+    }
+
+    validateBonus() {
+
+        if(this.bonus < 0 || this.bonus == null) {
+
+            this.validations.bonus = 1;
+            this.validations.validate = false;
+
+        }
+
+    }
+
+    validateType() {
+
+        if(this.salary_type_id == null || this.salary_type_id < 1) {
+
+            this.validations.type = 1;
+            this.validations.validate = false;
+
+        }
+
+    }
 
 }

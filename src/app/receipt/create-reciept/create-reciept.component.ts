@@ -106,7 +106,7 @@ export class CreateRecieptComponent implements OnInit {
       
       if(this.timer == 0){
         this.sendingData.sugest = true;
-        this._http.sugestUserReceipt({search: this.payment.user_name}).then(
+        this._http.sugestUserReceipt({search: this.payment.user.name}).then(
           data => {
 
             this.sugests = [];

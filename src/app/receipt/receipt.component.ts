@@ -48,7 +48,8 @@ export class ReceiptComponent implements OnInit {
 
   public storage: Storage = new Storage();
   
-  constructor(private _http: ReceiptService) { 
+  constructor(private _http: ReceiptService) {     
+
     this.getNotifications();
     this.getDates();
     this.getReceipts();
@@ -81,21 +82,23 @@ export class ReceiptComponent implements OnInit {
   getDates(){
     let d = new Date();
 
-    if(d.getMonth() <= 7){
-      this.search.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-";
-      this.search.to = d.getFullYear() + "-0" + (d.getMonth() + 2 ) + "-";
-    } else if (d.getMonth() == 8){
-      this.search.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-";
-      this.search.to = d.getFullYear() + "-" + (d.getMonth() + 2 ) + "-";
+    if (d.getMonth() <= 8) {
+
+      this.search.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-";      
+
     } else {
-      this.search.from = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-";
-      this.search.to = d.getFullYear() + "-" + (d.getMonth() + 2 ) + "-";
+
+      this.search.from = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-";      
+      
     }
 
     if(this.storage.getUserType() >= 6) {
 
+      this.search.to = this.search.from;
       this.search.from += '01';
-      this.search.to += '01';
+      d.setMonth(d.getMonth() + 1);
+      d.setDate(0);      
+      this.search.to += d.getDate();
 
     } else {
 
@@ -172,11 +175,7 @@ export class ReceiptComponent implements OnInit {
   }
 
   getReceipts(){
-
-    if(this.storage.getUserType() < 6){
-      this.getDates();
-      return;
-    }
+    
     this.sendingData.receipts = true;
     if(this.search.name == '')
       this.search.id = null;
