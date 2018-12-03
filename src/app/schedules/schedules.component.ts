@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ScheduleService } from './schedule.service';
 import { Schedule } from '../classes/schedule';
 import { User } from '../classes/user';
+import { Storage } from '../classes/storage';
 
 @Component({
   selector: 'app-schedules',
@@ -15,12 +16,11 @@ export class SchedulesComponent implements OnInit {
   public schedules: Array<Schedule> = [];
   public users: Array<User> = [];
   public filter: number = 1;
+  public storage: Storage = new Storage();
 
   public dataOrder: Array<any> = [];
 
-  constructor(private _http: ScheduleService) {
-
-    this.setDataOrder();
+  constructor(private _http: ScheduleService) {    
 
     this.getSchel();
 

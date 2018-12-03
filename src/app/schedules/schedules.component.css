@@ -25,3 +25,25 @@ li mat-icon {
     transition: .5s;
     cursor: pointer;
 }
+
+.linkExcel {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    display: flex;
+}
+
+.linkExcel p {
+    display: block;
+    position: relative;
+    margin-top: -5px;
+}
+
+.linkExcel img {
+    height: 20px;
+    margin-left: 20px;
+}
+
+#reciboNew {
+    position: relative;
+}
