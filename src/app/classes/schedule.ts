@@ -10,7 +10,7 @@ export class Schedule {
     public check_out: any;
     public active: boolean;
     public error: number;
-    public type: number;
+    
     public created_at: String;
     public updated_at: String;
     public edit: Boolean = false;
@@ -50,54 +50,32 @@ export class Schedule {
 
     setValues(data){
        
-        this.id = parseInt(data.id);
-        this.active = false;
-        if(parseInt(data.active) == 1) {
-            this.active = true;
-        }
-        
-        this.day_id = parseInt(data.day_id);
+        this.id = parseInt(data.id);                        
+        this.day_id = parseInt(data.day_id);           
 
-        if(data.check_in == null) {
-            data.check_in = '00:00';
-        }
+        let check_in = data.check_in.split(':');
+        let check_out = data.check_out.split(':');
 
-        if(data.check_out == null) {
-            data.check_out = '00:00';
-        }
-
-        if(this.active) {
-
-            let check_in = data.check_in.split(':');
-            let check_out = data.check_out.split(':');
-
-            this.check_in = check_in[0] + ":" + check_in[1];
-            this.check_out = check_out[0] + ":" + check_out[1];
-
-        } else {
-            this.check_in = null;
-            this.check_out = null;
-        }
+        this.check_in = check_in[0] + ":" + check_in[1];
+        this.check_out = check_out[0] + ":" + check_out[1];
         
         this.user_id = parseInt(data.user_id);
-        this.type = parseInt(data.type);
+        
         this.created_at = data.created_at;
         this.updated_at = data.updated_at;
 
     }
 
-    countHours(schedules){
+    countHours(schedules) {
 
         let count = 0;
     
         for(let x of schedules) {
-          
-          if(x.active == true) {
             
             let checkIn = new Date("2017-01-01 " + x.check_in);
             let checkOut = new Date("2017-01-01 " + x.check_out);
             count += checkOut.getHours() - checkIn.getHours();
-          }
+          
         }
 
         let amount = 0;

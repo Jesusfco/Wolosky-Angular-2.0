@@ -338,12 +338,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let x of schedules" [ngClass]="{ scheduleInactive: !x.active }">
-                            <!-- <ng-container *ngIf="x.active"> -->
+                        <tr *ngFor="let x of schedules">
+
                             <th>{{ x.dayView }}</th>
                             <th>{{ x.check_in | time }}</th>
                             <th>{{ x.check_out | time }}</th>
-                            <!-- </ng-container> -->
+
                         </tr>
                     </tbody>
                 </table>
