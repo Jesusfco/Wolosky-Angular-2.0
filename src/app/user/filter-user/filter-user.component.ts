@@ -3,6 +3,7 @@ import { FadeAnimation, SlideAnimation } from '../../animations/slide-in-out.ani
 import { Router } from '@angular/router';
 import { Card, BackgroundCard } from '../../animations/card.animation';
 import { Storage } from '../../classes/storage';
+import { timeout } from 'rxjs/operator/timeout';
 
 @Component({
   selector: 'app-filter-user',
@@ -23,10 +24,11 @@ export class FilterUserComponent implements OnInit {
   inactive;
   typeA = true;
   typeT = true;
-  typeO;
+  typeO = false;
   genderM = true;
   genderF = true;
 
+  validation = true;
   constructor(private router: Router) { }
 
   ngOnInit() {
@@ -50,6 +52,25 @@ export class FilterUserComponent implements OnInit {
       this.state.background = 'initial';
       this.state.card = 'initial';
     }, 100);
+    
+  }
+
+  validateFilter() {
+
+    setTimeout(() => {
+
+      this.validation = true;
+
+      if(!this.genderM && !this.genderF)
+        this.validation = false;
+
+      if(!this.active && !this.inactive)
+        this.validation = false;
+
+      if(!this.typeA && !this.typeO && !this.typeT)
+        this.validation = false;
+
+    },100);
     
   }
 
