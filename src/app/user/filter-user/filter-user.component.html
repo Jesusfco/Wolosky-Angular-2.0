@@ -1,0 +1,40 @@
+<mat-progress-bar mode="indeterminate" *ngIf="request" class="barLoader"></mat-progress-bar>
+
+<div class="cardSpace" [@background]="state.background">
+
+    <div class="closeCardBackground" (click)="closePop()">
+        <h5 class="closeIcon">
+            <mat-icon>close</mat-icon>
+        </h5>
+    </div>
+
+    <div class="cardModule" [@card]="state.card">
+        <h2>Exportar Usuario Excel</h2>       
+
+        <div class="flex">
+
+          <div>
+            <p>Status de Usuario</p>
+            <mat-checkbox [(ngModel)]="active" >Activos</mat-checkbox>
+            <mat-checkbox [(ngModel)]="inactive" >Inactivos</mat-checkbox>
+          </div>
+
+        <div>
+          <p>Tipos de Usuario</p>
+          <mat-checkbox [(ngModel)]="typeA">Alumnos</mat-checkbox>
+          <mat-checkbox [(ngModel)]="typeT">Trabajadores</mat-checkbox>
+          <mat-checkbox [(ngModel)]="typeO">Otros</mat-checkbox>
+        </div>
+        
+        <div>
+          <p>Genero</p>
+          <mat-checkbox [(ngModel)]="genderM">Masculino</mat-checkbox>
+          <mat-checkbox [(ngModel)]="genderF">Femenino</mat-checkbox>
+        </div>
+
+          <a class="btn" href="{{ storage.getUrl() + 'excel/users' +storage.getTokenUrl() }}&active={{ active }}&inactive={{ inactive }}&typeA={{ typeA }}&typeT={{ typeT }}&typeO={{ typeO }}&genderM={{ genderM }}&genderF={{ genderF }}">Descargar Excel</a>            
+
+      </div>       
+
+    </div>
+</div>

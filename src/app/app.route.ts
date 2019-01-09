@@ -57,6 +57,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { PaymentCreateComponent } from './workers-payment/payment-create/payment-create.component';
 import { PaymentShowComponent } from './workers-payment/payment-show/payment-show.component';
 import { RecordsComponent } from './records/records.component';
+import { FilterUserComponent } from './user/filter-user/filter-user.component';
 
 
 export const routes: Routes = [
@@ -75,6 +76,7 @@ export const routes: Routes = [
         component: UserComponent,
         children: [
             {path: 'create', component: CreateUserComponent},
+            {path: 'filter', component: FilterUserComponent},
             {path: 'show/:id', component: ShowUserComponent,
                 children: [
                     { path: 'schedule', component: EditScheduleComponent},

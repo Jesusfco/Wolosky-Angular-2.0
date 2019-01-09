@@ -115,6 +115,7 @@ import { PaymentShowComponent } from './workers-payment/payment-show/payment-sho
 import { NotificationService } from './notification/notification.service';
 import { RecordsComponent } from './records/records.component';
 import { RecordService } from './records/record.service';
+import { FilterUserComponent } from './user/filter-user/filter-user.component';
 
 @NgModule({
   declarations: [
@@ -168,6 +169,7 @@ import { RecordService } from './records/record.service';
     PaymentCreateComponent,
     PaymentShowComponent,
     RecordsComponent,
+    FilterUserComponent,
   ],
   imports: [
     BrowserModule,
