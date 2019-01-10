@@ -1,56 +1,54 @@
-<div id="reciboNew">
+<mat-progress-bar mode="indeterminate" *ngIf="sendingData" class="barLoader"></mat-progress-bar>
 
 
 
 
-    <h2 class="centerText" (click)="sortDataOrder()">Horarios</h2>
-    <form ngNoForm method="POST" action="{{ storage.getUrl() + 'excel/schedules' + storage.getTokenUrl() }}
-    &type={{ filter }}">
-        <input type="hidden" name="data" value='{{dataOrder | json}}'>
-        <button type="submit">Exportar Excel</button>
-    </form>
-    <!-- <a class="linkExcel" href="{{ storage.getUrl() + 'excel/schedules' + storage.getTokenUrl() }}
+<h2 class="centerText" (click)="sortDataOrder()">Horarios</h2>
+<form ngNoForm method="POST" action="{{ storage.getUrl() + 'excel/schedules' + storage.getTokenUrl() }}
+    &type={{ filter }}" *ngIf="!sendingData">
+    <input type="hidden" name="data" value='{{dataOrder | json}}'>
+    <button type="submit">Exportar Excel</button>
+</form>
+<!-- <a class="linkExcel" href="{{ storage.getUrl() + 'excel/schedules' + storage.getTokenUrl() }}
     &type={{ filter }}"> -->
-    <!-- <p>Exportar a Excel</p>
+<!-- <p>Exportar a Excel</p>
         <img src="http://icons.iconarchive.com/icons/graphicloads/filetype/256/excel-xls-icon.png">
     </a> -->
 
-    <div class="flexform">
-        <div>
+<div class="flexform">
+    <div>
 
-            <label>Tipo de Usuarios:</label><br>
-            <select [(ngModel)]="filter" name="filter" (change)="getSchel()">
+        <label>Tipo de Usuarios:</label><br>
+        <select [(ngModel)]="filter" name="filter" (change)="getSchel()">
                     <option value="1">Alumnos</option> 
                     <option value="2">Trabajadores</option>                    
             </select>
 
-        </div>
-
-
     </div>
 
-    <div *ngFor="let day of dataOrder" class="flexRow">
 
-        <h4 class="centerText">Día: {{ day.day | dayPipe }}</h4>
+</div>
 
-        <div *ngFor="let schedule of day.schedules" class="l4">
+<div *ngFor="let day of dataOrder" class="flexRow">
 
-            <div>
+    <h4 class="centerText">Día: {{ day.day | dayPipe }}</h4>
 
-                <h5 class="centerText">Horario: {{ schedule.check_in | scheduleComponentPipe }} - {{ schedule.check_in + 1 | scheduleComponentPipe}}</h5>
+    <div *ngFor="let schedule of day.schedules" class="l4">
 
-                <ul>
-                    <li *ngFor="let user of schedule.users">
-                        {{ user.user_name }}
+        <div>
 
-                        <mat-icon routerLink="/users/show/{{ user.user_id }}/schedule" matTooltip="Editar Horario" matTooltipPosition="left">edit</mat-icon>
-                    </li>
-                </ul>
+            <h5 class="centerText">Horario: {{ schedule.check_in | scheduleComponentPipe }} - {{ schedule.check_in + 1 | scheduleComponentPipe}}</h5>
 
+            <ul>
+                <li *ngFor="let user of schedule.users">
+                    {{ user.user_name }}
 
-            </div>
+                    <mat-icon routerLink="/users/show/{{ user.user_id }}/schedule" matTooltip="Editar Horario" matTooltipPosition="left">edit</mat-icon>
+                </li>
+            </ul>
+
 
         </div>
-    </div>
 
+    </div>
 </div>

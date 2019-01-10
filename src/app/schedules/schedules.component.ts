@@ -19,6 +19,7 @@ export class SchedulesComponent implements OnInit {
   public storage: Storage = new Storage();
 
   public dataOrder: Array<any> = [];
+  public sendingData: boolean  = false;
 
   constructor(private _http: ScheduleService) {    
 
@@ -31,7 +32,7 @@ export class SchedulesComponent implements OnInit {
 
   getSchel() {
 
-
+    this.sendingData = true;
     this._http.getShcedules({type: this.filter}).then(
 
       data => {
@@ -71,7 +72,7 @@ export class SchedulesComponent implements OnInit {
       },
 
       error => localStorage.setItem('request', JSON.stringify(error))
-    );
+    ).then(() => this.sendingData = false);
 
   }
 
