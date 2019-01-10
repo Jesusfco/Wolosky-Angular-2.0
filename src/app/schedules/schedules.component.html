@@ -4,12 +4,16 @@
 
 
     <h2 class="centerText" (click)="sortDataOrder()">Horarios</h2>
-
-    <a class="linkExcel" href="{{ storage.getUrl() + 'excel/schedules' + storage.getTokenUrl() }}
+    <form ngNoForm method="POST" action="{{ storage.getUrl() + 'excel/schedules' + storage.getTokenUrl() }}
     &type={{ filter }}">
-        <p>Exportar a Excel</p>
+        <input type="hidden" name="data" value='{{dataOrder | json}}'>
+        <button type="submit">Exportar Excel</button>
+    </form>
+    <!-- <a class="linkExcel" href="{{ storage.getUrl() + 'excel/schedules' + storage.getTokenUrl() }}
+    &type={{ filter }}"> -->
+    <!-- <p>Exportar a Excel</p>
         <img src="http://icons.iconarchive.com/icons/graphicloads/filetype/256/excel-xls-icon.png">
-    </a>
+    </a> -->
 
     <div class="flexform">
         <div>
@@ -21,6 +25,7 @@
             </select>
 
         </div>
+
 
     </div>
 
