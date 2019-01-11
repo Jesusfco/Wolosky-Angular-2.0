@@ -1,6 +1,14 @@
 <mat-progress-bar mode="indeterminate" *ngIf="sendingData > 0" class="barLoader"></mat-progress-bar>
 
 <h2 class="centerText">Eventos</h2>
+
+<div class="divSearch">
+    <input [(ngModel)]="search.name" (keyup)="searchInput()" placeholder="Buscar Evento" name="search" type="search">
+
+    <br>
+    <mat-icon *ngIf="search.name == ''">search</mat-icon>
+    <mat-icon *ngIf="search.name !== ''" (click)="search.name = ''">close</mat-icon>
+</div>
 <div class="responsive-table">
     <table align="center">
         <thead>
@@ -14,7 +22,7 @@
             <!-- <th colspan="3">Opciones</th> -->
         </thead>
         <tbody>
-            <tr *ngFor="let event of events" [routerLink]="['events/show', event.id]" (click)="send(event)">
+            <tr *ngFor="let event of events" [routerLink]="['./show', event.id]" (click)="send(event)">
                 <td>{{ event.id }}</td>
                 <td class="left">{{ event.name }}</td>
                 <td>{{ event.cost }}</td>

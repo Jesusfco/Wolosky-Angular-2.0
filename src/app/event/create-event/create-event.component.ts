@@ -1,8 +1,10 @@
+import { Notificaction } from './../../classes/notification';
 import { EventService } from './../event.service';
 import { cardPop, backgroundOpacity } from './../../animations';
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Event } from '../../classes/event';
+import { NotificationService } from '../../notification/notification.service';
 
 @Component({
   selector: 'app-create-event',
@@ -25,9 +27,9 @@ export class CreateEventComponent implements OnInit {
   }
 
   public event: Event = new Event();
-  public sendingData: number = 0;
+  public sendingData: number = 0;  
 
-  constructor(private _http: EventService, private router: Router) { }
+  constructor(private _http: EventService, private router: Router, private notification: NotificationService) { }
 
   ngOnInit() {
 
@@ -41,11 +43,33 @@ export class CreateEventComponent implements OnInit {
   closePop() {
 
     setTimeout(() => {
-      this.router.navigate(['../']);
+      this.router.navigate(['events']);
     }, 450);
     this.state.background = 'initial';
     this.state.card = 'initial';
     
+  }
+
+  createEvent() {
+
+    this.event.validateAll();
+        
+    if(!this.event.validations.validated) return;
+
+    this.sendingData++;
+
+    this._http.create(this.event).then(
+      data => {
+
+        this.event.setValues(data);
+        this._http.sendData('new', this.event);
+        this.closePop();        
+
+      }, error => this.notification.sendError(error)
+    ).then(
+      () => this.sendingData--
+    );
+
   }
 
 }

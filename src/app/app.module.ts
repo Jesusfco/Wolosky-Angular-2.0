@@ -116,6 +116,7 @@ import { NotificationService } from './notification/notification.service';
 import { RecordsComponent } from './records/records.component';
 import { RecordService } from './records/record.service';
 import { FilterUserComponent } from './user/filter-user/filter-user.component';
+import { ShowEventComponent } from './event/show-event/show-event.component';
 
 @NgModule({
   declarations: [
@@ -170,6 +171,7 @@ import { FilterUserComponent } from './user/filter-user/filter-user.component';
     PaymentShowComponent,
     RecordsComponent,
     FilterUserComponent,
+    ShowEventComponent,
   ],
   imports: [
     BrowserModule,

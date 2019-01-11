@@ -10,41 +10,33 @@
 
     <div class="cardModule" [@card]="state.card">
 
-        <h2 class="centerText">Nuevo Evento</h2>
+        <h2 class="centerText">Evento {{event.name }}</h2>
 
-        <form class="flex" (submit)="createEvent()">
+        <form class="flex">
 
             <div class="formData l12">
                 <label>Nombre:</label><br>
-                <input [(ngModel)]="event.name" name="name" type="text">
-                <small class="error" *ngIf="event.validations.name == 1">Campo requerido*</small>
+                <input [(ngModel)]="event.name" name="name" type="text" disabled>
             </div>
 
             <div class="formData l4">
                 <label>Costo:</label><br>
-                <input [(ngModel)]="event.cost" name="cost" type="number">
-                <small class="error" *ngIf="event.validations.cost == 1">Campo requerido*</small>
+                <input [(ngModel)]="event.cost" name="cost" type="number" disabled>
             </div>
 
             <div class="formData l4">
                 <label>Fecha inicio:</label><br>
-                <input [(ngModel)]="event.date" name="date" type="date">
-                <small class="error" *ngIf="event.validations.date == 1">Campo requerido*</small>
+                <input [(ngModel)]="event.date" name="date" type="date" disabled>
             </div>
 
             <div class="formData l4">
                 <label>Fecha Final *Opcional:</label><br>
-                <input [(ngModel)]="event.date_to" name="date_to" type="date">
+                <input [(ngModel)]="event.date_to" name="date_to" type="date" disabled>
             </div>
 
             <div class="formData l12">
                 <label>Description *Opcional:</label><br>
-                <textarea [(ngModel)]="event.description" name="description"></textarea>
-            </div>
-
-
-            <div class="formData 12">
-                <button class="btn">Crear Evento</button>
+                <textarea [(ngModel)]="event.description" name="description" disabled></textarea>
             </div>
         </form>
 

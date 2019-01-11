@@ -58,6 +58,7 @@ import { PaymentCreateComponent } from './workers-payment/payment-create/payment
 import { PaymentShowComponent } from './workers-payment/payment-show/payment-show.component';
 import { RecordsComponent } from './records/records.component';
 import { FilterUserComponent } from './user/filter-user/filter-user.component';
+import { ShowEventComponent } from './event/show-event/show-event.component';
 
 
 export const routes: Routes = [
@@ -102,6 +103,7 @@ export const routes: Routes = [
         children: [
             { path: 'create', component: CreateEventComponent },
             { path: 'assign', component: AssignUserEventComponent },
+            { path: 'show/:id',  component: ShowEventComponent}
         ]
     },
 

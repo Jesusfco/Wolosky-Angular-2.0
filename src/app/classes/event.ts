@@ -12,6 +12,13 @@ export class Event {
     public created_at: String;
     public updated_at: String;
 
+    public validations = {
+        validated: true,
+        name: 0,
+        date: 0,
+        cost: 0,
+    };
+
     public event_participants: Array<EventParticipant> = [];
     public receipts: Array<Receipt> = [];
 
@@ -35,5 +42,56 @@ export class Event {
         this.payoff_count = parseInt(data.payoff_count);
 
     }
+
+    statusView() {
+        return '';
+    }
+
+    validateAll() {
+        this.restoreValidations();
+        this.validateName();
+        this.valdiateCost();
+        this.validateDate();
+    }
     
+    validateName() {
+        try
+        {
+            if(this.name == null || this.name.length < 4){
+                this.validations.name = 1;
+                this.validations.validated = false;
+            }
+        }
+        catch (ex)
+        {
+        // Code to handle exception
+        }
+        
+    }
+
+    valdiateCost() {
+        if(this.cost <=0 || this.cost == null) {
+            this.validations.cost = 1;
+            this.validations.validated = false;
+        }
+    }
+
+    validateDate() {
+        if(this.date == null || this.date.length == 0) {
+            this.validations.date = 1;
+            this.validations.validated = false;
+        } else {
+
+        }
+
+    }
+
+    restoreValidations() {
+        this.validations = {
+            validated: true,
+            name: 0,
+            date: 0,
+            cost: 0,
+        };
+    }
 }
