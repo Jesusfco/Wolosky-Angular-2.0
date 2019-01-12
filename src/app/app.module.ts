@@ -117,6 +117,9 @@ import { RecordsComponent } from './records/records.component';
 import { RecordService } from './records/record.service';
 import { FilterUserComponent } from './user/filter-user/filter-user.component';
 import { ShowEventComponent } from './event/show-event/show-event.component';
+import { EditEventComponent } from './event/edit-event/edit-event.component';
+import { ParticipantsEventComponent } from './event/participants-event/participants-event.component';
+import { ReceiptsEventComponent } from './event/receipts-event/receipts-event.component';
 
 @NgModule({
   declarations: [
@@ -172,6 +175,9 @@ import { ShowEventComponent } from './event/show-event/show-event.component';
     RecordsComponent,
     FilterUserComponent,
     ShowEventComponent,
+    EditEventComponent,
+    ParticipantsEventComponent,
+    ReceiptsEventComponent,
   ],
   imports: [
     BrowserModule,

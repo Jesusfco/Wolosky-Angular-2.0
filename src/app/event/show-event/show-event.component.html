@@ -12,7 +12,16 @@
 
         <h2 class="centerText">Evento {{event.name }}</h2>
 
-        <form class="flex">
+        <div class="options">
+
+
+            <mat-icon (click)="editEventView()" matTooltip="Editar Evento" matTooltipPosition="below">edit</mat-icon>
+            <mat-icon (click)="participantsEventView()" matTooltip="Administrar Participantes" matTooltipPosition="below">group</mat-icon>
+            <mat-icon (click)="receiptsEventView()" matTooltip="Recibos del Evento" matTooltipPosition="below">receipt</mat-icon>
+            <mat-icon (click)="deleteEventView()" matTooltip="Eliminar Evento" matTooltipPosition="below">delete</mat-icon>
+        </div>
+
+        <form class="flex" *ngIf="view == 1">
 
             <div class="formData l12">
                 <label>Nombre:</label><br>
@@ -40,6 +49,23 @@
             </div>
         </form>
 
-
+        <div *ngIf="view == 2">
+            <app-edit-event></app-edit-event>
+        </div>
+        <div *ngIf="view == 3">
+            <app-participants-event></app-participants-event>
+        </div>
+        <div *ngIf="view == 4">
+            <app-receipts-event></app-receipts-event>
+        </div>
+        <div *ngIf="view == 5">
+            <h3>Eliminar Evento</h3>
+            <p>¿Estas seguro de eliminar este evento? - Si eliminas el evento los recibos podran ser vistos al menos que marque la casilla para eliminar tambien los recibos relacionados al evento</p>
+            <mat-checkbox [(ngModel)]="deleteReceipts">Eliminar con recibos</mat-checkbox>
+            <div class="confirmCancel" *ngIf="sendingData == 0">
+                <button class="btn btnCancel" (click)="view = 1">Cancelar</button>
+                <button class="btn btnDelete" (click)="delete()">Aceptar</button>
+            </div>
+        </div>
     </div>
 </div>
