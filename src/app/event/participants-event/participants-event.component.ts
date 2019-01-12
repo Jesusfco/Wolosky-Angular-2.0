@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EventService } from '../event.service';
 
 @Component({
   selector: 'app-participants-event',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ParticipantsEventComponent implements OnInit {
 
-  constructor() { }
+  public search = {
+    name: '',
+    active: true,
+    inactive: false,
+    typeA: true,
+    typeT: true,
+    typeO: true,
+    genderM: true,
+    genderF: true
+  }
+
+  constructor(private _http: EventService) { }
 
   ngOnInit() {
   }
+
+  searchParticipants() {}
 
 }

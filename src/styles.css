@@ -332,6 +332,11 @@ select {
     cursor: pointer;
 }
 
+.cardModule .options mat-icon {
+    cursor: pointer;
+    margin-right: 5px;
+}
+
 @media screen and (max-width: 750px) {
     .cardModule {
         width: 90%;
@@ -477,6 +482,7 @@ select {
     position: absolute;
     top: 10px;
     right: 10px;
+    cursor: pointer;
 }
 
 #createCard .options mat-icon {
@@ -515,6 +521,10 @@ select {
     display: flex !important;
     flex-flow: row wrap;
     margin: 0 auto;
+}
+
+.centerFlex {
+    justify-content: space-around;
 }
 
 input:-webkit-autofill,

@@ -34,6 +34,9 @@ export class EventComponent implements OnInit {
         this.updateEvent(x.data);
         else if(x.action == 'delete')
         this.deleteEvent(x.data);
+
+        else if(x.action == 'get')
+        this.getEvent(x.data);
       
     });
 
@@ -126,6 +129,21 @@ export class EventComponent implements OnInit {
 
     }
 
+  }
+
+  getEvent(id) {
+    for(let e of this.events) {
+
+      if(e.id == id) {
+
+        this._http.sendData('show', e);    
+        break;
+
+      }
+
+      
+
+    }
   }
   
 

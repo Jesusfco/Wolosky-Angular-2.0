@@ -1,3 +1,59 @@
-<p>
-  participants-event works!
-</p>
+<h3 class="centerText">Administrar participantes</h3>
+
+<div class="divSearch">
+    <input [(ngModel)]="search.name" (keyup)="searchParticipants()" placeholder="Buscar Usuario" name="search" type="search">
+
+    <br>
+    <mat-icon *ngIf="search.name == ''">search</mat-icon>
+    <mat-icon *ngIf="search.name !== ''" (click)="search.name = ''">close</mat-icon>
+</div>
+
+
+<mat-accordion>
+
+    <mat-expansion-panel>
+
+        <mat-expansion-panel-header>
+
+            <mat-panel-title>
+                Filtros de Busqueda
+                <mat-icon>settings</mat-icon>
+            </mat-panel-title>
+
+        </mat-expansion-panel-header>
+
+        <div class="flex" (click)="searchParticipants()">
+
+            <div class="l12">
+                <p>Status de Usuario</p>
+                <div class="flex centerFlex">
+                    <mat-checkbox [(ngModel)]="search.active">Activos</mat-checkbox>
+                    <mat-checkbox [(ngModel)]="search.inactive">Inactivos</mat-checkbox>
+                </div>
+
+            </div>
+
+            <div class="l12">
+                <p>Tipos de Usuario</p>
+                <div class="flex centerFlex">
+                    <mat-checkbox [(ngModel)]="search.typeA">Alumnos</mat-checkbox>
+                    <mat-checkbox [(ngModel)]="search.typeT">Trabajadores</mat-checkbox>
+                    <mat-checkbox [(ngModel)]="search.typeO">Otros</mat-checkbox>
+                </div>
+
+            </div>
+
+            <div class="l12">
+                <p>Genero</p>
+                <div class="flex centerFlex">
+                    <mat-checkbox [(ngModel)]="search.genderM">Masculino</mat-checkbox>
+                    <mat-checkbox [(ngModel)]="search.genderF">Femenino</mat-checkbox>
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </mat-expansion-panel>
+</mat-accordion>

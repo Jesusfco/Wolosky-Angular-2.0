@@ -9,8 +9,8 @@
     </div>
 
     <div class="cardModule" [@card]="state.card">
-
-        <h2 class="centerText">Evento {{event.name }}</h2>
+        <br>
+        <h2 class="centerText">Evento <br>{{event.name }}</h2>
 
         <div class="options">
 
@@ -50,7 +50,7 @@
         </form>
 
         <div *ngIf="view == 2">
-            <app-edit-event></app-edit-event>
+            <app-edit-event [event]="event" (updateEventEmit)="update($event)"></app-edit-event>
         </div>
         <div *ngIf="view == 3">
             <app-participants-event></app-participants-event>

@@ -47,6 +47,12 @@ export class Event {
         return '';
     }
 
+    updateValidation() {
+        this.restoreValidations();
+        this.validateName();
+        this.validateDate();
+    }
+
     validateAll() {
         this.restoreValidations();
         this.validateName();

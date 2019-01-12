@@ -1,3 +1,34 @@
-<p>
-  edit-event works!
-</p>
+<form class="flex" (submit)="updateEvent()">
+
+    <div class="formData l12">
+        <label>Nombre:</label><br>
+        <input [(ngModel)]="event2.name" name="name" type="text">
+        <small class="error" *ngIf="event2.validations.name == 1">Campo requerido*</small>
+    </div>
+
+    <div class="formData l4">
+        <label>Costo:</label><br>
+        <input [(ngModel)]="event2.cost" name="cost" type="number">
+        <small class="error" *ngIf="event2.validations.cost == 1">Campo requerido*</small>
+    </div>
+
+    <div class="formData l4">
+        <label>Fecha inicio:</label><br>
+        <input [(ngModel)]="event2.date" name="date" type="date">
+    </div>
+
+    <div class="formData l4">
+        <label>Fecha Final *Opcional:</label><br>
+        <input [(ngModel)]="event2.date_to" name="date_to" type="date">
+    </div>
+
+    <div class="formData l12">
+        <label>Description *Opcional:</label><br>
+        <textarea [(ngModel)]="event2.description" name="description"></textarea>
+    </div>
+
+
+    <div class="formData 12">
+        <button class="btn">Editar Evento</button>
+    </div>
+</form>
