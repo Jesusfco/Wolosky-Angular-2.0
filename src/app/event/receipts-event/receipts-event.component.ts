@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Event } from '../../classes/event';
+import { EventService } from '../event.service';
 
 @Component({
   selector: 'app-receipts-event',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReceiptsEventComponent implements OnInit {
 
-  constructor() { }
+  @Input() event: Event;
+  
+  constructor(private _http: EventService) { }
 
   ngOnInit() {
   }

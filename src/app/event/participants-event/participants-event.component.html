@@ -57,3 +57,25 @@
 
     </mat-expansion-panel>
 </mat-accordion>
+
+<div class="responsive-table">
+    <table align="center">
+        <thead>
+            <tr>
+                <th class="left">Nombre</th>
+                <th>Monto a pagar</th>
+                <th>Activo </th>
+            </tr>
+            <!-- <th colspan="3">Opciones</th> -->
+        </thead>
+        <tbody>
+            <tr *ngFor="let participant of participants">
+
+                <td class="left">{{ participant.user.name }}</td>
+                <td>{{ participant.cost }}</td>
+                <td>{{ participant.active }} </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>

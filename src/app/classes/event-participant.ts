@@ -13,6 +13,7 @@ export class EventParticipant {
     public event_id: number;
     public event: Event;
     public created_at: String;
+    public active: Boolean = false;
 
     constructor() {}
 

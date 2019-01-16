@@ -56,6 +56,12 @@ export class EventService {
               .toPromise();
   }
 
+  getParticipants(data){
+    return this._http.get(this.link.url + "event/participants/" + data.id + this.token.getTokenUrl())
+              .map(data => data.json())
+              .toPromise();
+  }
+
   createParticipant(data){
     return this._http.post(this.link.url + "event/createParticipant" + this.token.getTokenUrl(), data)
               .map(data => data.json())

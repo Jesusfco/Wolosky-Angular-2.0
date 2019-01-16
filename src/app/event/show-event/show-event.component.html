@@ -53,10 +53,10 @@
             <app-edit-event [event]="event" (updateEventEmit)="update($event)"></app-edit-event>
         </div>
         <div *ngIf="view == 3">
-            <app-participants-event></app-participants-event>
+            <app-participants-event [event]="event"></app-participants-event>
         </div>
         <div *ngIf="view == 4">
-            <app-receipts-event></app-receipts-event>
+            <app-receipts-event [event]="event"></app-receipts-event>
         </div>
         <div *ngIf="view == 5">
             <h3>Eliminar Evento</h3>
