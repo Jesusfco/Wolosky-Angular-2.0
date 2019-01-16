@@ -62,7 +62,7 @@
     <table align="center">
         <thead>
             <tr>
-                <th class="left">Nombre</th>
+                <th class="left" (click)="changeSort()">Nombre</th>
                 <th>Monto a pagar</th>
                 <th>Activo </th>
             </tr>
@@ -72,8 +72,8 @@
             <tr *ngFor="let participant of participants">
 
                 <td class="left">{{ participant.user.name }}</td>
-                <td>{{ participant.cost }}</td>
-                <td>{{ participant.active }} </td>
+                <td>${{ participant.cost }}</td>
+                <td><mat-checkbox [(ngModel)]="participant.active"></mat-checkbox></td>
 
             </tr>
         </tbody>

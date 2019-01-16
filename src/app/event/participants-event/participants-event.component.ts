@@ -24,16 +24,19 @@ export class ParticipantsEventComponent implements OnInit {
     typeT: true,
     typeO: true,
     genderM: true,
-    genderF: true
+    genderF: true,
+    orderBy: true,
   }
 
+  public participantsBackUp: Array<EventParticipant> = [];
   public participants: Array<EventParticipant> = [];
 
   constructor(private _http: EventService, private not: NotificationService) { 
-    this.setParticipants()
+        
   }
 
   ngOnInit() {
+    this.setParticipants()
   }
 
   setParticipants() {
@@ -41,9 +44,15 @@ export class ParticipantsEventComponent implements OnInit {
     this._http.getParticipants(this.event).then(
 
       data => {
-        if(data.users != undefined){
-          this.setParticipantsArray(data.users);
-        }
+
+        if(data.users != undefined)
+          this.setParticipantsArray(data.users)        
+
+        if(data.participants) 
+          this.setParticipantsActive(data.participants)
+
+        this.freshTable();
+
       },
 
       error => this.not.sendError(error)
@@ -54,7 +63,7 @@ export class ParticipantsEventComponent implements OnInit {
 
   setParticipantsArray(users) {
 
-    this.participants = []
+    this.participantsBackUp = []
 
     for(let user of users) {
 
@@ -63,8 +72,9 @@ export class ParticipantsEventComponent implements OnInit {
       participant.user = user;
       participant.user_id = user.id;
       participant.event_id = this.event.id;
+      participant.cost = this.event.cost;
       participant.active = false;
-      this.participants.push(participant);
+      this.participantsBackUp.push(participant);
 
     }
 
@@ -74,13 +84,18 @@ export class ParticipantsEventComponent implements OnInit {
 
     for(let participant of parts) {
 
-      for(let part of this.participants) {
+      for(let part of this.participantsBackUp) {
 
         if(part.user_id == participant.user_id) {
 
           part.id = participant.id;
-          part.cost = participant.cost;
+
+          if(participant.cost != null || participant.cost <=0) part.cost = participant.cost;
+
+          else part.cost = this.event.cost
+
           part.active = true;
+          
           break;
 
         }
@@ -89,6 +104,77 @@ export class ParticipantsEventComponent implements OnInit {
 
     }
 
+  }
+
+  searchParticipants() {}
+
+  sortArray() {
+
+    if(this.search.orderBy) {
+
+      this.participantsBackUp.sort((a, b) => {
+
+        if(a.user.name != undefined) a.user.name.toUpperCase();
+        if(b.user.name != undefined) b.user.name.toUpperCase();
+  
+        if(a.user.name < b.user.name){
+          return -1;
+        } else if (a.user.name > b.user.name){
+          return 1;
+        } else if(a.user.name == ''){
+          return 1;
+        }else {
+          return 0;
+        }
+      });
+
+    } else {
+
+      this.participantsBackUp.sort((a, b) => {
+
+        if(a.user.name != undefined) a.user.name.toUpperCase();
+        if(b.user.name != undefined) b.user.name.toUpperCase();
+  
+        if(a.user.name < b.user.name){
+          return 1;
+        } else if (a.user.name > b.user.name){
+          return -1;
+        } else if(a.user.name == ''){
+          return -1;
+        }else {
+          return 0;
+        }
+      });
+
+    }
+
+    this.freshTable()
+
+  }
+
+  changeSort() {
+    this.search.orderBy = !this.search.orderBy
+    this.sortArray()
+  }
+
+
+  freshTable() {
+    this.participants = [];
+    for(let part of this.participantsBackUp) {
+      this.participants.push(part);
+    }
+  }
+
+  searchByName() {
+    this.participants = this.participantsBackUp;
+    let busqueda = this.search.name;
+    if(busqueda === undefined || busqueda == '') return this.participants;
+    
+    return this.participants.filter(function(participant){
+
+      return (participant.user.name.includes(busqueda.toUpperCase()))
+      
+    });
   }
 
 }
