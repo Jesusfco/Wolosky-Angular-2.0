@@ -88,13 +88,7 @@ export class ParticipantsEventComponent implements OnInit {
 
         if(part.user_id == participant.user_id) {
 
-          part.id = participant.id;
-
-          if(participant.cost != null || participant.cost <=0) part.cost = participant.cost;
-
-          else part.cost = this.event.cost
-
-          part.active = true;
+          part.setValues(participant)
           
           break;
 
@@ -166,15 +160,55 @@ export class ParticipantsEventComponent implements OnInit {
   }
 
   searchByName() {
-    this.participants = this.participantsBackUp;
+    let participants = this.participantsBackUp;
     let busqueda = this.search.name;
-    if(busqueda === undefined || busqueda == '') return this.participants;
+    if(busqueda === undefined || busqueda == '') return participants;
     
-    return this.participants.filter(function(participant){
+    return participants.filter(function(participant){
 
       return (participant.user.name.includes(busqueda.toUpperCase()))
       
     });
+  }
+
+  searchParticipantsWriting() {
+    this.participants = this.searchByName();
+  }
+
+  activeParticipant(participant: EventParticipant) {
+
+    setTimeout(() => {
+
+      participant.checkActive()    
+
+      this._http.createParticipant(participant).then(
+
+        data => {
+
+          let partcipantRecived = new EventParticipant()
+          partcipantRecived.setValues(data)
+
+          for(let part of this.participants) {
+            if(part.user_id == partcipantRecived.user_id) {
+              part.id = partcipantRecived.id
+              break;
+            }
+          }
+
+        }, error => {
+
+          error.message = 'No se pudo actualizar al participante ' + participant.user.name
+
+          this.not.sendError(error)
+          participant.active = !participant.active
+          participant.checkActive()
+
+        }
+
+      )
+
+    }, 100)
+    
   }
 
 }

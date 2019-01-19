@@ -134,8 +134,10 @@ export class NotificationComponent implements OnInit {
 
       else {
 
-        message.title = "Error: " + x.status;
-        message.description = x.statusText;
+        if(x.message != undefined) message.description = x.message
+        else message.description = x.statusText
+
+        message.title = "Error: " + x.status;        
         message.type = 2;
 
       }

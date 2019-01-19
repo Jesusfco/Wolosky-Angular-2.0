@@ -1,7 +1,7 @@
 <h3 class="centerText">Administrar participantes</h3>
 
 <div class="divSearch">
-    <input [(ngModel)]="search.name" (keyup)="searchParticipants()" placeholder="Buscar Usuario" name="search" type="search">
+    <input [(ngModel)]="search.name" (keyup)="searchParticipantsWriting()" placeholder="Buscar Usuario" name="search" type="search">
 
     <br>
     <mat-icon *ngIf="search.name == ''">search</mat-icon>
@@ -72,8 +72,15 @@
             <tr *ngFor="let participant of participants">
 
                 <td class="left">{{ participant.user.name }}</td>
-                <td>${{ participant.cost }}</td>
-                <td><mat-checkbox [(ngModel)]="participant.active"></mat-checkbox></td>
+                <td matTooltip="Clic para personalizar el Monto" matTooltipPosition="below" (click)="editPrice(participant)">
+                    <span></span> ${{ participant.cost }}
+                    <form (submit)="updatePrice(participant)">
+                        <input id="focusModify" (blur)="finishModify(participant)" [(ngModel)]="participant.cost" name="cost" type="number" min="1">
+                    </form>
+                </td>
+                <td>
+                    <mat-checkbox (click)="activeParticipant(participant)" [(ngModel)]="participant.active"></mat-checkbox>
+                </td>
 
             </tr>
         </tbody>

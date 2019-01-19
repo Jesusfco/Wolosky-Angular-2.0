@@ -42,10 +42,18 @@ export class EventParticipant {
             this.event.setValues(data.event);
         }
 
+        if(this.status == 1) this.active = true;
+        else this.active = false;
+
     }
 
     send(object) {
         
+    }
+
+    checkActive() {
+        if(this.active) this.status = 1;
+        else this.status = 0;
     }
 
 }
