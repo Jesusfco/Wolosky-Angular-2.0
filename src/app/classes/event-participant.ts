@@ -7,13 +7,14 @@ export class EventParticipant {
     public creator_id: number;
     public user_id: number;
     public user: User;
-    public status: number;
+    public status: number = 0;
     public creator: User;
     public cost: number;    
     public event_id: number;
     public event: Event;
     public created_at: String;
     public active: Boolean = false;
+    public edit_price: boolean = false
 
     constructor() {}
 

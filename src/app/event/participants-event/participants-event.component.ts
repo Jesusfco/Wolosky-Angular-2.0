@@ -4,6 +4,8 @@ import { EventService } from '../event.service';
 import { EventParticipant } from '../../classes/event-participant';
 import { Event } from '../../classes/event';
 import { not } from '@angular/compiler/src/output/output_ast';
+import { Storage } from '../../classes/storage';
+import { Url } from '../../classes/url';
 
 @Component({
   selector: 'app-participants-event',
@@ -26,12 +28,22 @@ export class ParticipantsEventComponent implements OnInit {
     genderM: true,
     genderF: true,
     orderBy: true,
+    status: false,
   }
 
   public participantsBackUp: Array<EventParticipant> = [];
   public participants: Array<EventParticipant> = [];
 
+  public url1 = ''
+  public url2 = ''
+
   constructor(private _http: EventService, private not: NotificationService) { 
+
+    let storage = new Storage()
+    let url = new Url()
+
+    this.url1 = url.url + 'excel/event/participants/' + this.event + storage.getTokenUrl()
+    this.url2 = url.url + 'excel/event/participantsInf/' + this.event + storage.getTokenUrl()
         
   }
 
@@ -51,7 +63,7 @@ export class ParticipantsEventComponent implements OnInit {
         if(data.participants) 
           this.setParticipantsActive(data.participants)
 
-        this.freshTable();
+        this.sortByStatus()
 
       },
 
@@ -75,7 +87,7 @@ export class ParticipantsEventComponent implements OnInit {
       participant.cost = this.event.cost;
       participant.active = false;
       this.participantsBackUp.push(participant);
-
+      
     }
 
   }
@@ -144,11 +156,49 @@ export class ParticipantsEventComponent implements OnInit {
 
     this.freshTable()
 
-  }
+  }  
 
   changeSort() {
     this.search.orderBy = !this.search.orderBy
     this.sortArray()
+  }
+
+  changeSortStatus() {
+    this.search.status = !this.search.status
+    this.sortByStatus();
+  }
+
+  sortByStatus() {
+
+    if(this.search.status)
+
+    this.participantsBackUp.sort((a, b) => {
+     
+      if( a.status == null || a.status == undefined ||a.status < b.status)
+        return -1
+      else if (a.status > b.status)
+        return 1
+      
+      else 
+        return 0;
+      
+    });
+
+    else
+
+      this.participantsBackUp.sort((a, b) => {
+      
+        if( a.status == null || a.status == undefined || a.status < b.status)
+          return 1
+        else if (a.status > b.status)
+          return -1        
+        else 
+          return 0
+        
+      });
+
+    this.freshTable()
+
   }
 
 
@@ -208,6 +258,105 @@ export class ParticipantsEventComponent implements OnInit {
       )
 
     }, 100)
+    
+  }
+
+  editPrice(participant) {
+
+    for(let part of this.participants) {
+      part.edit_price = false;      
+    }
+
+    participant.edit_price = true;
+
+    setTimeout(() => document.getElementById('focusModify').focus(), 50);
+
+  }
+
+  updatePrice(participant: EventParticipant) {
+    this.activeParticipant(participant)
+    participant.edit_price = false
+  }
+
+  finishModify(participant) {
+    participant.edit_price = false;
+  }
+
+  countUsersInEvent() {
+    let x = 0;
+    for(let part of  this.participantsBackUp) {
+      if(part.status == 1)
+        x++      
+    }
+
+    return x;
+  }
+
+  filterParticipants() {
+
+    setTimeout(() => {
+
+      this.freshTable()
+    for(let i=0; i < this.participants.length; i++) {
+
+      if(!this.search.active && this.participants[i].user.status == 1){
+
+        this.participants.splice(i,1) 
+        i--
+        continue
+
+      }
+
+      else if(!this.search.inactive && this.participants[i].user.status > 1) {
+
+        this.participants.splice(i,1) 
+        i--
+        continue
+
+      }
+
+      else if(!this.search.typeA && this.participants[i].user.user_type_id == 1) {
+
+        this.participants.splice(i,1) 
+        i--
+        continue
+
+      }
+
+      else if(!this.search.typeO && this.participants[i].user.user_type_id > 4) {
+
+        this.participants.splice(i,1) 
+        i--
+        continue
+        
+      }
+
+      else if(!this.search.typeT && this.participants[i].user.user_type_id <= 4 && this.participants[i].user.user_type_id >= 2) {
+
+        this.participants.splice(i,1) 
+        i--
+        continue
+        
+      }
+
+      else if(!this.search.genderM && this.participants[i].user.gender == 1) {
+
+        this.participants.splice(i,1) 
+        i--
+        continue
+        
+      }
+
+      else if(!this.search.genderF && this.participants[i].user.gender == 2) {
+
+        this.participants.splice(i,1) 
+        i--        
+        
+      }        
+
+    }
+    
+    }, 50);
     
   }
 
