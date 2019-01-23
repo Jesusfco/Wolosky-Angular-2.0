@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Event } from '../../classes/event';
 import { EventService } from '../event.service';
+import { Receipt } from '../../classes/receipt';
 
 @Component({
   selector: 'app-receipts-event',
@@ -8,8 +9,8 @@ import { EventService } from '../event.service';
   styleUrls: ['./receipts-event.component.css']
 })
 export class ReceiptsEventComponent implements OnInit {
-
-  @Input() event: Event;
+  
+  @Input() receipts: Array<Receipt>
   
   constructor(private _http: EventService) { }
 

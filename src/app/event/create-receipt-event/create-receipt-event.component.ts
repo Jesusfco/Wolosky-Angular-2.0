@@ -121,9 +121,10 @@ export class CreateReceiptEventComponent implements OnInit {
 
         let receipt = new Receipt();
         receipt.setData(data)
-        this.receipts.push(receipt)
+        receipt.user = this.select.user
+        this.receipts.unshift(receipt)
         this.view = 0
-        this.not.sendNotification('Recibo Creado', 'El recibo del evento ha sido creado correctamente', 3500)
+        this.not.sendNotification('Recibo Creado', 'El recibo del evento ha sido creado correctamente', 3000)
 
       }, error => this.not.sendError(error)
 

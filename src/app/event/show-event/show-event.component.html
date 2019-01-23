@@ -26,6 +26,9 @@
             <a target="_blank" href="{{ url2 }}">
                 <mat-icon matTooltip="Descargar lista de participantes con detalles" matTooltipPosition="below">format_list_numbered</mat-icon>
             </a>
+            <a target="_blank" href="{{ url3 }}">
+                <mat-icon matTooltip="Descargar recibos del evento" matTooltipPosition="below">description</mat-icon>
+            </a>
             <mat-icon (click)="deleteEventView()" matTooltip="Eliminar Evento" matTooltipPosition="below">delete</mat-icon>
         </div>
 
@@ -47,12 +50,12 @@
             </div>
 
             <div class="formData l4">
-                <label>Fecha Final *Opcional:</label><br>
+                <label>Fecha Final:</label><br>
                 <input [(ngModel)]="event.date_to" name="date_to" type="date" disabled>
             </div>
 
             <div class="formData l12">
-                <label>Description *Opcional:</label><br>
+                <label>Description:</label><br>
                 <textarea [(ngModel)]="event.description" name="description" disabled></textarea>
             </div>
         </form>
@@ -64,7 +67,7 @@
             <app-participants-event [event]="event"></app-participants-event>
         </div>
         <div *ngIf="view == 4">
-            <app-receipts-event [event]="event"></app-receipts-event>
+            <app-receipts-event [receipts]="receipts"></app-receipts-event>
         </div>
 
         <div *ngIf="view == 6">

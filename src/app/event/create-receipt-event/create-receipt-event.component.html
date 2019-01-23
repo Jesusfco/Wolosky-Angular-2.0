@@ -33,11 +33,11 @@
 
     <div class="formData l12">
         <label>Monto</label><br>
-        <input [(ngModel)]="receipt.amount" name="amount" id="focus1">
+        <input [(ngModel)]="receipt.amount" name="amount" type="number" id="focus1">
         <small class="error" *ngIf="amountValidate == 1">El valor del monto debe ser mayor a 0</small>
     </div>
 
-    <div class="formData 12" *ngIf="sendingData == 0">
+    <div class="formData l12" *ngIf="sendingData == 0">
         <button class="btn">Crear Recibo</button>
     </div>
 

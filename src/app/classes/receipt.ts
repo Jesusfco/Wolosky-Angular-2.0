@@ -53,4 +53,30 @@ export class Receipt {
         }
 
     }
+
+    assignUserFromArrayUser(users: Array<User>) {
+        
+
+        
+        if(this.user_id == null) {
+            let user = new User()
+            user.name = 'Sin Usuario Asignado'
+            this.user = user;
+            return;
+        }
+
+        for(let user of users) {
+
+            if(user.id == this.user_id) {
+                this.user = user
+                break;
+            }
+
+        }
+
+        if(this.user.id == null) {
+            this.user.name = 'Usuario Eliminado'
+        }
+
+    }
 }

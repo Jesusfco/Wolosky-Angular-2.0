@@ -192,6 +192,9 @@ th {
     cursor: pointer;
 }
 
+
+/* BOTONES */
+
 .btn {
     width: 100%;
     padding: 10px;
@@ -201,11 +204,22 @@ th {
     cursor: pointer;
     margin-top: 20px;
     background-color: rgb(255, 0, 200);
+    transition: .35
 }
 
-.btn:focus {}
+.btn:focus {
+    transform: scale(1.035);
+    -webkit-box-shadow: 10px 10px 4px -7px rgba(0, 0, 0, 0.28);
+    -moz-box-shadow: 10px 10px 4px -7px rgba(0, 0, 0, 0.28);
+    box-shadow: 10px 10px 4px -7px rgba(0, 0, 0, 0.28);
+}
 
-.btn:hover {}
+.btn:hover {
+    transform: scale(1.035);
+    -webkit-box-shadow: 10px 10px 4px -7px rgba(0, 0, 0, 0.28);
+    -moz-box-shadow: 10px 10px 4px -7px rgba(0, 0, 0, 0.28);
+    box-shadow: 10px 10px 4px -7px rgba(0, 0, 0, 0.28);
+}
 
 .btnPrimary {
     background: #3679e4
@@ -234,6 +248,12 @@ select {
     background: #ECECEC;
     padding: 10px;
     border-radius: 3px;
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+    background: rgb(206, 206, 206);
 }
 
 textarea {

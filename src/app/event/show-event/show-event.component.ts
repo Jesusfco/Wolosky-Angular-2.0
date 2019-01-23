@@ -1,3 +1,4 @@
+
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Event } from '../../classes/event';
 import { EventService } from '../event.service';
@@ -30,8 +31,9 @@ export class ShowEventComponent implements OnInit {
   users: Array<User>
   receipts: Array<Receipt>
 
-  public url1
-  public url2
+  url1
+  url2
+  url3
   public sendingData: number = 0;
   public view = 1;  
 
@@ -70,6 +72,7 @@ export class ShowEventComponent implements OnInit {
 
     this.url1 = url.url + 'excel/event/participants/' + this.event.id + storage.getTokenUrl()
     this.url2 = url.url + 'excel/event/participantsInf/' + this.event.id + storage.getTokenUrl()
+    this.url3 = url.url + 'excel/event/receipts/' + this.event.id + storage.getTokenUrl()
     
     setTimeout(() => {
       this.state.background = 'final';
@@ -112,6 +115,7 @@ export class ShowEventComponent implements OnInit {
         for(let rec of data.receipts) {
           let object = new Receipt()
           object.setData(rec)
+          object.assignUserFromArrayUser(this.users)
           this.receipts.push(object)
         }
 

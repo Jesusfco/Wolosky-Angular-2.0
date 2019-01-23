@@ -1,3 +1,25 @@
-<p>
-  receipts-event works!
-</p>
+<div class="responsive-table">
+
+    <table align="center">
+
+        <thead>
+
+            <tr>
+                <th class="left">Participante</th>
+                <th>Monto</th>
+                <th>Fecha-Hora</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr *ngFor="let receipt of receipts">
+
+                <td class="left">{{ receipt.user.name }}</td>
+                <td>${{ receipt.amount }}</td>
+                <td>{{ receipt.created_at }}</td>
+
+            </tr>
+        </tbody>
+    </table>
+
+</div>
