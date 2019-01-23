@@ -80,4 +80,10 @@ export class EventService {
     .toPromise();
   }
 
+  createReceipt(receipt) {
+    return this._http.post(this.link.url + "event/createReceipt" + this.token.getTokenUrl(), receipt)
+    .map(data => data.json())
+    .toPromise();
+  }
+
 }

@@ -1,4 +1,4 @@
-<h3 class="centerText">Administrar participantes</h3>
+<h3 class="centerText">Administrar participantes {{countUsersInEvent()}}/{{ participantsBackUp.length }}</h3>
 
 <div class="divSearch">
     <input [(ngModel)]="search.name" (keyup)="searchParticipantsWriting()" placeholder="Buscar Usuario" name="search" type="search">
@@ -23,14 +23,6 @@
         </mat-expansion-panel-header>
 
         <div class="flex">
-
-            <div class="l12">
-                <p class="centerText">Hay # {{ countUsersInEvent() }} Participantes en el evento</p>
-                <div class="flex centerFlex">
-                    <a target="_blank" href="{{ url1 }}">Descargar lista de participantes</a>
-                    <a target="_blank" href="{{ url2 }}">Visualizar con recibos</a>
-                </div>
-            </div>
 
             <div class="l12" (click)="filterParticipants()">
                 <p>Status de Usuario</p>

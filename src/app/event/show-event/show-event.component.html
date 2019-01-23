@@ -10,14 +10,22 @@
 
     <div class="cardModule" [@card]="state.card">
         <br>
-        <h2 class="centerText">Evento <br>{{event.name }}</h2>
+        <h2 class="centerText" *ngIf="event.name == null">Cargando...</h2>
+        <h2 class="centerText">{{event.name }}</h2>
 
         <div class="options">
 
 
             <mat-icon (click)="editEventView()" matTooltip="Editar Evento" matTooltipPosition="below">edit</mat-icon>
             <mat-icon (click)="participantsEventView()" matTooltip="Administrar Participantes" matTooltipPosition="below">group</mat-icon>
+            <mat-icon (click)="createReceiptEventView()" matTooltip="Generar Recibo" matTooltipPosition="below">note_add</mat-icon>
             <mat-icon (click)="receiptsEventView()" matTooltip="Recibos del Evento" matTooltipPosition="below">receipt</mat-icon>
+            <a target="_blank" href="{{ url1 }}">
+                <mat-icon matTooltip="Descargar lista de participantes" matTooltipPosition="below">recent_actors</mat-icon>
+            </a>
+            <a target="_blank" href="{{ url2 }}">
+                <mat-icon matTooltip="Descargar lista de participantes con detalles" matTooltipPosition="below">format_list_numbered</mat-icon>
+            </a>
             <mat-icon (click)="deleteEventView()" matTooltip="Eliminar Evento" matTooltipPosition="below">delete</mat-icon>
         </div>
 
@@ -57,6 +65,10 @@
         </div>
         <div *ngIf="view == 4">
             <app-receipts-event [event]="event"></app-receipts-event>
+        </div>
+
+        <div *ngIf="view == 6">
+            <app-create-receipt-event [sendingData]="sendingData" [event]="event" [receipts]="receipts" [participants]="participantsBackUp" [users]="users"></app-create-receipt-event>
         </div>
         <div *ngIf="view == 5">
             <h3>Eliminar Evento</h3>

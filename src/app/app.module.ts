@@ -120,6 +120,7 @@ import { ShowEventComponent } from './event/show-event/show-event.component';
 import { EditEventComponent } from './event/edit-event/edit-event.component';
 import { ParticipantsEventComponent } from './event/participants-event/participants-event.component';
 import { ReceiptsEventComponent } from './event/receipts-event/receipts-event.component';
+import { CreateReceiptEventComponent } from './event/create-receipt-event/create-receipt-event.component';
 
 @NgModule({
   declarations: [
@@ -178,6 +179,7 @@ import { ReceiptsEventComponent } from './event/receipts-event/receipts-event.co
     EditEventComponent,
     ParticipantsEventComponent,
     ReceiptsEventComponent,
+    CreateReceiptEventComponent,
   ],
   imports: [
     BrowserModule,

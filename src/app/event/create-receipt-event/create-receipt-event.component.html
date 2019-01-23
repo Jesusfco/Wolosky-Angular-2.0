@@ -1,0 +1,44 @@
+<h3 class="centerText">Crear Recibo</h3>
+
+<div class="l12">
+    <label>Nombre del participante:</label><br>
+    <input class="l12" [(ngModel)]="search" name="search" type="search" [matAutocomplete]="auto" (keyup)="searchSugest($event)">
+
+    <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let user of sugests" [value]="user.name" (onSelectionChange)="setUserReceipt(user)">
+            {{ user.name }}
+        </mat-option>
+    </mat-autocomplete>
+
+</div>
+
+<p *ngIf="view == 2" class="centerText">El usuario seleccionado actualmente no es participante del evento, si desea asignarlo al evento, vaya a la seccion "Administrar Participantes" para darlo de alta y vuelta a intentarlo</p>
+
+<form class="flex" *ngIf="view == 1" (submit)="createReceipt()">
+
+    <div class="formData l12">
+        <label>Participante Seleccionado:</label><br>
+        <input [(ngModel)]="select.user.name" name="name" disabled>
+    </div>
+
+    <div class="formData l6">
+        <label>Monto a pagar</label><br>
+        <input [(ngModel)]="select.cost" name="cost" disabled>
+    </div>
+
+    <div class="formData l6">
+        <label>Monto pagado</label><br>
+        <input [(ngModel)]="payed" name="payed" disabled>
+    </div>
+
+    <div class="formData l12">
+        <label>Monto</label><br>
+        <input [(ngModel)]="receipt.amount" name="amount" id="focus1">
+        <small class="error" *ngIf="amountValidate == 1">El valor del monto debe ser mayor a 0</small>
+    </div>
+
+    <div class="formData 12" *ngIf="sendingData == 0">
+        <button class="btn">Crear Recibo</button>
+    </div>
+
+</form>

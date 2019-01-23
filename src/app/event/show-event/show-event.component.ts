@@ -4,6 +4,11 @@ import { EventService } from '../event.service';
 import { NotificationService } from '../../notification/notification.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { cardPop, backgroundOpacity } from './../../animations';
+import { Url } from '../../classes/url';
+import { Storage } from '../../classes/storage';
+import { EventParticipant } from '../../classes/event-participant';
+import { User } from '../../classes/user';
+import { Receipt } from '../../classes/receipt';
 
 @Component({
   selector: 'app-show-event',
@@ -20,9 +25,16 @@ export class ShowEventComponent implements OnInit {
     }
   }
 
+  event: Event = new Event();
+  participantsBackUp: Array<EventParticipant> = [];
+  users: Array<User>
+  receipts: Array<Receipt>
+
+  public url1
+  public url2
   public sendingData: number = 0;
-  public view = 1;
-  public event: Event = new Event();
+  public view = 1;  
+
   public state = {
     background: 'initial',
     card: 'initial',
@@ -43,18 +55,23 @@ export class ShowEventComponent implements OnInit {
       if (x.action == 'show') {
         this.event = x.data;        
       }       
-    });
-
-    this._http.sendData('get', this.event.id);
-
-    setTimeout(() => {
-      if(this.event.name == null)
-        this.setEvent();
-    },250);
+    });    
 
   }
 
-  ngOnInit() { setTimeout(() => {
+  ngOnInit() { 
+
+    this._http.sendData('get', this.event.id);
+    
+    this.setEvent();    
+
+    let storage = new Storage()
+    let url = new Url()
+
+    this.url1 = url.url + 'excel/event/participants/' + this.event.id + storage.getTokenUrl()
+    this.url2 = url.url + 'excel/event/participantsInf/' + this.event.id + storage.getTokenUrl()
+    
+    setTimeout(() => {
       this.state.background = 'final';
       this.state.card = 'final';
     }, 10);
@@ -77,10 +94,71 @@ export class ShowEventComponent implements OnInit {
 
     this._http.show(this.event).then(
 
-      data => this.event.setValues(data),
+      data => {
+        this.event.setValues(data.event) 
+
+        this.users = []
+        for(let user of data.users) {
+          let object = new User()
+          object.setValues(user)
+          this.users.push(object)
+        }
+
+        this.setParticipantsArray()
+        if(data.event.participants != undefined)
+          this.setParticipantsActive(data.event.participants)
+
+        this.receipts = []
+        for(let rec of data.receipts) {
+          let object = new Receipt()
+          object.setData(rec)
+          this.receipts.push(object)
+        }
+
+
+      },
       error => this.notification.sendError(error)
 
     ).then(() => this.sendingData--);
+
+  }
+
+  setParticipantsArray() {
+
+    this.participantsBackUp = []
+
+    for(let user of this.users) {
+
+      let participant = new EventParticipant();
+
+      participant.user = user;
+      participant.user_id = user.id;
+      participant.event_id = this.event.id;
+      participant.cost = this.event.cost;
+      participant.active = false;
+      this.participantsBackUp.push(participant);
+      
+    }
+
+  }
+
+  setParticipantsActive(parts) {
+
+    for(let participant of parts) {
+
+      for(let part of this.participantsBackUp) {
+
+        if(part.user_id == participant.user_id) {
+
+          part.setValues(participant)
+          
+          break;
+
+        }
+
+      }
+
+    }
 
   }
 
@@ -97,6 +175,7 @@ export class ShowEventComponent implements OnInit {
   deleteEventView(){ this.view = 5; }
 
   receiptsEventView(){this.view = 4;}
+  createReceiptEventView() {this.view = 6}
 
   delete() {
     let data = {

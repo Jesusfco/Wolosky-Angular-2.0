@@ -106,7 +106,11 @@ export class NewProductComponent implements OnInit {
   }//Fin de validateName public function()
 
   validateUniqueName(){    
+
     this.form.name = -1;
+
+    this.product.name = this.product.name.replace(/\s+$/, '');
+    
     for(let x of this.products){
 
       if(this.product.name == x.name){
