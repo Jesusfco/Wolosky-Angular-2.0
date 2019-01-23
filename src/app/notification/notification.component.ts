@@ -74,14 +74,15 @@ export class NotificationComponent implements OnInit {
 
         }
 
-    }
-
-    else {
+    } else {
 
       if(x.status == 0){
 
         message.title = "Error de Conexión";
-        message.description = "No se ha establecido conexion al servidor";
+        if(x.message != undefined)
+          message.description = x.message
+        else
+          message.description = "No se ha establecido conexion al servidor";
         message.type = 2;
 
         let lecture = localStorage.getItem('out_conection');
@@ -100,7 +101,7 @@ export class NotificationComponent implements OnInit {
 
         }
 
-        if(count > 1) message.type = 0;
+        if(count > 1 && x.message == undefined) message.type = 0;
 
       } else if(x.status == 400) {
           let login = parseInt(localStorage.getItem('login'));

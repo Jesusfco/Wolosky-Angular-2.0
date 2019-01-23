@@ -1,4 +1,3 @@
-
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Event } from '../../classes/event';
 import { EventService } from '../event.service';
@@ -30,6 +29,7 @@ export class ShowEventComponent implements OnInit {
   participantsBackUp: Array<EventParticipant> = [];
   users: Array<User>
   receipts: Array<Receipt>
+  storage: Storage = new Storage()
 
   url1
   url2
@@ -139,7 +139,7 @@ export class ShowEventComponent implements OnInit {
       participant.user_id = user.id;
       participant.event_id = this.event.id;
       participant.cost = this.event.cost;
-      participant.active = false;
+      participant.status = false;
       this.participantsBackUp.push(participant);
       
     }

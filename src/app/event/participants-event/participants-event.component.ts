@@ -6,6 +6,7 @@ import { Event } from '../../classes/event';
 import { not } from '@angular/compiler/src/output/output_ast';
 import { Storage } from '../../classes/storage';
 import { Url } from '../../classes/url';
+import { Receipt } from '../../classes/receipt';
 
 @Component({
   selector: 'app-participants-event',
@@ -15,8 +16,9 @@ import { Url } from '../../classes/url';
 export class ParticipantsEventComponent implements OnInit {
 
   @Input() event: Event;
-
-  sendingData = 0
+  @Input() sendingData
+  @Input() participantsBackUp: Array<EventParticipant>
+  @Input() receipts: Array<Receipt>
 
   public search = {
     name: '',
@@ -31,7 +33,8 @@ export class ParticipantsEventComponent implements OnInit {
     status: false,
   }
 
-  public participantsBackUp: Array<EventParticipant> = [];
+  selected: EventParticipant = new EventParticipant()
+  
   public participants: Array<EventParticipant> = [];
 
   public url1 = ''
@@ -47,71 +50,10 @@ export class ParticipantsEventComponent implements OnInit {
         
   }
 
-  ngOnInit() {
-    this.setParticipants()
+  ngOnInit() {    
+    this.sortByStatus()
   }
-
-  setParticipants() {
-
-    this._http.getParticipants(this.event).then(
-
-      data => {
-
-        if(data.users != undefined)
-          this.setParticipantsArray(data.users)        
-
-        if(data.participants) 
-          this.setParticipantsActive(data.participants)
-
-        this.sortByStatus()
-
-      },
-
-      error => this.not.sendError(error)
-
-    ).then( () => this.sendingData++ )
-
-  }
-
-  setParticipantsArray(users) {
-
-    this.participantsBackUp = []
-
-    for(let user of users) {
-
-      let participant = new EventParticipant();
-
-      participant.user = user;
-      participant.user_id = user.id;
-      participant.event_id = this.event.id;
-      participant.cost = this.event.cost;
-      participant.active = false;
-      this.participantsBackUp.push(participant);
-      
-    }
-
-  }
-
-  setParticipantsActive(parts) {
-
-    for(let participant of parts) {
-
-      for(let part of this.participantsBackUp) {
-
-        if(part.user_id == participant.user_id) {
-
-          part.setValues(participant)
-          
-          break;
-
-        }
-
-      }
-
-    }
-
-  }
-
+  
   searchParticipants() {}
 
   sortArray() {
@@ -228,9 +170,7 @@ export class ParticipantsEventComponent implements OnInit {
   activeParticipant(participant: EventParticipant) {
 
     setTimeout(() => {
-
-      participant.checkActive()    
-
+      
       this._http.createParticipant(participant).then(
 
         data => {
@@ -243,15 +183,14 @@ export class ParticipantsEventComponent implements OnInit {
               part.id = partcipantRecived.id
               break;
             }
-          }
+          }          
 
         }, error => {
 
           error.message = 'No se pudo actualizar al participante ' + participant.user.name
 
           this.not.sendError(error)
-          participant.active = !participant.active
-          participant.checkActive()
+          participant.status = !participant.status          
 
         }
 
@@ -269,12 +208,48 @@ export class ParticipantsEventComponent implements OnInit {
 
     participant.edit_price = true;
 
+    Object.assign(this.selected, participant)
+
     setTimeout(() => document.getElementById('focusModify').focus(), 50);
 
   }
 
-  updatePrice(participant: EventParticipant) {
-    this.activeParticipant(participant)
+  updatePrice(participant) {        
+
+    if(this.selected.cost != participant.cost) {
+
+      participant.cost = this.selected.cost
+
+      this._http.createParticipant(participant).then(
+
+        data => {
+
+          let par = new EventParticipant()
+          par.setValues(data)
+
+          for(let part of this.participants) {
+
+            if(part.user_id == par.user_id) {
+              part.id = par.id
+              part.created_at = par.created_at
+              
+              break;
+            }
+          }
+
+          this.not.sendNotification('Participante Actualizado', 'El costo del participante ' + participant.user.name + ' ha sido actualizado', 1500)
+
+        },
+
+        error => {
+
+          error.message = 'No se pudo actualizar al participante ' + participant.user.name
+          this.not.sendError(error)          
+
+        }
+      )
+    }
+      
     participant.edit_price = false
   }
 
@@ -285,7 +260,7 @@ export class ParticipantsEventComponent implements OnInit {
   countUsersInEvent() {
     let x = 0;
     for(let part of  this.participantsBackUp) {
-      if(part.status == 1)
+      if(part.status)
         x++      
     }
 
@@ -355,7 +330,7 @@ export class ParticipantsEventComponent implements OnInit {
       }        
 
     }
-    
+
     }, 50);
     
   }

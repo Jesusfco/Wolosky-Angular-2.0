@@ -1,3 +1,4 @@
+import { ParkingComponent } from './parking/parking.component';
 import { WorkersPaymentComponent } from './workers-payment/workers-payment.component';
 import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
@@ -59,6 +60,10 @@ import { PaymentShowComponent } from './workers-payment/payment-show/payment-sho
 import { RecordsComponent } from './records/records.component';
 import { FilterUserComponent } from './user/filter-user/filter-user.component';
 import { ShowEventComponent } from './event/show-event/show-event.component';
+import { ShowReceiptComponent } from './receipt/show-receipt/show-receipt.component';
+import { ShowParkingComponent } from './parking/show-parking/show-parking.component';
+import { NewParkingComponent } from './parking/new-parking/new-parking.component';
+import { AdminParkingComponent } from './parking/admin-parking/admin-parking.component';
 
 
 export const routes: Routes = [
@@ -93,7 +98,7 @@ export const routes: Routes = [
         component: ReceiptComponent,
         children: [
             { path: 'create', component: CreateRecieptComponent },
-            { path: 'edit/:id',  component: EditReceiptComponent}
+            { path: 'show/:id',  component: ShowReceiptComponent}
         ]
     },
 
@@ -113,6 +118,16 @@ export const routes: Routes = [
         children: [
             { path: 'crear', component: PaymentCreateComponent },
             { path: 'show/:id', component: PaymentShowComponent },
+        ]
+    },
+
+    {
+        path: 'parking',
+        component: ParkingComponent,
+        children: [
+            { path: 'admin', component: AdminParkingComponent },
+            { path: 'crear', component: NewParkingComponent },
+            { path: 'show/:id', component: ShowParkingComponent },
         ]
     },
     {

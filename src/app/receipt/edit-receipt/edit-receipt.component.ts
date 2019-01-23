@@ -1,4 +1,4 @@
-import { Component, OnInit , OnDestroy} from '@angular/core';
+import { Component, OnInit , OnDestroy, Input} from '@angular/core';
 import { Receipt } from '../../classes/receipt';
 import { Storage } from '../../classes/storage';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -34,53 +34,29 @@ export class EditReceiptComponent implements OnInit {
     {value: 12, view: 'Diciembre'},
   ];
 
-  public window = 1;
-  private observerRef: any;
+  @Input() receiptEdit: Receipt
+  
   public request: boolean = false;
+  
   public receipt: Receipt = new Receipt();
-  public storage: Storage = new Storage();
+  
 
   constructor(private _http: ReceiptService, 
-    private router: Router, 
-    private actRou: ActivatedRoute,
+    
     private notificationService: NotificationService ) { 
 
-    this.observerRef = actRou.params.subscribe(params => {
-      this.receipt.id = params['id'];
-      this.getReceipt();
-    });
-
+    
   }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.state.background = 'final';
-      this.state.card = 'final';
-    }, 100);
+    
+    Object.assign(this.receipt, this.receiptEdit)
+    
   }  
 
-  windowChange() {
-    if(this.window == 1) {
-      this.window = 2;
-    } else {
-      this.window = 1;
-    }
-  }
+  
 
-  getReceipt(){
-
-    this.request = true;
-
-    this._http.showReceipt(this.receipt).then(
-      data => this.receipt.setData(data), 
-      error => this.notificationService.sendData(error)
-
-    ).then(
-
-      () => this.request = false
-
-    );
-  }
+  
 
   update(){
 
@@ -91,7 +67,7 @@ export class EditReceiptComponent implements OnInit {
 
         this.notificationService.sendNotification('Recibo Actualizado', 'Los datos han sido actualizado correctamente', 2500);
         this._http.sendData('update', this.receipt);
-        this.closePop();
+        
 
       }, error => this.notificationService.sendData(error)
 
@@ -103,35 +79,6 @@ export class EditReceiptComponent implements OnInit {
     
   }
 
-  delete() {
-    this.request = true;    
-    this._http.deleteReceipt(this.receipt).then(
-    
-      data => {
-
-        this._http.sendData('delete', this.receipt);
-        this.notificationService.sendNotification('Recibo Eliminado', 'Los datos han sido actualizado correctamente', 2500);
-        this.closePop();
-
-      }, error => this.notificationService.sendData(error)
-
-      ).then(
-
-        () => this.request = false
-
-      );
-  }
-
-  printReceipt(){  
-    window.print();      
-  }
-
-  closePop(){    
-    setTimeout(() => {
-      this.router.navigate(['/receipt']);
-    }, 450);
-    this.state.background = 'initial';
-    this.state.card = 'initial';
-    
-  }
+ 
+ 
 }

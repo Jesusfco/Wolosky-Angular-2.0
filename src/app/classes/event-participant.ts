@@ -7,13 +7,12 @@ export class EventParticipant {
     public creator_id: number;
     public user_id: number;
     public user: User;
-    public status: number = 0;
+    public status: boolean = false
     public creator: User;
     public cost: number;    
     public event_id: number;
     public event: Event;
-    public created_at: String;
-    public active: Boolean = false;
+    public created_at: String;    
     public edit_price: boolean = false
 
     constructor() {}
@@ -24,7 +23,7 @@ export class EventParticipant {
         this.user_id = parseInt(data.user_id);
         this.creator_id = parseInt(data.creator_id);
         this.event_id = parseInt(data.event_id);
-        this.status = parseInt(data.status);
+        this.status = data.status;
         this.cost = parseFloat(data.cost);
         this.created_at = data.created_at;
 
@@ -43,8 +42,7 @@ export class EventParticipant {
             this.event.setValues(data.event);
         }
 
-        if(this.status == 1) this.active = true;
-        else this.active = false;
+       
 
     }
 
@@ -52,9 +50,6 @@ export class EventParticipant {
         
     }
 
-    checkActive() {
-        if(this.active) this.status = 1;
-        else this.status = 0;
-    }
+   
 
 }

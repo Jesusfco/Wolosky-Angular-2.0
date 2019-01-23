@@ -34,28 +34,23 @@
 
 
         <li [routerLink]="['/users']"><button mat-button>Usuarios</button></li>
-
-        <li [routerLink]="['/schedules']"><button mat-button>Horarios</button></li>
-
         <li [routerLink]="['/receipt']"><button mat-button>Recibos</button></li>
-
-        <li [routerLink]="['/events']"><button mat-button>Eventos</button></li>
+        <li [routerLink]="['/parking']"><button mat-button>Estacionamiento</button></li>
+        <li [routerLink]="['/schedules']"><button mat-button>Horarios</button></li>
+        <li [routerLink]="['/asistencias']" *ngIf="userData.getUserType() >= 6"><button mat-button>Asistencias</button></li>
 
         <li [routerLink]="['/inventory']"><button mat-button>Inventario</button></li>
-
         <li [routerLink]="['/sale-point']"><button mat-button>Punto de Venta <span class="notified">{{ userData.getSalesErrorConnection() }}</span></button></li>
-
         <li [routerLink]="['/sales']"><button mat-button>Registro de Ventas</button></li>
-
         <li [routerLink]="['/sale-debt']"><button mat-button>Deudores Abarrotería</button></li>
 
         <li [routerLink]="['/expenses']"><button mat-button>Gastos</button></li>
 
+        <li [routerLink]="['/events']"><button mat-button>Eventos</button></li>
+
         <li [routerLink]="['/cutout']" *ngIf="userData.getUserType() >= 6"><button mat-button>Recorte de Caja</button></li>
 
         <li [routerLink]="['/pago-trabajadores']" *ngIf="userData.getUserType() >= 6"><button mat-button>Pago Trabajadores</button></li>
-
-        <li [routerLink]="['/asistencias']" *ngIf="userData.getUserType() >= 6"><button mat-button>Asistencias</button></li>
 
         <li [routerLink]="['/monthly-cost']"><button mat-button>Costos por Hora</button></li>
 
@@ -87,9 +82,10 @@
     </ul>
 
     <h5>USUARIO</h5>
+
     <ul>
+        <li [routerLink]="['/perfil']"><button mat-button>Perfil</button></li>
         <li><button mat-button (click)="cerrarSesion()">Cerrar Sesión</button></li>
-        <!-- <li><button md-button>Perfil</button></li> -->
     </ul>
 
 

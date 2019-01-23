@@ -1,115 +1,55 @@
-<mat-progress-bar mode="indeterminate" *ngIf="request" class="barLoader"></mat-progress-bar>
+<form class="flex" (submit)="update()">
 
-<div class="cardSpace" [@background]="state.background">
+    <h2 class="l12 credit">
+        <i class="material-icons" [ngClass]="{ 'green-text': receipt.payment_type == false}" (click)="receipt.payment_type = false" matTooltip="Pago en efectivo">attach_money</i>
+        <i class="material-icons" [ngClass]="{ 'green-text': receipt.payment_type == true}" (click)="receipt.payment_type = true" matTooltip="Pago con tarjeta">credit_card</i>
+    </h2>
 
-    <div class="closeCardBackground" (click)="closePop()">
-        <h5 class="closeIcon">
-            <mat-icon>close</mat-icon>
-        </h5>
+
+    <div class="formData l12">
+        <label>Nombre de Alumno:</label><br>
+        <input class="l12" [(ngModel)]="receipt.user.name" name="user.name" type="search" disabled>
     </div>
 
-    <div class="cardModule" [@card]="state.card">
-        <h2>Crear Recibo</h2>
+    <div class="formData l12">
+        <label>Creador:</label><br>
+        <input class="l12" [(ngModel)]="receipt.creator.name" name="creator.name" type="search" disabled>
+    </div>
 
-        <div class="options">
-            <i class="material-icons" (click)="printReceipt()" matTooltip="Imprimir recibo">print</i>
-            <i class="material-icons" (click)="windowChange()" matTooltip="Eliminar Recibo">delete</i>
-        </div>
+    <div class="formData l6">
 
-
-        <form class="flex" (submit)="update()" *ngIf="window == 1">
-
-
-
-            <div *ngIf="receipt.payment_type == false" class="checkBox">Efectivo
-                <mat-icon>monetization_on</mat-icon>
-            </div>
-            <div *ngIf="receipt.payment_type == true" class="checkBox">Tarjeta
-                <mat-icon>credit_card</mat-icon>
-            </div>
-
-
-            <div class="formData l12">
-                <label>Nombre de Alumno:</label><br>
-                <input class="l12" [(ngModel)]="receipt.user.name" name="user.name" type="search" disabled>
-            </div>
-
-            <div class="formData l12">
-                <label>Creador:</label><br>
-                <input class="l12" [(ngModel)]="receipt.creator.name" name="creator.name" type="search" disabled>
-            </div>
-
-            <div class="formData l6">
-
-                <label>Tipo de pago:</label><br>
-                <select [(ngModel)]="receipt.type" name="type" disabled>
-                            <option value="1">Mensualidad</option> 
-                            <option value="2">Inscripcion</option>
-                            <!-- <option value="3">Días</option> -->
-                            <option value="4">Uniforme</option>                                                
-                            <!-- <option value="5">Evento/Viajes/Otros</option>                                                 -->
-                    </select>
-
-            </div>
-
-            <div class="formData l6">
-                <label>Monto:</label><br>
-                <input [(ngModel)]="receipt.amount" name="amount" type="number" min="0">
-
-            </div>
-
-
-
-            <div *ngIf="receipt.type == 1" class="formData l6">
-                <label>Mes:</label><br>
-                <select [(ngModel)]="receipt.month" name="month" disabled>
-                        <option  *ngFor="let x of months" value="{{ x.value }}">{{ x.view}}</option>
-                    </select>
-            </div>
-
-            <div class="formData l6">
-                <label>Año:</label><br>
-                <input class="l6" [(ngModel)]="receipt.year" name="year" disabled>
-            </div>
-
-            <div *ngIf="receipt.type == 3" class="formData l6">
-                <label>Dias:</label><br>
-                <input [(ngModel)]="receipt.days" name="days" type="number" min="1" max="30">
-
-            </div>
-
-            <div *ngIf="receipt.type == 5" class="formData l6">
-                <label>Descripción:</label><br>
-                <input [(ngModel)]="receipt.description" name="description" type="text">
-                <small class="error" *ngIf="validation.description == 1">Campo requerido*</small>
-
-            </div>
-
-            <button *ngIf="request == false" class="btn" type="submit">Editar Recibo</button>
-            <button *ngIf="request == true" class="btn formBtn" style="background: rgb(209, 209, 209)" disabled>Editar Recibo</button>
-
-
-        </form>
-
-        <div *ngIf="window == 2">
-            <h3>¿Estas seguro/a que desea borrar este Recibo?</h3>
-            <p>Una vez eliminado ya no se podra recuperar</p>
-            <div class="confirmCancel">
-                <button class="btn btnCancel" (click)="windowChange()">Cancelar</button>
-                <button class="btn btnDelete" (click)="delete()">Aceptar</button>
-            </div>
-        </div>
-
+        <label>Tipo de recibo:</label><br>
+        <p>{{ receipt.typeView() }}</p>
 
     </div>
-</div>
 
-<div id="reciboNew">
-    <h1>RECIBO # {{ receipt.id }}</h1>
-    <p>MONTO: $ {{ receipt.amount }}</p>
-    <p>ALUMNO/A: {{ receipt.user_id }}</p>
-    <p *ngIf="receipt.type == 1">TIPO DE PAGO: MENSUALIDAD</p>
-    <p *ngIf="receipt.type == 2">TIPO DE PAGO: INSCRIPCION</p>
-    <p>ATENTIDO POR: {{ receipt.creator_id }}</p>
-    <p>PAGADO EL: {{ receipt.created_at }}</p>
-</div>
+    <div class="formData l6">
+        <label>Monto:</label><br>
+        <input [(ngModel)]="receipt.amount" name="amount" type="number" min="0">
+
+    </div>
+
+
+
+    <div *ngIf="receipt.type == 1" class="formData l6">
+        <label>Mes:</label><br>
+        <p>{{ receipt.monthView() }}</p>
+    </div>
+
+    <div class="formData l6" *ngIf="receipt.type == 1 || receipt.type == 2">
+        <label>Año:</label><br>
+        <p>{{ receipt.year }}</p>
+    </div>
+
+    <div *ngIf="receipt.type == 3" class="formData l6">
+        <label>Dias:</label><br>
+        <input [(ngModel)]="receipt.days" name="days" type="number" min="1" max="30">
+
+    </div>
+
+
+    <button *ngIf="request == false" class="btn" type="submit">Editar Recibo</button>
+    <button *ngIf="request == true" class="btn formBtn" style="background: rgb(209, 209, 209)" disabled>Editar Recibo</button>
+
+
+</form>

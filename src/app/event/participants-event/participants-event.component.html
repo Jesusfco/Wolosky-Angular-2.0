@@ -80,11 +80,11 @@
                 <td matTooltip="Clic para personalizar el Monto" matTooltipPosition="below" (click)="editPrice(participant)">
                     <span *ngIf="!participant.edit_price"> ${{ participant.cost }}</span>
                     <form *ngIf="participant.edit_price" (submit)="updatePrice(participant)">
-                        <input id="focusModify" (blur)="finishModify(participant)" [(ngModel)]="participant.cost" name="cost" type="number" min="1">
+                        <input id="focusModify" (blur)="finishModify(participant)" [(ngModel)]="selected.cost" name="cost" type="number" min="1">
                     </form>
                 </td>
                 <td>
-                    <mat-checkbox (click)="activeParticipant(participant)" [(ngModel)]="participant.active"></mat-checkbox>
+                    <mat-checkbox (click)="activeParticipant(participant)" [(ngModel)]="participant.status"></mat-checkbox>
                 </td>
 
             </tr>

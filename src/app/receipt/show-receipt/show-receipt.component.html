@@ -1,0 +1,122 @@
+<mat-progress-bar mode="indeterminate" *ngIf="request" class="barLoader"></mat-progress-bar>
+
+<div class="cardSpace" [@background]="state.background">
+
+    <div class="closeCardBackground" (click)="closePop()">
+        <h5 class="closeIcon">
+            <mat-icon>close</mat-icon>
+        </h5>
+    </div>
+
+    <div class="cardModule" [@card]="state.card">
+
+        <h2 class="centerText">Recibo #{{ receipt.id }}</h2>
+
+        <div class="options">
+            <i class="material-icons" (click)="window = 1" matTooltip="Ver Recibo">visibility</i>
+            <i class="material-icons" (click)="window = 3" matTooltip="Editar Recibo" *ngIf="storage.getUserType() > 5">edit</i>
+            <i class="material-icons" (click)="printReceipt()" matTooltip="Imprimir recibo">print</i>
+            <i class="material-icons" (click)="window = 2" matTooltip="Eliminar Recibo" *ngIf="storage.getUserType() > 5">delete</i>
+        </div>
+
+
+        <form class="flex" *ngIf="window == 1">
+
+
+
+            <h2 class="l12 credit">
+                <i class="material-icons" [ngClass]="{ 'green-text': receipt.payment_type == false}" matTooltip="Pago en efectivo">attach_money</i>
+                <i class="material-icons" [ngClass]="{ 'green-text': receipt.payment_type == true}" matTooltip="Pago con tarjeta">credit_card</i>
+            </h2>
+
+
+            <div class="formData l12">
+                <label>Nombre de Alumno:</label><br>
+                <p>{{ receipt.user.name }}</p>
+            </div>
+
+            <div class="formData l12">
+                <label>Creador:</label><br>
+                <p>{{ receipt.creator.name }}</p>
+            </div>
+
+            <div class="formData l6">
+                <label>Monto:</label><br>
+                <p>${{ receipt.amount }}</p>
+
+            </div>
+
+            <div class="formData l6">
+
+                <label>Tipo de recibo:</label><br>
+                <p>{{ receipt.typeView() }}</p>
+
+            </div>
+
+            <div *ngIf="receipt.type == 1" class="formData l6">
+                <label>Mes:</label><br>
+                <p>{{ receipt.monthView() }}</p>
+            </div>
+
+            <div class="formData l6" *ngIf="receipt.type == 1 || receipt.type == 2">
+                <label>Año:</label><br>
+                <p>{{ receipt.year }}</p>
+            </div>
+
+            <div *ngIf="receipt.type == 3" class="formData l6">
+                <label>Dias:</label><br>
+                <p>{{ receipt.days }}</p>
+
+            </div>
+
+            <div class="formData l12" *ngIf="receipt.type == 5 ">
+                <label>Evento:</label><br>
+                <p>{{ receipt.event.name }}</p>
+            </div>
+
+            <div class="formData l6">
+                <label>Fecha-Hora Creación:</label><br>
+                <p>{{ receipt.created_at }}</p>
+            </div>
+
+            <div class="formData l6">
+                <label>Fecha-Hora Actualizacion:</label><br>
+                <p>{{ receipt.updated_at }}</p>
+            </div>
+
+            <!-- <div *ngIf="receipt.type == 5" class="formData l6">
+                <label>Descripción:</label><br>
+                <input [(ngModel)]="receipt.description" name="description" type="text">
+                <small class="error" *ngIf="validation.description == 1">Campo requerido*</small>
+
+            </div> -->
+
+
+
+
+        </form>
+
+        <div *ngIf="window == 2">
+            <h3>¿Estas seguro/a que desea borrar este Recibo?</h3>
+            <p>Una vez eliminado ya no se podra recuperar</p>
+            <div class="confirmCancel">
+                <button class="btn btnCancel" (click)="deleteWindow()">Cancelar</button>
+                <button class="btn btnDelete" (click)="delete()">Aceptar</button>
+            </div>
+        </div>
+
+        <app-edit-receipt [receiptEdit]="receipt" *ngIf="window == 3"></app-edit-receipt>
+
+
+    </div>
+</div>
+
+<div id="reciboNew">
+    <h1>RECIBO # {{ receipt.id }}</h1>
+    <p>MONTO: $ {{ receipt.amount }}</p>
+    <p>ALUMNO/A: {{ receipt.user_id }}</p>
+    <p *ngIf="receipt.type == 1">TIPO DE PAGO: MENSUALIDAD</p>
+    <p *ngIf="receipt.type == 2">TIPO DE PAGO: INSCRIPCION</p>
+    <p>ATENTIDO POR: {{ receipt.creator_id }}</p>
+    <p>PAGADO EL: {{ receipt.created_at }}</p>
+</div>

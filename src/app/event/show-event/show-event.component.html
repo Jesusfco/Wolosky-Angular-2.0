@@ -16,8 +16,8 @@
         <div class="options">
 
 
-            <mat-icon (click)="editEventView()" matTooltip="Editar Evento" matTooltipPosition="below">edit</mat-icon>
-            <mat-icon (click)="participantsEventView()" matTooltip="Administrar Participantes" matTooltipPosition="below">group</mat-icon>
+            <mat-icon (click)="editEventView()" matTooltip="Editar Evento" matTooltipPosition="below" *ngIf="storage.getUserType() > 5">edit</mat-icon>
+            <mat-icon (click)="participantsEventView()" matTooltip="Administrar Participantes" matTooltipPosition="below" *ngIf="storage.getUserType() > 5">group</mat-icon>
             <mat-icon (click)="createReceiptEventView()" matTooltip="Generar Recibo" matTooltipPosition="below">note_add</mat-icon>
             <mat-icon (click)="receiptsEventView()" matTooltip="Recibos del Evento" matTooltipPosition="below">receipt</mat-icon>
             <a target="_blank" href="{{ url1 }}">
@@ -29,7 +29,7 @@
             <a target="_blank" href="{{ url3 }}">
                 <mat-icon matTooltip="Descargar recibos del evento" matTooltipPosition="below">description</mat-icon>
             </a>
-            <mat-icon (click)="deleteEventView()" matTooltip="Eliminar Evento" matTooltipPosition="below">delete</mat-icon>
+            <mat-icon (click)="deleteEventView()" matTooltip="Eliminar Evento" matTooltipPosition="below" *ngIf="storage.getUserType() > 5">delete</mat-icon>
         </div>
 
         <form class="flex" *ngIf="view == 1">
@@ -64,7 +64,7 @@
             <app-edit-event [event]="event" (updateEventEmit)="update($event)"></app-edit-event>
         </div>
         <div *ngIf="view == 3">
-            <app-participants-event [event]="event"></app-participants-event>
+            <app-participants-event [sendingData]="sendingData" [event]="event" [receipts]="receipts" [participantsBackUp]="participantsBackUp"></app-participants-event>
         </div>
         <div *ngIf="view == 4">
             <app-receipts-event [receipts]="receipts"></app-receipts-event>

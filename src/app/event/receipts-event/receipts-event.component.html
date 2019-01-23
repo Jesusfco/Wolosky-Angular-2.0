@@ -12,7 +12,7 @@
 
         </thead>
         <tbody>
-            <tr *ngFor="let receipt of receipts">
+            <tr *ngFor="let receipt of receipts" [routerLink]="['/receipt/show', receipt.id]">
 
                 <td class="left">{{ receipt.user.name }}</td>
                 <td>${{ receipt.amount }}</td>

@@ -121,6 +121,12 @@ import { EditEventComponent } from './event/edit-event/edit-event.component';
 import { ParticipantsEventComponent } from './event/participants-event/participants-event.component';
 import { ReceiptsEventComponent } from './event/receipts-event/receipts-event.component';
 import { CreateReceiptEventComponent } from './event/create-receipt-event/create-receipt-event.component';
+import { ShowReceiptComponent } from './receipt/show-receipt/show-receipt.component';
+import { ParkingComponent } from './parking/parking.component';
+import { NewParkingComponent } from './parking/new-parking/new-parking.component';
+import { EditParkingComponent } from './parking/edit-parking/edit-parking.component';
+import { ShowParkingComponent } from './parking/show-parking/show-parking.component';
+import { AdminParkingComponent } from './parking/admin-parking/admin-parking.component';
 
 @NgModule({
   declarations: [
@@ -180,6 +186,12 @@ import { CreateReceiptEventComponent } from './event/create-receipt-event/create
     ParticipantsEventComponent,
     ReceiptsEventComponent,
     CreateReceiptEventComponent,
+    ShowReceiptComponent,
+    ParkingComponent,
+    NewParkingComponent,
+    EditParkingComponent,
+    ShowParkingComponent,
+    AdminParkingComponent,
   ],
   imports: [
     BrowserModule,
