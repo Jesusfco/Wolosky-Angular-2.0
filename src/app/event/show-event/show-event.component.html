@@ -74,6 +74,7 @@
             <app-create-receipt-event [sendingData]="sendingData" [event]="event" [receipts]="receipts" [participants]="participantsBackUp" [users]="users"></app-create-receipt-event>
         </div>
         <div *ngIf="view == 5">
+
             <h3>Eliminar Evento</h3>
             <p>¿Estas seguro de eliminar este evento? - Si eliminas el evento los recibos podran ser vistos al menos que marque la casilla para eliminar tambien los recibos relacionados al evento</p>
             <mat-checkbox [(ngModel)]="deleteReceipts">Eliminar con recibos</mat-checkbox>
@@ -81,6 +82,7 @@
                 <button class="btn btnCancel" (click)="view = 1">Cancelar</button>
                 <button class="btn btnDelete" (click)="delete()">Aceptar</button>
             </div>
+
         </div>
     </div>
 </div>
