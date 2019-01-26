@@ -73,7 +73,7 @@ export class CreateReceiptEventComponent implements OnInit {
 
       if(part.user_id == user.id) {
 
-        if(part.status!= 1) {
+        if(!part.status) {
           this.view = 2
           return
         }

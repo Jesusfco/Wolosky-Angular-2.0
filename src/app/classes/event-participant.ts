@@ -23,7 +23,8 @@ export class EventParticipant {
         this.user_id = parseInt(data.user_id);
         this.creator_id = parseInt(data.creator_id);
         this.event_id = parseInt(data.event_id);
-        this.status = data.status;
+        if(data.status == '1' || data.status == 1 || data.status == true)
+            this.status = true;
         this.cost = parseFloat(data.cost);
         this.created_at = data.created_at;
 

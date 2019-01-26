@@ -165,7 +165,7 @@ export class SchedulesComponent implements OnInit {
 
           for(let schedule of day.schedules) {
 
-            for(let check = horario.check_in; check <= horario.check_out; check++) {
+            for(let check = horario.check_in; check < horario.check_out; check++) {
       
               if(schedule.check_in == check){
       
