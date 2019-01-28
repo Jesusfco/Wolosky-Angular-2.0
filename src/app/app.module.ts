@@ -127,6 +127,7 @@ import { NewParkingComponent } from './parking/new-parking/new-parking.component
 import { EditParkingComponent } from './parking/edit-parking/edit-parking.component';
 import { ShowParkingComponent } from './parking/show-parking/show-parking.component';
 import { AdminParkingComponent } from './parking/admin-parking/admin-parking.component';
+import { ParkingService } from './parking/parking.service';
 
 @NgModule({
   declarations: [
@@ -253,6 +254,7 @@ import { AdminParkingComponent } from './parking/admin-parking/admin-parking.com
         RecordService,
         EventService,
         NotificationService,
+        ParkingService,
       ],
 
   bootstrap: [AppComponent]

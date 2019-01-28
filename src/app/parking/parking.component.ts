@@ -1,4 +1,6 @@
+import { ParkingService } from './parking.service';
 import { Component, OnInit } from '@angular/core';
+import { Parking } from '../classes/parking';
 
 @Component({
   selector: 'app-parking',
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ParkingComponent implements OnInit {
 
-  constructor() { }
+  parkings: Array<Parking> = []
+
+  search = {
+    to: null,
+    from: null,
+    name: null
+  };
+
+  constructor(private _http: ParkingService) { }
 
   ngOnInit() {
   }
 
+  setParkings() {
+
+  }
+
+  searchInput(e) {
+
+  }
 }
