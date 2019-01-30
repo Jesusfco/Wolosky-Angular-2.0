@@ -1,17 +1,16 @@
+<mat-progress-bar mode="indeterminate" *ngIf="sendingData > 0" class="barLoader"></mat-progress-bar>
+<router-outlet></router-outlet>
 <h2 class="centerText">Estacionamiento</h2>
 
 <form class="form" (submit)="setParkings()">
+
     <input (change)="setParkings()" type="date" [(ngModel)]="search.from" name="from" id="search"><label><mat-icon>date_range</mat-icon></label>
     <input (change)="setParkings()" type="date" [(ngModel)]="search.to" name="to" id="search"><label>
             <mat-icon>date_range</mat-icon></label>
 
     <input [(ngModel)]="search.name" name="name" id="search" type="search" placeholder="Buscar Usuario" (keyup)="searchInput($event)"><label><mat-icon>search</mat-icon></label>
 
-
-
 </form>
-
-
 
 
 <div class="responsive-table">
@@ -28,7 +27,7 @@
             <!-- <th colspan="3">Opciones</th> -->
         </thead>
         <tbody>
-            <tr *ngFor="let re of parkings" [routerLink]="['./show', re.id]">
+            <tr *ngFor="let re of parkings" [routerLink]="['./ver', re.id]">
                 <td class="left">{{ re.user.name }}</td>
                 <td>$ {{ re.amount }}</td>
                 <td>{{re.check_in}}</td>
@@ -39,6 +38,30 @@
 
     </table>
 
+</div>
 
+<div class="floatOptions">
+
+    <div class="moreOptions">
+
+        <a target="_blank" href="{{ storage.getUrl() + 'excel/receipt' +storage.getTokenUrl() }}
+          &from={{ search.from }}&to={{ search.to }}&id={{ search.id }}">
+            <button matTooltip="Descargar Recibos" matTooltipPosition="left" mat-fab id="cancelButton">
+              <mat-icon >archive</mat-icon>
+          </button>
+        </a>
+
+        <button [routerLink]="['./admin']" matTooltip="Administrar Cuentas Por Mes" matTooltipPosition="left" mat-fab>
+          <mat-icon >people</mat-icon>
+      </button>
+
+        <button [routerLink]="['./crear']" matTooltip="Crear Recibo" matTooltipPosition="left" mat-fab>
+          <mat-icon >create</mat-icon>
+      </button>
+    </div>
+
+    <button matTooltip="Opciones de Recibos" matTooltipPosition="left" mat-fab color="pri" class="floatOptionPrincipal">
+              <mat-icon >settings</mat-icon>
+          </button>
 
 </div>

@@ -127,7 +127,7 @@ export const routes: Routes = [
         children: [
             { path: 'admin', component: AdminParkingComponent },
             { path: 'crear', component: NewParkingComponent },
-            { path: 'show/:id', component: ShowParkingComponent },
+            { path: 'ver/:id', component: ShowParkingComponent },
         ]
     },
     {

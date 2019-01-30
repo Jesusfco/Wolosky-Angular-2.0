@@ -95,8 +95,7 @@ export class ReceiptComponent implements OnInit {
     if(this.storage.getUserType() >= 6) {
 
       this.search.to = this.search.from;
-      this.search.from += '01';
-      d.setMonth(d.getMonth() + 1);
+      this.search.from += '01';    
       d.setDate(0);      
       this.search.to += d.getDate();
 

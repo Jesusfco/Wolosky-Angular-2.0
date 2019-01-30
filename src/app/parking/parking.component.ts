@@ -1,6 +1,8 @@
+import { NotificationService } from './../notification/notification.service';
 import { ParkingService } from './parking.service';
 import { Component, OnInit } from '@angular/core';
 import { Parking } from '../classes/parking';
+import { Storage } from '../classes/storage';
 
 @Component({
   selector: 'app-parking',
@@ -10,23 +12,124 @@ import { Parking } from '../classes/parking';
 export class ParkingComponent implements OnInit {
 
   parkings: Array<Parking> = []
-
+  sendingData = 0
   search = {
     to: null,
     from: null,
-    name: null
-  };
+    name: null,
+    id: null
+  }
 
-  constructor(private _http: ParkingService) { }
+  storage: Storage = new Storage()
+
+  constructor(private _http: ParkingService, private not: NotificationService) { 
+    
+    _http.getData().subscribe(x => {      
+      
+      if (x.action == 'new') {
+        this.new(x.data);        
+      } else if(x.action == "update")
+        this.update(x.data);
+        else if(x.action == 'delete')
+        this.delete(x.data);
+      
+    });
+
+  }
 
   ngOnInit() {
+    this.getDates()
+    this.setParkings()
   }
 
   setParkings() {
+
+    this.sendingData++
+
+    this._http.getParkings(this.search).then(
+       
+      data => {
+      
+        this.parkings = []
+
+        for(let parking of data) {
+
+          let object = new Parking()
+          object.setValues(parking);
+          this.parkings.push(object)
+
+        }
+
+      }, error => this.not.sendError(error)
+
+    ).then(() => this.sendingData--)
 
   }
 
   searchInput(e) {
 
+  }
+
+  getDates() {
+
+    let d = new Date();
+
+    if (d.getMonth() <= 8) {
+
+      this.search.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-";      
+
+    } else {
+
+      this.search.from = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-";      
+      
+    }
+
+    if(this.storage.getUserType() >= 6) {
+
+      this.search.to = this.search.from;
+      this.search.from += '01';      
+      d.setDate(0);      
+      this.search.to += d.getDate();
+
+    } else {
+
+      if(d.getDate() < 10) {
+
+        this.search.from += "0" + d.getDate();        
+
+      } else {
+
+        this.search.from += d.getDate();
+        
+      }
+
+      this.search.to = this.search.from;
+
+    }
+
+  }
+
+  new(parking: Parking) {
+    this.parkings.unshift(parking)
+  }
+
+  update(parking: Parking) {
+
+    for(let park of this.parkings) {
+      if(parking.id == park.id){
+        park = parking
+        break
+      }
+    }
+
+  }
+
+  delete(parking: Parking) {
+    for(let i = 0; i < this.parkings.length; i++) {
+      if(parking.id == this.parkings[i].id){
+        this.parkings.splice(i,1)
+        break
+      }
+    }
   }
 }

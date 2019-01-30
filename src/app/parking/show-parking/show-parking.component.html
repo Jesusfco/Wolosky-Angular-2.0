@@ -1,3 +1,85 @@
-<p>
-  show-parking works!
-</p>
+<mat-progress-bar mode="indeterminate" *ngIf="sendingData > 0" class="barLoader"></mat-progress-bar>
+
+<div class="cardSpace" [@background]="state.background">
+
+    <div class="closeCardBackground" (click)="closePop()">
+        <h5 class="closeIcon">
+            <mat-icon>close</mat-icon>
+        </h5>
+    </div>
+
+    <div class="cardModule" [@card]="state.card">
+
+        <div class="options">
+            <i class="material-icons" (click)="window = 1" matTooltip="Ver Recibo">visibility</i>
+            <i class="material-icons" (click)="window = 2" matTooltip="Editar Entrada Estacionamiento">edit</i>
+            <!-- <i class="material-icons" (click)="printReceipt()" matTooltip="Imprimir recibo">print</i> -->
+            <i class="material-icons" (click)="window = 3" matTooltip="Eliminar">delete</i>
+        </div>
+
+        <h2 class="centerText" *ngIf="!parking.user.id">Cargando Datos</h2>
+        <h2 class="centerText" *ngIf="parking.user.id">Entrada Estacionamiento #{{ parking.id }}</h2>
+
+        <form class="flex" *ngIf="window == 1">
+
+            <div class="formData l12">
+                <label>Usuario:</label><br>
+                <p *ngIf="parking.user.name">{{ parking.user.name }}</p>
+            </div>
+
+            <div class="formData l6">
+                <label>Fecha:</label><br>
+                <p>{{parking.date_entry}}</p>
+            </div>
+
+            <div class="formData l6">
+                <label>Monto:</label><br>
+                <p *ngIf="!parking.amount">Sin Asignar</p>
+                <p *ngIf="parking.amount">${{parking.amount}}</p>
+            </div>
+
+            <div class="formData l6">
+                <label>Check In:</label><br>
+                <p>{{parking.check_in}}</p>
+            </div>
+
+            <div class="formData l6">
+                <label>Check Out:</label><br>
+                <p>{{parking.check_out}}</p>
+            </div>
+
+            <div class="formData l6">
+                <label>Status:</label><br>
+                <p>{{parking.paidView()}}</p>
+            </div>
+
+            <div class="formData l6">
+                <label>Creador:</label><br>
+                <p *ngIf="parking.creator.name">{{parking.creator.name}}</p>
+            </div>
+
+            <div class="formData l6">
+                <label>Fecha Hora de Creación:</label><br>
+                <p>{{parking.created_at}}</p>
+            </div>
+
+            <div class="formData l6">
+                <label>Ultima Actualización:</label><br>
+                <p>{{parking.updated_at}}</p>
+            </div>
+
+        </form>
+        <app-edit-parking [parking2]="parking" (updateEventEmit)="update($event)" *ngIf="window == 2"></app-edit-parking>
+        <div *ngIf="window == 3">
+
+            <h3>Eliminar Recibo de Estacionamiento</h3>
+            <p>¿Estas seguro de eliminar este recibo? - Si eliminas el recibo no podra ser recuperado</p>
+
+            <div class="confirmCancel" *ngIf="sendingData == 0">
+                <button class="btn btnCancel" (click)="window = 1">Cancelar</button>
+                <button class="btn btnDelete" (click)="delete()">Aceptar</button>
+            </div>
+
+        </div>
+    </div>
+</div>

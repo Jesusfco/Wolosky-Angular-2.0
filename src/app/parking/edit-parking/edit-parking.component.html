@@ -1,3 +1,44 @@
-<p>
-  edit-parking works!
-</p>
+<form class="flex" (submit)="update()">
+
+    <div class="formData l12">
+        <label>Usuario Elegido:</label><br>
+        <p *ngIf="!parking.user.name">Seleccione un Usuario</p>
+        <p *ngIf="parking.user.name">{{ parking.user.name }}</p>
+        <small class="error" *ngIf="parking.validations.user == 1">Es necesario elegir un Usuario</small>
+    </div>
+
+    <div class="formData l6">
+        <label>Check In:</label><br>
+        <input [(ngModel)]="parking.check_in" name="check_in" type="time">
+        <small class="error" *ngIf="parking.validations.check_in == 1">Campo requerido</small>
+    </div>
+
+    <div class="formData l6">
+        <label>Check Out:</label><br>
+        <input [(ngModel)]="parking.check_out" name="check_out" type="time">
+    </div>
+
+    <div class="formData l6">
+        <label>Monto:</label><br>
+        <input [(ngModel)]="parking.amount" name="amount" type="number">
+        <small class="error" *ngIf="parking.validations.date == 1">Campo requerido</small>
+    </div>
+
+    <div class="formData l6">
+        <label>Status:</label><br>
+        <select [(ngModel)]="parking.paid" name="paid">
+        <option value="0">Pendiente</option> 
+        <option value="1">Pagado</option>            
+      </select>
+    </div>
+
+    <div class="formData l6">
+        <label>Fecha:</label><br>
+        <p>{{parking.date_entry}}</p>
+    </div>
+
+    <div class="formData l12">
+        <button class="btn">Actualizar Recibo</button>
+    </div>
+
+</form>
