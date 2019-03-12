@@ -27,6 +27,9 @@ export class FilterUserComponent implements OnInit {
   typeO = false;
   genderM = true;
   genderF = true;
+  age1;
+  age2;
+
 
   validation = true;
   constructor(private router: Router) { }
@@ -68,6 +71,9 @@ export class FilterUserComponent implements OnInit {
         this.validation = false;
 
       if(!this.typeA && !this.typeO && !this.typeT)
+        this.validation = false;
+
+      if(this.age1 != null && this.age2 == null)
         this.validation = false;
 
     },100);

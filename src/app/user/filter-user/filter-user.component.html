@@ -32,7 +32,14 @@
                 <mat-checkbox [(ngModel)]="genderF">Femenino</mat-checkbox>
             </div>
 
-            <a *ngIf="validation" class="btn" href="{{ storage.getUrl() + 'excel/users' +storage.getTokenUrl() }}&active={{ active }}&inactive={{ inactive }}&typeA={{ typeA }}&typeT={{ typeT }}&typeO={{ typeO }}&genderM={{ genderM }}&genderF={{ genderF }}">Descargar Excel</a>
+            <div class="l12">
+                <p>Filtrado Por Edades</p>
+                <input [(ngModel)]="age1" type="number" min="0" placeholder="Desde" onchange="validateFilter()">
+                <input [(ngModel)]="age2" type="number" min="0" placeholder="Hasta" onchange="validateFilter()">
+
+            </div>
+
+            <a *ngIf="validation" class="btn" href="{{ storage.getUrl() + 'excel/users' +storage.getTokenUrl() }}&active={{ active }}&inactive={{ inactive }}&typeA={{ typeA }}&typeT={{ typeT }}&typeO={{ typeO }}&genderM={{ genderM }}&genderF={{ genderF }}&age2={{ age2 }}&age1={{ age1 }}">Descargar Excel</a>
 
         </div>
 
