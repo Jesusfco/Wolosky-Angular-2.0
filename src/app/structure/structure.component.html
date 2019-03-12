@@ -30,7 +30,8 @@
     </div>
 
     <h5>APLICACIÓN</h5>
-    <ul *ngIf="userData.getUserType() == 3 || userData.getUserType() >= 6">
+
+    <ul *ngIf="userData.getUserType() >= 6">
 
 
         <li [routerLink]="['/users']"><button mat-button>Usuarios</button></li>
