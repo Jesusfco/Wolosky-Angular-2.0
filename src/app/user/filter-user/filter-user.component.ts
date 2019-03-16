@@ -27,8 +27,10 @@ export class FilterUserComponent implements OnInit {
   typeO = false;
   genderM = true;
   genderF = true;
-  age1;
-  age2;
+  age1 = null;
+  age2= null;
+  hours1 = null;
+  hours2 = null;
 
 
   validation = true;
@@ -73,7 +75,10 @@ export class FilterUserComponent implements OnInit {
       if(!this.typeA && !this.typeO && !this.typeT)
         this.validation = false;
 
-      if(this.age1 != null && this.age2 == null)
+      if((this.age1 != null && this.age2 == null) || (this.age1 == null && this.age2 != null) )
+        this.validation = false;
+
+      if((this.hours1 != null && this.hours2 == null) || (this.hours1 == null && this.hours2 != null))
         this.validation = false;
 
     },100);
