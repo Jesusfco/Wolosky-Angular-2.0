@@ -63,7 +63,7 @@ export class Sale {
     }
 
     deleteProduct(id){
-        console.log(id);
+        
         for(let x = 0; x < Object.keys(this.description).length; x++){
             if(id == this.description[x].product_id){
                 this.description.splice(x, 1);
