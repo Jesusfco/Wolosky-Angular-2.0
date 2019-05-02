@@ -12,7 +12,7 @@
 
         <form *ngIf="form == 1" (submit)="checkClientMoney()">
             <h2>Dinero del Cliente</h2>
-            <input id="saleClientMoney" type="number" [(ngModel)]="sale.clientMoney" name="clientMoney" value="{{sale.total}}" min="{{sale.total}}">
+            <input id="saleClientMoney" type="number" [(ngModel)]="sale.receipts[0].amount" name="amount"  min="{{sale.total}}">
 
             <button *ngIf="request == false" type="submit" class="btn btnAccept">Confirmar</button>
             <button *ngIf="request == true" type="submit" class="btn btnAccept" disabled>Confirmar</button>
