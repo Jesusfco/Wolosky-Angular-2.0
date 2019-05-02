@@ -1,4 +1,5 @@
 import { Url } from './url';
+import { Product } from './product';
 export class Storage {
     public token:string;
     public tokenRequest:string;
@@ -104,7 +105,16 @@ export class Storage {
     }
 
     getInventory(){
-        return JSON.parse(localStorage.getItem('inventory'));
+        let array = JSON.parse(localStorage.getItem('inventory'));
+        let array2: Array<Product> = []
+
+        for(let pro of array) {
+            let product = new Product();
+            product.setData(pro);
+            array2.push(product)
+        }
+
+        return array2;
     }
 
     getCash(){

@@ -8,7 +8,8 @@ export class Receipt {
     user: User = new User();
     creator_id: any;
     creator: User = new User();
-    amount: number;    
+    amount: number;
+    payment: number;    
     event_id: any;
     event: Event = new Event()
     type: Number = 1;

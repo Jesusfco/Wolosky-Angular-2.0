@@ -15,9 +15,8 @@ import { Observable } from 'rxjs/Observable';
 })
 export class SalePointComponent implements OnInit {
 
-  public inventory = [];
-  public sale: Sale = new Sale();
-  public descripton: SaleDescription = new SaleDescription();
+  public inventory: Array<Product> = [];
+  public sale: Sale = new Sale();  
   public search = {
     name: '',
     quantity: 1,
@@ -36,7 +35,7 @@ export class SalePointComponent implements OnInit {
 
   public interval: any = 0;
 
-  sugests: Array<any> = [];
+  sugests: Array<Product> = [];
 
   constructor(private _http: SaleService,
               private inventoryService: InventoryService,
@@ -133,8 +132,7 @@ export class SalePointComponent implements OnInit {
       }
 
     }
-
-    this.sale.setSubtotal();
+    
     this.sale.getTotal();
 
   }//   CHECK PRICES() FUNCTION

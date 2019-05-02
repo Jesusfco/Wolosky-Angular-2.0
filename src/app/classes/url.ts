@@ -3,7 +3,7 @@ export class Url {
     public basic: string;
     
         constructor() {
-            this.basic = "http://www.woloskygimnasia.com/";
+            // this.basic = "http://www.woloskygimnasia.com/";
             this.basic = "http://localhost:8000/"
 
             this.url = this.basic + 'api/';

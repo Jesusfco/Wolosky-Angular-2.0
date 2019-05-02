@@ -1,18 +1,27 @@
 import { SaleDescription } from './sale-description';
+import { User } from './user';
+import { Receipt } from './receipt';
+import { MyCarbon } from '../utils/classes/my-carbon';
 
 export class Sale {
-    public id: number;
-    public total: number;
+    public id: number;    
     public creator_id: number;
-    public creator_name: string;
-    public description: Array<any>= [];
-    public clientMoney: number;
+    public creator: User;
+    public description: Array<SaleDescription>= [];
+    public receipts: Array<Receipt> = []
     public created_at: string;
     public type: number;
 
-    constructor(){
-        this.total = 0;
+    constructor(){        
         this.type = 1;
+    }
+
+    get total(){
+        let n = 0
+        for(let desc of this.description) {
+            n+= desc.subtotal
+        }
+        return n
     }
 
     storageLocalSale(){
@@ -39,8 +48,7 @@ export class Sale {
     checkUniqueDescription(product){
         for (let x = 0; x < Object.keys(this.description).length; x++){
             if(product.product_id ==  this.description[x].product_id){
-                this.description[x].quantity += product.quantity;
-                this.description[x].subtotal = this.description[x].quantity * this.description[x].price;
+                this.description[x].quantity += product.quantity;                
                 return false;
                 // break;
             }
@@ -48,17 +56,8 @@ export class Sale {
         return true;
     }
 
-    setSubtotal(){
-        for (let x = 0; x < Object.keys(this.description).length; x++){
-            this.description[x].subtotal = this.description[x].price * this.description[x].quantity;
-        }
-    }
-    getTotal(){
-        
-        this.total = 0;
-        for(let x of this.description){
-            this.total += x.subtotal;
-        }
+    
+    getTotal(){               
         this.storageLocalSale();
     }
 
@@ -86,39 +85,9 @@ export class Sale {
     }
 
     setCreatedAt(){
-        let x = new Date();
-        this.created_at = x.getFullYear() + "-";
-
-        if(x.getMonth() < 9){
-            this.created_at += "0" + (x.getMonth() + 1) + "-";
-        } else {
-            this.created_at += (x.getMonth() + 1) + "-";
-        }
-
-        if( x.getDate() < 9){
-            this.created_at += "0" + (x.getDate() ) + " ";        
-        }else {
-            this.created_at += (x.getDate() ) + " ";
-        }
-
-        if(x.getHours() < 10){
-            this.created_at += "0" + x.getHours() + ":";
-        }
-        else {
-            this.created_at += x.getHours() + ":";
-        }
-
-        if( x.getMinutes() < 10) {
-            this.created_at += "0" + x.getMinutes() + ":";
-        } else {
-            this.created_at += x.getMinutes() + ":";
-        }
-
-        if( x.getSeconds() < 10) {
-            this.created_at += "0" + x.getSeconds();
-        } else {
-            this.created_at += x.getSeconds();
-        }
+        
+        this.created_at = MyCarbon.nowTimeStamp()
+        
     }
 
 

@@ -5,6 +5,7 @@ import { Sale } from '../../classes/sale';
 import { SaleService } from '../sale.service';
 import { Product } from '../../classes/product';
 import { SaleDebt } from '../../classes/sale-debt';
+import { Receipt } from '../../classes/receipt';
 
 @Component({
   selector: 'app-sale-process',
@@ -42,8 +43,12 @@ export class SaleProcessComponent implements OnInit {
     this.sale.description = this.sale.getLocalSale();
     this.sale.type = this.sale.getSaleTypeStorage();
     this.sale.getTotal();
-    let money = this.sale.total;
-    this.sale.clientMoney = money;
+    
+    if(this.sale.receipts.length  == 0) {
+      let receipt = new Receipt();
+      receipt.amount = this.sale.total
+      this.sale.receipts.push(receipt)
+    }
 
     if(this.sale.type == 3)
       this.form = 3;

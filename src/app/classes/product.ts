@@ -1,15 +1,17 @@
+import { ObjectJSONParser } from "../utils/classes/ObjectJSON";
+
 export class Product {
 
     public id: number;
-    public name: string;
-    public code: string;
+    public name: string = '';
+    public code: string = '';
     public price_public: number;
     public price_intern: number;
     public cost_price: number;
     public reorder: number;
     public stock: number;
-    public department: string;
-    public created_at: string;
+    public department: string = '';
+    public created_at: string = '';
     public edit: boolean;
     public delete: boolean;
     public add: boolean;
@@ -20,12 +22,14 @@ export class Product {
         this.delete = false;
         this.add = false;
         this.reorder = 0;
-        this.stock = 0;
-        this.name = '';
-        this.code = '';
+        this.stock = 0;        
         this.price_intern = 0;
         this.price_public = 0;
         this.cost_price = 0;
+    }
+
+    setData(data) {
+        ObjectJSONParser.set(data, this)
     }
 
     afterSale(sale){
