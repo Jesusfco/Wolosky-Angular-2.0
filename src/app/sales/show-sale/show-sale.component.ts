@@ -77,14 +77,14 @@ export class ShowSaleComponent implements OnInit {
 
         for(let i = 0; i < this.sale.description.length; i++) {
           
-          if(this.sale.description[i].product_name == undefined || 
-            this.sale.description[i].product_name == null) {
+          if(this.sale.description[i].product.name == undefined || 
+            this.sale.description[i].product.name == null) {
 
               for(let product of this.products){
 
                 if(product.id == this.sale.description[i].product_id) {
 
-                  this.sale.description[i].product_name = product.name;
+                  this.sale.description[i].product = product;
                   break;
 
                 }

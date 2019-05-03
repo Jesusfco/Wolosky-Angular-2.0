@@ -1,7 +1,7 @@
 import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 import "rxjs";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 
 import { Url } from '../classes/url';
 import { Storage } from '../classes/storage';
@@ -12,7 +12,18 @@ export class SaleService {
   public link: Url = new Url();
   public storage: Storage = new Storage();
 
+  private subject = new Subject<any>();
+  
   constructor(private _http: Http) { }
+
+  getData(): Observable<any> {
+    return this.subject.asObservable();
+  }
+
+  sendData(action, data) {
+    const message = {action: action, data: data};
+    setTimeout(() => this.subject.next(message), 50);
+  }
 
   postSale(sale) {
     return this._http.post(this.link.url + 'sale' + this.storage.getTokenUrl(), sale)

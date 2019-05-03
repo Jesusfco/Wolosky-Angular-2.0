@@ -14,6 +14,10 @@ export class Cash {
         localStorage.setItem('userCash', (money + cash).toString() );
     }
 
+    static addCash(cash) {
+        let money = parseInt( localStorage.getItem('userCash') );
+        localStorage.setItem('userCash', (money + cash).toString() );
+    }
     substractCash(cash) {
         let money = parseInt( localStorage.getItem('userCash') );
         localStorage.setItem('userCash', (money - cash).toString() );

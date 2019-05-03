@@ -50,19 +50,19 @@
             </thead>
 
             <tbody>
-                <tr *ngFor="let product of sale.description">
-                    <td>{{ product.name | lowercase }}</td>
-                    <td *ngIf="product.modify == true">
-                        <form (submit)="finishModify(product)">
-                            <input id="focusModify" (keyup)=changingQuantity(product) (blur)="finishModify(product)" [(ngModel)]="product.quantity" name="quantity" type="number" min="1">
+                <tr *ngFor="let desc of sale.description">
+                    <td>{{ desc.product.name | lowercase }}</td>
+                    <td *ngIf="desc.modify == true">
+                        <form (submit)="finishModify(desc)">
+                            <input id="focusModify" (keyup)=changingQuantity(desc) (blur)="finishModify(desc)" [(ngModel)]="desc.quantity" name="quantity" type="number" min="1">
                         </form>
                     </td>
-                    <td *ngIf="product.modify == false" (click)="startModify(product)">{{ product.quantity }}</td>
-                    <td>{{ product.price }}</td>
-                    <td>{{ product.subtotal }}</td>
+                    <td *ngIf="desc.modify == false" (click)="startModify(desc)">{{ desc.quantity }}</td>
+                    <td>${{ desc.price }}</td>
+                    <td>${{ desc.subtotal }}</td>
                     <td>
-                        <mat-icon (click)="sale.deleteProduct(product.product_id)">remove_shopping_cart</mat-icon>
-                        <mat-icon (click)="startModify(product)">edit</mat-icon>
+                        <mat-icon (click)="sale.deleteProduct(desc.product_id)">remove_shopping_cart</mat-icon>
+                        <mat-icon (click)="startModify(desc)">edit</mat-icon>
                     </td>
 
                 </tr>

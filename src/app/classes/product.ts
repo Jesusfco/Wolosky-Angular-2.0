@@ -29,6 +29,7 @@ export class Product {
     }
 
     setData(data) {
+        this.id = 0
         ObjectJSONParser.set(data, this)
     }
 

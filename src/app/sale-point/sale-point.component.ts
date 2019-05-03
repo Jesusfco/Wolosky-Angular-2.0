@@ -16,7 +16,7 @@ import { Observable } from 'rxjs/Observable';
 export class SalePointComponent implements OnInit {
 
   public inventory: Array<Product> = [];
-  public sale: Sale = new Sale();  
+  public sale: Sale = Sale.getLastSale();  
   public search = {
     name: '',
     quantity: 1,
@@ -34,6 +34,7 @@ export class SalePointComponent implements OnInit {
   public observerFailSales: any;
 
   public interval: any = 0;
+  subscriptionService
 
   sugests: Array<Product> = [];
 
@@ -42,13 +43,16 @@ export class SalePointComponent implements OnInit {
               private router: Router) {
 
                 this.inventory = this.storage.getInventory();
-                this.sendStoreSales();
-
-                if(this.sale.getLocalSale() != undefined){
-                  this.sale.description = this.sale.getLocalSale();
-                  this.sale.type = this.sale.getSaleTypeStorage();
-                  this.sale.getTotal();
-                }
+                this.sendStoreSales();       
+                
+                this.subscriptionService = _http.getData().subscribe(x => {
+      
+                  if (x.action === 'finish') {       
+                    this.sale = new Sale();
+                    this.sale.saveOnLocalStorage()
+                  }
+            
+                });
 
   }
 
@@ -75,9 +79,9 @@ export class SalePointComponent implements OnInit {
 
   identifyProduct(){
 
-    if(this.search.name == '' || this.search.name == null) return;
+    if(this.search.name.trim() == '' || this.search.name == null) return;
 
-    this.search.name = this.search.name.replace(/\s+$/, '');
+    let term = this.search.name.trim().toLowerCase();
 
     this.restoreFormValue();
 
@@ -85,31 +89,28 @@ export class SalePointComponent implements OnInit {
 
     for(let x of this.inventory){
 
-      if(x.code == this.search.name || x.name.toUpperCase() == this.search.name.toUpperCase()){
-        if(this.sale.type == 1)
-        this.sale.pushProduct({
-            product_id: x.id,
-            name: x.name,
-            price: x.price_public,            
-            quantity: this.search.quantity,
-            modify: false
-          });
+      if(x.code == term || x.name.toLowerCase() == term){
+        
+        let desc = new SaleDescription();        
+        desc.product = x
+        desc.quantity = this.search.quantity
+        desc.product_id = x.id
 
-        if(this.sale.type > 1)
-        this.sale.pushProduct({
-            product_id: x.id,
-            name: x.name,            
-            price: x.price_intern,
-            quantity: this.search.quantity,
-            modify: false
-          });
+        if(this.sale.type == 1) {
+          desc.price = x.price_public
+        } else {
+          desc.price = x.price_intern
+        }
+        
+        this.sale.pushProduct(desc);
+        this.sale.saveOnLocalStorage()
 
         this.restoreSearch();
 
         break;
       }
-    }
-    // this.sale.storageLocalSale();
+
+    }    
 
   }
 
@@ -133,7 +134,7 @@ export class SalePointComponent implements OnInit {
 
     }
     
-    this.sale.getTotal();
+    this.sale.saveOnLocalStorage();
 
   }//   CHECK PRICES() FUNCTION
 
@@ -146,13 +147,14 @@ export class SalePointComponent implements OnInit {
 
   restoreSearch(){
     this.search = {
-      name: undefined,
+      name: '',
       quantity: 1,
     };
   }
 
   restoreSale(){
     this.sale = new Sale();
+    this.sale.saveOnLocalStorage()
   }
 
   storageSale(){
@@ -164,9 +166,7 @@ export class SalePointComponent implements OnInit {
   }
 
   goSaleProcess(){
-    this.sendStoreSales();
-    localStorage.setItem('saleStatus', '1');
-    this.interval = setInterval(() => this.intervalSaleLogic(), 1000);
+    this.sendStoreSales();        
     this.router.navigate(['/sale-point/sale-process']);
   }
 
@@ -176,33 +176,17 @@ export class SalePointComponent implements OnInit {
         let x = JSON.parse(localStorage.getItem('sales'));
         this._http.outServiceSales({sales: x}).then(
                 data => {
-                  console.log('intervalos de ventas error terminado');
+                  
                     localStorage.removeItem('sales');
                     clearInterval(this.observerFailSales);
                 }, error => {
-                    console.log(error);
-                    console.log('intervalos de ventas error');
+                    
                 }
             );
     }
 
   }
-
-  intervalSaleLogic(){
-
-    if(localStorage.getItem('saleStatus') == undefined){
-      this.sale = new Sale();
-      this.exitInterval();
-      this.setObservableFailSales();
-
-    } else if(localStorage.getItem('saleStatus') == '0'){
-      this.exitInterval();
-    }
-  }
-
-  exitInterval(){
-    clearInterval(this.interval);
-  }
+  
 
   setObservableFailSales(){
 
@@ -213,13 +197,13 @@ export class SalePointComponent implements OnInit {
   }
 
   changingQuantity(product) {
-    // console.log(event);
+    
     if(product.quantity <= 0 || product.quantity == null || product.quantity == undefined) {
       return;
     }
 
-    product.subtotal = product.quantity * product.price;
-    this.sale.getTotal();
+    this.sale.saveOnLocalStorage();
+
   }
 
   startModify(product){
@@ -237,9 +221,8 @@ export class SalePointComponent implements OnInit {
     if(product.quantity <= 0 || product == null){
       product.quantity = 1;
     }
-
-    product.subtotal = product.quantity * product.price;
-    this.sale.getTotal();
+    
+    this.sale.saveOnLocalStorage();
 
     product.modify = false;
 

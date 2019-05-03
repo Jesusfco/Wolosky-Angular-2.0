@@ -277,25 +277,29 @@ select {
     width: 100%;
 }
 
-.formData small {
+form small {
     position: absolute;
     right: 10px;
     margin-top: 0px;
 }
 
-.formData .error {
+form .error {
     color: rgb(206, 11, 11);
 }
 
-.formData .validate {
+form .validate {
     background: rgb(0, 172, 43);
 }
 
-.formData .inputError {
+form .inputError,
+form input.error,
+form textarea.error {
     background: rgb(243, 147, 147);
 }
 
-.formData .inputValidate {
+form .inputValidate,
+form input.error,
+form textarea.error {
     background: rgb(175, 255, 195);
 }
 
@@ -425,6 +429,7 @@ select {
 
 .input {
     display: block;
+    width: 100%;
 }
 
 .l12 {

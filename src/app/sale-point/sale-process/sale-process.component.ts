@@ -1,3 +1,6 @@
+import { NotificationService } from './../../notification/notification.service';
+import { Cash } from './../../classes/cash';
+import { Focus } from './../../utils/classes/focus';
 import { Component, OnInit } from '@angular/core';
 import { cardPop, backgroundOpacity} from '../../animations';
 import { Router } from '@angular/router';
@@ -15,7 +18,7 @@ import { Receipt } from '../../classes/receipt';
 })
 export class SaleProcessComponent implements OnInit {
 
-  public sale: Sale = new Sale();
+  public sale: Sale = Sale.getLastSale();
   public inventory: Product =  new Product();
   public saleDebt: SaleDebt = new SaleDebt();
 
@@ -36,22 +39,29 @@ export class SaleProcessComponent implements OnInit {
   public form: number = 1;
 
   constructor(private router: Router,
-            private _http: SaleService) { 
-    
-    
-
-    this.sale.description = this.sale.getLocalSale();
-    this.sale.type = this.sale.getSaleTypeStorage();
-    this.sale.getTotal();
+            private _http: SaleService,
+            private not: NotificationService) { 
+           
     
     if(this.sale.receipts.length  == 0) {
       let receipt = new Receipt();
       receipt.amount = this.sale.total
+      receipt.payment = this.sale.total
       this.sale.receipts.push(receipt)
+      this.sale.saveOnLocalStorage()
     }
 
-    if(this.sale.type == 3)
+    if(this.sale.type == 3) {
+      if(this.sale.saleDebt == undefined) {
+        this.sale.saleDebt = this.saleDebt
+      } else {
+        this.saleDebt = this.sale.saleDebt
+      }
+      
       this.form = 3;
+
+    }
+      
 
   }
 
@@ -78,59 +88,43 @@ export class SaleProcessComponent implements OnInit {
   }
 
   checkClientMoney(){
+    if(this.sale.receipts[0].payment < this.sale.total) {
+      return
+    }    
+
     this.form = 2;
 
-    setTimeout(() => {
-      
-        document.getElementById('salesBtnConfirm').focus();
-
-    }, 10);
+    Focus.elementById('salesBtnConfirm')
 
   }
 
   confirmSale(){
-    this.sale.setCreatedAt();
-
-    localStorage.removeItem('saleDescription');
-    localStorage.removeItem('saleType');
+    this.sale.setCreatedAt();    
+    Sale.removeLastSaleStorage()
     this.request = true;
 
     this._http.postSale(this.sale).then(
-      data => {
-        let x = parseInt(localStorage.getItem('userCash'));
-        x += this.sale.total;
-        localStorage.setItem('userCash', x.toString());
-
-        this.inventory.afterSale(this.sale.description);
-        localStorage.removeItem('saleStatus');
-
-        let not = {
-          status: 200,
-          title: 'Venta Cargada con exito',
-          description: 'La venta se ha cargado al servidor'
-        };
-
-        localStorage.setItem('request', JSON.stringify(not));
+      data => {                
+        this._http.sendData('finish', 1)
+        this.not.sendNotification('Venta Cargada con exito', 'La venta se ha cargado al servidor', 6000)        
 
       },
       error => {
 
-        localStorage.setItem('request', JSON.stringify(error));
-
-        let x = parseInt(localStorage.getItem('userCash'));
-        x += this.sale.total;
-        localStorage.setItem('userCash', x.toString());
-
-        this.inventory.afterSale(this.sale.description);
+        this.not.sendError(error)                        
         this.sale.storeSaleErrorConnection(this.sale);
 
       }
     ).then(
-      () => this.request = false
+      () => {
+        this.request = false
+        Cash.addCash(this.sale.total)
+        this.inventory.afterSale(this.sale.description);
+      }
     );
-
-    localStorage.removeItem('saleStatus');
+    
     this.closePop()
+
   }
 
   closePop(){    

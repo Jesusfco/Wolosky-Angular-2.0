@@ -1,7 +1,9 @@
+import { SaleDebt } from './sale-debt';
 import { SaleDescription } from './sale-description';
 import { User } from './user';
 import { Receipt } from './receipt';
 import { MyCarbon } from '../utils/classes/my-carbon';
+import { ObjectJSONParser } from '../utils/classes/ObjectJSON';
 
 export class Sale {
     public id: number;    
@@ -10,10 +12,24 @@ export class Sale {
     public description: Array<SaleDescription>= [];
     public receipts: Array<Receipt> = []
     public created_at: string;
+    public saleDebt: SaleDebt
     public type: number;
 
     constructor(){        
         this.type = 1;
+    }
+
+    setData(data) {
+        ObjectJSONParser.set(data, this)
+        if(data.description){
+            this.description = []
+            for(let desc of data.description){
+                let d = new SaleDescription();
+                d.setData(desc);
+                this.description.push(d)
+            }
+        }
+
     }
 
     get total(){
@@ -24,10 +40,22 @@ export class Sale {
         return n
     }
 
-    storageLocalSale(){
-        localStorage.setItem('saleDescription', JSON.stringify(this.description));
-        localStorage.setItem('saleType', JSON.stringify(this.type));
+    saveOnLocalStorage() {
+        localStorage.setItem('last_sale', JSON.stringify(this));
     }
+
+    static getLastSale() {
+        let sale = JSON.parse(localStorage.getItem('last_sale'))
+        let object = new Sale();
+        if(sale != undefined)
+            object.setData(sale)
+
+        return object
+    }
+
+    static removeLastSaleStorage() {
+        localStorage.removeItem('last_sale')
+    }    
 
     getLocalSale(){
         return JSON.parse(localStorage.getItem('saleDescription'));
@@ -37,29 +65,24 @@ export class Sale {
         return JSON.parse(localStorage.getItem('saleType'));
     }
 
-    pushProduct(product){
-        product.subtotal = product.price * product.quantity;
-        if(this.checkUniqueDescription(product))
-            this.description.push(product);
-        
-        this.getTotal();
+    pushProduct(description: SaleDescription){
+        console.log(description)
+        if(this.checkUniqueDescription(description))
+            this.description.push(description);
+                
     }
 
-    checkUniqueDescription(product){
-        for (let x = 0; x < Object.keys(this.description).length; x++){
-            if(product.product_id ==  this.description[x].product_id){
-                this.description[x].quantity += product.quantity;                
-                return false;
-                // break;
+    checkUniqueDescription(description: SaleDescription){
+        for (let desc of this.description){
+            if(desc.product_id ==  description.product_id){
+                console.log(desc)
+                desc.quantity += description.quantity;                
+                return false;                
             }
         }
-        return true;
-    }
 
-    
-    getTotal(){               
-        this.storageLocalSale();
-    }
+        return true;
+    }        
 
     deleteProduct(id){
         
@@ -68,7 +91,7 @@ export class Sale {
                 this.description.splice(x, 1);
             }
         }
-        this.getTotal();
+        
     }
 
     storeSaleErrorConnection(sale){

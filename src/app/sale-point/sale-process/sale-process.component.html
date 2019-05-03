@@ -12,14 +12,16 @@
 
         <form *ngIf="form == 1" (submit)="checkClientMoney()">
             <h2>Dinero del Cliente</h2>
-            <input id="saleClientMoney" type="number" [(ngModel)]="sale.receipts[0].amount" name="amount"  min="{{sale.total}}">
+            <div>
+                <input id="saleClientMoney" type="number" [(ngModel)]="sale.receipts[0].payment" name="payment" min="{{sale.total}}" [ngClass]="{'inputError': !(sale.receipts[0].payment >= sale.total)}"><br>
+                <small class="error" *ngIf="!(sale.receipts[0].payment >= sale.total)">El monto debe ser mayor a ${{sale.total}}</small>
+            </div>
+            <button type="submit" class="btn btnAccept" [disabled]="!(sale.receipts[0].payment >= sale.total)">Confirmar</button>
 
-            <button *ngIf="request == false" type="submit" class="btn btnAccept">Confirmar</button>
-            <button *ngIf="request == true" type="submit" class="btn btnAccept" disabled>Confirmar</button>
         </form>
 
         <form *ngIf="form == 2" (submit)="confirmSale()">
-            <h2>Cambio: ${{ sale.clientMoney - sale.total }}</h2>
+            <h2>Cambio: ${{ sale.receipts[0].payment - sale.total }}</h2>
             <button id="salesBtnConfirm" type="submit" class="btn btnAccept">Confirmar</button>
         </form>
 
