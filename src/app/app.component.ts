@@ -1,3 +1,4 @@
+import { User } from './classes/user';
 import { Component, Input, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes} from '@angular/animations';
 import { LoginService } from './login/login.service';
@@ -59,7 +60,7 @@ export class AppComponent {
   checkLogin(){
     this._http.checkAuth().then(
       data => {
-
+        User.storageAuthUser(data.user)
         this.localData.storageUserData(data.user);
         this.localData.storageCash(data.cash);
         

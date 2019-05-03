@@ -37,6 +37,7 @@ export class Receipt {
         this.user_id = parseInt(data.user_id);        
         this.creator_id = parseInt(data.creator_id);
         this.amount = parseFloat(data.amount);
+        this.payment = parseFloat(data.payment);
         this.event_id = parseInt(data.event_id);
         this.type = parseInt(data.type);
         this.month = parseInt(data.month);

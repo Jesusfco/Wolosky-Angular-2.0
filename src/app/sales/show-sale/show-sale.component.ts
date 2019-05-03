@@ -1,3 +1,4 @@
+import { User } from './../../classes/user';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Sale } from '../../classes/sale';
@@ -14,6 +15,7 @@ import { Storage } from '../../classes/storage';
 export class ShowSaleComponent implements OnInit {
 
   public sale: Sale = new Sale();
+  auth: User = User.authUser()
   public backSales: Array<Sale> = [];
   state = {
     background: 'initial',
@@ -27,6 +29,8 @@ export class ShowSaleComponent implements OnInit {
     private _http: SaleService, 
     private actRou: ActivatedRoute) {
 
+      console.log(this.auth)
+
       this.backSales = JSON.parse(localStorage.getItem('salesComponent'));
       this.products = JSON.parse(localStorage.getItem('inventory'));
 
@@ -36,6 +40,7 @@ export class ShowSaleComponent implements OnInit {
       this._http.showSale(this.sale.id).then(
         data => {
           this.sale.setData(data);
+          console.log(this.sale)
         },
         error => console.log(error)
       );
@@ -62,7 +67,13 @@ export class ShowSaleComponent implements OnInit {
     
   }
 
-  
+  print(){
+    window.print()
+  }
+
+  deleteProcess() {
+
+  }
 
 }
 

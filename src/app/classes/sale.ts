@@ -35,6 +35,14 @@ export class Sale {
                 this.description.push(d)
             }
         }
+        if(data.receipts){
+            this.receipts = []
+            for(let receipt of data.receipts){
+                let d = new Receipt();
+                d.setData(receipt);
+                this.receipts.push(d)
+            }
+        }
 
     }
 
@@ -46,6 +54,14 @@ export class Sale {
         return n
     }
 
+    get creatorName() {
+        if(this.creator) {
+            return this.creator.name
+        }
+
+        return 'Desconocido'
+    }
+
     get typeView() {
         if(this.type == 1) return 'Público'
         if(this.type == 2) return 'Interno'
@@ -53,8 +69,25 @@ export class Sale {
         return ''
     }
 
+    get subtotal() {
+        let x = this.total;
+        return (x * .84).toFixed(2);
+    }
+
+    get IVA(){
+        let x = this.total;
+        return (x * .16).toFixed(2);
+    }
+
     saveOnLocalStorage() {
         localStorage.setItem('last_sale', JSON.stringify(this));
+    }
+
+    isPayed() {
+        if(this.receipts.length >= 1) {
+            if(this.receipts[0].amount >= this.total) return true
+        }
+        return false
     }
 
     static getLastSale() {

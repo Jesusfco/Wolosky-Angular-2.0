@@ -149,6 +149,18 @@ export class User {
 
     }
 
+    static storageAuthUser(user) {
+        localStorage.setItem('userLogged', JSON.stringify(user))
+    }
+
+    static  authUser() {
+        let user = new User()
+        let data = JSON.parse(localStorage.getItem('userLogged'))
+        if(data == undefined)   return null      
+        user.setData(data)
+        return user
+    }
+
     setImg() {
         let y: Url = new Url();
         

@@ -1,0 +1,70 @@
+<div *ngIf="sale" id="receipt">
+    <img src="assets/img/logo.png">
+    <div class="toper">
+        <p>Avenida 2 poniente #338 Colonia Santo Dmingo. CP 29000</p>
+        <p>Fecha/Hora de expedición <br><span *ngIf="sale != undefinded">{{sale.created_at}}</span> <span *ngIf="receipt != undefinded">{{receipt.created_at}}</span></p>
+        <p>Atendido por: <br>
+            <span *ngIf="sale?.creator != null">{{sale.creatorName}}</span></p>
+        <p *ngIf="sale">Folio de Venta: {{sale.id}}</p>
+        <p *ngIf="receipt">Folio de Recibo: {{receipt.id}}</p>
+        <br>
+
+    </div>
+
+    <div *ngIf="sale">
+        <table class="table is-fullwidth">
+
+            <thead>
+                <tr>
+                    <th>Cant</th>
+                    <th>Artículo</th>
+                    <th class="has-text-right">Precio</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let desc of sale.description">
+                    <td>{{ desc.quantity }}</td>
+                    <td>{{ desc.product.name }}</td>
+                    <td class="has-text-right">{{ (desc.price * .84).toFixed(2) }}</td>
+
+                </tr>
+
+            </tbody>
+        </table>
+
+        <div class=" flex">
+            <div class="s6">
+                <div>
+                    <p>Subtotal</p>
+                    <p>IVA (16%)</p>
+                    <p>TOTAL</p>
+
+                    <div *ngIf="sale?.isPayed()">
+                        <p>Efectivo</p>
+                        <p>Cambio</p>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="s6">
+                <div class="has-text-right">
+                    <p>${{sale.subtotal}}</p>
+                    <p>${{sale.IVA}}</p>
+                    <p>${{sale.total}}</p>
+                    <div *ngIf="sale?.isPayed()">
+                        <p>${{sale.receipts[0].payment}}</p>
+                        <p>${{sale.receipts[0].payment - sale.receipts[0].amount}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div *ngIf="receipt">
+
+    </div>
+
+</div>

@@ -1,3 +1,4 @@
+<app-print-receipt [sale]="sale"></app-print-receipt>
 <div class="cardSpace" [@background]="state.background">
 
     <div class="closeCardBackground" (click)="closePop()">
@@ -7,6 +8,11 @@
     </div>
 
     <div class="cardModule" [@card]="state.card">
+
+        <div class="options">
+            <i class="material-icons" (click)="print()" matTooltip="Imprimir recibo">print</i>
+            <i class="material-icons" (click)="deleteProcess()" matTooltip="Eliminar Recibo" *ngIf="auth.user_type_id > 5">delete</i>
+        </div>
         <h1 class="centerText">Venta</h1>
         <form class="flex">
             <div class="l6">

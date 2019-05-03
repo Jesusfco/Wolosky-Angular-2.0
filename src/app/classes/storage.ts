@@ -49,8 +49,7 @@ export class Storage {
         return parseInt(localStorage.getItem('userType'));
     }
 
-    storageUserData(data) {
-        
+    storageUserData(data) {        
         localStorage.setItem('userName', data.name);
         localStorage.setItem('userId', data.id);
         localStorage.setItem('userEmail', data.email);

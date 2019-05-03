@@ -1,0 +1,22 @@
+#receipt
+    img
+        display: block
+        width: 70%
+        margin: 0 auto
+    .toper
+        text-align: center
+    p
+        margin: 3px 0
+    .has-text-right
+        text-align: right
+#receipt, #receipt *
+    // visibility: hidden
+@media print
+    
+    #receipt, #receipt *
+        visibility: visible
+    #receipt
+        position: absolute
+        top: 0
+        left: 0
+        z-index: 1000

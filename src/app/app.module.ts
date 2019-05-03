@@ -1,3 +1,4 @@
+import { PrintReceiptComponent } from './utils/print-receipt/print-receipt.component';
 import { EventService } from './event/event.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -128,6 +129,7 @@ import { EditParkingComponent } from './parking/edit-parking/edit-parking.compon
 import { ShowParkingComponent } from './parking/show-parking/show-parking.component';
 import { AdminParkingComponent } from './parking/admin-parking/admin-parking.component';
 import { ParkingService } from './parking/parking.service';
+import { DeleteGenericComponent } from './utils/delete-generic/delete-generic.component';
 
 @NgModule({
   declarations: [
@@ -193,6 +195,8 @@ import { ParkingService } from './parking/parking.service';
     EditParkingComponent,
     ShowParkingComponent,
     AdminParkingComponent,
+    PrintReceiptComponent,
+    DeleteGenericComponent
   ],
   imports: [
     BrowserModule,

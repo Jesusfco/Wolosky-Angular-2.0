@@ -475,6 +475,10 @@ input {
     width: 24%;
 }
 
+.s6 {
+    width: 49%;
+}
+
 @media screen and (max-width: 1000px) {
     .container {
         width: 92%;
@@ -688,32 +692,8 @@ select:-webkit-autofill {
 }
 
 @media print {
-    html {
-        height: 100vh !important;
-    }
     body * {
         visibility: hidden;
-    }
-    body {
-        height: 700px !important;
-    }
-    #reciboNew * {
-        visibility: visible !important;
-    }
-    #reciboNew {
-        position: absolute;
-        display: block !important;
-        left: 0 !important;
-        top: 0 !important;
-        z-index: 1000 !important;
-        visibility: visible !important;
-        page-break-inside: avoid;
-    }
-    .l4 {
-        width: 50%;
-    }
-    #toPrint {
-        visibility: visible !important;
     }
 }
 
