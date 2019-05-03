@@ -1,3 +1,4 @@
+import { User } from './../../classes/user';
 import { MyCarbon } from './../../utils/classes/my-carbon';
 import { NotificationService } from './../../notification/notification.service';
 import { Cash } from './../../classes/cash';
@@ -22,6 +23,7 @@ export class SaleProcessComponent implements OnInit {
   public sale: Sale = Sale.getLastSale();
   public inventory: Product =  new Product();
   public saleDebt: SaleDebt = new SaleDebt();
+  auth: User = User.authUser()
 
   state = [{
     background: 'initial',
@@ -43,8 +45,8 @@ export class SaleProcessComponent implements OnInit {
             private _http: SaleService,
             private not: NotificationService) { 
            
-    
-    if(this.sale.receipts.length  == 0) {
+    this.sale.creator = this.auth
+    if(this.sale.receipts.length  == 0 && this.sale.type != 3) {
       let receipt = new Receipt();
       receipt.amount = this.sale.total
       receipt.payment = this.sale.total
@@ -53,6 +55,7 @@ export class SaleProcessComponent implements OnInit {
     }
 
     if(this.sale.type == 3) {
+      this.sale.receipts = []
       if(this.sale.saleDebt == undefined) {
         this.sale.saleDebt = this.saleDebt
       } else {

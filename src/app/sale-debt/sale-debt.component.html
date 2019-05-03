@@ -49,7 +49,7 @@
             <tbody *ngIf="storage.getUserType() >= 6">
                 <tr *ngFor="let debt of debtors" [ngClass]="{ 'status1': debt.status == 1 , 'updating': debt.updating}">
                     <td class="left">{{ debt.id }}</td>
-                    <td> {{ debt.user_name }}</td>
+                    <td> <span *ngIf="debt.user"> {{ debt.user.name }}</span></td>
                     <td>$ {{ debt.total }}</td>
                     <td *ngIf="debt.status == true">Pendiente</td>
                     <td *ngIf="debt.status == false">Pagado</td>

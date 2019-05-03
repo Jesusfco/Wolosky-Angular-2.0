@@ -51,8 +51,16 @@ export class SaleDebtComponent implements OnInit {
     this.request = true;
     this._http.getDebtors(this.search).then(
       data => {
-        this.debtors = data.data;
+
+        this.debtors = []
+        for(let d of data.data) {
+          let object = new SaleDebt()
+          object.setData(d)
+          this.debtors.push(object)
+        }
+        
         this.search.total = data.total;
+        
       },
       error => localStorage.setItem('request', JSON.stringify(error))
     ).then(
