@@ -43,6 +43,13 @@
             </div>
         </form>
 
+        <div *ngIf="form == 4">
+            <div class="confirmCancel">
+                <button class="btn btnPrimary" (click)="print()" id="select2">Imprimir Recibo</button>
+                <button class="btn " (click)="closePop()">Continuar</button>
+            </div>
+        </div>
+
     </div>
 
 
@@ -52,3 +59,5 @@
 
 
 </div>
+
+<app-print-receipt [sale]="sale"></app-print-receipt>

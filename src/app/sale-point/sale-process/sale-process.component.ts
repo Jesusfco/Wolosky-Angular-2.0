@@ -101,6 +101,7 @@ export class SaleProcessComponent implements OnInit {
 
     this._http.postSale(this.sale).then(
       data => {                
+        this.sale.id= data.id
         this._http.sendData('finish', 1)
         this.not.sendNotification('Venta Cargada con exito', 'La venta se ha cargado al servidor', 6000)        
       },
@@ -113,12 +114,14 @@ export class SaleProcessComponent implements OnInit {
     ).then(
       () => {
         this.request = false
+        this.form = 4
+        Focus.elementById('select2')
         Cash.addCash(this.sale.total)
         this.inventory.afterSale(this.sale.description);
       }
     );
     
-    this.closePop()
+    
 
   }
 
@@ -138,7 +141,8 @@ export class SaleProcessComponent implements OnInit {
     this.sale.created_at = MyCarbon.nowTimeStamp()
     
     this._http.postSale(this.sale).then(
-      data => {                
+      data => {             
+        this.sale.id= data.id   
         this._http.sendData('finish', 1)
         this.not.sendNotification('Venta Cargada con exito', 'La venta se ha cargado al servidor', 6000)        
       },
@@ -151,6 +155,8 @@ export class SaleProcessComponent implements OnInit {
     ).then(
       () => {
         this.request = false
+        this.form = 4
+        Focus.elementById('select2')
         Cash.addCash(this.sale.total)
         this.inventory.afterSale(this.sale.description);
       }
@@ -203,6 +209,10 @@ export class SaleProcessComponent implements OnInit {
     return form;
     
     
+  }
+
+  print(){
+    window.print()
   }
 
 
