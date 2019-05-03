@@ -252,7 +252,8 @@ select {
 
 input:disabled,
 textarea:disabled,
-select:disabled {
+select:disabled,
+p:disabled {
     background: rgb(206, 206, 206);
 }
 
@@ -297,10 +298,32 @@ form textarea.error {
     background: rgb(243, 147, 147);
 }
 
+form p {
+    margin: 0
+}
+
 form .inputValidate,
 form input.error,
 form textarea.error {
     background: rgb(175, 255, 195);
+}
+
+form>div {
+    padding: 8px;
+}
+
+form div.icon-left input {
+    padding-left: 30px
+}
+
+form>div>div {
+    position: relative;
+}
+
+form div.icon-left .icon {
+    position: absolute;
+    top: 5px;
+    left: 5px;
 }
 
 .confirmCancel {
@@ -427,7 +450,7 @@ form textarea.error {
 
 /* Inputs Grid Styles */
 
-.input {
+input {
     display: block;
     width: 100%;
 }

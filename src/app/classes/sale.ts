@@ -11,7 +11,7 @@ export class Sale {
     public creator: User;
     public description: Array<SaleDescription>= [];
     public receipts: Array<Receipt> = []
-    public created_at: string;
+    public created_at: string = '';
     public saleDebt: SaleDebt
     public type: number;
 
@@ -20,7 +20,13 @@ export class Sale {
     }
 
     setData(data) {
+        this.id = 0
+        this.creator_id = 0        
         ObjectJSONParser.set(data, this)
+        if(data.creator) {
+            this.creator = new User()
+            this.creator.setData(data.creator)
+        }
         if(data.description){
             this.description = []
             for(let desc of data.description){
@@ -38,6 +44,13 @@ export class Sale {
             n+= desc.subtotal
         }
         return n
+    }
+
+    get typeView() {
+        if(this.type == 1) return 'Público'
+        if(this.type == 2) return 'Interno'
+        if(this.type == 3) return 'Interno Quincena'
+        return ''
     }
 
     saveOnLocalStorage() {
@@ -106,14 +119,7 @@ export class Sale {
         }
         return [];
     }
-
-    setCreatedAt(){
-        
-        this.created_at = MyCarbon.nowTimeStamp()
-        
-    }
-
-
+   
     getGrossProfit(sales){
         let neto = 0;
         let countUndefined = {

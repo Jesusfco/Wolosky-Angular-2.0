@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { MyCarbon } from './../utils/classes/my-carbon';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Sale } from '../classes/sale';
 import { SaleService } from '../sale-point/sale.service';
 import { Url } from '../classes/url';
@@ -12,265 +13,130 @@ import { PageEvent } from '@angular/material';
 })
 export class SalesComponent implements OnInit {
   
-  public sales: Array<Sale> = [];
-  public backSales: Array<Sale> = [];
-  public sal: Sale =  new Sale();
+  sales: Array<Sale> = [];    
 
-  public date = {
-    from: null,
-    to: null,
-  };
-  
-  public analize = {
-    neto: 0,
+  search = {
+    from: '',
+    to: '',
     total: 0,
-    undefined: {
-      count: 0,
-      products: [],
-    },
+    page: 1,
+    per_page: 25,
   };
-
-  public sort: any = {
-    id: 0,
-    total: 0,
-    created: 0,
-  };
+      
 
   public lenghtArrayOptions: Array<number> = [ 10, 25, 50, 100, 200 ];
 
-  public pageEvent: PageEvent = {
-    pageIndex: 0,
-    pageSize: 25,
-    length: 0
-  };
+  // public pageEvent: PageEvent = {
+  //   pageIndex: 0,
+  //   pageSize: 25,
+  //   length: 0
+  // };
 
   public request: boolean = false;
 
   public storage: Storage = new Storage();
   public url: Url = new Url();
-
+  subscriptionHttp
+  subscriptionSearch
 
   constructor(private _http: SaleService) {
 
-    this.request = true;
+    
     this.getDates();
+    this.searchSales();
 
-    this._http.getSales().then(
-      data => {
-
-        this.request = false;
-        this.backSales = data;
-        this.refreshTable();
-        this.analize = this.sal.getGrossProfit(data);
-        localStorage.setItem('salesComponent', JSON.stringify(data));
-
-      },
-      error => {
-          console.log(error);
-          this.request = false;
+    this.subscriptionHttp = _http.getData().subscribe(x =>{
+      
+      if(x.action == 'delete') {        
+        
+        let i = 0
+        for(let s of this.sales) {
+          if(s.id == x.data.id) {
+            this.sales.splice(i, 1)
+            break
+          }
+          i++
         }
-      );
+
+      }
+
+    });
+   
 
    }
 
   ngOnInit() {
   }
 
-  search(){
-    this.request = true;
+  ngOnDelete() {
+    this.subscriptionHttp.unsubscribe()
+    if(this.subscriptionSearch)
+      this.subscriptionSearch.unsubscribe()
+  }
 
+  searchSales(){
+    
+    if(this.search.from == null || this.search.from == '' || this.search.to == null || this.search.to == '') return
     this.validateFromTo();
-    this._http.getSalesParameter(this.date).then(
-
+    this.request = true;
+    
+    if(this.subscriptionSearch)
+      this.subscriptionSearch.unsubscribe()
+    this.subscriptionSearch = this._http.getSalesParameter(this.search).subscribe(
       data => {
+        
+        this.sales = []
+          for(let sale of data.data)   {
+            let s = new Sale();
+            s.setData(sale)
+            this.sales.push(s)
+          }
 
-        this.backSales = data;
-        this.refreshTable();
-        localStorage.setItem('salesComponent', JSON.stringify(data));
+          this.search.total = data.total
 
       },
-      error => {
-        localStorage.setItem('request', JSON.stringify(error));
-
-      },
-    ).then(
-      () => this.request = false
-    );
-
-    if (this.date.from !== undefined && this.date.to === undefined){
-
       
-
-    }
-    else if (this.date.from !== undefined && this.date.to !== undefined){
-
-    }
-
+      null,
+      () => {
+        this.request = false
+      }
+      )
+    
   }
 
   validateFromTo() {
-    let d = new Date(this.date.from);
-    let x = new Date(this.date.to);
+    let d = new Date(this.search.from);
+    let x = new Date(this.search.to);
 
     if(d > x) {
-      let yy = this.date.from;
-      this.date.from = this.date.to;
-      this.date.to = yy;
+      let yy = this.search.from.toString();
+      this.search.from = this.search.to.toString();
+      this.search.to = yy;
 
     }
   }
 
-  getDates(){
-    let d = new Date();
-
-    if(d.getMonth() <= 8){
-      this.date.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-";
-      this.date.to = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-";
-    } else {
-      this.date.from = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-";
-      this.date.to = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-";
-    }
-
-    if(d.getDate() < 10) {
-      this.date.from += "0" + d.getDate();
-      this.date.to += "0" + d.getDate();
-    } else {
-      this.date.from += d.getDate();
-      this.date.to += d.getDate();
-    }
-
+  getDates() {
+    this.search.from = MyCarbon.todayDateInput();
+    this.search.to = MyCarbon.todayDateInput();
   }
 
   getToday(){
     this.getDates();
-    this.search();
+    this.searchSales();
   }
 
-  testPage($event){
+  paginatorEvent($event){
     
-    this.pageEvent = $event;
-    this.refreshTable();
+    this.search.page = $event.pageIndex + 1
+    this.searchSales();
 
   }
 
-  refreshTable() {
-
-    this.sales = [];
-
-    for(let i = 0; i < this.pageEvent.pageSize; i++){
-
-      if(i + (this.pageEvent.pageIndex * this.pageEvent.pageSize) == this.backSales.length) { break; }
-
-      this.sales.push(this.backSales[i + (this.pageEvent.pageIndex * this.pageEvent.pageSize)]);
-
-    }
-
+  sendSale(sale) {
+    this._http.sendData('show', sale);
   }
 
-  sortById(){
-
-    if(this.sort.id == 0) {
-      
-      this.backSales.sort((a, b) => {
-        if(a.id < b.id) {
-          return -1;
-        } else if (a.id > b.id) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-
-      this.sort.id = 1;
-
-    } else if ( this.sort.id == 1 ) {
-
-      this.backSales.sort((a, b) => {
-        if(a.id > b.id) {
-          return -1;
-        } else if (a.id < b.id) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-
-      this.sort.id = 0;
-
-    }
-    
-    this.refreshTable();
-
-  }
-
-  sortByTotal(){
-
-    if(this.sort.total == 0) {
-      
-      this.backSales.sort((a, b) => {
-        if(a.total < b.total) {
-          return -1;
-        } else if (a.total > b.total) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-
-      this.sort.total = 1;
-
-    } else if ( this.sort.total == 1 ) {
-
-      this.backSales.sort((a, b) => {
-        if(a.total > b.total) {
-          return -1;
-        } else if (a.total < b.total) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-
-      this.sort.total = 0;
-
-    }
-    
-    this.refreshTable();
-
-  }
-
-  sortByDate(){
-    if(this.sort.created == 0) {
-      
-      this.backSales.sort((a, b) => {
-        if(a.created_at < b.created_at) {
-          return -1;
-        } else if (a.created_at > b.created_at) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-
-      this.sort.created = 1;
-
-    } else if ( this.sort.created == 1 ) {
-
-      this.backSales.sort((a, b) => {
-        if(a.created_at > b.created_at) {
-          return -1;
-        } else if (a.created_at < b.created_at) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-
-      this.sort.created = 0;
-
-    }
-    
-    this.refreshTable();
-  }
+ 
 
 }

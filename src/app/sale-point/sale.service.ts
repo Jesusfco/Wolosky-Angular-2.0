@@ -13,7 +13,7 @@ export class SaleService {
   public storage: Storage = new Storage();
 
   private subject = new Subject<any>();
-  
+
   constructor(private _http: Http) { }
 
   getData(): Observable<any> {
@@ -46,7 +46,7 @@ export class SaleService {
   getSalesParameter(data){
     return this._http.post(this.link.url + 'sales' + this.storage.getTokenUrl(), data)
     .map(data => data.json())
-    .toPromise();
+    
   }
 
   showSale(id){

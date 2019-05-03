@@ -1,3 +1,4 @@
+import { ObjectJSONParser } from './../utils/classes/ObjectJSON';
 
 import { MonthlyPayment } from './monthly-payment';
 import { Reference } from '../classes/reference';
@@ -8,27 +9,27 @@ import { Url } from './url';
 
 export class User {
 
-    public id: number;
-    public email:  string;
-    public password: string;
-    public name: string;
-    public img: string;
-    public birthday: string;
-    public curp: string;
-    public placeBirth: string;
-    public gender: number;
-    public phone: string;
-    public insurance: string;
+    public id: number = null;
+    public email:  string = '';
+    public password: string = '';
+    public name: string = '';
+    public img: string = '';
+    public birthday: string = '';
+    public curp: string = '';
+    public placeBirth: string = '';
+    public gender: number = null;
+    public phone: string = '';
+    public insurance: string = '';
 
-    public street: string;
-    public houseNumber: number;
-    public colony: string;
-    public city: string;
+    public street: string = '';
+    public houseNumber: number = null;
+    public colony: string = '';
+    public city: string = '';
 
     public timer: any;
     public validations: any;
 
-    public creator_user_id: number;
+    public creator_user_id: number = null;
     public monthly_payment_id: number;
     public user_type_id: number;
     public salary_id: number;
@@ -75,6 +76,11 @@ export class User {
         };
     }
 
+    setData(data) {
+        this.id = 0
+        this.creator_user_id = 0        
+        ObjectJSONParser.set(data, this) 
+    }
     setValues(data){
 
         

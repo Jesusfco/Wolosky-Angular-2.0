@@ -37,6 +37,25 @@ export class MyCarbon {
         return stamp
     }
 
+    static todayDateInput(){
+        let d = new Date();
+        let date = '';
+        
+        if(d.getMonth() <= 8){
+            date = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-";
+        
+        } else {
+            date = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-";        
+        }
+
+        if(d.getDate() < 10) 
+            date += '0' + d.getDate()
+        else date += d.getDate()
+
+        return  date
+
+    }
+
     static getFromToThisMonth() {
         let d = new Date();
         let from = '';

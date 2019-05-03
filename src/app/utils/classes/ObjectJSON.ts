@@ -30,6 +30,24 @@ export class ObjectJSONParser{
         
     }
 
+    static setWithoutParse(data, object){ 
+        
+        let atributes = Object.getOwnPropertyNames(object);        
+        
+        for(let atribute of atributes) {
+
+            for(let key in data) {            
+               
+                if(atribute == key) {
+                                       
+                    object[atribute] = data[key];                                                                                        
+
+                }
+            }
+        
+        }
+    }
+
     static getBoolean(value){
         switch(value){
              case true:

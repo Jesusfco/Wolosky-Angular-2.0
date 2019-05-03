@@ -7,11 +7,29 @@
     </div>
 
     <div class="cardModule" [@card]="state.card">
-        <h3>Ticket #{{sale.id}}</h3>
-        <h4>Total: ${{sale.total}}</h4>
-        <h4>Fecha/Hora: {{sale.created_at}}</h4>
+        <h1 class="centerText">Venta</h1>
+        <form class="flex">
+            <div class="l6">
+                <p disabled>Folio #{{sale.id}}</p>
+            </div>
 
-        <h4>Descripcion de venta</h4>
+            <div class="l6">
+                <p disabled>Vendedor: <span *ngIf="sale.creator">{{sale.creator.name}}</span></p>
+            </div>
+
+            <div class="l6">
+                <p disabled>Total: ${{sale.total}}</p>
+            </div>
+            <div class="l6">
+                <p>Tipo de venta: {{sale.typeView}}</p>
+            </div>
+            <div class="l6">
+                <p>Fecha/Hora: {{sale.created_at}}</p>
+            </div>
+
+
+        </form>
+        <h4>Descripción</h4>
         <div class="responsive-table">
             <table>
                 <thead>
@@ -24,7 +42,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let product of sale.description">
-                        <td>{{product.product_name}}</td>
+                        <td>{{product.product.name}}</td>
                         <td>{{product.price}}</td>
                         <td>{{product.quantity}}</td>
                         <td>{{product.subtotal}}</td>
@@ -33,11 +51,5 @@
             </table>
         </div>
     </div>
-
-
-
-
-
-
 
 </div>

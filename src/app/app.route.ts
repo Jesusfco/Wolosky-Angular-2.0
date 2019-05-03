@@ -143,7 +143,7 @@ export const routes: Routes = [
     // PUNTO DE VENTA
     { path: 'sales', component: SalesComponent,
         children : [
-            { path: 'sale/:id', component: ShowSaleComponent },
+            { path: 'show/:id', component: ShowSaleComponent },
         ] },
     { path: 'inventory', component: InventoryComponent,
         children : [

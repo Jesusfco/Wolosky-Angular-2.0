@@ -4,25 +4,38 @@
 
 
 
-<form class="form">
-    <input (change)="search()" type="date" [(ngModel)]="date.from" name="from" id="search"><label><mat-icon>date_range</mat-icon></label>
-    <input (change)="search()" type="date" [(ngModel)]="date.to" name="to" id="search"><label><mat-icon>date_range</mat-icon></label>
+<form class="form flexRow">
+    <div class="l6">
+        <label>Desde</label>
+        <div class="icon-left">
+            <input (change)="searchSales()" type="date" [(ngModel)]="search.from" name="from">
+            <label class="icon"><mat-icon>date_range</mat-icon></label>
+        </div>
+    </div>
+
+    <div class="l6 ">
+        <label>Hasta</label>
+        <div class="icon-left">
+            <input (change)="searchSales()" type="date" [(ngModel)]="search.to" name="to">
+            <label class="icon"><mat-icon>date_range</mat-icon></label>
+        </div>
+    </div>
 </form>
 
 <div class="responsive-table">
     <table>
         <thead>
             <tr>
-                <th (click)="sortById()">#</th>
-                <th (click)="sortByTotal()">Total</th>
-                <th (click)="sortByDate()">Fecha</th>
-                <th (click)="sortByDate()">Hora</th>
+                <th>Folio</th>
+                <th>Total</th>
+                <th>Fecha</th>
+                <th>Hora</th>
             </tr>
         </thead>
 
         <tbody [ngClass]="{ 'loadingForm': request == true}">
 
-            <tr *ngFor="let sale of sales" [routerLink]="['/sales/sale', sale.id]">
+            <tr *ngFor="let sale of sales" [routerLink]="['/sales/show', sale.id]" (click)="sendSale(sale)">
                 <td>{{ sale.id }}</td>
                 <td> ${{ sale.total }}</td>
                 <td>{{ sale.created_at | date: format }}</td>
@@ -33,7 +46,7 @@
         </tbody>
     </table>
 
-    <mat-paginator (page)="testPage($event)" [length]="backSales.length" [pageSize]="25" [pageSizeOptions]="lenghtArrayOptions">
+    <mat-paginator (page)="paginatorEvent($event)" [length]="search.total" [pageSize]="25" [pageSizeOptions]="lenghtArrayOptions">
     </mat-paginator>
 
 </div>
@@ -42,7 +55,7 @@
 
     <div class="moreOptions">
 
-        <a target="_blank" href="{{ url.url }}excel/sales{{ storage.getTokenUrl() }}&from={{date.from}}">
+        <a target="_blank" href="{{ url.url }}excel/sales{{ storage.getTokenUrl() }}&from={{search.from}}&to={{search.to}}">
             <button matTooltip="Descargar Ventas" matTooltipPosition="left" mat-fab id="cancelButton">
                 <mat-icon >archive</mat-icon>
             </button>

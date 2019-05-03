@@ -31,16 +31,11 @@ export class ShowSaleComponent implements OnInit {
       this.products = JSON.parse(localStorage.getItem('inventory'));
 
     this.observerRef = actRou.params.subscribe(params => {
-      this.sale.id = params['id'];
-
-      this.setSaleWithBack();
-
-      if(this.sale.created_at != undefined) return;
+      this.sale.id = params['id'];            
 
       this._http.showSale(this.sale.id).then(
         data => {
-          this.sale = this.storage.setNamesById(data);
-
+          this.sale.setData(data);
         },
         error => console.log(error)
       );
@@ -67,41 +62,7 @@ export class ShowSaleComponent implements OnInit {
     
   }
 
-  setSaleWithBack(){
-    
-    for(let x of this.backSales){
-
-      if(this.sale.id == x.id) {
-
-        this.sale = x;
-
-        for(let i = 0; i < this.sale.description.length; i++) {
-          
-          if(this.sale.description[i].product.name == undefined || 
-            this.sale.description[i].product.name == null) {
-
-              for(let product of this.products){
-
-                if(product.id == this.sale.description[i].product_id) {
-
-                  this.sale.description[i].product = product;
-                  break;
-
-                }
-
-              }
-
-            }
-
-        }
-
-        break;
-
-      }
-
-    }
-
-  }
+  
 
 }
 

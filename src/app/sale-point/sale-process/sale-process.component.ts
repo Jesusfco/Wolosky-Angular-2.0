@@ -1,7 +1,8 @@
+import { MyCarbon } from './../../utils/classes/my-carbon';
 import { NotificationService } from './../../notification/notification.service';
 import { Cash } from './../../classes/cash';
 import { Focus } from './../../utils/classes/focus';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { cardPop, backgroundOpacity} from '../../animations';
 import { Router } from '@angular/router';
 import { Sale } from '../../classes/sale';
@@ -57,7 +58,7 @@ export class SaleProcessComponent implements OnInit {
       } else {
         this.saleDebt = this.sale.saleDebt
       }
-      
+
       this.form = 3;
 
     }
@@ -81,25 +82,20 @@ export class SaleProcessComponent implements OnInit {
 
   }
 
-  ngOnDestroy() {    
-    if(localStorage.getItem('saleStatus') == '1')
-      localStorage.setItem('saleStatus', '0');
+  ngOnDestroy() {        
 
   }
 
   checkClientMoney(){
-    if(this.sale.receipts[0].payment < this.sale.total) {
-      return
-    }    
-
+    if(this.sale.receipts[0].payment < this.sale.total) return
+    
     this.form = 2;
-
     Focus.elementById('salesBtnConfirm')
 
   }
 
   confirmSale(){
-    this.sale.setCreatedAt();    
+    this.sale.created_at = MyCarbon.nowTimeStamp()
     Sale.removeLastSaleStorage()
     this.request = true;
 
@@ -107,7 +103,6 @@ export class SaleProcessComponent implements OnInit {
       data => {                
         this._http.sendData('finish', 1)
         this.not.sendNotification('Venta Cargada con exito', 'La venta se ha cargado al servidor', 6000)        
-
       },
       error => {
 
@@ -139,43 +134,26 @@ export class SaleProcessComponent implements OnInit {
   debtForm() {
     if(this.validateDebt() == false) return;
 
-    this.request = true;
-    this.saleDebt.total = this.sale.total;
-    this.sale.setCreatedAt();
+    this.request = true;    
+    this.sale.created_at = MyCarbon.nowTimeStamp()
     
-    this._http.debtSale({sale: this.sale, saleDebt: this.saleDebt}).then(
-
-      data => {
-        
-        localStorage.removeItem('saleDescription');
-        localStorage.removeItem('saleType');
-        localStorage.removeItem('saleStatus');
-        
-        this.inventory.afterSale(this.sale.description);
-
-        let not = {
-          status: 200,
-          title: 'Venta Cargada con exito',
-          description: 'La venta se ha cargado al servidor'
-        };
-
-        localStorage.setItem('request', JSON.stringify(not));
-
-        this.closePop();
-
+    this._http.postSale(this.sale).then(
+      data => {                
+        this._http.sendData('finish', 1)
+        this.not.sendNotification('Venta Cargada con exito', 'La venta se ha cargado al servidor', 6000)        
       },
-
       error => {
 
-        localStorage.setItem('request', JSON.stringify(error));
+        this.not.sendError(error)                        
         this.sale.storeSaleErrorConnection(this.sale);
 
       }
-
     ).then(
-
-      () => this.request = true,
-
+      () => {
+        this.request = false
+        Cash.addCash(this.sale.total)
+        this.inventory.afterSale(this.sale.description);
+      }
     );
   }
 
@@ -209,7 +187,7 @@ export class SaleProcessComponent implements OnInit {
 
   validateDebt() {
     let form = false;
-    this.saleDebt.user_name = this.saleDebt.user_name.replace(/\s+$/, '');
+    this.saleDebt.user_name = this.saleDebt.user_name.trim();
     for(let x of this.sugests){
 
       if(this.saleDebt.user_name == x.name) {
