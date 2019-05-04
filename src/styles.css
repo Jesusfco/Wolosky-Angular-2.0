@@ -312,15 +312,15 @@ form>div {
     padding: 8px;
 }
 
-form div.icon-left input {
+form .icon-left input {
     padding-left: 30px
 }
 
-form>div>div {
+form .icon-left {
     position: relative;
 }
 
-form div.icon-left .icon {
+form .icon-left .icon {
     position: absolute;
     top: 5px;
     left: 5px;

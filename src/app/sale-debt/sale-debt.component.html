@@ -13,11 +13,27 @@
 
 
 
-    <form class="form">
-        <input (change)="get()" type="date" [(ngModel)]="search.from" name="from" id="search"><label><mat-icon>date_range</mat-icon></label>
-        <input (change)="get()" type="date" [(ngModel)]="search.to" name="to" id="search"><label><mat-icon>date_range</mat-icon></label>
+    <form class=" flex">
+        <div class="l4 ">
+            <div class="icon-left">
+                <input (change)="get()" type="date" [(ngModel)]="search.from" name="from">
+                <label class="icon"><mat-icon>date_range</mat-icon></label>
+            </div>
+        </div>
 
-        <input [(ngModel)]="search.name" [matAutocomplete]="auto" name="name" id="search" type="search" placeholder="Buscar Usuario" (keyup)="searchInput($event)" (submit)="get()"><label><mat-icon>search</mat-icon></label>
+        <div class="l4">
+            <div class="icon-left">
+                <input (change)="get()" type="date" [(ngModel)]="search.to" name="to">
+                <label class="icon"><mat-icon>date_range</mat-icon></label>
+            </div>
+        </div>
+
+        <div class="l4 ">
+            <div class="icon-left">
+                <input [(ngModel)]="search.name" [matAutocomplete]="auto" name="name" type="search" placeholder="Buscar Usuario" (keyup)="searchInput($event)" (submit)="get()">
+                <label class="icon"><mat-icon>search</mat-icon></label>
+            </div>
+        </div>
 
         <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let sugest of sugests" [value]="sugest.name" (onSelectionChange)="searchReceiptId(sugest.id)">
