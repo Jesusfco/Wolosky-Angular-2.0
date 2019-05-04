@@ -1,12 +1,17 @@
-<div *ngIf="sale" id="receipt">
+<div id="receipt">
     <img src="assets/img/logo.png">
     <div class="toper">
         <p>Avenida 2 poniente #338 Colonia Santo Dmingo. CP 29000</p>
-        <p>Fecha/Hora de expedición <br><span *ngIf="sale != undefinded">{{sale.created_at}}</span> <span *ngIf="receipt != undefinded">{{receipt.created_at}}</span></p>
+        <p>Fecha/Hora de expedición
+            <br><span *ngIf="sale != undefinded">{{sale.created_at}}</span>
+            <span *ngIf="receipt != undefinded">{{receipt.created_at}}</span>
+        </p>
         <p>Atendido por: <br>
-            <span *ngIf="sale?.creator != null">{{sale.creatorName}}</span></p>
-        <p *ngIf="sale">Folio de Venta: {{sale.id}}</p>
-        <p *ngIf="receipt">Folio de Recibo: {{receipt.id}}</p>
+            <span *ngIf="sale?.creator != null">{{sale.creatorName}}</span>
+            <span *ngIf="receipt?.creator != null">{{receipt.creatorName}}</span>
+        </p>
+        <p *ngIf="sale">Folio de Venta: <br><span class="strong">#{{sale.id}}</span></p>
+        <p *ngIf="receipt">Folio de Recibo: <br><span class="strong">#{{receipt.id}}</span></p>
         <br>
 
     </div>
@@ -64,7 +69,26 @@
     </div>
 
     <div *ngIf="receipt">
+        <p>Descripción</p>
+        <p class="strong">{{receipt.descriptionView}}</p>
+        <p class="strong">{{receipt.user.name}}</p>
+        <div class=" flex">
+            <div class="s6">
+                <div>
+                    <p>Subtotal</p>
+                    <p>IVA (16%)</p>
+                    <p>TOTAL</p>
+                </div>
+            </div>
+            <div class="s6">
+                <div class="has-text-right">
+                    <p>${{receipt.subtotal}}</p>
+                    <p>${{receipt.IVA}}</p>
+                    <p>${{receipt.amount}}</p>
 
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

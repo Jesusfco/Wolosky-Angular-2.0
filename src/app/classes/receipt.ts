@@ -1,3 +1,4 @@
+import { MyCarbon } from './../utils/classes/my-carbon';
 import { User } from "./user";
 import { Event } from "./event";
 
@@ -12,7 +13,7 @@ export class Receipt {
     payment: number;    
     event_id: any;
     event: Event = new Event()
-    type: Number = 1;
+    type: number = 1;
     month: number;
     year: number;
     days: number;
@@ -31,6 +32,29 @@ export class Receipt {
 
         this.payment_type = false;
 
+    }
+
+    get creatorName() {
+        if(this.creator) {
+            return this.creator.name
+        }
+
+        return 'Desconocido'
+    }
+    get subtotal() {
+        let x = this.amount;
+        return (x * .84).toFixed(2);
+    }
+
+    get IVA(){
+        let x = this.amount;
+        return (x * .16).toFixed(2);
+    }
+    get descriptionView() {
+        if(this.type == 1) return 'Mensualidad ' + MyCarbon.monthToString(this.month) + ' ' + this.year
+        if(this.type == 2) return 'Inscripción ' + ' ' + this.year
+        if(this.type == 0) return 'Recibo Tienda'
+        return ''
     }
     setData(data) {
         this.id = parseInt(data.id);

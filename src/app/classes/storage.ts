@@ -19,6 +19,10 @@ export class Storage {
         }
     }
 
+    static getTokenUrl () {        
+        return '?token=' + localStorage.getItem('token');
+    }
+
     getToken(){
         return localStorage.getItem('token');
     }

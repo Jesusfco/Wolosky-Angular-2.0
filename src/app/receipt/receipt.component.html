@@ -1,6 +1,7 @@
 <mat-progress-bar mode="indeterminate" *ngIf="sendingData.notifications" class="barLoader"></mat-progress-bar>
 <mat-progress-bar mode="indeterminate" *ngIf="sendingData.receipts" class="barLoader"></mat-progress-bar>
 
+
 <div class="relative">
 
     <h2 class="centerText">Recibos de Alumnos </h2>
@@ -20,19 +21,31 @@
 
     </div>
 
-    <form class="form" (submit)="getReceipts()">
-        <input (change)="getReceipts()" type="date" [(ngModel)]="search.from" name="from" id="search"><label><mat-icon>date_range</mat-icon></label>
-        <input (change)="getReceipts()" type="date" [(ngModel)]="search.to" name="to" id="search" *ngIf="storage.getUserType() >= 6"><label *ngIf="storage.getUserType() >= 6">
-            <mat-icon>date_range</mat-icon></label>
+    <form class=" flex" (submit)="getReceipts()">
+        <div class="l4">
+            <div class="icon-left">
+                <input (change)="getReceipts()" type="date" [(ngModel)]="search.from" name="from">
+                <label class="icon"><mat-icon>date_range</mat-icon></label>
+            </div>
+        </div>
 
-        <input [(ngModel)]="search.name" [matAutocomplete]="auto" name="name" id="search" type="search" placeholder="Buscar Usuario" (keyup)="searchInput($event)"><label><mat-icon>search</mat-icon></label>
-
-        <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let sugest of sugests" [value]="sugest.name" (onSelectionChange)="searchReceiptId(sugest.id)">
-                {{ sugest.name }}
-            </mat-option>
-        </mat-autocomplete>
-
+        <div class="l4" *ngIf="storage.getUserType() >= 6">
+            <div class="icon-left">
+                <input (change)="getReceipts()" type="date" [(ngModel)]="search.to" name="to">
+                <label class="icon"><mat-icon>date_range</mat-icon></label>
+            </div>
+        </div>
+        <div class="l4">
+            <div class="icon-left">
+                <input [(ngModel)]="search.name" [matAutocomplete]="auto" name="name" type="search" placeholder="Buscar Usuario" (keyup)="searchInput($event)">
+                <label class="icon"><mat-icon>search</mat-icon></label>
+            </div>
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let sugest of sugests" [value]="sugest.name" (onSelectionChange)="searchReceiptId(sugest.id)">
+                    {{ sugest.name }}
+                </mat-option>
+            </mat-autocomplete>
+        </div>
     </form>
 
 
@@ -45,7 +58,7 @@
                     <!-- <th class="left">id</th> -->
                     <th>Alumno</th>
                     <th>Monto</th>
-                    <th>Tipo</th>
+                    <th>Descripción</th>
                     <th>Fecha-Hora Creación</th>
                 </tr>
                 <!-- <th colspan="3">Opciones</th> -->
@@ -54,7 +67,7 @@
                 <tr *ngFor="let re of receipts" [routerLink]="['/receipt/show', re.id]">
                     <td class="left">{{ re.user.name }}</td>
                     <td>$ {{ re.amount }}</td>
-                    <td>{{re.typeView()}}</td>
+                    <td>{{re.descriptionView}}</td>
                     <td>{{ re.created_at }}</td>
 
 

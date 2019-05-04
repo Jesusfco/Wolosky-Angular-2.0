@@ -1,5 +1,5 @@
 <mat-progress-bar mode="indeterminate" *ngIf="request" class="barLoader"></mat-progress-bar>
-
+<app-print-receipt [receipt]="receipt"></app-print-receipt>
 <div class="cardSpace" [@background]="state.background">
 
     <div class="closeCardBackground" (click)="closePop()">
@@ -109,14 +109,4 @@
 
 
     </div>
-</div>
-
-<div id="reciboNew">
-    <h1>RECIBO # {{ receipt.id }}</h1>
-    <p>MONTO: $ {{ receipt.amount }}</p>
-    <p>ALUMNO/A: {{ receipt.user_id }}</p>
-    <p *ngIf="receipt.type == 1">TIPO DE PAGO: MENSUALIDAD</p>
-    <p *ngIf="receipt.type == 2">TIPO DE PAGO: INSCRIPCION</p>
-    <p>ATENTIDO POR: {{ receipt.creator_id }}</p>
-    <p>PAGADO EL: {{ receipt.created_at }}</p>
 </div>

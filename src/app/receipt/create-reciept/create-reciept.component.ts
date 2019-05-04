@@ -1,3 +1,4 @@
+import { MyCarbon } from './../../utils/classes/my-carbon';
 import { NotificationService } from './../../notification/notification.service';
 import { Component, OnInit } from '@angular/core';
 import { BackgroundCard, Card } from '../../animations/card.animation';
@@ -16,22 +17,10 @@ import { User } from '../../classes/user';
 })
 export class CreateRecieptComponent implements OnInit {
 
-  public months = [
-    {value: 1, view: 'Enero'},
-    {value: 2, view: 'Febrero'},
-    {value: 3, view: 'Marzo'},
-    {value: 4, view: 'Abril'},
-    {value: 5, view: 'Mayo'},
-    {value: 6, view: 'Junio'},
-    {value: 7, view: 'Julio'},
-    {value: 8, view: 'Agosto'},
-    {value: 9, view: 'Septiembre'},
-    {value: 10, view: 'Octubre'},
-    {value: 11, view: 'Noviembre'},
-    {value: 12, view: 'Diciembre'},
-  ];
+  public months = MyCarbon.getMonthsArrayForOptions()
 
   public window: number = 1;
+  
   public state = {
     background: 'initial',
     card: 'initial',
@@ -60,6 +49,7 @@ export class CreateRecieptComponent implements OnInit {
   public request: any = undefined;
 
   public storage: Storage =  new Storage();
+  auth: User = User.authUser()
 
   constructor(private router: Router,
     private actRou: ActivatedRoute,
@@ -68,6 +58,8 @@ export class CreateRecieptComponent implements OnInit {
 
       let d = new Date();
       this.payment.month = d.getMonth() + 1;
+      this.payment.year = d.getFullYear();
+      this.payment.creator = this.auth
 
 
     }
@@ -237,15 +229,16 @@ export class CreateRecieptComponent implements OnInit {
     this._http.postNewReceipt(this.payment).then(
       data => {
 
-        let receipt: Receipt = new Receipt();
-        receipt.setData(data);
+        this.payment.id = data.id
+        this.payment.created_at = data.created_at
+        this.payment.amount = data.amount        
 
-        this._http.sendData('new', receipt);
+        this._http.sendData('new', this.payment);
         
         if(this.payment.payment_type == false) 
           this.storage.updateCash(data.amount);        
 
-        this.notification.sendNotification('Recibo Creado', 'Datos guardados en el servidor', 2500);
+        this.notification.sendNotification('Recibo Creado', 'Datos guardados en el servidor', 5000);
         this.window++;
 
       },

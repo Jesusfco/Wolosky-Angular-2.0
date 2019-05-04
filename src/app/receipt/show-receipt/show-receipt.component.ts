@@ -1,3 +1,4 @@
+import { MyCarbon } from './../../utils/classes/my-carbon';
 import { Card, BackgroundCard } from './../../animations/card.animation';
 import { Component, OnInit } from '@angular/core';
 import { Receipt } from '../../classes/receipt';
@@ -19,20 +20,7 @@ export class ShowReceiptComponent implements OnInit {
     card: 'initial',
   };
 
-  public months = [
-    {value: 1, view: 'Enero'},
-    {value: 2, view: 'Febrero'},
-    {value: 3, view: 'Marzo'},
-    {value: 4, view: 'Abril'},
-    {value: 5, view: 'Mayo'},
-    {value: 6, view: 'Junio'},
-    {value: 7, view: 'Julio'},
-    {value: 8, view: 'Agosto'},
-    {value: 9, view: 'Septiembre'},
-    {value: 10, view: 'Octubre'},
-    {value: 11, view: 'Noviembre'},
-    {value: 12, view: 'Diciembre'},
-  ];
+  public months = MyCarbon.getMonthsArrayForOptions();
 
   public window = 1;
   private observerRef: any;

@@ -38,6 +38,10 @@ a {
     position: relative;
 }
 
+.strong {
+    font-weight: 700;
+}
+
 .divSearch {
     display: block;
     margin: 0 auto;

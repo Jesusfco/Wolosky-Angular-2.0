@@ -1,6 +1,7 @@
 <mat-progress-bar mode="indeterminate" *ngIf="sendingData.monthly" class="barLoader"></mat-progress-bar>
 <mat-progress-bar mode="indeterminate" *ngIf="sendingData.request" class="barLoader"></mat-progress-bar>
 
+<app-print-receipt [receipt]="payment"></app-print-receipt>
 <div class="cardSpace" [@background]="state.background">
 
     <div class="closeCardBackground" (click)="closePop()">
@@ -100,14 +101,4 @@
 
 
     </div>
-</div>
-
-<div *ngIf="window == 2" id="reciboNew">
-    <h1>RECIBO # {{ payment.id }}</h1>
-    <p>MONTO: $ {{ payment.amount }}</p>
-    <p>ALUMNO/A: {{ payment.user.name }}</p>
-    <p *ngIf="payment.type == 1">TIPO DE PAGO: MENSUALIDAD</p>
-    <p *ngIf="payment.type == 2">TIPO DE PAGO: INSCRIPCION</p>
-    <p>ATENTIDO POR: {{ storage.getUserName() }}</p>
-    <p>PAGADO EL: {{ payment.created_at }}</p>
 </div>

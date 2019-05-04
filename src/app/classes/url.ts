@@ -1,3 +1,5 @@
+import { Storage } from "./storage";
+
 export class Url {
     public url: string;
     public basic: string;
@@ -8,4 +10,11 @@ export class Url {
 
             this.url = this.basic + 'api/';
         }
+
+        // static basicUrl = 'http://mrfotoserver.roguezservices.com/';
+    static basicUrl = 'http://localhost:8000/';
+
+    static getApiUrlToken(link: string): string {
+        return this.basicUrl + 'api/' + link + Storage.getTokenUrl();
+    } 
 }

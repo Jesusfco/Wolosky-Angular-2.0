@@ -2,12 +2,6 @@
     width: 70%;
 }
 
-#reciboNew {
-    position: absolute;
-    display: none;
-    /* margin: 0; */
-}
-
 .credit {
     text-align: center !important;
     font-size: 60px !important;
