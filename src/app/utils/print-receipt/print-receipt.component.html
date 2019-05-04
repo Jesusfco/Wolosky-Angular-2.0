@@ -3,8 +3,8 @@
     <div class="toper">
         <p>Avenida 2 poniente #338 Colonia Santo Dmingo. CP 29000</p>
         <p>Fecha/Hora de expedición
-            <br><span *ngIf="sale != undefinded">{{sale.created_at}}</span>
-            <span *ngIf="receipt != undefinded">{{receipt.created_at}}</span>
+            <br><span *ngIf="sale != undefined">{{sale.created_at}}</span>
+            <span *ngIf="receipt != undefined">{{receipt.created_at}}</span>
         </p>
         <p>Atendido por: <br>
             <span *ngIf="sale?.creator != null">{{sale.creatorName}}</span>
