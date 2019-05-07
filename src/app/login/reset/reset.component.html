@@ -1,0 +1,30 @@
+<mat-progress-bar mode="indeterminate" *ngIf="request > 0" class="barLoader"></mat-progress-bar>
+
+<div class="background" style="background-image: url(assets/img/login.jpg)">
+
+    <div class="loginCard">
+        <h1 class="has-text-centered"> Recuperar Contraseña</h1>
+        <img src="assets/img/logo.png">
+
+        <form (submit)="login()">
+            <div>
+                <div class="icon-left">
+                    <input [(ngModel)]="user.email" name="email" type="email" placeholder="Correo" [ngClass]="{'error': validate > 0}" id="select">
+                    <label class="icon"><mat-icon>mail</mat-icon></label>
+                </div>
+                <small *ngIf="validate == 1" class="error">Requerido</small>
+                <small *ngIf="validate == 2" class="error">Correo Inexistente</small>
+            </div>
+
+            <button class="btnPrimary btn">
+              Recuperar Contraseña
+            </button>
+
+        </form>
+
+        <p routerLink="/login" class="centerText light cursorPointer">Iniciar Sesión</p>
+
+
+    </div>
+
+</div>

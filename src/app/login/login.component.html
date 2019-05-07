@@ -13,19 +13,30 @@
                 <p *ngIf="form.email == 1">* Correo Requerido </p>
                 <p *ngIf="form.password == 1">* Contraseña Requerida</p>
 
+                <div>
+                    <div class="icon-left">
+                        <input [(ngModel)]="data.email" name="email" type="email" placeholder="Correo o Telefono" id="select">
+                        <label class="icon"><mat-icon>mail</mat-icon></label>
+                    </div>
+                </div>
+                <div>
+                    <div class="icon-left">
+                        <input [(ngModel)]="data.password" name="password" type="password" placeholder="Contraseña" id="select2">
+                        <label class="icon"><mat-icon>security</mat-icon></label>
+                    </div>
+                </div>
 
-                <input *ngIf="!serverConection" [(ngModel)]="data.email" name="email" type="email" placeholder="Correo o Telefono" #mail2><br>
-                <input *ngIf="serverConection" [(ngModel)]="data.email" name="email" type="email" placeholder="Correo o Telefono" disabled><br>
-
-                <input *ngIf="!serverConection" [(ngModel)]="data.password" name="password" type="password" placeholder="Contraseña" #password2>
-                <input *ngIf="serverConection" [(ngModel)]="data.password" name="password" type="password" placeholder="Contraseña" disabled><br>
-
-
-                <button class="btn " id="btnLog">Iniciar sesión</button>
+                <button class="btn " id="btnLog" [disabled]="serverConection">Iniciar sesión</button>
 
 
                 <!-- <button id="btnFacebook" class="btn">Iniciar con Facebook</button> -->
                 <!-- <p>¿Olvidaste tu Contraseña?</p> -->
+                <br>
+                <p class="centerText pass" routerLink="/resetear-contraseña">
+
+                    ¿Has olvidado la contraseña?
+
+                </p>
             </form>
 
             <!-- <hr>

@@ -1,0 +1,63 @@
+<mat-progress-bar mode="indeterminate" *ngIf="request > 0" class="barLoader"></mat-progress-bar>
+
+<div class="background" style="background-image: url(assets/img/login.jpg)">
+
+    <div class="loginCard">
+        <div *ngIf="div == 1">
+            <h1 class="centerText"> Introduce el código de seguridad</h1>
+            <p class="centerText light">Comprueba si has recibido un mensaje con tu código, que debe tener cinco caracteres, en el correo electrónico.<br></p>
+            <br>
+            <form (submit)="validateToken()" autocomplete="false">
+                <div class="  ">
+                    <div class="icon-left">
+                        <input [(ngModel)]="code " name="code" class="input" [ngClass]="{'is-invalid': badCode}" placeholder="Introduce el código" autocomplete="false" id="select">
+                        <label class="icon"><mat-icon>security</mat-icon></label>
+                    </div>
+                    <p *ngIf="in" class="error">Codigo Incorrecto. Intento #{{attemps }}</p>
+                </div>
+
+                <div class=" ">
+
+                    <button class="btn btnPrimary " [ngClass]="{'is-loading': request > 0}" [disabled]="request > 0">
+                    Continuar
+                  </button>
+
+                </div>
+            </form>
+
+        </div>
+        <div *ngIf="div == 2">
+            <h1 class="centerText"> Nueva Contraseña</h1>
+            <p class="centerText strong">Porfavor escriba una nueva contraseña para poder ingresar al sistema</p>
+            <br>
+            <form (submit)="resetPassword()" autocomplete="false">
+                <div class="  ">
+                    <p class="icon-left">
+                        <input [(ngModel)]="user.password " name="password" class="input" [ngClass]="{'is-invalid': badPassword}" placeholder="Nueva Contraseña" autocomplete="false" type="password" id="select">
+                        <label class="icon"><mat-icon>security</mat-icon></label>
+                    </p>
+                    <p *ngIf="badPassword" class="error">Minimo 5 caracteres</p>
+                </div>
+
+                <div class=" ">
+
+                    <button class="btn btnPrimary" [ngClass]="{'is-loading': request > 0}" [disabled]="request > 0">
+                    Restablecer Contraseña
+                  </button>
+
+                </div>
+            </form>
+        </div>
+
+        <div *ngIf="div == 3">
+            <h1 class="centerText"> Contraseña Restaurada</h1>
+            <p class="centerText strong">Inicie su sesión con la nueva contraseña para poder ingresar al sistema<br></p>
+        </div>
+        <br>
+
+        <p class="centerText light cursorPointer" routerLink="/login">Iniciar Sesión</p>
+
+
+    </div>
+
+</div>

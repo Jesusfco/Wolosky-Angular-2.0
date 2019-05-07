@@ -1,3 +1,4 @@
+import { ResetComponent } from './login/reset/reset.component';
 import { PrintReceiptComponent } from './utils/print-receipt/print-receipt.component';
 import { EventService } from './event/event.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -130,6 +131,8 @@ import { ShowParkingComponent } from './parking/show-parking/show-parking.compon
 import { AdminParkingComponent } from './parking/admin-parking/admin-parking.component';
 import { ParkingService } from './parking/parking.service';
 import { DeleteGenericComponent } from './utils/delete-generic/delete-generic.component';
+import { RecoverComponent } from './login/recover/recover.component';
+
 
 @NgModule({
   declarations: [
@@ -196,7 +199,9 @@ import { DeleteGenericComponent } from './utils/delete-generic/delete-generic.co
     ShowParkingComponent,
     AdminParkingComponent,
     PrintReceiptComponent,
-    DeleteGenericComponent
+    DeleteGenericComponent,
+    ResetComponent,
+    RecoverComponent,
   ],
   imports: [
     BrowserModule,

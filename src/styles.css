@@ -42,6 +42,14 @@ a {
     font-weight: 700;
 }
 
+.light {
+    font-weight: 300;
+}
+
+.cursorPointer {
+    cursor: pointer;
+}
+
 .divSearch {
     display: block;
     margin: 0 auto;
@@ -307,8 +315,8 @@ form p {
 }
 
 form .inputValidate,
-form input.error,
-form textarea.error {
+form input.validate,
+form textarea.validate {
     background: rgb(175, 255, 195);
 }
 
@@ -317,7 +325,7 @@ form>div {
 }
 
 form .icon-left input {
-    padding-left: 30px
+    padding-left: 35px
 }
 
 form .icon-left {

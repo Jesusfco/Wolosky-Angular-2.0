@@ -29,7 +29,7 @@
 }
 
 #logo {
-    width: 100px;
+    width: 60%;
     display: block;
     margin: 0 auto;
 }
@@ -41,33 +41,20 @@
     color: rgb(73, 73, 73);
 }
 
-#formSpace {
-    padding: 0 15px
-}
-
-input {
-    width: 100%;
-    border: none;
-    background: #ECECEC;
-    padding: 10px;
-    border-radius: 3px;
-    margin-bottom: 0px;
-}
-
 #btnLog {
     margin-top: 15px;
 }
 
 #btnLog:hover {
-    background: #FC2323;
+    background: rgb(6, 52, 128);
 }
 
 #btnLog:focus {
-    background: #FC2323;
+    background: rgb(6, 52, 128);
 }
 
 #btnLog {
-    background: #C00000;
+    background: #0263FF;
 }
 
 #btnFacebook {
@@ -88,6 +75,11 @@ input {
     z-index: 13;
     display: block;
     text-align: center;
+    cursor: pointer;
+}
+
+.pass {
+    font-weight: 300;
     cursor: pointer;
 }
 

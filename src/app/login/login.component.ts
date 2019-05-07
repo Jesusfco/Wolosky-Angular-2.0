@@ -1,3 +1,4 @@
+import { Focus } from './../utils/classes/focus';
 import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
@@ -11,16 +12,7 @@ import { Storage } from '../classes/storage';
 })
 export class LoginComponent implements OnInit {
 
-  @ViewChild('mail2') private mailRef: ElementRef;    
-  // @ViewChild('password2') private passwordRef: ElementRef;    
-
-  public ngAfterViewInit(): void {
-    // this.data.email = localStorage.getItem('userEmail');
-    
-    // if(this.data.email == '' || this.data.email == null)      
-      this.mailRef.nativeElement.focus();
-    // this.passwordRef.nativeElement.focus();
-  }
+  
 
   data = {
     email: null,
@@ -43,15 +35,19 @@ export class LoginComponent implements OnInit {
   
     ngOnInit() {
       
-      
+      Focus.elementById('select')
 
     }
     accesar() {
       this.restoreValidation();
       this.validateMail();
       this.validatePassword();
-  
-      if(this.form.validate == 1)  return;      
+      
+      if(this.form.validate == 1){
+        if(this.form.email == 1) Focus.elementById('select')
+        else Focus.elementById('select2')
+        return;
+      }      
   
       this.serverConection = true;
       this._http.login(this.data).then(

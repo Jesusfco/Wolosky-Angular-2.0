@@ -1,3 +1,4 @@
+import { ResetComponent } from './login/reset/reset.component';
 import { ParkingComponent } from './parking/parking.component';
 import { WorkersPaymentComponent } from './workers-payment/workers-payment.component';
 import { Routes } from '@angular/router';
@@ -64,13 +65,14 @@ import { ShowReceiptComponent } from './receipt/show-receipt/show-receipt.compon
 import { ShowParkingComponent } from './parking/show-parking/show-parking.component';
 import { NewParkingComponent } from './parking/new-parking/new-parking.component';
 import { AdminParkingComponent } from './parking/admin-parking/admin-parking.component';
+import { RecoverComponent } from './login/recover/recover.component';
 
 
 export const routes: Routes = [
-    {
-        path: 'login',
-        component: LoginComponent
-    },
+    { path: 'login', component: LoginComponent },
+    { path: 'resetear-contraseña', component: ResetComponent },
+    { path: 'restablecer-contraseña', component: RecoverComponent },
+    { path: 'login', component: LoginComponent },
 
     {
         path: 'cash',
