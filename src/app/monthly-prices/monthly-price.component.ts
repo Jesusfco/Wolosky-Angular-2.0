@@ -2,6 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MonthlyPrice } from '../classes/monthly-price';
 import { MonthlyPriceService } from './monthly-price.service';
 
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operator/filter';
+
 @Component({
   selector: 'app-monthly-price',
   templateUrl: './monthly-price.component.html',
@@ -16,7 +19,15 @@ export class MonthlyPriceComponent implements OnInit {
   public sort: number = 0;
   public request: boolean = false;
 
-  constructor(private _http: MonthlyPriceService) {
+  principal = true
+
+  constructor(private _http: MonthlyPriceService, private router: Router) {
+    
+    this.router.events.filter((event: any) => event instanceof NavigationEnd)
+    .subscribe(event => { 
+      if(event.url == "/monthly-cost") this.principal = true
+      else this.principal = false            
+    });    
 
     this.request = true;
     _http.getAll().then(
@@ -30,7 +41,8 @@ export class MonthlyPriceComponent implements OnInit {
           this.monthlyPrices.push(x);
         }
         
-        this.localStoragePrices();
+        MonthlyPrice.setPricesLocalStorage(this.monthlyPrices)
+        
       },
       error => localStorage.setItem('request', JSON.stringify(error)),
     ).then(
@@ -71,7 +83,7 @@ export class MonthlyPriceComponent implements OnInit {
 
         localStorage.setItem('request', JSON.stringify(not));
 
-        this.localStoragePrices();
+        MonthlyPrice.setPricesLocalStorage(this.monthlyPrices)
 
       },
 
@@ -175,10 +187,6 @@ export class MonthlyPriceComponent implements OnInit {
       }
     });
 
-  }
-
-  localStoragePrices() {
-    localStorage.setItem('monthlyPrices', JSON.stringify(this.monthlyPrices));
   }
 
 }

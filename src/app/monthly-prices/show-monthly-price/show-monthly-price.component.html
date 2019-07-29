@@ -1,0 +1,33 @@
+<h4><span [routerLink]="['../../']">Precios</span> >> {{ price.hours }}hrs.</h4>
+
+
+<div>
+  <button routerLink="{{ '/monthly-cost/ver/' + this.price.id}}">Ver</button>
+  <button routerLink="{{ '/monthly-cost/ver/' + this.price.id  + '/edit'}}">Modificar</button>
+  <button routerLink="{{ '/monthly-cost/ver/' + this.price.id  + '/delete'}}">Eliminar</button>
+</div>
+
+<router-outlet></router-outlet>
+  <div class="flexRow" *ngIf="principal">
+
+    <div class="formData l6">
+        <label>Horas:</label><br>
+        <input class="" [(ngModel)]="price.hours" name="hours" type="number" min="0" disabled>        
+    </div>
+
+    <div class="formData l6">
+        <label>Monto:</label><br>
+        <input [(ngModel)]="price.cost" name="cost" type="number" min="0" disabled>        
+    </div>
+
+    <div class="formData l6">
+      <label>Fecha de Creación:</label><br>
+      <input [(ngModel)]="price.created_at" name="created_at"  disabled>        
+    </div>
+
+    <div class="formData l6">
+      <label>Fecha de Modificación:</label><br>
+      <input [(ngModel)]="price.updated_at" name="updated_at"  disabled>        
+    </div>
+
+  </div>

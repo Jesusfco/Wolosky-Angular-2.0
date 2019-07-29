@@ -19,6 +19,12 @@ export class MonthlyPriceService {
                 .toPromise();
   }
 
+  show(data){
+    return this._http.get(Url.getApiUrlToken('monthly-cost/' + data.id) )
+                .map(data => data.json())
+                .toPromise();
+  }
+
   create(monthlyCost){
     return this._http.post(this.link.url + 'monthly-cost/create' + this.token.getTokenUrl(), monthlyCost)
                 .map(data => data.json())

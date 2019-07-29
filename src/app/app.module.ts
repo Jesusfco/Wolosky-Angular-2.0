@@ -132,6 +132,8 @@ import { AdminParkingComponent } from './parking/admin-parking/admin-parking.com
 import { ParkingService } from './parking/parking.service';
 import { DeleteGenericComponent } from './utils/delete-generic/delete-generic.component';
 import { RecoverComponent } from './login/recover/recover.component';
+import { ShowMonthlyPriceComponent } from './monthly-prices/show-monthly-price/show-monthly-price.component';
+import { EditMonthlyPriceComponent } from './monthly-prices/edit-monthly-price/edit-monthly-price.component';
 
 
 @NgModule({
@@ -202,6 +204,8 @@ import { RecoverComponent } from './login/recover/recover.component';
     DeleteGenericComponent,
     ResetComponent,
     RecoverComponent,
+    ShowMonthlyPriceComponent,
+    EditMonthlyPriceComponent,
   ],
   imports: [
     BrowserModule,

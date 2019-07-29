@@ -1,4 +1,6 @@
 <mat-progress-bar mode="indeterminate" *ngIf="request" class="barLoader"></mat-progress-bar>
+<router-outlet></router-outlet>
+<div *ngIf="principal">
 
 <H2 class="centerText">Precios del Gimnasio</H2>
 <div class="responsive-table">
@@ -18,27 +20,17 @@
                 <th>Costo</th>
                 <th>Fecha/Creacion</th>
                 <th>Ultima Actualización</th>
-                <th>Acciones</th>
+                
             </tr>
         </thead>
 
         <tbody>
 
-            <tr *ngFor="let x of monthlyPrices">
+            <tr *ngFor="let x of monthlyPrices"  [routerLink]="['./ver', x.id]">
                 <td> {{ x.hours }}</td>
-
-                <td *ngIf="x.edit == false"> ${{ x.cost }}</td>
-                <td *ngIf="x.edit == true">
-                    <form (submit)="pushEdit(x)">
-                        <input id="editPrice" [(ngModel)]="x.cost" name="cost" type="number">
-                    </form>
-                </td>
+                <td> ${{ x.cost }}</td>                
                 <td>{{ x.created_at | date: format }} {{ x.created_at | date: 'hh:mm a' }}</td>
-                <td>{{ x.updated_at | date: format }} </td>
-                <td>
-                    <mat-icon (click)="deletePrice(x)">delete</mat-icon>
-                    <mat-icon (click)="startModify(x)">edit</mat-icon>
-                </td>
+                <td>{{ x.updated_at | date: format }} </td>               
             </tr>
 
 
@@ -87,4 +79,4 @@
     </div>
 </a>
 
-<router-outlet></router-outlet>
+</div>

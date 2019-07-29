@@ -22,4 +22,27 @@ export class MonthlyPrice {
         this.updated_at = data.updated_at;
 
     }
+
+    static getPricesLocalStorage() {
+
+        let data = JSON.parse(localStorage.getItem('monthlyPrices'))
+
+        let prices: Array<MonthlyPrice> = []; 
+
+        for(let d of data) {
+
+            let price = new MonthlyPrice();
+            price.setData(d)
+            prices.push(d)
+
+        }
+        
+        return prices
+
+    }
+
+    static setPricesLocalStorage(data) {
+        localStorage.setItem('monthlyPrices', JSON.stringify(data));
+    }
+
 }

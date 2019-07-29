@@ -1,0 +1,25 @@
+<form class="flexRow">
+
+  <div class="formData l6">
+      <label>Horas:</label><br>
+      <input class="" [(ngModel)]="price.hours" name="hours" type="number" min="0" disabled>        
+  </div>
+
+  <div class="formData l6">
+      <label>Monto:</label><br>
+      <input [(ngModel)]="price.cost" name="cost" type="number" min="0" id="focus1">        
+  </div>
+
+  <div class="formData l6">
+    <label>Fecha de Creación:</label><br>
+    <input [(ngModel)]="price.created_at" name="created_at"  disabled>        
+  </div>
+
+  <div class="formData l6">
+    <label>Fecha de Modificación:</label><br>
+    <input [(ngModel)]="price.updated_at" name="updated_at"  disabled>        
+  </div>
+
+  <button *ngIf="request == 0" class="btn formBtn" style="background: rgb(238, 163, 0)" type="submit">Actualizar Precio</button>
+  <button *ngIf="request != " class="btn formBtn" style="background: rgb(209, 209, 209)" disabled>Actualizar Precio</button>
+</form>
