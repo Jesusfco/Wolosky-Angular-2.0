@@ -14,6 +14,7 @@ export class EditMonthlyPriceComponent implements OnInit {
 
   price: MonthlyPrice = new MonthlyPrice();
   request = 0
+  subscriptionHttp
   constructor(
     private actRou: ActivatedRoute,
     private _http: MonthlyPriceService,
@@ -26,9 +27,19 @@ export class EditMonthlyPriceComponent implements OnInit {
 
     Focus.elementById("focus1")
 
+    this.subscriptionHttp = this._http.getData().subscribe(x => {      
+      if (x.action == 'show') {        
+        Object.assign(this.price, x.data);         
+      }
+    });
+
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.subscriptionHttp.unsubscribe()
   }
 
   getData() {
@@ -44,7 +55,6 @@ export class EditMonthlyPriceComponent implements OnInit {
   }
 
   form() {
-
     
     this.request++;
     this._http.update(this.price).then(
@@ -52,18 +62,11 @@ export class EditMonthlyPriceComponent implements OnInit {
       data => {
 
         this.price.updated_at = data.updated_at;
-
-        let not = {
-          status: 200,
-          title: 'Precio Actualizado',
-          description: 'Datos cargados a la base de datos'
-        };
-
-        localStorage.setItem('request', JSON.stringify(not));
+        this.not.sendNotification('Precio Actualizado','Datos cargados a la base de datos', 2500)        
 
       },
 
-      error => localStorage.setItem('request', JSON.stringify(error))
+      error => this.not.sendError(error)
 
     ).then(
       () => this.request--

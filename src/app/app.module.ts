@@ -134,6 +134,7 @@ import { DeleteGenericComponent } from './utils/delete-generic/delete-generic.co
 import { RecoverComponent } from './login/recover/recover.component';
 import { ShowMonthlyPriceComponent } from './monthly-prices/show-monthly-price/show-monthly-price.component';
 import { EditMonthlyPriceComponent } from './monthly-prices/edit-monthly-price/edit-monthly-price.component';
+import { VerifyMonthlyPriceComponent } from './monthly-prices/verify-monthly-price/verify-monthly-price.component';
 
 
 @NgModule({
@@ -206,6 +207,7 @@ import { EditMonthlyPriceComponent } from './monthly-prices/edit-monthly-price/e
     RecoverComponent,
     ShowMonthlyPriceComponent,
     EditMonthlyPriceComponent,
+    VerifyMonthlyPriceComponent,
   ],
   imports: [
     BrowserModule,

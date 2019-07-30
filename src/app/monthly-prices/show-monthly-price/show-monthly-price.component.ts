@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MonthlyPrice } from '../../classes/monthly-price';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { MonthlyPriceService } from '../monthly-price.service';
@@ -16,6 +16,7 @@ export class ShowMonthlyPriceComponent implements OnInit {
 
   principal = true
 
+  subscriptionHttp
   constructor(
     private actRou: ActivatedRoute,
     private router: Router,
@@ -31,20 +32,37 @@ export class ShowMonthlyPriceComponent implements OnInit {
         .subscribe(event => { 
           if(event.url == ("/monthly-cost/ver/" + this.price.id)) this.principal = true
           else this.principal = false            
-    });  
+      }); 
+      
+      this.subscriptionHttp = this._http.getData().subscribe(x => {      
+        if (x.action === 'update') {        
+          Object.assign(this.price, x.data);         
+        }
+      });
 
   }
 
   ngOnInit() {
   }
 
+  ngOnDestroy() {
+    this.subscriptionHttp.unsubscribe()
+  }
+
   getData() {
-
+    this.request++;
     this._http.show(this.price).then(
-      data => this.price.setData(data),
+      data => {
+        this.price.setData(data)
+        this.sendObject()
+      },
       error => this.not.sendError(error) 
-    );
+    ).then(() => this.request--);
 
+  }
+
+  sendObject() {
+    this._http.sendData('show', this.price)
   }
 
   deletePrice(price) {

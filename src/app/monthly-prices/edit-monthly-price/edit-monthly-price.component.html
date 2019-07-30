@@ -1,4 +1,5 @@
-<form class="flexRow">
+<mat-progress-bar mode="indeterminate" *ngIf="request > 0" class="barLoader"></mat-progress-bar>
+<form class="flexRow" (submit)="form()">
 
   <div class="formData l6">
       <label>Horas:</label><br>
@@ -21,5 +22,5 @@
   </div>
 
   <button *ngIf="request == 0" class="btn formBtn" style="background: rgb(238, 163, 0)" type="submit">Actualizar Precio</button>
-  <button *ngIf="request != " class="btn formBtn" style="background: rgb(209, 209, 209)" disabled>Actualizar Precio</button>
+  <button *ngIf="request != 0" class="btn formBtn" style="background: rgb(209, 209, 209)" disabled>Actualizar Precio</button>
 </form>

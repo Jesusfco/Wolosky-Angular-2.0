@@ -80,9 +80,36 @@ export class User {
         this.id = 0
         this.creator_user_id = 0        
         ObjectJSONParser.set(data, this) 
-    }
-    setValues(data){
+        if(data.salary != undefined) {
+            let sal = new Salary();
+            sal.setValues(data.salary);
+            this.salary = sal;
+        }
 
+        if(data.monthly_payment != undefined)             
+            this.monthly_payment.setValues(data.monthly_payment);                    
+       
+        if(data.schedules != undefined) {
+            this.schedules = [];
+            for(let sche of data.schedules) {                
+                let schedule: Schedule = new Schedule();
+                schedule.setValues(sche);
+                this.schedules.push(sche);
+            }
+        }
+
+        if(data.references != undefined) {
+            this.references = [];
+            for(let re of data.references) {
+                let r = new Reference();
+                r.setValues(re);
+                this.references.push(r);
+            }
+        }
+
+    }
+
+    setValues(data){
         
         this.name = data.name;        
         this.email = data.email;

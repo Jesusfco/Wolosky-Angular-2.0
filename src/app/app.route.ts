@@ -68,6 +68,7 @@ import { AdminParkingComponent } from './parking/admin-parking/admin-parking.com
 import { RecoverComponent } from './login/recover/recover.component';
 import { ShowMonthlyPriceComponent } from './monthly-prices/show-monthly-price/show-monthly-price.component';
 import { EditMonthlyPriceComponent } from './monthly-prices/edit-monthly-price/edit-monthly-price.component';
+import { VerifyMonthlyPriceComponent } from './monthly-prices/verify-monthly-price/verify-monthly-price.component';
 
 
 export const routes: Routes = [
@@ -180,7 +181,8 @@ export const routes: Routes = [
         children: [
             { path: 'create', component: CreateMonthlyPriceComponent },
             { path: 'ver/:id', component: ShowMonthlyPriceComponent,  children: [ 
-                    { path: 'edit', component: EditMonthlyPriceComponent }
+                    { path: 'edit', component: EditMonthlyPriceComponent },
+                    { path: 'verificar', component: VerifyMonthlyPriceComponent}
                 ]
             }
         ]

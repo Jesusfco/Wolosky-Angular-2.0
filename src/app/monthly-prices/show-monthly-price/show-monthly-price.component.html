@@ -1,10 +1,12 @@
+<mat-progress-bar mode="indeterminate" *ngIf="request > 0" class="barLoader"></mat-progress-bar>
 <h4><span [routerLink]="['../../']">Precios</span> >> {{ price.hours }}hrs.</h4>
 
 
 <div>
   <button routerLink="{{ '/monthly-cost/ver/' + this.price.id}}">Ver</button>
-  <button routerLink="{{ '/monthly-cost/ver/' + this.price.id  + '/edit'}}">Modificar</button>
+  <button routerLink="{{ '/monthly-cost/ver/' + this.price.id  + '/edit'}}" (click)="sendObject()">Modificar</button>
   <button routerLink="{{ '/monthly-cost/ver/' + this.price.id  + '/delete'}}">Eliminar</button>
+  <button routerLink="{{ '/monthly-cost/ver/' + this.price.id  + '/verificar'}}" (click)="sendObject()">Verificar Mensualidades</button>
 </div>
 
 <router-outlet></router-outlet>
