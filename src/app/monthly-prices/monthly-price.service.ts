@@ -47,7 +47,7 @@ export class MonthlyPriceService {
   }
 
   delete(object){
-    return this._http.delete(Url.getApiUrlToken('monthly-cost' + object.id))
+    return this._http.delete(Url.getApiUrlToken('monthly-cost/' + object.id))
                 .map(data => data.json())
                 .toPromise();
   }
@@ -56,6 +56,12 @@ export class MonthlyPriceService {
     return this._http.get(Url.getApiUrlToken('monthly-cost/studentSchedules') )
       .map(data => data.json())
       .toPromise();
+  }
+
+  updateStudentsMonthly(array) {
+    return this._http.post(Url.getApiUrlToken('monthly-cost/updateMonthlyPayment'), {array: array})
+        .map(data => data.json())
+        .toPromise();
   }
 
 }

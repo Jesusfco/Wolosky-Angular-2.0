@@ -63,6 +63,7 @@ export class EditMonthlyPriceComponent implements OnInit {
 
         this.price.updated_at = data.updated_at;
         this.not.sendNotification('Precio Actualizado','Datos cargados a la base de datos', 2500)        
+        this._http.sendData("update", this.price)
 
       },
 

@@ -5,12 +5,13 @@
 <div>
   <button routerLink="{{ '/monthly-cost/ver/' + this.price.id}}">Ver</button>
   <button routerLink="{{ '/monthly-cost/ver/' + this.price.id  + '/edit'}}" (click)="sendObject()">Modificar</button>
-  <button routerLink="{{ '/monthly-cost/ver/' + this.price.id  + '/delete'}}">Eliminar</button>
+  <button (click)="deleteC = true">Eliminar</button>
   <button routerLink="{{ '/monthly-cost/ver/' + this.price.id  + '/verificar'}}" (click)="sendObject()">Verificar Mensualidades</button>
 </div>
 
 <router-outlet></router-outlet>
-  <div class="flexRow" *ngIf="principal">
+<app-delete-generic *ngIf="deleteC" (actionDeleteEvent)="deleteObserve($event)" [message]="deleteMessage"></app-delete-generic>
+  <div class="flexRow" *ngIf="principal && !deleteC">
 
     <div class="formData l6">
         <label>Horas:</label><br>

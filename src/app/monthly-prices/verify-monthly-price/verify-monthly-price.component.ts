@@ -4,6 +4,7 @@ import { MonthlyPriceService } from '../monthly-price.service';
 import { NotificationService } from '../../notification/notification.service';
 import { MonthlyPrice } from '../../classes/monthly-price';
 import { User } from '../../classes/user';
+import { MonthlyPayment } from '../../classes/monthly-payment';
 
 @Component({
   selector: 'app-verify-monthly-price',
@@ -17,11 +18,11 @@ export class VerifyMonthlyPriceComponent implements OnInit {
   subscriptionHttp
 
   users: Array<User> = []
-  prices: Array<MonthlyPrice> = MonthlyPrice.getPricesLocalStorage()
+  prices: Array<MonthlyPrice> = []
   analisis = [] 
   /*
     ESTRUCTURE ANALISIS ARRAY
-    {user: -, hours: -, minutes: -}
+    {user: -, hours: -, minutes: -, monthly: -}
   */
 
   constructor( 
@@ -29,6 +30,8 @@ export class VerifyMonthlyPriceComponent implements OnInit {
     private _http: MonthlyPriceService,
     private not: NotificationService) { 
 
+      this.prices = MonthlyPrice.getPricesLocalStorage()
+      
     this.subscriptionHttp = this._http.getData().subscribe(x => {      
       if (x.action == 'show') {        
         Object.assign(this.price, x.data);
@@ -83,8 +86,12 @@ export class VerifyMonthlyPriceComponent implements OnInit {
           let j = {
             user: user,
             hours: 0,
-            minutes: 0
+            minutes: 0,
+            monthly: new MonthlyPayment()
           }
+
+          j.monthly.setValues(user.monthly_payment)
+          j.monthly.amount = this.price.cost
 
           for(let che of user.schedules) {
 
@@ -108,9 +115,8 @@ export class VerifyMonthlyPriceComponent implements OnInit {
           }
                     
           
-          if(last && j.hours >= this.price.hours) { // ULTIMO PRECIO DE HORA
-            this.analisis.push(j)                              
-            console.log('aqui')
+          if(last && j.hours >= this.price.hours) { // ULTIMO PRECIO DE HORA            
+            this.analisis.push(j)                                          
             continue;              
           }
 
@@ -136,12 +142,23 @@ export class VerifyMonthlyPriceComponent implements OnInit {
 
           }
 
-        } // FIN DE ANALISIS DE TIEMPO
-        
-        console.log(this.analisis)
+        } // FIN DE ANALISIS DE TIEMPO                
 
       }, error => this.not.sendError(error)
 
+    ).then(() => this.request--)
+  }
+
+  updatePrices() {
+    let array = []
+    for(let d of this.analisis){
+      array.push(d.monthly)
+    }
+
+    this.request++
+    this._http.updateStudentsMonthly(array).then(
+      data=> this.not.sendNotification('Mensualidades actualizadas', 'Los datos han sido guardado correctamente en el servidor', 3000),
+      error => this.not.sendError(error)      
     ).then(() => this.request--)
   }
 

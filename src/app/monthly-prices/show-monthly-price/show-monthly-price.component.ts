@@ -17,6 +17,12 @@ export class ShowMonthlyPriceComponent implements OnInit {
   principal = true
 
   subscriptionHttp
+  deleteC = false
+  deleteMessage = {
+    type: 1,
+    title: "¿Estas seguro de eliminar el costo de esta hora?",
+    message: "Las mensualidades no se veran afectadas despues de la eliminación, de esa hora. Tendran que ser establecidas manualmente."
+  }
   constructor(
     private actRou: ActivatedRoute,
     private router: Router,
@@ -71,27 +77,9 @@ export class ShowMonthlyPriceComponent implements OnInit {
     this._http.delete(price).then(
       data => {
 
-        let array = MonthlyPrice.getPricesLocalStorage()
-        for(let x = 0; x < array.length; x++) {
-          if(array[x].id == price.id) {
-            array.splice(x, 1);
-            break;
-          }
-        }
-
-        MonthlyPrice.setPricesLocalStorage(array)
-
-        let not = {
-
-          status: 200,
-          title: 'Precio Eliminado',
-          description: 'Datos eliminados de la Base de Datos',
-          
-        };
-
-        localStorage.setItem('request', JSON.stringify(not));
-
-        // this.localStoragePrices();
+        this._http.sendData('delete', this.price);
+        this.not.sendNotification('Precio de Hora Eliminado', 'Los datos han sido actualizado correctamente', 2500);
+        this.router.navigate(['/monthly-cost']);        
 
       },
 
@@ -105,6 +93,12 @@ export class ShowMonthlyPriceComponent implements OnInit {
     // localStorage.setItem('monthlyPrices', JSON.stringify(this.monthlyPrices));
   }
 
-  
+  deleteObserve(e) {
+    this.deleteC = false;
+    if(!e) return;
+
+  this.deletePrice(this.price);
+
+  }
 
 }

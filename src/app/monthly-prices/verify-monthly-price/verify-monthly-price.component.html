@@ -1,1 +1,30 @@
+<mat-progress-bar mode="indeterminate" *ngIf="request > 0" class="barLoader"></mat-progress-bar>
 <h3>Verificar Mensualidades {{price.hours}} hrs</h3>
+
+
+<button *ngIf="request == 0" (click)="updatePrices()">Actualizar Mensualidades de alumnos</button>
+<div class="responsive-table">
+
+  <table>
+      <thead>
+          <tr>             
+              <th>Alumno/a</th>
+              <th>Mensualidad anterior</th>
+              <th>Nueva Mensualidad</th>              
+          </tr>
+      </thead>
+
+      <tbody>
+
+          <tr *ngFor="let x of analisis;  let i = index"  >
+              <td> {{ x.user.name }}</td>
+              <td> ${{ x.user.monthly_payment.amount }}</td>                
+              <td><input [(ngModel)]="x.monthly.amount" name="amount{{i}}"></td>
+                             
+          </tr>
+
+
+      </tbody>
+  </table>
+  </div>
+  

@@ -20,8 +20,17 @@ export class MonthlyPriceComponent implements OnInit {
   public request: boolean = false;
 
   principal = true
+  subscriptionHttp
 
   constructor(private _http: MonthlyPriceService, private router: Router) {
+
+    this.subscriptionHttp = this._http.getData().subscribe(x => {      
+      if (x.action === 'delete') {        
+        this.deletePrice(x.data)
+      } else if  (x.action === 'update') {        
+        this.updatePrice(x.data)
+      }
+    })
     
     this.router.events.filter((event: any) => event instanceof NavigationEnd)
     .subscribe(event => { 
@@ -53,45 +62,36 @@ export class MonthlyPriceComponent implements OnInit {
 
   }
 
+  deletePrice(price){
+    
+    for(let x = 0; x < this.monthlyPrices.length; x++) {
+      if(this.monthlyPrices[x].id == price.id) {
+        this.monthlyPrices.splice(x, 1);
+        break;
+      }
+    }
+
+    MonthlyPrice.setPricesLocalStorage(this.monthlyPrices)
+  }
+
+  updatePrice(price) {
+    for(let x = 0; x < this.monthlyPrices.length; x++) {
+      if(this.monthlyPrices[x].id == price.id) {
+        Object.assign(this.monthlyPrices[x], price)
+        break;
+      }
+    }
+
+    MonthlyPrice.setPricesLocalStorage(this.monthlyPrices)
+  }
+
   ngOnInit() {
   }
 
   ngOnDestroy() {
     localStorage.removeItem('monthlyPrices');
-  }
-
-  deletePrice(price) {
-
-    this.request = true;
-    this._http.delete(price).then(
-      data => {
-
-        for(let x = 0; x < this.monthlyPrices.length; x++) {
-          if(this.monthlyPrices[x].id == price.id) {
-            this.monthlyPrices.splice(x, 1);
-            break;
-          }
-        }
-
-        let not = {
-
-          status: 200,
-          title: 'Precio Eliminado',
-          description: 'Datos eliminados de la Base de Datos',
-          
-        };
-
-        localStorage.setItem('request', JSON.stringify(not));
-
-        MonthlyPrice.setPricesLocalStorage(this.monthlyPrices)
-
-      },
-
-      error => localStorage.setItem('request', JSON.stringify(error))
-    ).then(
-      () => this.request = false
-    );
-  }
+    this.subscriptionHttp.unsubscribe()
+  } 
 
   startModify(price) {
 
