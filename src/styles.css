@@ -266,7 +266,8 @@ input:disabled,
 textarea:disabled,
 select:disabled,
 p:disabled {
-    background: rgb(206, 206, 206);
+    background: rgb(230, 230, 230);
+    border:3px dashed #74aabf;
 }
 
 textarea {

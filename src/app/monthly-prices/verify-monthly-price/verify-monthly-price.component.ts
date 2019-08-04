@@ -19,10 +19,11 @@ export class VerifyMonthlyPriceComponent implements OnInit {
 
   users: Array<User> = []
   prices: Array<MonthlyPrice> = []
+  formValidate = true;
   analisis = [] 
   /*
-    ESTRUCTURE ANALISIS ARRAY
-    {user: -, hours: -, minutes: -, monthly: -}
+    ESTRUCTURE ANALISIS ARRAY []
+    {user: -, hours: -, minutes: -, monthly: -, validate: true}
   */
 
   constructor( 
@@ -31,7 +32,7 @@ export class VerifyMonthlyPriceComponent implements OnInit {
     private not: NotificationService) { 
 
       this.prices = MonthlyPrice.getPricesLocalStorage()
-      
+
     this.subscriptionHttp = this._http.getData().subscribe(x => {      
       if (x.action == 'show') {        
         Object.assign(this.price, x.data);
@@ -87,7 +88,8 @@ export class VerifyMonthlyPriceComponent implements OnInit {
             user: user,
             hours: 0,
             minutes: 0,
-            monthly: new MonthlyPayment()
+            monthly: new MonthlyPayment(),
+            validate: true
           }
 
           j.monthly.setValues(user.monthly_payment)
@@ -150,6 +152,11 @@ export class VerifyMonthlyPriceComponent implements OnInit {
   }
 
   updatePrices() {
+    if(!this.validateMonthlies()){
+      alert("Asegurese de que los valores de las nuevas mensualidades sean validos.")
+      return;
+    }
+
     let array = []
     for(let d of this.analisis){
       array.push(d.monthly)
@@ -160,6 +167,22 @@ export class VerifyMonthlyPriceComponent implements OnInit {
       data=> this.not.sendNotification('Mensualidades actualizadas', 'Los datos han sido guardado correctamente en el servidor', 3000),
       error => this.not.sendError(error)      
     ).then(() => this.request--)
+  }
+
+  validateInput(i) {
+    let x = this.analisis[i].monthly.amount
+
+    if(x == null || x < 0) this.analisis[i].validate = false
+
+    else this.analisis[i].validate = true
+
+  }
+
+  validateMonthlies() {
+    for(let x of this.analisis) {
+      if(!x.validate) return false;
+    }
+    return true
   }
 
 }

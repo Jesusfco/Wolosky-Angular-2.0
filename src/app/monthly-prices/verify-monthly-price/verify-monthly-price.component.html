@@ -2,7 +2,7 @@
 <h3>Verificar Mensualidades {{price.hours}} hrs</h3>
 
 
-<button *ngIf="request == 0" (click)="updatePrices()">Actualizar Mensualidades de alumnos</button>
+<button *ngIf="request == 0" (click)="updatePrices()" >Actualizar Mensualidades de alumnos</button>
 <div class="responsive-table">
 
   <table>
@@ -19,7 +19,10 @@
           <tr *ngFor="let x of analisis;  let i = index"  >
               <td> {{ x.user.name }}</td>
               <td> ${{ x.user.monthly_payment.amount }}</td>                
-              <td><input [(ngModel)]="x.monthly.amount" name="amount{{i}}"></td>
+              <td>
+                <input [(ngModel)]="x.monthly.amount" name="amount{{i}}" type="number" (keyup)="validateInput(i)">
+                <span *ngIf="!x.validate">Se requiere un valor mayor o igual $0</span>
+              </td>
                              
           </tr>
 
