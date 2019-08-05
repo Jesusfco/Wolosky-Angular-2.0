@@ -103,24 +103,27 @@ export class ShowUserComponent implements OnInit {
         this.showUser.setValues(data);
         localStorage.setItem('userData', JSON.stringify(this.user));
 
-        if(this.user.user_type_id <= 4) {
-
-          this.setSchedules();
-          this.setReferences();
-          this.setMonthlyPrices();
-          
-
-        } 
-        
-        if (this.user.user_type_id == 1) {
-
-          this.setMonthlyPayment();
-
-        } else if(this.user.user_type_id >= 2 && this.user.user_type_id <= 4) {
-
-          this.setSalary();
-
+        if(this.user.img.length > 0) {
+          this.downloadPerfilPhoto()
         }
+
+        // if(this.user.user_type_id <= 4) {
+
+        //   this.setSchedules();
+        //   this.setReferences();
+        //   this.setMonthlyPrices();          
+
+        // } 
+        
+        // if (this.user.user_type_id == 1) {
+
+        //   this.setMonthlyPayment();
+
+        // } else if(this.user.user_type_id >= 2 && this.user.user_type_id <= 4) {
+
+        //   this.setSalary();
+
+        // }
 
       }, error => localStorage.setItem('request', JSON.stringify(error)))
       
@@ -490,10 +493,33 @@ export class ShowUserComponent implements OnInit {
 
         this.user.img = data;
         this.user.setImg();
-        this.notificationS.sendNotification('Imagen Actualizada', 'La imagen a sido cargada correctamente', 2500);
+        this.notificationS.sendNotification('Imagen Actualizada', 'La imagen a sido cargada correctamente', 3500);
+        this.downloadPerfilPhoto();
         
       }, error => this.notificationS.sendData(error)
     )
     
   }
+
+  downloadPerfilPhoto() {
+
+    this._http.getUserImg(this.user.img).subscribe(data => {
+      this.createImageFromBlob(data);
+    }, error => {
+      console.log(error);
+    });
+
+  }
+
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader(); //you need file reader for read blob data to base64 image data.
+    reader.addEventListener("load", () => {      
+       this.userImgFile = reader.result; // here is the result you got from reader
+    }, false);
+ 
+    if (image) {
+       reader.readAsDataURL(image);
+    }
+ }
+
 }

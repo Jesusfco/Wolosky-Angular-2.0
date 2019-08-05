@@ -1,4 +1,4 @@
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, Response, ResponseContentType } from '@angular/http';
 import { Injectable } from '@angular/core';
 import "rxjs";
 import { Observable } from "rxjs";
@@ -170,6 +170,13 @@ export class UserService {
     return this._http.post(this.link.url + 'user/saveUserImg' + this.token.getTokenUrl(), formData)
             .map(data => data.json())
             .toPromise();
+  }
+
+  getUserImg(data){
+    // data = "https://upload.wikimedia.org/wikipedia/commons/5/5f/Ramon_Maria_Narvaez.jpg"
+    return this._http
+        .get( data , { responseType: ResponseContentType.Blob })
+        .map((res: Response) => res.blob())
   }
 
 }
