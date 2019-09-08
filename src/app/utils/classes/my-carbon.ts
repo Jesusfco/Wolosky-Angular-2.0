@@ -58,18 +58,22 @@ export class MyCarbon {
 
     static getFromToThisMonth() {
         let d = new Date();
+        let lastDayMonth = new Date();
+
+        lastDayMonth.setMonth(d.getMonth() + 1);
+        lastDayMonth.setDate(0)
         let from = '';
         let to = '';
-        if(d.getMonth() <= 7){
+        if(d.getMonth() <= 8) {
+
             from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-01";
-            to = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + d.getDate();
-        } else if (d.getMonth() == 8){
-            from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-01";
-            to = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-" + d.getDate();
+            to = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + lastDayMonth.getDate();        
+            
         } else {
-            from = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-01";
-            to = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-" + d.getDate();
+            from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-01";
+            to = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + lastDayMonth.getDate();
         }
+        
 
         return  {
                     from: from,

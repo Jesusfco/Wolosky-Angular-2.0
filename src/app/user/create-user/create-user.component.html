@@ -1,16 +1,15 @@
 <mat-progress-bar mode="indeterminate" *ngIf="sendingData" class="barLoader"></mat-progress-bar>
-<div class="background" [@background]></div>
-<div id="createCard" @principal>
 
-    <a [routerLink]="['../']">
-        <div id="cerrarBtn"> Cerrar <i class="material-icons">close</i></div>
-    </a>
+<div>
+
+
+    <h1><a [routerLink]="['../']"> USUARIOS</a> >>  CREAR USUARIO</h1>
+    
 
 
     <div class="form" [ngClass]="{'loadingForm': sendingData == true}">
-        <h1 align="center">Crear Usuario</h1>
 
-        <div class="container">
+        
             <form class="flexRow" (submit)="createUser()" enctype="multipart/form-data" autocomplete="off">
                 <div class="flexRow l6">
                     <h2 class="l12">Datos Personales</h2>
@@ -217,7 +216,7 @@
         <button *ngIf="user.user_type_id <= 4" type="submit" class="btn formBtn">Crear Usuario</button>
 
 
-    </div>
+    
 </div>
 
 <app-create-schedule *ngIf="scheduleView" [schedules]="schedules" (closeEventCreateSchedule)="assignSchedules($event)"></app-create-schedule>

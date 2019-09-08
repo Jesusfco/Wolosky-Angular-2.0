@@ -3,6 +3,7 @@ import { ParkingService } from './parking.service';
 import { Component, OnInit } from '@angular/core';
 import { Parking } from '../classes/parking';
 import { Storage } from '../classes/storage';
+import { MyCarbon } from '../utils/classes/my-carbon';
 
 @Component({
   selector: 'app-parking',
@@ -72,40 +73,8 @@ export class ParkingComponent implements OnInit {
 
   getDates() {
 
-    let d = new Date();
-
-    if (d.getMonth() <= 8) {
-
-      this.search.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-";      
-
-    } else {
-
-      this.search.from = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-";      
-      
-    }
-
-    if(this.storage.getUserType() >= 6) {
-
-      this.search.to = this.search.from;
-      this.search.from += '01';      
-      d.setDate(0);      
-      this.search.to += d.getDate();
-
-    } else {
-
-      if(d.getDate() < 10) {
-
-        this.search.from += "0" + d.getDate();        
-
-      } else {
-
-        this.search.from += d.getDate();
-        
-      }
-
-      this.search.to = this.search.from;
-
-    }
+    this.search.from = MyCarbon.getFromToThisMonth().from
+    this.search.to = MyCarbon.getFromToThisMonth().to
 
   }
 

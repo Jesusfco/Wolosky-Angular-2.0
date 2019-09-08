@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from './user.service';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import {PageEvent} from '@angular/material';
+import { filter } from 'rxjs/operator/filter';
 
 @Component({
   selector: 'app-user',
@@ -9,6 +10,8 @@ import {PageEvent} from '@angular/material';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
+
+  principal = true;
 
   users: Array<any> = [];
   search = {
@@ -29,7 +32,16 @@ export class UserComponent implements OnInit {
   idShowUser: number = null;
   showUserView: boolean = false;
 
-  constructor(private _http: UserService, private router: Router) { }
+  constructor(private _http: UserService, private router: Router) { 
+
+    router.events.filter((event: any) => event instanceof NavigationEnd)
+        .subscribe(event => { 
+          console.log(event.url)
+          if(event.url == "/users") this.principal = true
+          else this.principal = false            
+      }); 
+
+  }
 
   ngOnInit() {
 

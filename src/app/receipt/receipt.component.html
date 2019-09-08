@@ -4,9 +4,9 @@
 
 <div class="relative">
 
-    <h2 class="centerText">Recibos de Alumnos </h2>
+    <h2 class="centerText">RECIBOS </h2>
 
-    <div *ngIf="notifications.on" class="notifyReceipt">
+    <!-- <div *ngIf="notifications.on" class="notifyReceipt">
         <h5>Notificaciones</h5>
         <div>
             <p>Hay #{{ notifications.debtorsMonthly }} alumnos con pagos pendientes de este mes.
@@ -16,10 +16,10 @@
             <div *ngIf="notifications.viewDebtors" id="debtors">
                 <p *ngFor="let deb of notifications.debtors" (click)="debtorPay(deb)" [routerLink]="['/receipt/create']"> {{ deb.name }}</p>
             </div>
-            <!-- <p>Hay #{{ notifications.debtorsInscription }} alumnos con inscripciones pendientes de este mes.</p> -->
+         <p>Hay #{{ notifications.debtorsInscription }} alumnos con inscripciones pendientes de este mes.</p>
         </div>
 
-    </div>
+    </div> -->
 
     <form class=" flex" (submit)="getReceipts()">
         <div class="l4">
