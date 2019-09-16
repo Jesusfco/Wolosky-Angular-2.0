@@ -135,6 +135,9 @@ import { RecoverComponent } from './login/recover/recover.component';
 import { ShowMonthlyPriceComponent } from './monthly-prices/show-monthly-price/show-monthly-price.component';
 import { EditMonthlyPriceComponent } from './monthly-prices/edit-monthly-price/edit-monthly-price.component';
 import { VerifyMonthlyPriceComponent } from './monthly-prices/verify-monthly-price/verify-monthly-price.component';
+import { ExportRecordsComponent } from './records/export-records/export-records.component';
+import { DeleteRecordsComponent } from './records/delete-records/delete-records.component';
+import { DetailsRecordComponent } from './records/details-record/details-record.component';
 
 
 @NgModule({
@@ -208,6 +211,9 @@ import { VerifyMonthlyPriceComponent } from './monthly-prices/verify-monthly-pri
     ShowMonthlyPriceComponent,
     EditMonthlyPriceComponent,
     VerifyMonthlyPriceComponent,
+    ExportRecordsComponent,
+    DeleteRecordsComponent,
+    DetailsRecordComponent,
   ],
   imports: [
     BrowserModule,

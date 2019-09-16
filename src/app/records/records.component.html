@@ -1,14 +1,33 @@
 <mat-progress-bar mode="indeterminate" *ngIf="sendingData > 0" class="barLoader"></mat-progress-bar>
 
+<router-outlet></router-outlet>
+
 <h2 class="centerText">Asistencias</h2>
 
-<form class="form" (submit)="setRecords()">
-    <input (change)="setRecords()" type="date" [(ngModel)]="search.from" name="from" id="search"><label><mat-icon>date_range</mat-icon></label>
-    <input (change)="setRecords()" type="date" [(ngModel)]="search.to" name="to" id="search"><label><mat-icon>date_range</mat-icon></label>
+<form class=" flex" (submit)="setRecords()">
+    <div class="l4">
+        <div class="icon-left">
+            <input (change)="setRecords()" type="date" [(ngModel)]="search.from" name="from">
+            <label class="icon"><mat-icon>date_range</mat-icon></label>
+        </div>
+    </div>
 
+    <div class="l4">
+        <div class="icon-left">
+            <input (change)="setRecords()" type="date" [(ngModel)]="search.to" name="to">
+            <label class="icon"><mat-icon>date_range</mat-icon></label>
+        </div>
+    </div>
 
-
+    <div class="l4">
+        <div class="icon-left">
+            <input [(ngModel)]="search.name"  name="name" type="search" placeholder="Buscar Usuario">
+            <label class="icon"><mat-icon>search</mat-icon></label>
+        </div>
+        
+    </div>
 </form>
+
 
 <div class="responsive-table" [ngClass]="{ 'loadingForm': sendingData > 0}">
     <table align="center">
@@ -35,4 +54,28 @@
     </mat-paginator>
 </div>
 
-<router-outlet></router-outlet>
+<div class="floatOptions">
+
+    <div class="moreOptions">
+
+        <a target="_blank" >
+            <button matTooltip="Exportar Asistencias" [routerLink]="['./exportar']" matTooltipPosition="left" mat-fab id="cancelButton">
+                <mat-icon >archive</mat-icon>
+            </button>
+        </a>
+
+        <button  matTooltip="Nuevo Producto" matTooltipPosition="left" mat-fab>
+            <mat-icon >create</mat-icon>
+        </button>
+
+        <button  matTooltip="Nuevo Producto" matTooltipPosition="left" mat-fab>
+            <mat-icon >create</mat-icon>
+        </button>
+
+    </div>
+
+    <button matTooltip="Opciones de Inventario" matTooltipPosition="left" mat-fab color="pri" class="floatOptionPrincipal">
+                    <mat-icon >settings</mat-icon>
+                </button>
+
+</div>

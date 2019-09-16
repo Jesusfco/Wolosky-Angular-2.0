@@ -35,8 +35,7 @@ export class UserComponent implements OnInit {
   constructor(private _http: UserService, private router: Router) { 
 
     router.events.filter((event: any) => event instanceof NavigationEnd)
-        .subscribe(event => { 
-          console.log(event.url)
+        .subscribe(event => {           
           if(event.url == "/users") this.principal = true
           else this.principal = false            
       }); 

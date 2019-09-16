@@ -25,7 +25,7 @@ export class CreateUserComponent implements OnInit {
 
   cardState: string = 'initial';
   backgroundState: string = 'initial';
-  sendingData:boolean = false;
+  sendingData: boolean = false;
   
   public credential = parseInt(localStorage.getItem('userType'));
 

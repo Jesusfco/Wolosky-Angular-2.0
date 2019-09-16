@@ -15,6 +15,9 @@ export class Url {
     static getApiUrlToken(link: string): string {
         return this.basicUrl + 'api/' + link + Storage.getTokenUrl();
     } 
+     getApiUrlToken(link: string): string {
+        return Url.basicUrl + 'api/' + link + Storage.getTokenUrl();
+    } 
 
     static getApiUrl() {
         return this.basicUrl + 'api/'        

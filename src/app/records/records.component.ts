@@ -2,6 +2,7 @@ import { RecordService } from './record.service';
 import { Component, OnInit } from '@angular/core';
 import { Record } from '../classes/record';
 import { NotificationService } from '../notification/notification.service';
+import { MyCarbon } from '../utils/classes/my-carbon';
 
 @Component({
   selector: 'app-records',
@@ -16,7 +17,7 @@ export class RecordsComponent implements OnInit {
   public search = {
     from: '',
     to: '',
-    name: 'caro',
+    name: '',
     items: 20,
     page: 1,
     total: 0,
@@ -60,21 +61,9 @@ export class RecordsComponent implements OnInit {
  }
 
  getDates(){
-  let d = new Date();
-  let next = new Date();
-  next.setMonth(d.getMonth() + 1);
-  next.setDate(0);
-
-  if(d.getMonth() <= 7) {
-      this.search.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + "01";
-      this.search.to = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + next.getDate();
-    } else if (d.getMonth() == 8){
-      this.search.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + "01";
-      this.search.to = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-" + next.getDate();
-    } else {
-    this.search.from = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-" + "01";
-    this.search.to = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-" + next.getDate();
-    }
-  }
-
+  
+    this.search.from = MyCarbon.getFromToThisMonth().from
+    this.search.to = MyCarbon.getFromToThisMonth().to
+  
+ }
 }

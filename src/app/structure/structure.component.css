@@ -44,13 +44,8 @@ nav button {
     padding: 48px 0px;
     background: white;
     z-index: 3;
-    /* outline: 1px solid #333;
-    overflow-y: scroll; */
-}
-
-.sideNav:hover {
+    /* outline: 1px solid #333; */
     overflow-y: scroll;
-    width: 261.3px;
 }
 
 .sideNav h5 {
