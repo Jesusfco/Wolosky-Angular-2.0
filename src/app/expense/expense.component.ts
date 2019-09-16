@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Expense  } from '../classes/expense';
 import { PageEvent } from '@angular/material';
 import { ExpenseService } from './expense.service';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 //import { ExpandSubscriber } from 'rxjs/operator/expand';
 import { Storage } from '../classes/storage';
+import { MyCarbon } from '../utils/classes/my-carbon';
+import { User } from '../classes/user';
 
 @Component({
   selector: 'app-expense',
@@ -26,9 +28,18 @@ export class ExpenseComponent implements OnInit {
   private interval: any;
   public storage: Storage = new Storage();
 
+  public auth: User = User.authUser();
+
   constructor(private _http: ExpenseService, private router: Router) {
       this.getDates();
-      this.get();
+      
+
+      router.events.filter((event: any) => event instanceof NavigationEnd)
+      .subscribe(event => {           
+        if(event.url == "/expenses") 
+        this.get();
+                  
+    }); 
    }
 
   ngOnInit() {
@@ -80,65 +91,17 @@ export class ExpenseComponent implements OnInit {
     this.get();
   }
 
-  redirectCreate(){
-
-    this.router.navigate(['/expenses/create']);
-    localStorage.setItem('expenseCreateStatus', '1');
-    this.interval = setInterval(() => this.intervalSaleLogic(), 1000);
-
-  }
-
-  intervalSaleLogic(){
-  
-    if(localStorage.getItem('expenseCreateStatus') == undefined){
-
-      this.get();
-      clearInterval(this.interval);
-
-    } else if(localStorage.getItem('expenseCreateStatus') == '0'){
-
-      localStorage.removeItem('expenseCreateStatus');
-      clearInterval(this.interval);
-
-    }
-    
-  }
-
-  updateStartObservable(){
-    localStorage.setItem('expenseUpdateStatus', '1');
-    this.interval = setInterval(() => this.intervalSaleLogic2(), 1000);
-  }
-
-  intervalSaleLogic2(){
-  
-    if(localStorage.getItem('expenseUpdateStatus') == undefined){
-
-      this.get();
-      clearInterval(this.interval);
-
-    } else if(localStorage.getItem('expenseUpdateStatus') == '0'){
-
-      localStorage.removeItem('expenseUpdateStatus');
-      clearInterval(this.interval);
-
-    }
-    
-  }
-
   getDates(){
-    let d = new Date();
-
-    if(d.getMonth() <= 7){
-      this.search.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + "01";
-      this.search.to = d.getFullYear() + "-0" + (d.getMonth() + 2 ) + "-" + "01";
-    } else if (d.getMonth() == 8){
-      this.search.from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + "01";
-      this.search.to = d.getFullYear() + "-" + (d.getMonth() + 2 ) + "-" + "01";
-    } else {
-      this.search.from = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-" + "01";
-      this.search.to = d.getFullYear() + "-" + (d.getMonth() + 2 ) + "-" + "01";
+    if(this.auth.user_type_id >= 6) {
+      this.search.from = MyCarbon.getFromToThisMonth().from
+      this.search.to = MyCarbon.getFromToThisMonth().to
     }
+    
 
+    else {
+      this.search.from = MyCarbon.todayDateInput()
+      this.search.to = MyCarbon.todayDateInput()
+    }
   }
 
 }

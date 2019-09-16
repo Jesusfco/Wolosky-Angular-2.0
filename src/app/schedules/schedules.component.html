@@ -15,19 +15,26 @@
         <img src="http://icons.iconarchive.com/icons/graphicloads/filetype/256/excel-xls-icon.png">
     </a> -->
 
-<div class="flexform">
-    <div>
+<form class="flex" (submit)="getSchel()">
 
+    <div class="l4">
         <label>Tipo de Usuarios:</label><br>
-        <select [(ngModel)]="filter" name="filter" (change)="getSchel()">
-                    <option value="1">Alumnos</option> 
-                    <option value="2">Trabajadores</option>                    
-            </select>
+        <select [(ngModel)]="search.type" name="type" (change)="getSchel()">
+            <option value="1">Alumnos</option> 
+            <option value="2">Trabajadores</option>                    
+        </select>
+    </div>
 
+    <div class="l4">
+        <label>Nombre De Usuario</label><br>
+        <div class="icon-left">            
+            <input [(ngModel)]="search.name"  name="name" type="search" placeholder="Buscar Usuario">
+            <label class="icon"><mat-icon>search</mat-icon></label>
+        </div>            
     </div>
 
 
-</div>
+</form>
 
 <div *ngFor="let day of dataOrder" class="flexRow">
 

@@ -107,9 +107,9 @@ import { CreateMonthlyPriceComponent } from './monthly-prices/create-monthly-pri
 import { SchedulesComponent } from './schedules/schedules.component';
 import { ScheduleService } from './schedules/schedule.service';
 import { DeleteUserComponent } from './user/delete-user/delete-user.component';
-import { DayPípePipe } from './day-pípe.pipe';
+import { DayPípePipe } from './pipes/day-pípe.pipe';
 import { ScheduleComponentPipePipe } from './schedule-component-pipe.pipe';
-import { TimePipe } from './time.pipe';
+import { TimePipe } from './pipes/time.pipe';
 import { WorkersPaymentComponent } from './workers-payment/workers-payment.component';
 import { WorkPaymentService } from './workers-payment/work-payment.service';
 import { PaymentCreateComponent } from './workers-payment/payment-create/payment-create.component';
@@ -138,6 +138,7 @@ import { VerifyMonthlyPriceComponent } from './monthly-prices/verify-monthly-pri
 import { ExportRecordsComponent } from './records/export-records/export-records.component';
 import { DeleteRecordsComponent } from './records/delete-records/delete-records.component';
 import { DetailsRecordComponent } from './records/details-record/details-record.component';
+import { Time12FormatPipe } from './pipes/time-12-format.pipe';
 
 
 @NgModule({
@@ -214,6 +215,7 @@ import { DetailsRecordComponent } from './records/details-record/details-record.
     ExportRecordsComponent,
     DeleteRecordsComponent,
     DetailsRecordComponent,
+    Time12FormatPipe,
   ],
   imports: [
     BrowserModule,

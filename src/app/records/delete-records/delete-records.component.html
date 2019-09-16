@@ -1,3 +1,55 @@
-<p>
-  delete-records works!
-</p>
+<mat-progress-bar mode="indeterminate" *ngIf="sendingData > 0" class="barLoader"></mat-progress-bar>
+<div class="cardSpace">
+
+    <div class="closeCardBackground" [routerLink]="['../']">
+        <h5 class="closeIcon">
+            <mat-icon>close</mat-icon>
+        </h5>
+    </div>
+  
+    <div class="cardModule">
+  
+      <h2>Eliminar Asistencias</h2>
+  
+      <p>Las asistencias eliminas no podran volver a ser recuperadas bajo ningun medio. Utilize esta función con precaución</p>
+      <form class=" flex" (submit)="submit()">
+  
+          <div class="l6">
+              <div class="icon-left">
+                  <input type="date" [(ngModel)]="search.from" name="from">
+                  <label class="icon"><mat-icon>date_range</mat-icon></label>
+                  <small class="error" *ngIf="validations.from == 1">Requerido</small>
+              </div>
+          </div>
+      
+          <div class="l6">
+              <div class="icon-left">
+                  <input type="date" [(ngModel)]="search.to" name="to">
+                  <label class="icon"><mat-icon>date_range</mat-icon></label>
+                  <small class="error" *ngIf="validations.to == 1">Requerido</small>
+              </div>
+          </div>
+      
+          <div class="l12">
+              <label>Tipos de usuario:</label><br>
+              <select [(ngModel)]="search.type" name="type">
+                      <option value="1">Trabajadores</option> 
+                      <option value="2">Alumnos</option>
+                      <option value="3">Todos</option>                    
+              </select>
+          </div>
+  
+          <!-- <div class="l12">
+              <div class="icon-left">
+                  <input [(ngModel)]="search.name"  name="name" type="search" placeholder="Buscar Usuario">
+                  <label class="icon"><mat-icon>search</mat-icon></label>
+              </div>
+              
+          </div> -->
+          <button class="btn red">Eliminar Asistencias</button>        
+      </form>
+      
+  
+    </div>
+  
+  </div>

@@ -21,7 +21,7 @@ export class ReceiptComponent implements OnInit {
   public search = {
     from: "",
     to: "",
-    name: null,
+    name: '',
     id: null,
     items: 25,
     page: 1,
@@ -42,10 +42,10 @@ export class ReceiptComponent implements OnInit {
   public interval: any = 0;
 
   public outletOutput: any;
-  public sendingData = {
-    notifications: false,
-    receipts: false,
-  };
+  
+
+  request
+  sendingData = 0
 
   public storage: Storage = new Storage();
   
@@ -88,7 +88,7 @@ export class ReceiptComponent implements OnInit {
 
   getNotifications(){
 
-    this.sendingData.notifications = true;
+    this.sendingData++;
 
     this._http.getReceiptAnalisis().then(
 
@@ -106,7 +106,7 @@ export class ReceiptComponent implements OnInit {
 
     ).then(
 
-      () => this.sendingData.notifications = false,
+      () => this.sendingData--,
 
     );
   }
@@ -124,13 +124,13 @@ export class ReceiptComponent implements OnInit {
     setTimeout(() => {
       
       if(this.timer == 0){        
-        this.sendingData.receipts = true;
+        this.sendingData++;
         this._http.sugestUserReceipt({search: this.search.name}).then(
           data => {
             this.sugests = data;
           }, error => localStorage.setItem('request', JSON.stringify(error))
         ).then(
-          () => this.sendingData.receipts = false,
+          () => this.sendingData--,
         );
       } 
 
@@ -144,10 +144,18 @@ export class ReceiptComponent implements OnInit {
 
   getReceipts(){
     
-    this.sendingData.receipts = true;
-    if(this.search.name == '')
-      this.search.id = null;
-    this._http.getReceipt(this.search).then(
+    if(this.request != null) {    
+      if(!this.request.closed) {
+        this.request.unsubscribe()    
+        this.sendingData--
+      }
+      
+      
+    }
+
+    this.sendingData++;    
+      
+    this.request = this._http.getReceipts(this.search).subscribe(
       data => {
 
         this.receipts = [];
@@ -162,9 +170,8 @@ export class ReceiptComponent implements OnInit {
         
         this.search.total = data.total;
       },
-      error => localStorage.setItem('request', JSON.stringify(error))
-    ).then(
-      () => this.sendingData.receipts = false,
+      error => localStorage.setItem('request', JSON.stringify(error)),
+      () => this.sendingData--
     );
   }  
 

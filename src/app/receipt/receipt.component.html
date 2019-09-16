@@ -1,5 +1,4 @@
-<mat-progress-bar mode="indeterminate" *ngIf="sendingData.notifications" class="barLoader"></mat-progress-bar>
-<mat-progress-bar mode="indeterminate" *ngIf="sendingData.receipts" class="barLoader"></mat-progress-bar>
+<mat-progress-bar mode="indeterminate" *ngIf="sendingData" class="barLoader"></mat-progress-bar>
 
 
 <div class="relative">
@@ -41,7 +40,7 @@
                 <label class="icon"><mat-icon>search</mat-icon></label>
             </div>
             <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let sugest of sugests" [value]="sugest.name" (onSelectionChange)="searchReceiptId(sugest.id)">
+                <mat-option *ngFor="let sugest of sugests" [value]="sugest.name">
                     {{ sugest.name }}
                 </mat-option>
             </mat-autocomplete>
@@ -90,16 +89,16 @@
 
         <a target="_blank" href="{{ storage.getUrl() + 'excel/receipt' +storage.getTokenUrl() }}
             &from={{ search.from }}&to={{ search.to }}&id={{ search.id }}">
-            <button matTooltip="Descargar Recibos" matTooltipPosition="left" mat-fab id="cancelButton">
+            <button class="green" matTooltip="Descargar Recibos" matTooltipPosition="left" mat-fab id="cancelButton">
                 <mat-icon >archive</mat-icon>
             </button>
         </a>
 
-        <button matTooltip="Deudores del mes" matTooltipPosition="left" mat-fab>
+        <button class="orange" matTooltip="Deudores del mes" matTooltipPosition="left" mat-fab>
             <mat-icon >people</mat-icon>
         </button>
 
-        <button [routerLink]="['./create']" matTooltip="Crear Recibo" matTooltipPosition="left" mat-fab>
+        <button class="blue" [routerLink]="['./create']" matTooltip="Crear Recibo" matTooltipPosition="left" mat-fab>
             <mat-icon >create</mat-icon>
         </button>
     </div>

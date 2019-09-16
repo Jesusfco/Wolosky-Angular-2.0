@@ -11,15 +11,19 @@ import { Storage } from '../classes/storage';
 })
 export class SchedulesComponent implements OnInit {
 
-  public sche: any;
+  
 
   public schedules: Array<Schedule> = [];
-  public users: Array<User> = [];
-  public filter: number = 1;
+  public users: Array<User> = [];  
   public storage: Storage = new Storage();
 
   public dataOrder: Array<any> = [];
   public sendingData: boolean  = false;
+
+  search = {
+    type: 1,    
+    name: '',    
+  };
 
   constructor(private _http: ScheduleService) {    
 
@@ -33,7 +37,7 @@ export class SchedulesComponent implements OnInit {
   getSchel() {
 
     this.sendingData = true;
-    this._http.getShcedules({type: this.filter}).then(
+    this._http.getShcedules(this.search).then(
 
       data => {
 

@@ -42,8 +42,7 @@ export class CreateExpenseComponent implements OnInit {
 
   ngOnDestroy(){
 
-    if(localStorage.getItem('expenseCreateStatus') == undefined) return;
-    localStorage.setItem('expenseCreateStatus', '1');
+    
     
   }
 
@@ -60,7 +59,7 @@ export class CreateExpenseComponent implements OnInit {
           this.cash.substractCash(this.expense.$amount);
 
         this.router.navigate(['/expenses']);
-        localStorage.removeItem('expenseCreateStatus');
+        
       },
 
 

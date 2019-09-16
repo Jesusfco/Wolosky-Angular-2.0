@@ -24,8 +24,12 @@ export class RecordService {
 
   getRecords(object) {
     return this._http.post(this.token.getUrl() + 'records' + this.token.getTokenUrl(), object )
-            .map(data => data.json())
-            .toPromise();
+            .map(data => data.json());
+  }
+
+  deleteRecords(object) {
+    return this._http.post(this.token.getUrl() + 'records/delete' + this.token.getTokenUrl(), object )
+            .map(data => data.json()).toPromise();
   }
 
 }
