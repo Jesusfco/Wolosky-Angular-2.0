@@ -4,12 +4,6 @@
 
 <h2 class="centerText">Usuarios</h2>
 
-<a class="linkExcel" [routerLink]="['./filter']">
-    <p>Exportar a Excel</p>
-    <img src="http://icons.iconarchive.com/icons/graphicloads/filetype/256/excel-xls-icon.png">
-</a>
-
-
 <div class="divSearch">
     <input [(ngModel)]="search.searchWord" (keyup)="searchInput()" placeholder="Buscar Usuario" name="search" type="search">
 
@@ -50,12 +44,32 @@
     </mat-paginator>
 </div>
 
-<a (click)="redirectCreateUser()">
-    <div class="botonFloat">
-        <a class="botonA" matTooltip="Crear"><i class="material-icons">add</i></a>
-    </div>
-</a>
 
+
+<div class="floatOptions">
+
+        <div class="moreOptions">
+    
+            
+            <button class="green" matTooltip="Exportar Usuarios" [routerLink]="['./filter']" matTooltipPosition="left" mat-fab id="cancelButton">
+                <mat-icon >file_download</mat-icon>
+            </button>
+            
+            <!-- <button class="red darken-4"  matTooltip="Eliminar Asistencias" [routerLink]="['./delete']" matTooltipPosition="left" mat-fab>
+                <mat-icon >delete</mat-icon>
+            </button> -->
+    
+            <button class="blue" [routerLink]="['./create']"  matTooltip="Nuevo Usuario" matTooltipPosition="left" mat-fab>                
+                <mat-icon >create</mat-icon>
+            </button>
+    
+        </div>
+    
+        <button matTooltip="Opciones de Usuarios" matTooltipPosition="left" mat-fab color="pri" class="floatOptionPrincipal">
+            <mat-icon >settings</mat-icon>
+        </button>
+    
+    </div>
 
 </div>
 

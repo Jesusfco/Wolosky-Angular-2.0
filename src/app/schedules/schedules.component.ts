@@ -18,7 +18,8 @@ export class SchedulesComponent implements OnInit {
   public storage: Storage = new Storage();
 
   public dataOrder: Array<any> = [];
-  public sendingData: boolean  = false;
+  public sendingData = 0;
+  request
 
   search = {
     type: 1,    
@@ -36,8 +37,16 @@ export class SchedulesComponent implements OnInit {
 
   getSchel() {
 
-    this.sendingData = true;
-    this._http.getShcedules(this.search).then(
+    if(this.request != null) {    
+      if(!this.request.closed) {
+        this.request.unsubscribe()    
+        this.sendingData--
+      }            
+    }
+
+    this.sendingData ++;
+
+    this.request = this._http.getSchedules(this.search).subscribe(
 
       data => {
 
@@ -75,8 +84,9 @@ export class SchedulesComponent implements OnInit {
         
       },
 
-      error => localStorage.setItem('request', JSON.stringify(error))
-    ).then(() => this.sendingData = false);
+      error => localStorage.setItem('request', JSON.stringify(error)),
+      () => this.sendingData--
+    )
 
   }
 

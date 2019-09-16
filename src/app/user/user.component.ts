@@ -89,29 +89,4 @@ export class UserComponent implements OnInit {
     this.showUserView = true;
   }
 
-  redirectCreateUser(){
-    this.router.navigate(['/users/create']);
-    localStorage.setItem('userCreationStatus', '1');
-    this.interval = setInterval(() => this.intervalSaleLogic(), 1000);
-  }
-
-  intervalSaleLogic(){
-  
-    if(localStorage.getItem('userCreationStatus') == undefined){
-
-      this.searchRequest();
-      clearInterval(this.interval);
-
-    } else if(localStorage.getItem('userCreationStatus') == '0'){
-
-      clearInterval(this.interval);
-
-    }
-    
-  }
-
-  
-
-  
-
 }

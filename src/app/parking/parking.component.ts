@@ -67,10 +67,6 @@ export class ParkingComponent implements OnInit {
 
   }
 
-  searchInput(e) {
-
-  }
-
   getDates() {
 
     this.search.from = MyCarbon.getFromToThisMonth().from

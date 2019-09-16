@@ -2,15 +2,29 @@
 <router-outlet></router-outlet>
 <h2 class="centerText">Estacionamiento</h2>
 
-<form class="form" (submit)="setParkings()">
-
-    <input (change)="setParkings()" type="date" [(ngModel)]="search.from" name="from" id="search"><label><mat-icon>date_range</mat-icon></label>
-    <input (change)="setParkings()" type="date" [(ngModel)]="search.to" name="to" id="search"><label>
-            <mat-icon>date_range</mat-icon></label>
-
-    <input [(ngModel)]="search.name" name="name" id="search" type="search" placeholder="Buscar Usuario" (keyup)="searchInput($event)"><label><mat-icon>search</mat-icon></label>
-
-</form>
+<form class=" flex" (submit)="setParkings()">
+        <div class="l4">
+            <div class="icon-left">
+                <input (change)="setParkings()" type="date" [(ngModel)]="search.from" name="from">
+                <label class="icon"><mat-icon>date_range</mat-icon></label>
+            </div>
+        </div>
+    
+        <div class="l4">
+            <div class="icon-left">
+                <input (change)="setParkings()" type="date" [(ngModel)]="search.to" name="to">
+                <label class="icon"><mat-icon>date_range</mat-icon></label>
+            </div>
+        </div>
+    
+        <div class="l4">
+            <div class="icon-left">
+                <input [(ngModel)]="search.name"  name="name" type="search" placeholder="Buscar Usuario">
+                <label class="icon"><mat-icon>search</mat-icon></label>
+            </div>
+            
+        </div>
+    </form>
 
 
 <div class="responsive-table">

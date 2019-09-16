@@ -13,10 +13,9 @@ export class ScheduleService {
   
   constructor(private _http: Http) { }
  
-  getShcedules(userType) {
-    return this._http.post(this.token.getUrl() + 'schedule/getStudents' + this.token.getTokenUrl(), userType )
-            .map(data => data.json())
-            .toPromise();
+  getSchedules(data) {
+    return this._http.post(this.token.getUrl() + 'schedule/getStudents' + this.token.getTokenUrl(), data )
+            .map(data => data.json())            
   }
 
 }

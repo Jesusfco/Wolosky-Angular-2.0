@@ -1,19 +1,6 @@
-<mat-progress-bar mode="indeterminate" *ngIf="sendingData" class="barLoader"></mat-progress-bar>
-
-
-
+<mat-progress-bar mode="indeterminate" *ngIf="sendingData > 0" class="barLoader"></mat-progress-bar>
 
 <h2 class="centerText" (click)="sortDataOrder()">Horarios</h2>
-<form ngNoForm method="POST" action="{{ storage.getUrl() + 'excel/schedules' + storage.getTokenUrl() }}
-    &type={{ filter }}" *ngIf="!sendingData">
-    <input type="hidden" name="data" value='{{dataOrder | json}}'>
-    <button type="submit">Exportar Excel</button>
-</form>
-<!-- <a class="linkExcel" href="{{ storage.getUrl() + 'excel/schedules' + storage.getTokenUrl() }}
-    &type={{ filter }}"> -->
-<!-- <p>Exportar a Excel</p>
-        <img src="http://icons.iconarchive.com/icons/graphicloads/filetype/256/excel-xls-icon.png">
-    </a> -->
 
 <form class="flex" (submit)="getSchel()">
 
@@ -59,3 +46,32 @@
 
     </div>
 </div>
+
+<div class="floatOptions">
+
+        <div class="moreOptions">
+    
+            <form ngNoForm method="POST" action="{{ storage.getUrl() + 'excel/schedules' + storage.getTokenUrl() }}
+            &type={{ filter }}" *ngIf="!sendingData">
+                <input type="hidden" name="data" value='{{dataOrder | json}}'>
+                
+            
+                <button type="submit" class="green" matTooltip="Descargar Horarios" matTooltipPosition="left" mat-fab>
+                    <mat-icon >archive</mat-icon>
+                </button>
+            </form>
+    
+            <!-- <button class="orange" matTooltip="Deudores del mes" matTooltipPosition="left" mat-fab>
+                <mat-icon >people</mat-icon>
+            </button> -->
+    
+            <!-- <button class="blue" [routerLink]="['./create']" matTooltip="Crear Recibo" matTooltipPosition="left" mat-fab>
+                <mat-icon >create</mat-icon>
+            </button> -->
+        </div>
+    
+        <button matTooltip="Opciones de Horarios" matTooltipPosition="left" mat-fab color="pri" class="floatOptionPrincipal">
+                    <mat-icon >settings</mat-icon>
+                </button>
+    
+    </div>
