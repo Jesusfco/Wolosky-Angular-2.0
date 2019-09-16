@@ -12,7 +12,7 @@
 
         <div class="options">
 
-            <mat-icon routerLink="/users/show/{{ user.id }}/status" matTooltip="Editar Status" matTooltipPosition="below">assessment</mat-icon>
+            <mat-icon routerLink="/users/show/{{ user.id }}/status" (click)="sendUser()" matTooltip="Editar Status" matTooltipPosition="below">assessment</mat-icon>
             <mat-icon (click)="modifyUser()" matTooltip="Editar Usuario" matTooltipPosition="below">edit</mat-icon>
 
 
@@ -20,7 +20,7 @@
                 <mat-icon matTooltip="Imprimir Informacion de Usuario" matTooltipPosition="below">local_printshop</mat-icon>
             </a>
 
-            <mat-icon routerLink="/users/show/{{ user.id }}/delete" matTooltip="Eliminar Usuario" matTooltipPosition="below">delete</mat-icon>
+            <mat-icon routerLink="/users/show/{{ user.id }}/delete" matTooltip="Eliminar Usuario" matTooltipPosition="below" *ngIf="credential >= 6">delete</mat-icon>
         </div>
 
         <div class="imgUser">
@@ -106,6 +106,11 @@
                         <input [(ngModel)]="user.insurance" name="insurance" type="text" placeholder="Seguro social" (keyup)="user.seguroUpper()">
                     </div>
 
+                    <div class="formData l6 m6">
+                        <label>Estatus:</label><br>
+                        <p>{{ user.getStatusView() }}</p>
+                    </div>
+
                     <!-- <div>
                         <label>Foto:</label><br>
                         <input #fileInput class="fileInput" id="fileInput" name="fileInput" type="file" accept="image/x-png,image/gif,image/jpeg">
@@ -150,19 +155,19 @@
                         <h2 class="l12">Salario</h2>
                         <div class="formData l6 m6">
                             <label> Monto:</label><br>
-                            <input [(ngModel)]="salary.amount" name="amount" type="number" min="0" placeholder="Monto" [ngClass]="{ 'inputError': user.validations.salaryAmount == 1}">
+                            <input [(ngModel)]="user.salary.amount" name="amount" type="number" min="0" placeholder="Monto" [ngClass]="{ 'inputError': user.validations.salaryAmount == 1}">
                             <small class="error" *ngIf="user.validations.salaryAmount == 1">Requerido</small>
                         </div>
 
 
                         <div class="formData l6 m6">
                             <label>Bono:</label><br>
-                            <input [(ngModel)]="salary.bonus" name="bonus" type="number" min="0" placeholder="Bono">
+                            <input [(ngModel)]="user.salary.bonus" name="bonus" type="number" min="0" placeholder="Bono">
                         </div>
 
                         <div class="formData l6 m6">
                             <label>Tipo de Salario:</label>
-                            <select [(ngModel)]="salary.salary_type_id" name="salary_type_id">
+                            <select [(ngModel)]="user.salary.salary_type_id" name="salary_type_id">
                                 <option value="1">Hora</option>
                                 <option value="2">Quincena</option>
                             </select>
@@ -174,8 +179,8 @@
                         <h2 class="l12">Pago Mensual</h2>
                         <div class="formData l6 m6">
                             <label>Monto:</label><br>
-                            <input [(ngModel)]="monthlyPayment.amount" name="amount" type="number" min="0" placehoder="Monto" *ngIf="credential >= 6">
-                            <input [(ngModel)]="monthlyPayment.amount" name="amount" type="number" placehoder="Monto" *ngIf="credential == 3" disabled>
+                            <input [(ngModel)]="user.monthly_payment.amount" name="amount" type="number" min="0" placehoder="Monto" *ngIf="credential >= 6">
+                            <input [(ngModel)]="user.monthly_payment.amount" name="amount" type="number" placehoder="Monto" *ngIf="credential == 3" disabled>
                             <small class="error" *ngIf="user.validations.monthlyPaymentAmount > 0">Requerido</small>
                         </div>
 
@@ -192,7 +197,7 @@
             </form>
 
 
-            <form class="flexRow" enctype="multipart/form-data" autocomplete="off" *ngIf="!modify">
+            <form class="flexRow"  *ngIf="!modify">
                 <div class="flexRow l6">
                     <h2 class="l12">Datos Personales</h2>
 
@@ -256,7 +261,10 @@
                         <input [(ngModel)]="showUser.insurance" name="insurance" type="text" placeholder="Seguro social" disabled>
                     </div>
 
-
+                    <div class="formData l6 m6">
+                        <label>Estatus:</label><br>
+                        <p>{{ user.getStatusView() }}</p>
+                    </div>
                 </div>
                 <!--FIN DE DATOS GENERALES DE USUARIO -->
 
@@ -290,19 +298,18 @@
                         <h2 class="l12">Salario</h2>
                         <div class="formData l6 m6">
                             <label> Monto:</label><br>
-                            <input [(ngModel)]="salary.amount" name="amount" type="number" min="0" placeholder="Monto" [ngClass]="{ 'inputError': showUser.validations.salaryAmount == 1}" disabled>
-                            <small class="error" *ngIf="showUser.validations.salaryAmount == 1">Requerido</small>
+                            <input [(ngModel)]="showUser.salary.amount" name="amount" type="number" min="0" placeholder="Monto" [ngClass]="{ 'inputError': showUser.validations.salaryAmount == 1}" disabled>                            
                         </div>
 
 
                         <div class="formData l6 m6">
                             <label>Bono:</label><br>
-                            <input [(ngModel)]="salary.bonus" name="bonus" type="number" min="0" placeholder="Bono" disabled>
+                            <input [(ngModel)]="showUser.salary.bonus" name="bonus" type="number" min="0" placeholder="Bono" disabled>
                         </div>
 
                         <div class="formData l6 m6">
                             <label>Tipo de Salario:</label>
-                            <select [(ngModel)]="salary.salary_type_id" name="salary_type_id" disabled>
+                            <select [(ngModel)]="showUser.salary.salary_type_id" name="salary_type_id" disabled>
                                 <option value="1">Hora</option>
                                 <option value="2">Quincena</option>
                             </select>
@@ -315,19 +322,17 @@
                         <div class="formData l6 m6">
                             <label>Monto:</label><br>
 
-                            <input [(ngModel)]="monthlyPayment.amount" name="amount" type="number" placehoder="Monto" disabled>
+                            <input [(ngModel)]="showUser.monthly_payment.amount" name="amount" type="number" placehoder="Monto" disabled>
                             <small class="error" *ngIf="showUser.validations.monthlyPaymentAmount > 0">Requerido</small>
                         </div>
 
                     </div>
 
-                </div>
-
-                <!-- <button type="submit" class="btn formBtn"> Usuario</button> -->
+                </div>                
 
             </form>
 
-            <div class="horarios" *ngIf="user.user_type_id <= 4">
+            <div class="horarios" *ngIf="showUser.user_type_id <= 4">
                 <h2>Horarios</h2>
                 <table>
                     <thead>
@@ -338,9 +343,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let x of schedules">
+                        <tr *ngFor="let x of showUser.schedules">
 
-                            <th>{{ x.dayView }}</th>
+                            <th>{{ x.day_id | dayPipe }}</th>
                             <th>{{ x.check_in | time }}</th>
                             <th>{{ x.check_out | time }}</th>
 
@@ -348,10 +353,10 @@
                     </tbody>
                 </table>
 
-                <button routerLink="/users/show/{{ user.id }}/schedule" class="btn horarioBtn" (click)="toModifySchedules()">Modificar Horario</button>
+                <button routerLink="/users/show/{{ user.id }}/schedule" class="btn horarioBtn" (click)="sendUser()">Modificar Horario</button>
 
             </div>
-            <div class="referencias" *ngIf="user.user_type_id <= 4">
+            <div class="referencias" *ngIf="showUser.user_type_id <= 4">
                 <h2>Referencias</h2>
                 <table>
                     <thead>
@@ -362,14 +367,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let x of references" [ngClass]="{ scheduleInactive: x.active == false }">
+                        <tr *ngFor="let x of showUser.references" [ngClass]="{ scheduleInactive: x.active == false }">
                             <th>{{ x.name }}</th>
                             <th>{{ x.relationshipView }}</th>
                         </tr>
                     </tbody>
                 </table>
 
-                <button routerLink="/users/show/{{ user.id }}/references" *ngIf="schedules.length !== null" class="btn referenceBtn" (click)="toModifyReferences()">Modificar Referencias</button>
+                <button routerLink="/users/show/{{ user.id }}/references" class="btn referenceBtn" (click)="sendUser()">Modificar Referencias</button>
 
                 <br><br><br>
 

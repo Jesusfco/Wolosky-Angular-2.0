@@ -115,8 +115,8 @@ export class Schedule {
             { day: 'Miércoles', day_id: 3 },
             { day: 'Jueves', day_id: 4 },
             { day: 'Viernes', day_id: 5 },
-            { day: 'Sábado', day_id: 6 },
-            // { day: 'Domingo', day_id: 7 },
+            { day: 'Sábado', day_id: 6 },            
+            { day: 'Domingo', day_id: 7 },
         ];
 
     }

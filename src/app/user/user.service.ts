@@ -22,11 +22,13 @@ export class UserService {
     return this.subject.asObservable();
   }
 
-  sendData(message: any) {
-    this.subject.next(message);
+  sendData(action: String, data: any) {
+    let message = {
+      action: action,
+      data: data
+    };
+    setTimeout(() => this.subject.next(message), 50);
   }
-
- 
 
   create(information) {
     return this._http.post(this.link.url + 'user' + this.token.getTokenUrl() , information)

@@ -22,12 +22,7 @@ import { Storage } from '../../classes/storage';
 export class ShowUserComponent implements OnInit {
 
   public user: User = new User();
-  public showUser: User = new User();
-  public references: Array<Reference> = [];
-  public schedules: Array<Schedule> = [];
-  public monthlyPrices: Array<MonthlyPrice> = [];
-  public monthlyPayment: MonthlyPayment = new MonthlyPayment();
-  
+  public showUser: User = new User();    
   public salary: Salary =  new Salary();
   public formats = ['image/png', 'image/jpeg', 'image/jpg'];
 
@@ -35,26 +30,24 @@ export class ShowUserComponent implements OnInit {
   backgroundState: String = 'initial';
 
   public modify: Boolean = false;
-  public sendingData: Boolean = false;
+  public sendingData = 0
 
   public observerRef: any;
   public url: Url = new Url();
-  public storage: Storage;
+  public storage: Storage = new Storage();
   public outletOutput: any;
-  public credential = parseInt(localStorage.getItem('userType'));
+  
+  credential = User.authUser().user_type_id
 
   public userImgFile: any;
 
   constructor(private _http: UserService,
     private router: Router,
-    private notificationS: NotificationService,
-    private actRou: ActivatedRoute) {
-
-      this.storage = new Storage();
+    private notification: NotificationService,
+    private actRou: ActivatedRoute) {  
       
       this.observerRef = actRou.params.subscribe(params => {
-        this.user.id = params['id'];
-        localStorage.setItem('userShowId', this.user.id.toString());
+        this.user.id = params['id'];        
         this.getUserData();
       });
 
@@ -87,47 +80,26 @@ export class ShowUserComponent implements OnInit {
   }
 
   ngOnDestroy() {
-
-    localStorage.removeItem('userShowId');
-    localStorage.removeItem('userData');
-    localStorage.removeItem('monthlyPrices');
-
+    this.outletOutput.unsubscribe()
   }
 
   getUserData(){
-    this.sendingData = true;
+    this.sendingData++;
     this._http.getUser(this.user.id).then(
       data => {
 
         this.user.setValues(data);
-        this.showUser.setValues(data);
-        localStorage.setItem('userData', JSON.stringify(this.user));
+        this.showUser.setValues(data);        
 
         if(this.user.img.length > 0) {
           this.downloadPerfilPhoto()
-        }
-
-        // if(this.user.user_type_id <= 4) {
-
-        //   this.setSchedules();
-        //   this.setReferences();
-        //   this.setMonthlyPrices();          
-
-        // } 
+        }  
         
-        // if (this.user.user_type_id == 1) {
+        this.sendUser()
 
-        //   this.setMonthlyPayment();
-
-        // } else if(this.user.user_type_id >= 2 && this.user.user_type_id <= 4) {
-
-        //   this.setSalary();
-
-        // }
-
-      }, error => localStorage.setItem('request', JSON.stringify(error)))
+      }, error => this.notification.sendError(error)
       
-      .then( () => this.sendingData = false );
+    ).then( () => this.sendingData-- )
   }
 
   closePop() {
@@ -155,7 +127,7 @@ export class ShowUserComponent implements OnInit {
         
     }
 
-    this.sendingData = true;
+    this.sendingData++;
 
     this._http.updateUser(this.user).then(
 
@@ -170,7 +142,7 @@ export class ShowUserComponent implements OnInit {
 
       }
     ).then(
-      () => this.sendingData = false
+      () => this.sendingData--
     );
   }
 
@@ -195,96 +167,7 @@ export class ShowUserComponent implements OnInit {
     );
 
   }
-
-  setSchedules() {
-    this.sendingData = true;
-    this._http.getSchedules(this.user.id).then(
-
-      data => {
-        
-        // this.schedules = data;
-        for(let i = 0; i < data.length; i++) {
-
-          let schel: Schedule = new Schedule();
-
-          schel.setValues(data[i]);
-          schel.setDayView();
-
-          this.schedules.push(schel);
-
-        }        
-
-        localStorage.setItem('userSchedules', JSON.stringify(this.schedules));
-
-      },
-
-      error => localStorage.setItem('request', JSON.stringify(error))
-      
-    ).then(
-      () => this.sendingData = false
-    );
-  }
-
-  setMonthlyPayment() {
-    
-    this.sendingData = true;
-
-    this._http.getMonthlyPayment(this.user.monthly_payment_id).then(
-      data => {
-        this.monthlyPayment = data;
-        sessionStorage.setItem('monthlyPayment', JSON.stringify(this.monthlyPayment));
-      },
-      error => localStorage.setItem('request', JSON.stringify(error))
-    ).then(
-      () => this.sendingData = false
-    );
-  }
-
-  setSalary() {
-
-    this.sendingData = true;
-
-    this._http.getSalary(this.user.salary_id).then(
-
-      data => this.salary = data,
-      error => localStorage.setItem('request', JSON.stringify(error))
-
-    ).then(
-
-      () => this.sendingData = false
-
-    );
-  }
-
-  setReferences() {
-
-    this.sendingData = true;
-
-    this._http.getReferences(this.user.id).then(
-
-      data => {
-
-        for(let i = 0; i < data.length; i++) {
-
-          let reference: Reference = new Reference();
-          reference.setValuesFromData(data[i]);
-          this.references.push(reference);
-
-        }
-
-        localStorage.setItem('userReferences', JSON.stringify(this.references));
-
-      },
-
-      error => localStorage.setItem('request', JSON.stringify(error))
-
-    ).then(
-
-      () => this.sendingData = false
-      
-    );
-  }
-
+  
   setMonthlyPrices() {
     this._http.getAllMonthlyPrices().then(
 
@@ -294,14 +177,14 @@ export class ShowUserComponent implements OnInit {
 
           let m  = new MonthlyPrice();
           m.setData(i);
-          this.monthlyPrices.push(m);
+          // this.monthlyPrices.push(m);
           
         }
 
-        localStorage.setItem('monthlyPrices', JSON.stringify(this.monthlyPrices));
+        // localStorage.setItem('monthlyPrices', JSON.stringify(this.monthlyPrices));
         
       },
-      error => localStorage.setItem('request', JSON.parse(error))
+      error => this.notification.sendError(error)
     );
   }
 
@@ -394,52 +277,53 @@ export class ShowUserComponent implements OnInit {
 
   updateMonthly(data) {
 
-    this.monthlyPayment.amount = parseFloat(data);
-
+    this.user.monthly_payment.amount = parseFloat(data);
+    this.showUser.monthly_payment.amount = parseFloat(data);
+    
   }
 
   updateSchedules(data){    
 
-    this.schedules = data;    
+    this.user.schedules = data;    
+    this.showUser.schedules = data;    
 
   }
 
   updateReferences(data) {
 
-    this.references = data;
+    this.user.references = data;
+    this.showUser.references = data;
 
   }
 
   modifyMonthlyPayment() {
 
-    this.sendingData = true;
-    this._http.updateMonthlyPayment(this.monthlyPayment).then(
+    this.sendingData++;
+    this._http.updateMonthlyPayment(this.user.monthly_payment).then(
 
       data => {
 
-        this.monthlyPayment = data;
+        this.user.monthly_payment.setValues(data);
 
-        let not = {
-          title: 'Mensualidad Actualizada',
-          description: 'Datos cargados al servidor correctamente',
-          status: 200
-        };
-
-        localStorage.setItem('request', JSON.stringify(not));
-
+        this.notification.sendNotification(
+          'Mensualidad Actualizada',
+          'Datos cargados al servidor correctamente',
+          5000
+        )
+              
       },
 
-      error => localStorage.setItem('request', JSON.stringify(error))
+      error => this.notification.sendError(error)
 
-    ).then( () => this.sendingData = false );
+    ).then( () => this.sendingData-- );
 
+  }  
+
+  sendUser(){
+    this._http.sendData("user", this.showUser)
   }
 
-  toModifySchedules() { }
-
-  toModifyReferences() { }
-
-  // SEND FILE IMAGE LOGIC  
+  //FUNCTIONS FOR PROCESS IMAGE PROFILE 
   getFile(files: FileList) {
     
     for (let i = 0; i < files.length; i++) {
@@ -493,10 +377,10 @@ export class ShowUserComponent implements OnInit {
 
         this.user.img = data;
         this.user.setImg();
-        this.notificationS.sendNotification('Imagen Actualizada', 'La imagen a sido cargada correctamente', 3500);
+        this.notification.sendNotification('Imagen Actualizada', 'La imagen a sido cargada correctamente', 3500);
         this.downloadPerfilPhoto();
         
-      }, error => this.notificationS.sendData(error)
+      }, error => this.notification.sendData(error)
     )
     
   }

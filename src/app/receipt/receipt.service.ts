@@ -22,11 +22,8 @@ export class ReceiptService {
   }
 
   sendData(action: String, data: any) {
-    let message = {
-      action: action,
-      data: data
-    };
-    this.subject.next(message);
+    const message = {action: action, data: data};
+    setTimeout(() => this.subject.next(message), 50);    
   }
 
   getReceiptAnalisis(){

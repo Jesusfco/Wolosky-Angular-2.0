@@ -6,7 +6,9 @@
     <div id="cerrarBtn" [routerLink]="['../']"> Cerrar <i class="material-icons">close</i></div>
 
     <div class="form" [ngClass]="{'loadingForm': sendingData == true}">
-        <h1 align="center">Asignar Horarios</h1>
+        <h1 align="center">Horarios</h1>
+        <h2 align="center">{{ user.name }}</h2>
+        <h3 align="center">{{ user.getUserTypeView() }}</h3>
 
         <div class="options">
 
@@ -38,21 +40,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let x of schedules">
+                    <tr *ngFor="let x of user.schedules; let i = index">
 
 
-                        <th (click)="createNewSchedule(x)">{{ x.dayView }}</th>
-                        <th (click)="startEditSche(x)" *ngIf="x.edit == false" [ngClass]="{inputError: x.error == 1}"> {{ x.check_in | time }}</th>
-                        <th (click)="startEditSche(x)" *ngIf="x.edit == false" [ngClass]="{inputError: x.error == 1}"> {{ x.check_out | time }}</th>
+                        <th (click)="createNewSchedule(x)">{{ x.day_id | dayPipe }}</th>
+                        <!-- <th (click)="startEditSche(x)"  [ngClass]="{inputError: x.error == 1}"> {{ x.check_in | time }}</th>
+                        <th (click)="startEditSche(x)"  [ngClass]="{inputError: x.error == 1}"> {{ x.check_out | time }}</th> -->
 
-                        <th *ngIf="x.edit == true">
-                            <input id="editCheckIn" (change)="setResult()" [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_in" name="check_in" type="time">
+                        <th>
+                            <input id="editCheckIn" (change)="setResult()" [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_in" name="check_in{{i}}" type="time">
                         </th>
-                        <th *ngIf="x.edit == true"><input (change)="setResult()" [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_out" name="check_out" type="time">
+                        <th ><input (change)="setResult()" [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_out" name="check_out{{i}}" type="time">
                         </th>
 
                         <th (click)="deleteSchedule(x)">
-                            <div class="btn btnCancel">Eliminar</div>
+                            <div class="red btn btnCancel">Eliminar</div>
                         </th>
 
                     </tr>

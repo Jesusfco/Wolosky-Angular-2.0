@@ -34,7 +34,7 @@ export class EditScheduleComponent implements OnInit {
   sche: Schedule = new Schedule();
   public user: User = new User();
 
-  public credential = parseInt(localStorage.getItem('userType'));
+  public credential = User.authUser().user_type_id;
   public days = [];
 
   public result = {
@@ -42,13 +42,9 @@ export class EditScheduleComponent implements OnInit {
     amount: 0,
     amountActual: null,
     amountForce: null
-  };
+  };  
 
-  public userDataObserver: any;
-  public schedulesObserverData: any;
-  public monthlyPaymentObserver: any;
-
-  public storage: Storage = new Storage();
+ storage: Storage = new Storage();
 
   @HostListener('document:keyup', ['$event']) sss($event) {
     
@@ -58,18 +54,22 @@ export class EditScheduleComponent implements OnInit {
 
   }
 
+  outletOutput
+
   constructor(private _http: UserService,
     private router: Router,
     private location: Location,
     private actRou: ActivatedRoute) {
-
-      this.storage = new Storage();
-
-      this.id = parseInt(localStorage.getItem('userShowId'));
-
-      this.setUserDataObserver();
-      this.setSchedulesObserverData();
+      
       this.setDays();
+
+      this.outletOutput = this._http.getData().subscribe(x => {
+      
+        if (x.action == 'user') 
+          this.user.setValues(x.data)
+        
+        
+      });
 
   }
 
@@ -83,36 +83,6 @@ export class EditScheduleComponent implements OnInit {
     this.days = sche.getWeekDays();
   }
   
-  setMonthlyPaymentObserver() {
-    this.monthlyPaymentObserver = setInterval(() => this.logicMonthlyPaymentObserver(), 1000);
-  }
-
-  logicMonthlyPaymentObserver() {
-
-    if(sessionStorage.getItem('monthlyPayment') == undefined) return;
-
-    let monthlyPayment = JSON.parse(sessionStorage.getItem('monthlyPayment'));
-    this.result.amountActual = monthlyPayment.amount;
-    this.result.amountForce = monthlyPayment.amount;
-    clearInterval(this.monthlyPaymentObserver);
-
-  }
-
-  setSchedulesObserverData() {
-    this.schedulesObserverData = setInterval(() => this.logicSchedulesObserver(), 500);
-  }
-
-  logicSchedulesObserver() {
-    if(localStorage.getItem('userSchedules') == undefined) return;
-
-    this.schedules = JSON.parse(localStorage.getItem('userSchedules'));
-    this.sortSchedulesByDay();
-    this.setResult();
-    clearInterval(this.schedulesObserverData);
-  }
-
-  
-
   close(){
 
     this.cardState = 'initial';
@@ -125,18 +95,6 @@ export class EditScheduleComponent implements OnInit {
   }
 
   
-
-  setDayView(){
-    for(let x = 0; x < Object.keys(this.schedules).length; x++){
-      if(this.schedules[x].day_id == 1 ) this.schedules[x].dayView = 'Lunes';
-      else if(this.schedules[x].day_id == 2 ) this.schedules[x].dayView = 'Martes';
-      else if(this.schedules[x].day_id == 3 ) this.schedules[x].dayView = 'Miercoles';
-      else if(this.schedules[x].day_id == 4 ) this.schedules[x].dayView = 'Jueves';
-      else if(this.schedules[x].day_id == 5 ) this.schedules[x].dayView = 'Viernes';
-      else if(this.schedules[x].day_id == 6 ) this.schedules[x].dayView = 'Sabado';
-      else if(this.schedules[x].day_id == 7 ) this.schedules[x].dayView = 'Domingo';
-    }
-  }
   selectLV(){
     for(let x = 0; x < 5;x++){
       this.schedules[x].active = true;
@@ -157,10 +115,7 @@ export class EditScheduleComponent implements OnInit {
           if(this.user.user_type_id == 1) {
             this.result.amountActual = this.result.amountForce;
 
-            this._http.sendData({
-              data: this.result.amountForce,
-              action: 'MONTHLY'
-            });
+            this._http.sendData('MONTHLY', this.result.amountForce)            
 
           }
           
@@ -186,10 +141,7 @@ export class EditScheduleComponent implements OnInit {
 
           this.sortSchedulesByDay();
 
-          this._http.sendData({
-            data: this.schedules,
-            action: 'SCHEDULES'
-          });          
+          this._http.sendData('SCHEDULES', this.schedules)          
 
         }, error => {
 
@@ -275,30 +227,12 @@ export class EditScheduleComponent implements OnInit {
 
   }
 
-  setUserDataObserver() {
-    this.userDataObserver = setInterval(() => this.userDataObserverLogic(), 1000);
-  }
-
-  userDataObserverLogic() {
-    
-    if(localStorage.getItem('userData') == undefined) return;
-
-    this.user = JSON.parse(localStorage.getItem('userData'));
-    
-    if(this.user.user_type_id == 1) {
-      this.setMonthlyPaymentObserver();
-    }
-
-    clearInterval(this.userDataObserver);
-
-  }
-
   changeActive(day) {
 
     let validate = null;
     let count = 0;
 
-    for(let schedule of this.schedules) {
+    for(let schedule of this.user.schedules) {
 
       if(schedule.day_id == day.day_id) {
 
@@ -328,7 +262,7 @@ export class EditScheduleComponent implements OnInit {
       schedule.dayView = day.day;
       schedule.active = true;
 
-      this.schedules.push(schedule);
+      this.user.schedules.push(schedule);
 
       this.sortSchedulesByDay();
 
@@ -389,10 +323,7 @@ export class EditScheduleComponent implements OnInit {
           
           this.splitSchedule(sche);
 
-          this._http.sendData({
-            data: this.schedules,
-            action: 'SCHEDULES'
-          });
+          this._http.sendData('SCHEDULES', this.schedules)
 
         } ,
         error => localStorage.setItem('request', JSON.stringify(error))
@@ -406,38 +337,9 @@ export class EditScheduleComponent implements OnInit {
 
   splitSchedule(schedule) {
 
-    let i = this.schedules.indexOf(schedule);
-    this.schedules.splice(i, 1);
-
-    if(schedule.id != null) {
-
-      i = 0;
-
-      let userSchedules: Array<Schedule> = [];
-      userSchedules = JSON.parse(localStorage.getItem('userSchedules'));
-
-      for(let x = 0; x < userSchedules.length; x++) {
-
-        if(userSchedules[x].id == schedule.id) {
-
-          i = x;
-          break;
-
-        }
-
-      }
-
-      if(i != 0) {
-
-        userSchedules.splice(i, 1);
-
-        localStorage.setItem('userSchedules', JSON.stringify(this.schedules));
-        localStorage.setItem('scheduleChange', '1');
-
-      }
-
-    }
-
+      let i = this.user.schedules.indexOf(schedule);
+      this.user.schedules.splice(i, 1);
+      
   }
 
   createNewSchedule(sche) {
@@ -475,7 +377,7 @@ export class EditScheduleComponent implements OnInit {
   sortSchedulesByDay() {
 
 
-    this.schedules.sort((a, b) => {
+    this.user.schedules.sort((a, b) => {
 
       if(a.day_id < b.day_id) {
         return -1;
