@@ -14,7 +14,7 @@
         </div>
 
         <!-- <button (click)="selectLV()" class="btn LV">L-V</button> -->
-        <button (click)="createNewSchedule(x.day_id)" *ngFor="let x of days" class="btn black">{{ x.day_id | dayPipe }}</button>
+        <button (click)="createNewSchedule(x.day_id)"  matTooltip="Crear Horario en día {{ x.day_id | dayPipe}}" *ngFor="let x of days" class="btn black">{{ x.day_id | dayPipe }}</button>
 
         <form (submit)="form()">
             <table>

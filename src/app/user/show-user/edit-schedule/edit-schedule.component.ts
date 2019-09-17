@@ -28,10 +28,9 @@ export class EditScheduleComponent implements OnInit {
     checkIn: -1,
     checkOut: -1,
     format: 0
-  };
-
-  id: number
+  };  
   
+  scheduleCopied: Schedule
   sendingData: Boolean = false
   schedules: Array<Schedule> = []
   sche: Schedule = new Schedule()
@@ -117,7 +116,7 @@ export class EditScheduleComponent implements OnInit {
     if(!this.validateSchedules()) return;
 
     this.sendingData = true;    
-    this._http.updateSchedule(this.id, {
+    this._http.updateSchedule(this.user.id, {
             schedules: this.user.schedules, 
             amount: this.result.amountForce, 
             user: this.user
@@ -141,8 +140,7 @@ export class EditScheduleComponent implements OnInit {
         for(let d of data) {
 
           let sh = new Schedule();
-          sh.setValues(d);
-          sh.setDayView(); 
+          sh.setValues(d);          
           this.user.schedules.push(sh);
 
         }
@@ -253,8 +251,7 @@ export class EditScheduleComponent implements OnInit {
       let schedule = new Schedule();
 
       schedule.user_id = this.user.id;
-      schedule.day_id = day.day_id;
-      schedule.dayView = day.day;
+      schedule.day_id = day.day_id;      
       schedule.active = true;
 
       this.user.schedules.push(schedule);
@@ -271,13 +268,9 @@ export class EditScheduleComponent implements OnInit {
 
 
   startEditSche(schedule){
-
-    for(let i of this.user.schedules)      
-        i.edit = false;
-
+    this.quitEdit()
     schedule.edit = true;    
     Focus.elementById('editCheckIn')
-
   }
 
   deleteSchedule(sche) {
@@ -312,6 +305,7 @@ export class EditScheduleComponent implements OnInit {
 
     let count = 0;
 
+    this.quitEdit()
     for(let s of this.user.schedules) {
 
       if(s.day_id == day_id) {
@@ -374,4 +368,21 @@ export class EditScheduleComponent implements OnInit {
   }
   
 
+  copySchedule(schedule){
+    this.quitEdit()        
+    this.scheduleCopied = new Schedule()
+    Object.assign(this.scheduleCopied, schedule)
+  }
+
+  pasteSchedule(schedule){
+    this.quitEdit()            
+    schedule.check_in = this.scheduleCopied.check_in
+    schedule.check_out = this.scheduleCopied.check_out
+    this.setResult()
+  }
+
+  quitEdit(){
+    for(let i of this.user.schedules)     
+      i.edit = false;
+  }
 }

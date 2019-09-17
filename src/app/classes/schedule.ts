@@ -3,11 +3,10 @@ import { MonthlyPrice } from "../classes/monthly-price";
 export class Schedule {  
     public id: number;
     
-    public day_id: number;
-    public dayView: string;
+    public day_id: number;    
     public check_in: any;
     public check_out: any;
-    public active: boolean;
+    public active: boolean = true;
     public error: number;
     
     public created_at: String;
@@ -22,20 +21,7 @@ export class Schedule {
         //     this.setDayView();
         // }
     }
-
-
-    setDayView(){
-        if(this.day_id == 1){ this.dayView = "Lunes" }
-        else if(this.day_id == 2){ this.dayView = "Martes" }
-        else if(this.day_id == 3){ this.dayView = "Miercoles" }
-        else if(this.day_id == 4){ this.dayView = "Jueves" }
-        else if(this.day_id == 5){ this.dayView = "Viernes" }
-        else if(this.day_id == 6){ this.dayView = "Sábado" }
-        else if(this.day_id == 7){ this.dayView = "Domingo" }
-    }
-
     
-
     setValues(data){
        
         this.id = parseInt(data.id);                        

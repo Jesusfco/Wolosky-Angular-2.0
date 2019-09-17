@@ -62,6 +62,8 @@
                         <th>
                             <button type="button" (click)="deleteSchedule(x)" class="red btn btnCancel">Eliminar</button>
                             <button type="button" (click)="startEditSche(x)" class="btn green">Editar</button>
+                            <button type="button" class="btn orange" (click)="copySchedule(x)">Copiar</button>
+                            <button type="button" class="btn black white-text" (click)="pasteSchedule(x)" *ngIf="scheduleCopied">Pegar</button>
                         </th>
 
                     </tr>
