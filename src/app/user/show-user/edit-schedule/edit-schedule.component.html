@@ -27,7 +27,7 @@
 
         <button (click)="selectLV()" class="btn LV">L-V</button>
         <!-- [ngClass]="{active: x.active}" -->
-        <button (click)="changeActive(day)" *ngFor="let day of days" class="btn">{{ day.day }}</button>
+        <button (click)="createNewSchedule(day.day_id)" matTooltip="Crear Horario en día {{ day.day_id | dayPipe}}"  *ngFor="let day of days" class="btn black">{{ day.day }}</button>
 
         <form (submit)="form()">
             <table>
@@ -36,7 +36,7 @@
                         <th>Día</th>
                         <th>Hora de Entrada</th>
                         <th>Hora de Salida</th>
-                        <th>Eliminar</th>
+                        <th>Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,32 +44,43 @@
 
 
                         <th (click)="createNewSchedule(x)">{{ x.day_id | dayPipe }}</th>
-                        <!-- <th (click)="startEditSche(x)"  [ngClass]="{inputError: x.error == 1}"> {{ x.check_in | time }}</th>
-                        <th (click)="startEditSche(x)"  [ngClass]="{inputError: x.error == 1}"> {{ x.check_out | time }}</th> -->
+                        <th *ngIf="!x.edit" (click)="startEditSche(x)"  [ngClass]="{inputError: x.error == 1}"> 
+                            <span *ngIf="x.check_in != null">{{ x.check_in | time }}</span>
+                            <span *ngIf="x.check_in == null">Asigne Hora de Entrada</span>
+                        </th>
+                        <th *ngIf="!x.edit" (click)="startEditSche(x)"  [ngClass]="{inputError: x.error == 1}">
+                            <span *ngIf="x.check_out != null">{{ x.check_out | time }}</span>
+                            <span *ngIf="x.check_out == null">Asigne Hora de Salida</span>
+                        </th>
+
+                        <th *ngIf="x.edit">
+                            <input id="editCheckIn" (change)="setResult()" [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_in" name="check_in{{x.id}}" type="time">
+                        </th>
+                        <th *ngIf="x.edit"><input (change)="setResult()" [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_out" name="check_out{{x.id}}" type="time">
+                        </th>
 
                         <th>
-                            <input id="editCheckIn" (change)="setResult()" [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_in" name="check_in{{i}}" type="time">
-                        </th>
-                        <th ><input (change)="setResult()" [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_out" name="check_out{{i}}" type="time">
-                        </th>
-
-                        <th (click)="deleteSchedule(x)">
-                            <div class="red btn btnCancel">Eliminar</div>
+                            <button type="button" (click)="deleteSchedule(x)" class="red btn btnCancel">Eliminar</button>
+                            <button type="button" (click)="startEditSche(x)" class="btn green">Editar</button>
                         </th>
 
                     </tr>
                 </tbody>
             </table>
 
-            <div *ngIf="result.hours != 0 && user.user_type_id == 1">
+            <div *ngIf="result.hours != 0 && user.user_type_id == 1" >
                 <p>Horas: {{result.hours}}</p>
-                <p>Precio Por Horas: ${{result.amount}}</p>
-                <p>Monto Anterior: ${{ result.amountActual }}</p>
-                <input type="number" min="0" [(ngModel)]="result.amountForce" name="amountForce" *ngIf="credential >= 6">
+                <p>Precio Por Horas Sugerido: ${{result.amount}}</p>
+                <p>Monto Actual: ${{ user.monthly_payment.amount }}</p>
+                <div class="l4" *ngIf="credential >= 6">
+                    <label>Mensualidad:</label>
+                    <input type="number" min="0" [(ngModel)]="result.amountForce" name="amountForce">
+                </div>
+                <p>Si los horarios son actualizados la mensualidad del alumn@ se vera afectada.</p>
 
             </div>
 
-            <button type="submit" class="btn formBtn">Asignar Horarios</button>
+            <button type="submit" class="btn blue">Actualizar Horarios</button>
         </form>
 
 

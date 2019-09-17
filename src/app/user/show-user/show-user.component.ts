@@ -170,19 +170,14 @@ export class ShowUserComponent implements OnInit {
   
   setMonthlyPrices() {
     this._http.getAllMonthlyPrices().then(
-
       data => {
-
+        let array = []
         for(let i of data) {
-
           let m  = new MonthlyPrice();
           m.setData(i);
-          // this.monthlyPrices.push(m);
-          
+          array.push(m);          
         }
-
-        // localStorage.setItem('monthlyPrices', JSON.stringify(this.monthlyPrices));
-        
+        localStorage.setItem('monthlyPrices', JSON.stringify(array));        
       },
       error => this.notification.sendError(error)
     );
@@ -284,8 +279,15 @@ export class ShowUserComponent implements OnInit {
 
   updateSchedules(data){    
 
-    this.user.schedules = data;    
-    this.showUser.schedules = data;    
+    this.user.schedules = [];    
+    this.showUser.schedules = []
+    for(let d of data) {
+      let obj = new Schedule();
+      obj.setValues(d)
+      this.user.schedules.push(obj)
+      this.showUser.schedules.push(obj)
+    }
+    
 
   }
 

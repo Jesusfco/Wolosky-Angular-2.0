@@ -1,7 +1,6 @@
 import { MonthlyPrice } from "../classes/monthly-price";
 
-export class Schedule {
-
+export class Schedule {  
     public id: number;
     
     public day_id: number;
@@ -66,7 +65,12 @@ export class Schedule {
 
     }
 
-    countHours(schedules) {
+
+    generateRamdomId() {
+        this.id = Math.floor(Math.random() * 10000) * -1
+    }
+
+    static countHours(schedules) {
 
         let count = 0;
     

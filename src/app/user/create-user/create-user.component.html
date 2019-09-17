@@ -19,7 +19,7 @@
                      -->
 
 
-                    <div class="formData l6 m6">
+                    <div class="formData l12 m12">
                         <label>Nombre Completo:</label><br>
                         <input [(ngModel)]="user.name" name="name" type="text" placeholder="Nombre" (keydown)="user.nameUppercase()" (keypress)="uniqueNameWriting()" [ngClass]="{ 'inputError': user.validations.name > 0, 'inputValidate': user.validations.name < 0 }">
                         <small class="error" *ngIf="user.validations.name == 1">Se requiere el nombre</small>

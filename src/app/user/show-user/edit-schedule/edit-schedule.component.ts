@@ -8,6 +8,8 @@ import { FadeAnimation, SlideAnimation } from '../../../animations/slide-in-out.
 
 import { Url } from '../../../classes/url';
 import { Storage } from '../../../classes/storage';
+import { MonthlyPrice } from '../../../classes/monthly-price';
+import { NotificationService } from '../../../notification/notification.service';
 
 @Component({
   selector: 'app-edit-schedule',
@@ -58,23 +60,39 @@ export class EditScheduleComponent implements OnInit {
 
   constructor(private _http: UserService,
     private router: Router,
+    private notification: NotificationService,
     private location: Location,
     private actRou: ActivatedRoute) {
       
       this.setDays();
 
-      this.outletOutput = this._http.getData().subscribe(x => {
-      
+      this.outletOutput = this._http.getData().subscribe(x => {      
         if (x.action == 'user') 
-          this.user.setValues(x.data)
-        
-        
+          this.user.setValues(x.data)                
       });
+
+      this.getMonthlyPrices()
 
   }
 
   ngOnInit() {
 
+  }
+
+  getMonthlyPrices() {
+    this._http.getAllMonthlyPrices().then(
+      data => {
+        let array = []
+        for(let i of data) {
+          let m  = new MonthlyPrice();
+          m.setData(i);
+          array.push(m);          
+        }
+        localStorage.setItem('monthlyPrices', JSON.stringify(array));
+        this.setResult()        
+      },
+      error => this.notification.sendError(error)
+    );
   }
 
   setDays() {
@@ -105,55 +123,43 @@ export class EditScheduleComponent implements OnInit {
     
     if(!this.validateSchedules()) return;
 
-    this.sendingData = true;
-    // if(this.validateSchedules()){
+    this.sendingData = true;    
+    this._http.updateSchedule(this.id, {
+            schedules: this.user.schedules, 
+            amount: this.result.amountForce, 
+            user: this.user
+          }).then(
 
-      this._http.updateSchedule(this.id, {schedules: this.schedules, amount: this.result.amountForce, user: this.user}).then(
+      data => {
+        
+        if(this.user.user_type_id == 1) {
+          this.result.amountActual = this.result.amountForce;
 
-        data => {
-          
-          if(this.user.user_type_id == 1) {
-            this.result.amountActual = this.result.amountForce;
+          this._http.sendData('MONTHLY', this.result.amountForce)            
 
-            this._http.sendData('MONTHLY', this.result.amountForce)            
+        }
+        
+        this.notification.sendNotification(
+          'Horario Actualizado','Datos cargados en el servidor', 4500
+        )                
 
-          }
-          
+        this.user.schedules = [];
+        
+        for(let d of data) {
 
-          let not = {
-            status: 200,
-            title: 'Horario Actualizado',
-            description: 'Datos cargados en el servidor'
-          };
-  
-          localStorage.setItem('request', JSON.stringify(not));
+          let sh = new Schedule();
+          sh.setValues(d);
+          sh.setDayView(); 
+          this.user.schedules.push(sh);
 
-          this.schedules = [];
-          
-          for(let d of data) {
-
-            let sh = new Schedule();
-            sh.setValues(d);
-            sh.setDayView(); 
-            this.schedules.push(sh);
-
-          }
-
-          this.sortSchedulesByDay();
-
-          this._http.sendData('SCHEDULES', this.schedules)          
-
-        }, error => {
-
-          localStorage.setItem('request', JSON.stringify(error));
-          
         }
 
-      ).then(
+        this.sortSchedulesByDay();
 
-        () => this.sendingData = false
+        this._http.sendData('SCHEDULES', this.user.schedules)          
 
-      );
+      }, error => this.notification.sendError(error)
+    ).then( () => this.sendingData = false )
 
     
   }
@@ -164,7 +170,7 @@ export class EditScheduleComponent implements OnInit {
       
       if(this.user.user_type_id == 1) {
 
-        const re = this.sche.countHours(this.schedules);
+        const re = Schedule.countHours(this.user.schedules);
 
         this.result.hours = re.hours;
         this.result.amount = re.amount;
@@ -185,9 +191,11 @@ export class EditScheduleComponent implements OnInit {
 
     this.defaultValidationValue();
 
-    for(let x of this.schedules){
+    for(let x of this.user.schedules){
 
       if(x.active == true){
+
+        x.error = 0
 
         if(x.check_in == null || x.check_in == ''){
           x.error = 1;
@@ -240,12 +248,6 @@ export class EditScheduleComponent implements OnInit {
 
         if(validate == null) {
 
-          schedule.active = !schedule.active;
-          validate = schedule.active;
-
-        } else {
-
-          schedule.active = validate;
 
         }
 
@@ -274,27 +276,6 @@ export class EditScheduleComponent implements OnInit {
 
   }
 
-  chronomize() {
-
-    let che = JSON.parse(JSON.stringify(this.schedules));
-
-    for(let i = 0; i < this.schedules.length; i++) {
-
-        this.schedules[i].check_in = null;
-        this.schedules[i].check_out = null;
-
-      setTimeout(() => {
-
-        this.schedules[i].check_in = che[i].check_in;
-        this.schedules[i].check_out = che[i].check_out;
-
-
-      }, 10);
-      
-
-    }
-
-  } 
 
   startEditSche(x){
 
@@ -304,7 +285,7 @@ export class EditScheduleComponent implements OnInit {
       document.getElementById('editCheckIn').focus();
     }, 100);
 
-    for(let i of this.schedules){
+    for(let i of this.user.schedules){
 
       if(i.id != x.id){
         i.edit = false;
@@ -339,16 +320,16 @@ export class EditScheduleComponent implements OnInit {
 
       let i = this.user.schedules.indexOf(schedule);
       this.user.schedules.splice(i, 1);
-      
+
   }
 
-  createNewSchedule(sche) {
+  createNewSchedule(day_id) {
 
     let count = 0;
 
-    for(let s of this.schedules) {
+    for(let s of this.user.schedules) {
 
-      if(s.day_id == sche.day_id) {
+      if(s.day_id == day_id) {
 
         if(s.check_in == null || s.check_out == null) {
 
@@ -362,13 +343,12 @@ export class EditScheduleComponent implements OnInit {
 
     if(count > 0) return;
 
-    let schedule: Schedule = new Schedule();
-    schedule.user_id = sche.user_id;
-    schedule.day_id = sche.day_id;
-    schedule.dayView = sche.dayView;
+    let schedule: Schedule = new Schedule();    
+    schedule.user_id = this.user.id;
+    schedule.day_id = day_id;    
     schedule.active = true;
 
-    this.schedules.push(schedule);
+    this.user.schedules.push(schedule);
 
     this.sortSchedulesByDay();
 
