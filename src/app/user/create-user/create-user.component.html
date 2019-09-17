@@ -169,8 +169,8 @@
             <tbody>
                 <tr *ngFor="let x of user.schedules">                            
                     <th>{{ x.day_id | dayPipe }}</th>
-                    <th>{{ x.check_in }}</th>
-                    <th>{{ x.check_out }}</th>                            
+                    <th>{{ x.check_in | time }}</th>
+                    <th>{{ x.check_out | time }}</th>                            
                 </tr>
             </tbody>
             

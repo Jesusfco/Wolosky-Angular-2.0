@@ -263,9 +263,9 @@ export class User {
         this.city = this.city.toUpperCase();
     }
 
-    receiveSchedules(schedules) {
+    receiveSchedules(sche) {
         this.schedules = []
-        for(let d of schedules) {
+        for(let d of sche) {
             let obj = new Schedule();
             obj.setValues(d)
             this.schedules.push(obj)            

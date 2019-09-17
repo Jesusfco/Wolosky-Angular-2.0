@@ -39,11 +39,13 @@ export class CreateScheduleComponent implements OnInit {
     private location: Location,
     private router: Router
     ) {
-    this.monthlyPrices = JSON.parse(localStorage.getItem('monthlyPrices'));
 
     this.outletOutput = this._http.getData().subscribe(x => {      
       if (x.action == 'user')   
-        Object.assign(this.user, x.data)
+        this.user.setValues(x.data) 
+      if (x.action == 'MONTHLY_PRICES')   
+        this.monthlyPrices = x.data
+          
       
     })
    }
@@ -58,14 +60,12 @@ export class CreateScheduleComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    setTimeout(() => {      
-      this.cardState = 'final';
-      this.backgroundState = 'final';
-    }, 2000);
+    this.outletOutput.unsubscribe()
   }
 
   close(){
   
+    this.user.name = 'hasd'
     this.cardState = 'initial';
     this.backgroundState = 'initial';    
 

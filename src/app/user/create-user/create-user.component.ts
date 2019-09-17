@@ -44,7 +44,7 @@ export class CreateUserComponent implements OnInit {
   ) {
 
     this.outletOutput = this._http.getData().subscribe(x => {      
-        if (x.action == 'SCHEDULES')   
+        if (x.action == 'SCHEDULES')    
           this.user.receiveSchedules(x.data) 
         else if(x.action == 'REFERENCES') 
           this.receiveReferences(x.data);    
@@ -55,14 +55,13 @@ export class CreateUserComponent implements OnInit {
     this._http.getAllMonthlyPrices().then(
       data => {
 
+        this.monthlyPrices = []
         for(let i of data) {
-
           let m  = new MonthlyPrice();
           m.setData(i);
-          this.monthlyPrices.push(m);
-          
+          this.monthlyPrices.push(m);          
         }
-
+        
         localStorage.setItem('monthlyPrices', JSON.stringify(this.monthlyPrices));
         
       },
@@ -276,6 +275,7 @@ export class CreateUserComponent implements OnInit {
 
   sendUser() {
     this._http.sendData('user', this.user)
+    this._http.sendData('MONTHLY_PRICES', this.monthlyPrices)
   }    
 
   receiveReferences(references) {
