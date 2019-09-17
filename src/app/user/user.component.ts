@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from './user.service';
+import { UserService } from '../services/user.service';
 import { Router, NavigationEnd } from '@angular/router';
 import {PageEvent} from '@angular/material';
 import { filter } from 'rxjs/operator/filter';

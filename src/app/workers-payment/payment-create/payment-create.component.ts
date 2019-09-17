@@ -2,7 +2,7 @@ import { DayAnalized } from './../../classes/dayAnalized';
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { cardPop, backgroundOpacity} from '../../animations';
-import { WorkPaymentService } from '../work-payment.service';
+import { WorkPaymentService } from '../../services/work-payment.service';
 import { Record } from '../../classes/record';
 import { User } from '../../classes/user';
 import { Payment } from '../../classes/payment';

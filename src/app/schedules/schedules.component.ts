@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ScheduleService } from './schedule.service';
+import { ScheduleService } from '../services/schedule.service';
 import { Schedule } from '../classes/schedule';
 import { User } from '../classes/user';
 import { Storage } from '../classes/storage';

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Expense } from '../../classes/expense';
-import { ExpenseService } from '../expense.service';
+import { ExpenseService } from '../../services/expense.service';
 import { BackgroundCard, Card } from '../../animations/card.animation';
 import { Cash } from '../../classes/cash';
 

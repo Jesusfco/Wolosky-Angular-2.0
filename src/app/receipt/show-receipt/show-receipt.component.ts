@@ -3,7 +3,7 @@ import { Card, BackgroundCard } from './../../animations/card.animation';
 import { Component, OnInit } from '@angular/core';
 import { Receipt } from '../../classes/receipt';
 import { Storage } from '../../classes/storage';
-import { ReceiptService } from '../receipt.service';
+import { ReceiptService } from '../../services/receipt.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NotificationService } from '../../notification/notification.service';
 

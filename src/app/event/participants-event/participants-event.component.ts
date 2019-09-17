@@ -1,6 +1,6 @@
 import { NotificationService } from './../../notification/notification.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { EventService } from '../event.service';
+import { EventService } from '../../services/event.service';
 import { EventParticipant } from '../../classes/event-participant';
 import { Event } from '../../classes/event';
 import { not } from '@angular/compiler/src/output/output_ast';

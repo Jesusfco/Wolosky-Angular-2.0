@@ -1,6 +1,6 @@
 import { ResetComponent } from './login/reset/reset.component';
 import { PrintReceiptComponent } from './utils/print-receipt/print-receipt.component';
-import { EventService } from './event/event.service';
+import { EventService } from './services/event.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -45,12 +45,12 @@ import {
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { LoginService } from './login/login.service';
+import { LoginService } from './services/login.service';
 import { StructureComponent } from './structure/structure.component';
 import { FooterComponent } from './footer/footer.component';
 import { UserComponent } from './user/user.component';
 import { CreateUserComponent } from './user/create-user/create-user.component';
-import { UserService } from './user/user.service';
+import { UserService } from './services/user.service';
 import { CreateScheduleComponent } from './user/create-user/create-schedule/create-schedule.component';
 import { ReferenceComponent } from './user/create-user/reference/reference.component';
 import { ShowUserComponent } from './user/show-user/show-user.component';
@@ -64,7 +64,7 @@ import { EditScheduleComponent } from './user/show-user/edit-schedule/edit-sched
 import { ReceiptComponent } from './receipt/receipt.component';
 import { CreateRecieptComponent } from './receipt/create-reciept/create-reciept.component';
 import { EditReceiptComponent } from './receipt/edit-receipt/edit-receipt.component';
-import { ReceiptService } from './receipt/receipt.service';
+import { ReceiptService } from './services/receipt.service';
 
 import { EventComponent } from './event/event.component';
 import { CreateEventComponent } from './event/create-event/create-event.component';
@@ -74,12 +74,12 @@ import { AssignUserEventComponent } from './event/assign-user-event/assign-user-
 import { InventoryComponent } from './inventory/inventory.component';
 import { NewProductComponent } from './inventory/new-product/new-product.component';
 import { EditProductComponent } from './inventory/edit-product/edit-product.component';
-import { InventoryService } from './inventory/inventory.service';
-import { FilterInventoryPipe } from './inventory/filter-inventory.pipe';
+import { InventoryService } from './services/inventory.service';
+import { FilterInventoryPipe } from './pipes/filter-inventory.pipe';
 
 import { SalePointComponent } from './sale-point/sale-point.component';
 import { SearchProductComponent } from './sale-point/search-product/search-product.component';
-import { SaleService } from './sale-point/sale.service';
+import { SaleService } from './services/sale.service';
 
 import { SaleProcessComponent } from './sale-point/sale-process/sale-process.component';
 import { SalesComponent } from './sales/sales.component';
@@ -89,34 +89,34 @@ import { CashComponent } from './cash/cash.component';
 import { CashService } from './cash/cash.service';
 import { StatusUserComponent } from './user/status-user/status-user.component';
 import { CutoutComponent } from './cutout/cutout.component';
-import { CutoutService } from './cutout/cutout.service';
+import { CutoutService } from './services/cutout.service';
 
 import { ExpenseComponent } from './expense/expense.component';
 import { CreateExpenseComponent } from './expense/create-expense/create-expense.component';
 import { UpdateExpenseComponent } from './expense/update-expense/update-expense.component';
-import { ExpenseService } from './expense/expense.service';
+import { ExpenseService } from './services/expense.service';
 
 import { SaleDebtComponent } from './sale-debt/sale-debt.component';
-import { SaleDebtService } from './sale-debt/sale-debt.service';
+import { SaleDebtService } from './services/sale-debt.service';
 
 import { NotificationComponent } from './notification/notification.component';
 
 import { MonthlyPriceComponent } from './monthly-prices/monthly-price.component';
-import { MonthlyPriceService } from './monthly-prices/monthly-price.service';
+import { MonthlyPriceService } from './services/monthly-price.service';
 import { CreateMonthlyPriceComponent } from './monthly-prices/create-monthly-price/create-monthly-price.component';
 import { SchedulesComponent } from './schedules/schedules.component';
-import { ScheduleService } from './schedules/schedule.service';
+import { ScheduleService } from './services/schedule.service';
 import { DeleteUserComponent } from './user/delete-user/delete-user.component';
 import { DayPípePipe } from './pipes/day-pípe.pipe';
-import { ScheduleComponentPipePipe } from './schedule-component-pipe.pipe';
+import { ScheduleComponentPipePipe } from './pipes/schedule-component-pipe.pipe';
 import { TimePipe } from './pipes/time.pipe';
 import { WorkersPaymentComponent } from './workers-payment/workers-payment.component';
-import { WorkPaymentService } from './workers-payment/work-payment.service';
+import { WorkPaymentService } from './services/work-payment.service';
 import { PaymentCreateComponent } from './workers-payment/payment-create/payment-create.component';
 import { PaymentShowComponent } from './workers-payment/payment-show/payment-show.component';
 import { NotificationService } from './notification/notification.service';
 import { RecordsComponent } from './records/records.component';
-import { RecordService } from './records/record.service';
+import { RecordService } from './services/record.service';
 import { FilterUserComponent } from './user/filter-user/filter-user.component';
 import { ShowEventComponent } from './event/show-event/show-event.component';
 import { EditEventComponent } from './event/edit-event/edit-event.component';
@@ -129,7 +129,7 @@ import { NewParkingComponent } from './parking/new-parking/new-parking.component
 import { EditParkingComponent } from './parking/edit-parking/edit-parking.component';
 import { ShowParkingComponent } from './parking/show-parking/show-parking.component';
 import { AdminParkingComponent } from './parking/admin-parking/admin-parking.component';
-import { ParkingService } from './parking/parking.service';
+import { ParkingService } from './services/parking.service';
 import { DeleteGenericComponent } from './utils/delete-generic/delete-generic.component';
 import { RecoverComponent } from './login/recover/recover.component';
 import { ShowMonthlyPriceComponent } from './monthly-prices/show-monthly-price/show-monthly-price.component';

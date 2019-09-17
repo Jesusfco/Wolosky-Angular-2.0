@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Expense  } from '../classes/expense';
 import { PageEvent } from '@angular/material';
-import { ExpenseService } from './expense.service';
+import { ExpenseService } from '../services/expense.service';
 import { Router, NavigationEnd } from '@angular/router';
 //import { ExpandSubscriber } from 'rxjs/operator/expand';
 import { Storage } from '../classes/storage';

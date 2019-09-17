@@ -34,18 +34,7 @@ export class Schedule {
         else if(this.day_id == 7){ this.dayView = "Domingo" }
     }
 
-    setArray(){
-        let x = [
-            {day_id: 1, check_in: null, check_out: null, dayView: 'Lunes', active: false, error: 0},
-            {day_id: 2, check_in: null, check_out: null, dayView: 'Martes', active: false, error: 0},
-            {day_id: 3, check_in: null, check_out: null, dayView: 'Miercoles', active: false, error: 0},
-            {day_id: 4, check_in: null, check_out: null, dayView: 'Jueves', active: false, error: 0},
-            {day_id: 5, check_in: null, check_out: null, dayView: 'Viernes', active: false, error: 0},
-            {day_id: 6, check_in: null, check_out: null, dayView: 'Sabado', active: false, error: 0},
-          ];
-
-        return x;
-    }
+    
 
     setValues(data){
        
@@ -111,7 +100,7 @@ export class Schedule {
 
       }
 
-    getWeekDays() {
+    static getWeekDays() {
 
         return [            
             { day: 'Lunes', day_id: 1 },

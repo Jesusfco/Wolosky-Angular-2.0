@@ -2,7 +2,7 @@ import { NotificationService } from './../../notification/notification.service';
 import { BackgroundCard, Card } from './../../animations/card.animation';
 import { Component, OnInit } from '@angular/core';
 import { Parking } from '../../classes/parking';
-import { ParkingService } from '../parking.service';
+import { ParkingService } from '../../services/parking.service';
 import { User } from '../../classes/user';
 import { Router } from '@angular/router';
 

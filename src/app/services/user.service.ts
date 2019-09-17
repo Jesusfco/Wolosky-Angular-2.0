@@ -23,11 +23,11 @@ export class UserService {
   }
 
   sendData(action: String, data: any) {
-    let message = {
+    
+    setTimeout(() => this.subject.next( {
       action: action,
       data: data
-    };
-    setTimeout(() => this.subject.next(message), 50);
+    }), 50);
   }
 
   create(information) {

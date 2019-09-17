@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { InventoryService } from '../inventory/inventory.service';
-import { SaleService } from './sale.service';
+import { InventoryService } from '../services/inventory.service';
+import { SaleService } from '../services/sale.service';
 import { Product } from '../classes/product';
 import { Storage } from '../classes/storage';
 import { Sale } from '../classes/sale';

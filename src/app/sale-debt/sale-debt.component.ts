@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SaleDebt } from '../classes/sale-debt';
-import { SaleDebtService } from './sale-debt.service';
+import { SaleDebtService } from '../services/sale-debt.service';
 import { Storage } from '../classes/storage';
 
 @Component({

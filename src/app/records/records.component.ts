@@ -1,4 +1,4 @@
-import { RecordService } from './record.service';
+import { RecordService } from '../services/record.service';
 import { Component, OnInit } from '@angular/core';
 import { Record } from '../classes/record';
 import { NotificationService } from '../notification/notification.service';

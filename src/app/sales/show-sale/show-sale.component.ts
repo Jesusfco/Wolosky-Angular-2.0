@@ -2,7 +2,7 @@ import { User } from './../../classes/user';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Sale } from '../../classes/sale';
-import { SaleService } from '../../sale-point/sale.service';
+import { SaleService } from '../../services/sale.service';
 import { cardPop, backgroundOpacity } from '../../animations';
 import { Storage } from '../../classes/storage';
 

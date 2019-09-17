@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MonthlyPrice } from '../classes/monthly-price';
-import { MonthlyPriceService } from './monthly-price.service';
+import { MonthlyPriceService } from '../services/monthly-price.service';
 
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operator/filter';

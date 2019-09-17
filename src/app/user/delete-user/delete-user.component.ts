@@ -1,9 +1,10 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
 import { cardPop, backgroundOpacity} from '../../animations';
-import { UserService } from '../user.service';
+
 import { Router } from '@angular/router';
 import { User } from '../../classes/user';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-delete-user',

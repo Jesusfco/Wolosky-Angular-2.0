@@ -1,6 +1,6 @@
 import { NotificationService } from './../../notification/notification.service';
 import { Component, OnInit, Input, Output } from '@angular/core';
-import { EventService } from '../event.service';
+import { EventService } from '../../services/event.service';
 import { User } from '../../classes/user';
 import { Receipt } from '../../classes/receipt';
 import { EventParticipant } from '../../classes/event-participant';

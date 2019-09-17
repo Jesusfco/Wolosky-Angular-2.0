@@ -1,6 +1,6 @@
 import { Focus } from './../utils/classes/focus';
 import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
-import { LoginService } from './login.service';
+import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
 import { Storage } from '../classes/storage';
 

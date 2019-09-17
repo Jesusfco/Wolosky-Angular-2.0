@@ -1,4 +1,4 @@
-import { EventService } from './event.service';
+import { EventService } from '../services/event.service';
 import { Component, OnInit } from '@angular/core';
 import { Event } from '../classes/event';
 import { NotificationService } from '../notification/notification.service';

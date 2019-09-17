@@ -1,4 +1,4 @@
-import { Url } from './../classes/url';
+import { Url } from '../classes/url';
 import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 import "rxjs";

@@ -1,7 +1,7 @@
 import { MyCarbon } from './../utils/classes/my-carbon';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Sale } from '../classes/sale';
-import { SaleService } from '../sale-point/sale.service';
+import { SaleService } from '../services/sale.service';
 import { Url } from '../classes/url';
 import { Storage } from '../classes/storage';
 import { PageEvent } from '@angular/material';

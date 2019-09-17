@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
-import { UserService } from '../user.service';
+import { UserService } from '../../services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FadeAnimation, SlideAnimation } from '../../animations/slide-in-out.animation';
 @Component({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MonthlyPriceService } from '../monthly-price.service';
+import { MonthlyPriceService } from '../../services/monthly-price.service';
 import { NotificationService } from '../../notification/notification.service';
 import { ActivatedRoute } from '@angular/router';
 import { MonthlyPrice } from '../../classes/monthly-price';

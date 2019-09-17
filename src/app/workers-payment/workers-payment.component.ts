@@ -1,6 +1,6 @@
 import { NotificationService } from './../notification/notification.service';
 import { Component, OnInit } from '@angular/core';
-import { WorkPaymentService } from './work-payment.service';
+import { WorkPaymentService } from '../services/work-payment.service';
 import { Payment } from '../classes/payment';
 
 

@@ -2,7 +2,7 @@ import { Payment } from './../../classes/payment';
 import { backgroundOpacity, cardPop } from './../../animations';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { WorkPaymentService } from '../work-payment.service';
+import { WorkPaymentService } from '../../services/work-payment.service';
 
 @Component({
   selector: 'app-payment-show',

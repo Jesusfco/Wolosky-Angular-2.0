@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MonthlyPrice } from '../../classes/monthly-price';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { MonthlyPriceService } from '../monthly-price.service';
+import { MonthlyPriceService } from '../../services/monthly-price.service';
 import { NotificationService } from '../../notification/notification.service';
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MonthlyPrice } from '../../classes/monthly-price';
-import { MonthlyPriceService } from '../monthly-price.service';
+import { MonthlyPriceService } from '../../services/monthly-price.service';
 import { Router } from '@angular/router';
 import { BackgroundCard, Card } from '../../animations/card.animation';
 

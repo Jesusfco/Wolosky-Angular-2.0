@@ -1,5 +1,5 @@
 import { Notificaction } from './../../classes/notification';
-import { EventService } from './../event.service';
+import { EventService } from '../../services/event.service';
 import { cardPop, backgroundOpacity } from './../../animations';
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';

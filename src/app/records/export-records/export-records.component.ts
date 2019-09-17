@@ -8,8 +8,7 @@ import { Url } from '../../classes/url';
   styleUrls: ['./export-records.component.css']
 })
 export class ExportRecordsComponent implements OnInit {
-
-  url = new Url;
+  
   section = 1
   public search = {
     type: 1,
@@ -23,6 +22,7 @@ export class ExportRecordsComponent implements OnInit {
     to: 0,
     validate: true
   }
+  
 
   constructor() { 
     this.search.from = MyCarbon.getFromToThisMonth().from

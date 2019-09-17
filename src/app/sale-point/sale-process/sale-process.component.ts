@@ -7,7 +7,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { cardPop, backgroundOpacity} from '../../animations';
 import { Router } from '@angular/router';
 import { Sale } from '../../classes/sale';
-import { SaleService } from '../sale.service';
+import { SaleService } from '../../services/sale.service';
 import { Product } from '../../classes/product';
 import { SaleDebt } from '../../classes/sale-debt';
 import { Receipt } from '../../classes/receipt';

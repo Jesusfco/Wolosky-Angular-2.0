@@ -3,7 +3,7 @@ import { NotificationService } from './../../notification/notification.service';
 import { Component, OnInit } from '@angular/core';
 import { BackgroundCard, Card } from '../../animations/card.animation';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ReceiptService } from '../receipt.service';
+import { ReceiptService } from '../../services/receipt.service';
 import { Storage } from '../../classes/storage';
 import { Receipt } from '../../classes/receipt';
 import { User } from '../../classes/user';

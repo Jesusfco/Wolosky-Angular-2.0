@@ -1,6 +1,6 @@
 import { Focus } from './../../utils/classes/focus';
 import { NotificationService } from './../../notification/notification.service';
-import { LoginService } from './../login.service';
+import { LoginService } from '../../services/login.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../../classes/user';

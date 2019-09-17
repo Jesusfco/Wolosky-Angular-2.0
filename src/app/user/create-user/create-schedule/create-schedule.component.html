@@ -1,7 +1,7 @@
 <div class="background" [@background]="backgroundState"></div>
 <div id="createCard" [@principal]="cardState">
 
-    <div id="cerrarBtn" (click)="close(validateSchedules())"> Cerrar <i class="material-icons">close</i></div>
+    <div id="cerrarBtn" (click)="close(validateSchedules())" [routerLink]="['../']"> Cerrar <i class="material-icons">close</i></div>
 
     <div class="form">
         <h1 align="center">Asignar Horarios</h1>
@@ -13,8 +13,8 @@
             <p *ngIf="validations.format == 1">Recuerda que siempre la H.Entrada debe ser mas temprano que la H.Salida</p>
         </div>
 
-        <button (click)="selectLV()" class="btn LV">L-V</button>
-        <button (click)="x.active = !x.active" *ngFor="let x of schedules" class="btn" [ngClass]="{active: x.active}">{{ x.dayView }}</button>
+        <!-- <button (click)="selectLV()" class="btn LV">L-V</button> -->
+        <button (click)="createNewSchedule(x.day_id)" *ngFor="let x of days" class="btn black">{{ x.day_id | dayPipe }}</button>
 
         <form (submit)="form()">
             <table>
@@ -23,16 +23,36 @@
                         <th>Día</th>
                         <th>Hora de Entrada</th>
                         <th>Hora de Salida</th>
+                        <th>Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let x of schedules" [ngClass]="{trNone: x.active == false}">
-                        <ng-container *ngIf="x.active">
+                    <tr *ngFor="let x of user.schedules">
+                        
 
-                            <th>{{ x.dayView }}</th>
-                            <th><input [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_in" name="check_in" type="time"></th>
-                            <th><input [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_out" name="check_out" type="time"></th>
-                        </ng-container>
+                        <th>{{ x.day_id | dayPipe }}</th>
+                            <th *ngIf="!x.edit" (click)="editSchedule(x)"  [ngClass]="{inputError: x.error == 1}"> 
+                            <span *ngIf="x.check_in != null">{{ x.check_in | time }}</span>
+                            <span *ngIf="x.check_in == null">Asigne Hora de Entrada</span>
+                        </th>
+                        <th *ngIf="!x.edit" (click)="editSchedule(x)"  [ngClass]="{inputError: x.error == 1}">
+                            <span *ngIf="x.check_out != null">{{ x.check_out | time }}</span>
+                            <span *ngIf="x.check_out == null">Asigne Hora de Salida</span>
+                        </th>
+
+                        <th *ngIf="x.edit">
+                            <input id="editCheckIn" [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_in" name="check_in{{x.id}}" type="time">
+                        </th>
+                        <th *ngIf="x.edit">
+                            <input  [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_out" name="check_out{{x.id}}" type="time">
+                        </th>
+                        <th>
+                            <button type="button" class="red" (click)="deleteSchedule(x)">Eliminar</button>
+                            <button type="button" class="blue" (click)="editSchedule(x)">Editar</button>
+                            <button type="button" class="orange" (click)="copySchedule(x)">Copiar</button>
+                            <button type="button" class="black" (click)="pasteSchedule(x)" *ngIf="scheduleCopied">Pegar</button>
+                        </th>
+                        
                     </tr>
                 </tbody>
             </table>

@@ -2,13 +2,15 @@ import { Component, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 // import { trigger, state, style, transition, animate, keyframes} from '@angular/animations';
 import { User } from '../../classes/user';
-import { UserService } from '../user.service';
+
 import { Schedule } from '../../classes/schedule';
 import { Reference } from '../../classes/reference';
 import { Salary } from '../../classes/salary';
 import { MonthlyPayment } from '../../classes/monthly-payment';
 import { FadeAnimation, SlideAnimation } from '../../animations/slide-in-out.animation';
 import { MonthlyPrice } from '../../classes/monthly-price';
+import { NotificationService } from '../../notification/notification.service';
+import { UserService } from '../../services/user.service';
 
 // @HostBinding('@principal') principal  = true;
 // @HostBinding('@background') background  = true;
@@ -27,24 +29,29 @@ export class CreateUserComponent implements OnInit {
   backgroundState: string = 'initial';
   sendingData: boolean = false;
   
-  public credential = parseInt(localStorage.getItem('userType'));
+  credential = parseInt(localStorage.getItem('userType'));
 
   user: User = new User();
-  schedules = [];
-  sche: Schedule =  new Schedule();
-  references: Array<Reference> = [];
   monthlyPrices: Array<MonthlyPrice> = [];
-  salary: Salary =  new Salary();
-  monthlyPayment: MonthlyPayment =  new MonthlyPayment();
-
-  scheduleView: boolean = false;
+  
   referenceView: boolean = false;
+  outletOutput
+  
+  constructor(
+          private _http: UserService, 
+          private router: Router,
+          private notification: NotificationService
+  ) {
 
-  scheduleObservableInterval: any;
-  constructor(private _http: UserService, private router: Router) { }
-
-  ngOnInit() {
-    this.schedules = this.sche.setArray();
+    this.outletOutput = this._http.getData().subscribe(x => {      
+        if (x.action == 'SCHEDULES')   
+          this.user.receiveSchedules(x.data) 
+        else if(x.action == 'REFERENCES') 
+          this.receiveReferences(x.data);    
+    })
+}
+  
+  ngOnInit() {    
     this._http.getAllMonthlyPrices().then(
       data => {
 
@@ -59,13 +66,12 @@ export class CreateUserComponent implements OnInit {
         localStorage.setItem('monthlyPrices', JSON.stringify(this.monthlyPrices));
         
       },
-      error => localStorage.setItem('request', JSON.parse(error))
+      error => this.notification.sendError(error)
     );
   }
 
   ngOnDestroy(){
-    if(localStorage.getItem('userCreationStatus') == '1')
-      +localStorage.setItem('userCreationStatus', '0');
+    this.outletOutput.unsubscribe()
   }
 
   createUser(){
@@ -90,37 +96,25 @@ export class CreateUserComponent implements OnInit {
     }
     this._http.create({
                       user: this.user, 
-                      references: this.references, 
-                      schedules: this.schedules,
-                      salary: this.salary,
-                      monthlyPayment: this.monthlyPayment})
-                .then(
-                data => {
-                  localStorage.removeItem('userCreationStatus');
+                      references: this.user.references, 
+                      schedules: this.user.schedules,
+                      salary: this.user.salary,
+                      monthlyPayment: this.user.monthly_payment
+            }).then(
+                data => {                  
 
-                  let not = {
-                    status: 200,
-                    title: 'Usuario Creado',
-                    description: 'Datos cargados a la base de datos correctamente'
-                  };
-
-                  localStorage.setItem('request', JSON.stringify(not));
+                  this.notification.sendNotification(
+                    this.user.getUserTypeView() + " "+ this.user.name + " ha sido dado de alta",
+                    'Datos cargados a la base de datos correctamente',
+                    5000
+                  )                                      
 
                   this.closeWindow();
                 },
-                error => {
-                  localStorage.setItem('request', JSON.stringify(error));
-                  
-                }
+                error => this.notification.sendError(error)
                 ).then(
                   () => this.sendingData = false
                 );
-  }
-
-  assignSchedules(data){
-    this.setScheduleObservableInterval();
-    this.schedules = data;
-    this.scheduleView = false;
   }
 
   closeReferenceView(){
@@ -262,14 +256,14 @@ export class CreateUserComponent implements OnInit {
   }
 
   monthlyPaymentAmountValidation(){
-    if(this.monthlyPayment.amount == null || this.monthlyPayment.amount < 0) {
+    if(this.user.monthly_payment.amount == null || this.user.monthly_payment.amount < 0) {
       this.user.validations.validate = false;
       this.user.validations.monthlyPaymentAmount = 1; 
     }    
   }
 
   salaryAmountValidation(){
-    if (this.salary.amount == null || this.salary.amount == 0){
+    if (this.user.salary.amount == null || this.user.salary.amount == 0){
       this.user.validations.validate = false;
       this.user.validations.salaryAmount = 1;
     }
@@ -280,49 +274,12 @@ export class CreateUserComponent implements OnInit {
     this.uniqueEmailWriting();
   }
 
-  setScheduleObservableInterval() {
-    this.scheduleObservableInterval = setInterval(() => this.intervalScheduleLogic(), 1000);
+  sendUser() {
+    this._http.sendData('user', this.user)
+  }    
+
+  receiveReferences(references) {
+    this.user.schedules = references
   }
-
-  intervalScheduleLogic() {
-
-    if(localStorage.getItem('setUserMonthlyPrice') == '1') {
-
-      this.monthlyPayment.amount = 0;
-      let count = 0;
-
-      for(let x of this.schedules) {
-        
-        if(x.active == true) {
-          
-          let checkIn = new Date("2017-01-01 " + x.check_in);
-          let checkOut = new Date("2017-01-01 " + x.check_out);
-          count += checkOut.getHours() - checkIn.getHours();
-        }
-      }
-
-      for(let x of this.monthlyPrices) {
-        if(x.hours == count || x.hours > count) {
-          this.monthlyPayment.amount = x.cost;
-          break;
-        }
-      }
-
-      if(this.monthlyPayment.amount == 0) {
-        let i = this.monthlyPrices.length - 1;
-
-        this.monthlyPayment.amount = this.monthlyPrices[i].cost;
-
-      }
-
-      localStorage.removeItem('setUserMonthlyPrice');
-      clearInterval(this.scheduleObservableInterval);
-
-    } else if(localStorage.getItem('setUserMonthlyPrice') == '0') {
-      localStorage.removeItem('setUserMonthlyPrice');
-      clearInterval(this.scheduleObservableInterval);
-    }
-
-  }//FINAL FUNCTION
 
 }

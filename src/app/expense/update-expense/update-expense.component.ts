@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BackgroundCard, Card } from '../../animations/card.animation';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Expense } from '../../classes/expense';
-import { ExpenseService } from '../expense.service';
+import { ExpenseService } from '../../services/expense.service';
 
 @Component({
   selector: 'app-update-expense',

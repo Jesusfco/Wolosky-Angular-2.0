@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CutoutService } from './cutout.service';
+import { CutoutService } from '../services/cutout.service';
 import { Storage } from '../classes/storage';
 
 @Component({

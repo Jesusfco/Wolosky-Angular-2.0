@@ -38,7 +38,7 @@ export class User {
     public created_at: string;
     public updated_at: string;    
 
-    public salary: Salary;
+    public salary: Salary = new Salary();
     public monthly_payment: MonthlyPayment = new MonthlyPayment();
     public schedules: Array<Schedule> = [];
     public references: Array<Reference> = [];
@@ -89,14 +89,9 @@ export class User {
         if(data.monthly_payment != undefined)             
             this.monthly_payment.setValues(data.monthly_payment);                    
        
-        if(data.schedules != undefined) {
-            this.schedules = [];
-            for(let sche of data.schedules) {                
-                let schedule: Schedule = new Schedule();
-                schedule.setValues(sche);
-                this.schedules.push(sche);
-            }
-        }
+        if(data.schedules != undefined) 
+            this.receiveSchedules(data.schedules)
+        
 
         if(data.references != undefined) {
             this.references = [];
@@ -266,6 +261,15 @@ export class User {
     cityUpper(){
     if(this.city != null)
         this.city = this.city.toUpperCase();
+    }
+
+    receiveSchedules(schedules) {
+        this.schedules = []
+        for(let d of schedules) {
+            let obj = new Schedule();
+            obj.setValues(d)
+            this.schedules.push(obj)            
+        }
     }
 }    
 

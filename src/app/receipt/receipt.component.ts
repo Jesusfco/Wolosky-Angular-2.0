@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ReceiptService } from './receipt.service';
+import { ReceiptService } from '../services/receipt.service';
 import { Router } from '@angular/router';
 import { Storage } from '../classes/storage';
 import { Receipt } from '../classes/receipt';

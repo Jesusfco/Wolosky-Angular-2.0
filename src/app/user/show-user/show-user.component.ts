@@ -2,7 +2,7 @@ import { NotificationService } from './../../notification/notification.service';
 import { Component, OnInit, Input, Output, EventEmitter, HostListener, OnDestroy } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes} from '@angular/animations';
 import { User } from '../../classes/user';
-import { UserService } from '../user.service';
+
 import { Schedule } from '../../classes/schedule';
 import { Reference } from '../../classes/reference';
 import { Salary } from '../../classes/salary';
@@ -12,6 +12,7 @@ import { FadeAnimation, SlideAnimation } from '../../animations/slide-in-out.ani
 import { Router, ActivatedRoute } from '@angular/router';
 import { Url } from '../../classes/url';
 import { Storage } from '../../classes/storage';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-show-user',
@@ -277,18 +278,9 @@ export class ShowUserComponent implements OnInit {
     
   }
 
-  updateSchedules(data){    
-
-    this.user.schedules = [];    
-    this.showUser.schedules = []
-    for(let d of data) {
-      let obj = new Schedule();
-      obj.setValues(d)
-      this.user.schedules.push(obj)
-      this.showUser.schedules.push(obj)
-    }
-    
-
+  updateSchedules(schedules){    
+    this.user.receiveSchedules(schedules)    
+    this.showUser.receiveSchedules(schedules)    
   }
 
   updateReferences(data) {

@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '../../user.service';
+import { UserService } from '../../../services/user.service';
 import { User } from '../../../classes/user';
 import { Schedule } from '../../../classes/schedule';
 import { FadeAnimation, SlideAnimation } from '../../../animations/slide-in-out.animation';
@@ -10,6 +10,7 @@ import { Url } from '../../../classes/url';
 import { Storage } from '../../../classes/storage';
 import { MonthlyPrice } from '../../../classes/monthly-price';
 import { NotificationService } from '../../../notification/notification.service';
+import { Focus } from '../../../utils/classes/focus';
 
 @Component({
   selector: 'app-edit-schedule',
@@ -20,8 +21,8 @@ import { NotificationService } from '../../../notification/notification.service'
 })
 export class EditScheduleComponent implements OnInit {
 
-  cardState: String = 'initial';
-  backgroundState: String = 'initial';
+  cardState: String = 'initial'
+  backgroundState: String = 'initial'
   validations = {
     validate: true,
     checkIn: -1,
@@ -29,15 +30,15 @@ export class EditScheduleComponent implements OnInit {
     format: 0
   };
 
-  id: number;
+  id: number
   
-  sendingData: Boolean = false;
-  schedules: Array<Schedule> = [];
-  sche: Schedule = new Schedule();
-  public user: User = new User();
+  sendingData: Boolean = false
+  schedules: Array<Schedule> = []
+  sche: Schedule = new Schedule()
+  public user: User = new User()
 
-  public credential = User.authUser().user_type_id;
-  public days = [];
+  public credential = User.authUser().user_type_id
+  public days = Schedule.getWeekDays()
 
   public result = {
     hours: 0,
@@ -63,8 +64,6 @@ export class EditScheduleComponent implements OnInit {
     private notification: NotificationService,
     private location: Location,
     private actRou: ActivatedRoute) {
-      
-      this.setDays();
 
       this.outletOutput = this._http.getData().subscribe(x => {      
         if (x.action == 'user') 
@@ -93,12 +92,6 @@ export class EditScheduleComponent implements OnInit {
       },
       error => this.notification.sendError(error)
     );
-  }
-
-  setDays() {
-    let sche = new Schedule();
-    this.days = [];
-    this.days = sche.getWeekDays();
   }
   
   close(){
@@ -277,22 +270,14 @@ export class EditScheduleComponent implements OnInit {
   }
 
 
-  startEditSche(x){
+  startEditSche(schedule){
 
-    x.edit = true;    
-
-    setTimeout(() => {
-      document.getElementById('editCheckIn').focus();
-    }, 100);
-
-    for(let i of this.user.schedules){
-
-      if(i.id != x.id){
+    for(let i of this.user.schedules)      
         i.edit = false;
-      }
 
-    }
-    
+    schedule.edit = true;    
+    Focus.elementById('editCheckIn')
+
   }
 
   deleteSchedule(sche) {

@@ -1,5 +1,5 @@
 import { NotificationService } from './../notification/notification.service';
-import { ParkingService } from './parking.service';
+import { ParkingService } from '../services/parking.service';
 import { Component, OnInit } from '@angular/core';
 import { Parking } from '../classes/parking';
 import { Storage } from '../classes/storage';

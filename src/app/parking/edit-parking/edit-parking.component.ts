@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Parking } from '../../classes/parking';
-import { ParkingService } from '../parking.service';
+import { ParkingService } from '../../services/parking.service';
 import { NotificationService } from '../../notification/notification.service';
 
 @Component({

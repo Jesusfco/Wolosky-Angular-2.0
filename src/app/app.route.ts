@@ -89,7 +89,13 @@ export const routes: Routes = [
         path: 'users',
         component: UserComponent,
         children: [
-            {path: 'create', component: CreateUserComponent},
+            {
+                path: 'create', component: CreateUserComponent,
+                children: [
+                    { path: 'schedules', component: CreateScheduleComponent},
+                    { path: 'references', component: ReferenceComponent},
+                ]
+            },
             {path: 'filter', component: FilterUserComponent},
             {path: 'show/:id', component: ShowUserComponent,
                 children: [
