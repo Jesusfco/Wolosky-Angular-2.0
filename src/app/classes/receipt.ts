@@ -52,9 +52,10 @@ export class Receipt {
         return (x * .16).toFixed(2);
     }
     get descriptionView() {
-        if(this.type == 1) return 'Mensualidad ' + MyCarbon.monthToString(this.month) + ' ' + this.year
-        if(this.type == 2) return 'Inscripción ' + ' ' + this.year
         if(this.type == 0) return 'Recibo Tienda'
+        if(this.type == 1) return 'Mensualidad ' + MyCarbon.monthToString(this.month) + ' ' + this.year
+        if(this.type == 2) return 'Inscripción ' + this.year
+        if(this.type == 3) return 'Otros'                
         return ''
     }
     setData(data) {
@@ -114,19 +115,14 @@ export class Receipt {
     }
 
     typeView() {
-        if(this.type == 1) {
-            return 'Mensualidad'
-        } else if(this.type == 2) {
-            return 'Inscripción'
-        } else if(this.type == 3) {
-            return 'Externos'
-        } else if(this.type == 4) {
-            return 'Uniforme'
-        } else if(this.type == 5) {
-            return 'Evento'
-        } else {
-            return 'Otro'
-        }
+        if(this.type == 0) return 'Recibo Tienda'
+        if(this.type == 1) return 'Mensualidad'
+        if(this.type == 2) return 'Inscripción'
+        if(this.type == 3) return 'Otros'
+        // if(this.type == 4) return 'Uniforme'
+        if(this.type == 5) return 'Evento'        
+        return ''
+        
     }
 
     monthView() {
