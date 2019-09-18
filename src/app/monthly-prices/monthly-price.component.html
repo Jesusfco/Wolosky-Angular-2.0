@@ -73,10 +73,29 @@
 
 </div>
 
-<a *ngIf="credential >= 6" [routerLink]="['/monthly-cost/create']">
-    <div class="botonFloat">
-        <a class="botonA" matTooltip="Crear recibo"><i class="material-icons">add</i></a>
-    </div>
-</a>
 
+<div class="floatOptions" *ngIf="credential >= 6">
+
+    <div class="moreOptions">
+
+        <a target="_blank" href="">
+            <button class="green" matTooltip="Descargar Precios" matTooltipPosition="left" mat-fab id="cancelButton">
+                <mat-icon >archive</mat-icon>
+            </button>
+        </a>
+<!-- 
+        <button class="orange" matTooltip="Deudores del mes" matTooltipPosition="left" mat-fab>
+            <mat-icon >people</mat-icon>
+        </button> -->
+
+        <button class="blue" [routerLink]="['./create']" matTooltip="Crear Precio" matTooltipPosition="left" mat-fab>
+            <mat-icon >create</mat-icon>
+        </button>
+    </div>
+
+    <button matTooltip="Opciones de Mensualidades" matTooltipPosition="left" mat-fab color="pri" class="floatOptionPrincipal">
+        <mat-icon >settings</mat-icon>
+    </button>
+
+</div>
 </div>
