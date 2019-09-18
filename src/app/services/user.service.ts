@@ -50,8 +50,7 @@ export class UserService {
 
   search(data) {
     return this._http.post(this.link.url + 'userSearch' + this.token.getTokenUrl() + '&page=' + data.page, data)
-            .map(data => data.json())
-            .toPromise();
+            .map(data => data.json())            
   }
 
   getUser(id){

@@ -12,7 +12,7 @@
             
             <div class="formData l12 m12">
                 <label>Nombre Completo:</label><br>
-                <input [(ngModel)]="user.name" name="name" type="text" placeholder="Nombre" (keydown)="user.nameUppercase()" (keypress)="uniqueNameWriting()" [ngClass]="{ 'inputError': user.validations.name > 0, 'inputValidate': user.validations.name < 0 }">
+                <input [(ngModel)]="user.name" name="name" type="text" placeholder="Nombre" (keypress)="uniqueNameWriting()" [ngClass]="{ 'inputError': user.validations.name > 0, 'inputValidate': user.validations.name < 0 }">
                 <small class="error" *ngIf="user.validations.name == 1">Se requiere el nombre</small>
                 <small class="error" *ngIf="user.validations.name == 2">Nombre existente en la base de datos</small>
                 <small class="validate" *ngIf="user.validations.name == -1">Correcto</small>
@@ -21,7 +21,7 @@
 
             <div class="formData l6 m6">
                 <label>Correo:</label><br>
-                <input [(ngModel)]="user.email" name="email" type="email" placeholder="Correo" (keyup)="mailWriting()" [ngClass]="{ 'inputError': user.validations.email > 0, 'inputValidate': user.validations.email < 0 }">
+                <input [(ngModel)]="user.email" name="email" type="email" placeholder="Correo" (keyup)="uniqueEmailWriting()" [ngClass]="{ 'inputError': user.validations.email > 0, 'inputValidate': user.validations.email < 0 }">
                 <small class="error" *ngIf="user.validations.email == 1">Correo Requerido</small>
                 <small class="error" *ngIf="user.validations.email == 2">Correo ya asignado</small>
             </div>
@@ -61,17 +61,17 @@
 
             <div class="formData l6 m6">
                 <label>Lugar de nacimiento:</label><br>
-                <input [(ngModel)]="user.placeBirth" name="placeBirth" type="text" placeholder="Lugar de nacimiento" (keyup)="user.placeUpper()">
+                <input [(ngModel)]="user.placeBirth" name="placeBirth" type="text" placeholder="Lugar de nacimiento">
             </div>
 
             <div class="formData l6 m6">
                 <label>CURP:</label><br>
-                <input [(ngModel)]="user.curp" name="curp" type="text" placeholder="Curp" (keyup)="user.curpUpper()">
+                <input [(ngModel)]="user.curp" name="curp" type="text" placeholder="Curp">
             </div>
 
             <div class="formData l6 m6">
                 <label>Seguro Medico:</label><br>
-                <input [(ngModel)]="user.insurance" name="insurance" type="text" placeholder="Seguro social" (keyup)="user.seguroUpper()">
+                <input [(ngModel)]="user.insurance" name="insurance" type="text" placeholder="Seguro social">
             </div>
 
             <!-- <div>
@@ -95,7 +95,7 @@
 
             <div class="formData l6 m6">
                 <label>Calle:</label><br>
-                <input [(ngModel)]="user.street" name="street" type="text" placeholder="Calle" (keyup)="user.streetUpper()">
+                <input [(ngModel)]="user.street" name="street" type="text" placeholder="Calle">
             </div>
 
             <div class="formData l6 m6">
@@ -105,12 +105,12 @@
 
             <div class="formData l6 m6">
                 <label>Colonia:</label><br>
-                <input [(ngModel)]="user.colony" name="colony" type="text" placeholder="Colonia" (keyup)="user.colonyUpper()">
+                <input [(ngModel)]="user.colony" name="colony" type="text" placeholder="Colonia">
             </div>
 
             <div class="formData l6 m6">
                 <label>Ciudad:</label><br>
-                <input [(ngModel)]="user.city" name="city" type="text" placeholder="Ciudad" (keyup)="user.cityUpper()"><br>
+                <input [(ngModel)]="user.city" name="city" type="text" placeholder="Ciudad"><br>
             </div>
 
 
@@ -157,7 +157,7 @@
 
     <div class="horarios" *ngIf="user.user_type_id <= 4">
         <h2>Horarios</h2>
-        <p *ngIf="user.schedules.length == 0">Sin horarios asignados</p>
+        <p class="centerText" *ngIf="user.schedules.length == 0">Sin horarios asignados</p>
         <table *ngIf="user.schedules.length > 0">
             <thead>
                 <tr>
@@ -181,7 +181,7 @@
     </div>
     <div class="referencias" *ngIf="user.user_type_id <= 4">
         <h2>Referencias</h2>
-        <p *ngIf="user.references.length == 0">Sin referencias asignadas</p>
+        <p class="centerText" *ngIf="user.references.length == 0">Sin referencias asignadas</p>
         <table *ngIf="user.references.length > 0">
             <thead>
                 <tr>

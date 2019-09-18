@@ -1,8 +1,10 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FadeAnimation, SlideAnimation } from '../../animations/slide-in-out.animation';
+import { User } from '../../classes/user';
+import { NotificationService } from '../../notification/notification.service';
 @Component({
   selector: 'app-status-user',
   templateUrl: './status-user.component.html',
@@ -18,9 +20,7 @@ export class StatusUserComponent implements OnInit {
   sendingData: boolean = false;
 
   status: any = [];
-  user: any = {
-    name: ''
-  };
+  user: User = new User()
 
   record = {
     description: '',
@@ -41,33 +41,40 @@ export class StatusUserComponent implements OnInit {
 
   }
 
+  httpSubscription
   constructor(private _http: UserService,
     private router: Router,
     private location: Location,
-    private actRou: ActivatedRoute) { 
+    private actRou: ActivatedRoute,
+    private notification: NotificationService) { 
 
-      // this.observerRef = actRou.params.subscribe(params => {
-      //   this.id = params['id'];
-      //   this.record.user_id = this.id;
-      //   this.getStatusData();
-      // });
+      this.observerRef = actRou.parent.params.subscribe(params => {
+        this.id = params['id'];
+        this.record.user_id = this.id;
+        this.getStatusData();
+      });
 
-      this.id = parseInt(localStorage.getItem('userShowId'));
-      this.record.user_id = this.id;
-      this.getStatusData();
+      this.httpSubscription = this._http.getData().subscribe(x => {
+        if(x.action == 'user')
+          this.user.setValues(x.data)
+      })
+     
   }
 
   ngOnInit() {
+  }
+  ngOnDestroy() {
   }
 
   getStatusData(){
     this.sendingData = true;
     this._http.getStatus(this.id).then(
       data => {
-        this.status = data.status;
-        this.user = data.user;
+        
+        this.status = data.status;        
         this.record.status = data.user.status;
-      }, error => console.log(error)
+
+      }, error => this.notification.sendError(error)
     ).then(
       () => this.sendingData = false
     );
@@ -86,15 +93,15 @@ export class StatusUserComponent implements OnInit {
           this.status.unshift(data);
           this.record.description = '';
 
-          let noti = {
-            status: 200,
-            title: 'Status Actualizado',
-            description: 'Se ha cargado los datos correctamente'
-          };
+          this.notification.sendNotification(
+            'Status Actualizado',
+            'Se ha cargado los datos correctamente', 5000
+          )
 
-          localStorage.setItem('request', JSON.stringify(noti));
+          this._http.sendData('STATUS', this.record.status)
+          
         },
-        error => localStorage.setItem('request', JSON.stringify(error))
+        error => this.notification.sendError(error)
 
       ).then(
 

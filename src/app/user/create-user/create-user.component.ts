@@ -88,6 +88,8 @@ export class CreateUserComponent implements OnInit {
   }
 
   sendNewUser(){
+    this.user.setUpperCaseProperties()
+
     this.sendingData = true;
     if(this.user.validations.validate == false){
       this.sendingData = false;
@@ -266,12 +268,7 @@ export class CreateUserComponent implements OnInit {
       this.user.validations.validate = false;
       this.user.validations.salaryAmount = 1;
     }
-  }
-
-  mailWriting(){
-    this.user.mailUpper();
-    this.uniqueEmailWriting();
-  }
+  }      
 
   sendUser() {
     this._http.sendData('user', this.user)

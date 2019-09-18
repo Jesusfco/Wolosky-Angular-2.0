@@ -21,7 +21,8 @@ export class UserComponent implements OnInit {
     total: 0,
   };
 
-  public sendingData: Boolean = false;
+  sendingData = 0;
+  request
   
   pageEvent: PageEvent;
 
@@ -36,16 +37,21 @@ export class UserComponent implements OnInit {
 
     router.events.filter((event: any) => event instanceof NavigationEnd)
         .subscribe(event => {           
-          if(event.url == "/users") this.principal = true
+          if(event.url == "/users") {
+            this.principal = true
+            this.users = []
+            this.searchRequest()
+          }
           else this.principal = false            
       }); 
 
   }
 
-  ngOnInit() {
+  ngOnInit() {   
+  }
 
-   this.searchRequest();
-    
+  ngOnDestroy() {
+    this.request.unsubscribe()    
   }
   
 
@@ -71,17 +77,23 @@ export class UserComponent implements OnInit {
   }
 
   searchRequest(){
-    this.sendingData = true;
+    if(this.request != null) {    
+      if(!this.request.closed) {
+        this.request.unsubscribe()    
+        this.sendingData--
+      }            
+    }
 
-    this._http.search(this.search).then(
+    this.sendingData ++;
+
+    this.request = this._http.search(this.search).subscribe(
       data => {
         this.users = data.data;
         this.search.total = data.total;
       },
-      error => localStorage.setItem('request', JSON.stringify(error))
-    ).then(
-      () => this.sendingData = false
-    );
+      error => localStorage.setItem('request', JSON.stringify(error)),
+      () => this.sendingData --  
+    )
   }
 
   selectUser(id){

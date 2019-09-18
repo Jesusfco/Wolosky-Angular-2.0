@@ -63,9 +63,13 @@ export class ShowUserComponent implements OnInit {
           this.updateReferences(x.data);
 
         } else if(x.action == 'MONTHLY') {
+        
 
           this.updateMonthly(x.data);
 
+        } else if(x.action == 'STATUS') {
+            this.user.status = parseInt(x.data)
+            this.showUser.status = parseInt(x.data)
         }
         
       });
@@ -131,17 +135,10 @@ export class ShowUserComponent implements OnInit {
     this.sendingData++;
 
     this._http.updateUser(this.user).then(
-
-      data => {
-        let not = { 
-          title: 'Datos de Usuario Actualizado',
-          description: 'Los datos han sido cargados al servidor',
-          status: 200
-        };
-
-        localStorage.setItem('request', JSON.stringify(not));
-
-      }
+      data => this.notification.sendNotification(
+        'Usuario ' + this.user.name + ' Actualizado',
+        'Los datos han sido cargados al servidor', 5000
+      ), error => this.notification.sendError(error)              
     ).then(
       () => this.sendingData--
     );
@@ -151,20 +148,9 @@ export class ShowUserComponent implements OnInit {
 
     this._http.updateSalary(this.salary).then(
 
-      data => {
-
-          let not = {
-          title: 'Salario Actualizado',
-          description: 'Los datos han sido cargados al servidor',
-          status: 200
-        };
-
-        localStorage.setItem('request', JSON.stringify(not));
-
-      }, error => {
-
-      }
-
+      data => this.notification.sendNotification('Salario Actualizado',
+      'Los datos han sido cargados al servidor', 5000), 
+      error => this.notification.sendError(error)
     );
 
   }
@@ -192,9 +178,7 @@ export class ShowUserComponent implements OnInit {
 
     let  l = x.keyCode;
 
-    if (l >= 37 && l <= 40 || l == 13) { return; }
-
-    this.user.nameUppercase();
+    if (l >= 37 && l <= 40 || l == 13) { return; }    
 
     this.user.timer.name++;
 
@@ -223,14 +207,9 @@ export class ShowUserComponent implements OnInit {
           this.user.validations.validate = false;
         } 
         else {this.user.validations.name = -1;}
-        
-        // this.sendNewUser();
+                
       },
-      error => {
-        console.log(error);
-        
-        // this.sendNewUser();
-      }
+      error => console.log(error)
     );
   }
 
@@ -238,9 +217,7 @@ export class ShowUserComponent implements OnInit {
 
     let  l = x.keyCode;
 
-    if (l >= 37 && l <= 40 || l == 13) { return; }
-
-    this.user.mailUpper();
+    if (l >= 37 && l <= 40 || l == 13) { return; }    
 
     this.user.timer.email++;
 

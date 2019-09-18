@@ -200,6 +200,7 @@ export class User {
         if(this.user_type_id == 7) return 'Desarrollador'
         return 'Desconocido'
     }
+
     setImg() {
         let y: Url = new Url();
         
@@ -219,7 +220,17 @@ export class User {
         }    
     }
 
+    setUpperCaseProperties() {
+        this.nameUppercase()
+        this.curpUpper()
+        this.cityUpper()
+        this.streetUpper()
+        this.colonyUpper()
+        this.seguroUpper()
+    }
+
     validatePhoneFormat(){
+        if(this.phone != null)
         this.phone = this.phone.replace(/\D/g, '');
     }
 
@@ -247,7 +258,7 @@ export class User {
     if(this.insurance != null)
         this.insurance =  this.insurance.toUpperCase();
     }
-
+    
     streetUpper(){
     if(this.street != null)
         this.street =  this.street.toUpperCase();
@@ -271,6 +282,7 @@ export class User {
             this.schedules.push(obj)            
         }
     }
+
 }    
 
 

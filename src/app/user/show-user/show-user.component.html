@@ -20,7 +20,7 @@
                 <mat-icon matTooltip="Imprimir Informacion de Usuario" matTooltipPosition="below">local_printshop</mat-icon>
             </a>
 
-            <mat-icon routerLink="/users/show/{{ user.id }}/delete" matTooltip="Eliminar Usuario" matTooltipPosition="below" *ngIf="credential >= 6">delete</mat-icon>
+            <mat-icon routerLink="/users/show/{{ user.id }}/delete" (click)="sendUser()" matTooltip="Eliminar Usuario" matTooltipPosition="below" *ngIf="credential >= 6">delete</mat-icon>
         </div>
 
         <div class="imgUser">
@@ -93,17 +93,17 @@
 
                     <div class="formData l6 m6">
                         <label>Lugar de nacimiento:</label><br>
-                        <input [(ngModel)]="user.placeBirth" name="placeBirth" type="text" placeholder="Lugar de nacimiento" (keyup)="user.placeUpper()">
+                        <input [(ngModel)]="user.placeBirth" name="placeBirth" type="text" placeholder="Lugar de nacimiento" >
                     </div>
 
                     <div class="formData l6 m6">
                         <label>CURP:</label><br>
-                        <input [(ngModel)]="user.curp" name="curp" type="text" placeholder="Curp" (keyup)="user.curpUpper()">
+                        <input [(ngModel)]="user.curp" name="curp" type="text" placeholder="Curp">
                     </div>
 
                     <div class="formData l6 m6">
                         <label>Seguro Medico:</label><br>
-                        <input [(ngModel)]="user.insurance" name="insurance" type="text" placeholder="Seguro social" (keyup)="user.seguroUpper()">
+                        <input [(ngModel)]="user.insurance" name="insurance" type="text" placeholder="Seguro social">
                     </div>
 
                     <div class="formData l6 m6">
@@ -132,7 +132,7 @@
 
                     <div class="formData l6 m6">
                         <label>Calle:</label><br>
-                        <input [(ngModel)]="user.street" name="street" type="text" placeholder="Calle" (keyup)="user.streetUpper()">
+                        <input [(ngModel)]="user.street" name="street" type="text" placeholder="Calle">
                     </div>
 
                     <div class="formData l6 m6">
@@ -142,12 +142,12 @@
 
                     <div class="formData l6 m6">
                         <label>Colonia:</label><br>
-                        <input [(ngModel)]="user.colony" name="colony" type="text" placeholder="Colonia" (keyup)="user.colonyUpper()">
+                        <input [(ngModel)]="user.colony" name="colony" type="text" placeholder="Colonia">
                     </div>
 
                     <div class="formData l6 m6">
                         <label>Ciudad:</label><br>
-                        <input [(ngModel)]="user.city" name="city" type="text" placeholder="Ciudad" (keyup)="user.cityUpper()"><br>
+                        <input [(ngModel)]="user.city" name="city" type="text" placeholder="Ciudad"><br>
                     </div>
 
 

@@ -25,9 +25,19 @@ export class DeleteUserComponent implements OnInit {
 
   public userDataObserver: any;
 
-  constructor(private _http: UserService, private router: Router, private location: Location) {
+  httpSubscription
+  constructor(
+    private _http: UserService, 
+    private router: Router, 
+    private location: Location) {
 
-    this.setUserDataOberver();
+      this.httpSubscription = this._http.getData().subscribe(x => {
+        if (x.action == 'user') {
+          this.user.setData(x.data)
+          this.getSecureDeleteData()
+        }                    
+      })
+    
 
    }
 
@@ -50,18 +60,7 @@ export class DeleteUserComponent implements OnInit {
     
   }
 
-  setUserDataOberver() {
-    this.userDataObserver = setInterval(() => this.userDataObserverLogic(), 1000);
-  }
-
-  userDataObserverLogic() {
-    if(localStorage.getItem('userData') == undefined) { return; }
-
-    this.user = JSON.parse(localStorage.getItem('userData'));
-    this.getSecureDeleteData();
-    clearInterval(this.userDataObserver);
-
-  }
+    
 
   getSecureDeleteData() {
     this.request = true;
