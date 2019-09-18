@@ -16,6 +16,7 @@ export class Receipt {
     type: number = 1;
     month: number;
     year: number;
+    description = '';
     days: number;
     payment_type: boolean;
     created_at: string = '0000-00-00 00:00:00'

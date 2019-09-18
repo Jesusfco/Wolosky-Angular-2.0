@@ -34,12 +34,12 @@ export class EditScheduleComponent implements OnInit {
   sendingData: Boolean = false
   schedules: Array<Schedule> = []
   sche: Schedule = new Schedule()
-  public user: User = new User()
+  user: User = new User()
 
-  public credential = User.authUser().user_type_id
-  public days = Schedule.getWeekDays()
+  credential = User.authUser().user_type_id
+  days = Schedule.getWeekDays()
 
-  public result = {
+  result = {
     hours: 0,
     amount: 0,
     amountActual: null,

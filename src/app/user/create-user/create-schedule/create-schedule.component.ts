@@ -30,6 +30,13 @@ export class CreateScheduleComponent implements OnInit {
   days = Schedule.getWeekDays()
   outletOutput
 
+  analisisCountHours = {
+    hours: 0,
+    amount: 0,
+    amountActual: null,
+    amountForce: null
+  };  
+
   @HostListener('document:keyup', ['$event']) sss($event) {    
     if($event.keyCode == 27) 
         this.close();    
@@ -85,6 +92,7 @@ export class CreateScheduleComponent implements OnInit {
     // this.countHours();
     if(this.validateSchedules()) {
       this._http.sendData('SCHEDULES', this.user.schedules)
+      this._http.sendData('MONTHLY_AMOUNT', this.analisisCountHours.amount)
       this.close();    
     }
       
@@ -157,19 +165,13 @@ export class CreateScheduleComponent implements OnInit {
 
   countHours(){
 
-    let count = 0;
+    if(this.user.user_type_id != 1) return;
 
-    for(let x of this.user.schedules) {
-      
-      if(x.active == true) {
-        
-        let checkIn = new Date("2017-01-01 " + x.check_in);
-        let checkOut = new Date("2017-01-01 " + x.check_out);
-        count += checkOut.getHours() - checkIn.getHours();
-      }
-    }
-
-    console.log(count);
+    const re = Schedule.countHours(this.user.schedules);
+    
+    this.analisisCountHours.hours = re.hours;
+    this.analisisCountHours.amount = re.amount;
+    this.analisisCountHours.amountForce = re.amount;
 
   }
 

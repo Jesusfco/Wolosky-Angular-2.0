@@ -40,8 +40,10 @@ export class CreateRecieptComponent implements OnInit {
   public recharge: number = 100;
 
   public validation = {
+    
     paymentDate: 0,
     description: 0,
+    amount: 0,
     uniquePaymentMonthly: 0,
     form: true,
   };
@@ -176,7 +178,7 @@ export class CreateRecieptComponent implements OnInit {
   createReceipt(){
     
     this.restoreValidations();
-    // if(this.payment.type == 5) this.validateDescription();
+    if(this.payment.type == 6) this.validateDescription();
     if(this.validation.form == false) return;
     
     this.sendingData.request = true;
@@ -203,9 +205,7 @@ export class CreateRecieptComponent implements OnInit {
       );
 
     } else {
-
       this.sendReceipt();
-
     }
   }
 
@@ -214,12 +214,19 @@ export class CreateRecieptComponent implements OnInit {
     this.validation = {
       paymentDate: this.validation.paymentDate,
       description: 0,
+      amount: 0,
       form: true,
       uniquePaymentMonthly: 0,
     };
 
   }
 
+  validateDescription() {
+    if(this.payment.description.trim().length == 5) {
+      this.validation.form = false
+      this.validation.description = 1
+    }
+  }
   printReceipt(){
       window.print();
   }

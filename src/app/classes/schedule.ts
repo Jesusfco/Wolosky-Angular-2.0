@@ -51,6 +51,8 @@ export class Schedule {
     
         for(let x of schedules) {
             
+            if(x.check_in == null || x.check_out == null) continue
+            
             let checkIn = new Date("2017-01-01 " + x.check_in);
             let checkOut = new Date("2017-01-01 " + x.check_out);
             count += checkOut.getHours() - checkIn.getHours();

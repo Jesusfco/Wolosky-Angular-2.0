@@ -15,8 +15,10 @@
 
         <!-- <button (click)="selectLV()" class="btn LV">L-V</button> -->
         <button (click)="createNewSchedule(x.day_id)"  matTooltip="Crear Horario en día {{ x.day_id | dayPipe}}" *ngFor="let x of days" class="btn black">{{ x.day_id | dayPipe }}</button>
-
-        <form (submit)="form()">
+        <button class="btn blue" *ngIf="scheduleCopied">Horario Copiado: 
+            {{ scheduleCopied.check_in | time }} - {{ scheduleCopied.check_out | time }}
+        </button>
+        <form (submit)="form()" (change)="countHours()">
             <table>
                 <thead>
                     <tr>
@@ -41,10 +43,10 @@
                         </th>
 
                         <th *ngIf="x.edit">
-                            <input id="editCheckIn" [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_in" name="check_in{{x.id}}" type="time">
+                            <input (change)="countHours()" id="editCheckIn" [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_in" name="check_in{{x.id}}" type="time">
                         </th>
                         <th *ngIf="x.edit">
-                            <input  [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_out" name="check_out{{x.id}}" type="time">
+                            <input (change)="countHours()" [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_out" name="check_out{{x.id}}" type="time">
                         </th>
                         <th>
                             <button type="button" class="red" (click)="deleteSchedule(x)">Eliminar</button>
@@ -56,6 +58,13 @@
                     </tr>
                 </tbody>
             </table>
+
+            <div *ngIf="analisisCountHours.hours != 0 && user.user_type_id == 1" >
+                <p>Horas: {{analisisCountHours.hours}}</p>
+                <p>Precio Por Horas Sugerido: ${{analisisCountHours.amount}}</p>                
+                <p>Si los horarios son actualizados la mensualidad del alumn@ se vera afectada.</p>
+
+            </div>
             <button type="submit" class="btn formBtn">Asignar Horarios</button>
         </form>
 

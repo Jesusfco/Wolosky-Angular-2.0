@@ -60,7 +60,6 @@
 
             <tr *ngFor="let x of monthlyPrices">
                 <td> {{ x.hours }}</td>
-
                 <td> ${{ x.cost }}</td>
                 <td>{{ x.created_at | date: format }} {{ x.created_at | date: 'hh:mm a' }}</td>
                 <td>{{ x.updated_at | date: format }} </td>

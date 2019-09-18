@@ -41,8 +41,9 @@
                             <option value="1">Mensualidad</option> 
                             <option value="2">Inscripcion</option>
                             <!-- <option value="3">Días</option> -->
-                            <option value="4">Uniforme</option>                                                
+                            <!-- <option value="4">Uniforme</option>                                                 -->
                             <!-- <option value="5">Evento/Viajes/Otros</option>                                                 -->
+                            <!-- <option value="6">Otros</option>                                                 -->
                     </select>
 
                 </div>
@@ -82,10 +83,10 @@
 
                 </div>
 
-                <div *ngIf="payment.type == 5">
+                <div *ngIf="payment.type == 6">
                     <label>Descripción:</label><br>
                     <input [(ngModel)]="payment.description" name="description" type="text">
-                    <small class="error" *ngIf="validation.description == 1">Campo requerido*</small>
+                    <small class="error" *ngIf="validation.description == 1">5 caracteres requeridos*</small>
 
                 </div>
 

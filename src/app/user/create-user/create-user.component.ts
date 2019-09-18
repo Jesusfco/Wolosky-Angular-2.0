@@ -47,8 +47,10 @@ export class CreateUserComponent implements OnInit {
         if (x.action == 'SCHEDULES')    
           this.user.receiveSchedules(x.data) 
         else if(x.action == 'REFERENCES') 
-          this.receiveReferences(x.data);    
-    })
+          this.receiveReferences(x.data);  
+        else if (x.action == 'MONTHLY_AMOUNT' && this.user.user_type_id == 1)           
+          this.user.monthly_payment.amount = x.data
+    })  
 }
   
   ngOnInit() {    
@@ -70,7 +72,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    this.outletOutput.unsubscribe()
+    this.outletOutput.unsubscribe()    
   }
 
   createUser(){
