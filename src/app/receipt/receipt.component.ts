@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Storage } from '../classes/storage';
 import { Receipt } from '../classes/receipt';
 import { MyCarbon } from '../utils/classes/my-carbon';
+import { NotificationService } from '../notification/notification.service';
 
 @Component({
   selector: 'app-receipt',
@@ -48,8 +49,11 @@ export class ReceiptComponent implements OnInit {
   sendingData = 0
 
   public storage: Storage = new Storage();
+  httpSugestSubscription: any;
   
-  constructor(private _http: ReceiptService) {     
+  constructor(
+    private _http: ReceiptService, 
+    private not: NotificationService) {     
 
     this.getNotifications();
     this.getDates();
@@ -102,7 +106,7 @@ export class ReceiptComponent implements OnInit {
 
       },
 
-      error => localStorage.setItem('request', JSON.stringify(error)),
+      error => this.not.sendError(error),
 
     ).then(
 
@@ -113,28 +117,27 @@ export class ReceiptComponent implements OnInit {
 
   searchInput(key){
 
-    if(key.keyCode >=37 && key.keyCode <= 40 || key.keyCode == 13) return;
-
-    this.timer++;    
-
-    setTimeout(() => {      
-      this.timer--;      
-    }, 300);
+    if(key.keyCode >= 37 && key.keyCode <= 40 || key.keyCode == 13) return;    
 
     setTimeout(() => {
-      
-      if(this.timer == 0){        
-        this.sendingData++;
-        this._http.sugestUserReceipt({search: this.search.name}).then(
+              
+      if(this.httpSugestSubscription != null) {    
+        if(!this.httpSugestSubscription.closed) {
+          this.httpSugestSubscription.unsubscribe()    
+          this.sendingData--
+        }                
+      }
+
+      this.sendingData++;
+
+      this.httpSugestSubscription = this._http.sugestUserReceipt({search: this.search.name}).subscribe(
           data => {
             this.sugests = data;
-          }, error => localStorage.setItem('request', JSON.stringify(error))
-        ).then(
-          () => this.sendingData--,
-        );
-      } 
+          }, error => this.not,
+          () => this.sendingData--
+        )
 
-    }, 350);
+      }, 350);
   }
 
   searchReceiptId(id){
@@ -170,7 +173,7 @@ export class ReceiptComponent implements OnInit {
         
         this.search.total = data.total;
       },
-      error => localStorage.setItem('request', JSON.stringify(error)),
+      error =>  this.not.sendError(error),
       () => this.sendingData--
     );
   }  

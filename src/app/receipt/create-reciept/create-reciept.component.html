@@ -1,7 +1,7 @@
 <mat-progress-bar mode="indeterminate" *ngIf="sendingData.monthly" class="barLoader"></mat-progress-bar>
 <mat-progress-bar mode="indeterminate" *ngIf="sendingData.request" class="barLoader"></mat-progress-bar>
 
-<app-print-receipt [receipt]="payment"></app-print-receipt>
+<app-print-receipt [receipt]="receipt"></app-print-receipt>
 <div class="cardSpace" [@background]="state.background">
 
     <div class="closeCardBackground" (click)="closePop()">
@@ -13,87 +13,77 @@
     <div class="cardModule" [@card]="state.card">
         <h2 class="centerText">Crear Recibo</h2>
 
-        <form *ngIf="window == 1" (submit)="createReceipt()">
-            <div class="flexform">
+        <form *ngIf="window == 1" (submit)="createReceipt()" class="flex">
 
-
-                <p class="l12" *ngIf="validation.uniquePaymentMonthly == 1">Ya se realizo el pago de este mes</p><br>
-                <h2 class="l12 credit">
-                    <i class="material-icons" [ngClass]="{ 'green-text': payment.payment_type == false}" (click)="payment.payment_type = false" matTooltip="Pago en efectivo">attach_money</i>
-                    <i class="material-icons" [ngClass]="{ 'green-text': payment.payment_type == true}" (click)="payment.payment_type = true" matTooltip="Pago con tarjeta">credit_card</i>
-                </h2>
-                <div>
-                    <label>Nombre de Alumno:</label><br>
-                    <input [(ngModel)]="payment.user.name" name="name" type="search" [matAutocomplete]="auto" (keyup)="searchSugest($event)">
-
-                    <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let user of sugests" [value]="user.name" (onSelectionChange)="setMonthlyPayment(user)">
-                            {{ user.name }}
-                        </mat-option>
-                    </mat-autocomplete>
-
-                </div>
-
-                <div>
-
-                    <label>Tipo de pago:</label><br>
-                    <select [(ngModel)]="payment.type" name="type">
-                            <option value="1">Mensualidad</option> 
-                            <option value="2">Inscripcion</option>
-                            <!-- <option value="3">Días</option> -->
-                            <!-- <option value="4">Uniforme</option>                                                 -->
-                            <!-- <option value="5">Evento/Viajes/Otros</option>                                                 -->
-                            <!-- <option value="6">Otros</option>                                                 -->
-                    </select>
-
-                </div>
-
-                <div>
-                    <label>Monto:</label><br>
-
-                    <input *ngIf="payment.type == 1 && storage.getUserType() <= 4" [(ngModel)]="payment.monthlyAmount" name="monthlyAmount" type="number" disabled>
-
-                    <input *ngIf="payment.type == 1 && storage.getUserType() >= 6" [(ngModel)]="payment.monthlyAmount" name="monthlyAmount" type="number" min="0">
-
-                    <input *ngIf="payment.type > 1" [(ngModel)]="payment.amount" name="amount" type="number" min="0">
-
-                    <small class="validate" *ngIf="validation.paymentDate == 1 && payment.type == 1">Descuento ${{desc}}.00</small>
-                    <small class="error" *ngIf="validation.paymentDate == 2 && payment.type == 1">Recargo ${{recharge}}.00</small>
-
-                </div>
-
-
-
-                <div *ngIf="payment.type == 1">
-                    <label>Mes:</label><br>
-                    <select [(ngModel)]="payment.month" name="month" (change)="validateMonthlyPayment()">
-                        <option  *ngFor="let x of months" value="{{ x.value }}">{{ x.view}}</option>
-                    </select>
-                </div>
-
-                <div *ngIf="payment.type == 3">
-                    <label>Dias:</label><br>
-                    <input [(ngModel)]="payment.days" name="days" type="number" min="1" max="30">
-
-                </div>
-
-                <div *ngIf="payment.type <= 3">
-                    <label>Año:</label><br>
-                    <input [(ngModel)]="payment.year" name="year" type="number" min="2000" max="9999" (change)="validateMonthlyPayment()">
-
-                </div>
-
-                <div *ngIf="payment.type == 6">
-                    <label>Descripción:</label><br>
-                    <input [(ngModel)]="payment.description" name="description" type="text">
-                    <small class="error" *ngIf="validation.description == 1">5 caracteres requeridos*</small>
-
-                </div>
-
-                <button *ngIf="sendingData.request == false" class="btn formBtn" style="background: rgb(238, 163, 0)" type="submit">Crear Recibo</button>
-                <button *ngIf="sendingData.request == true" class="btn formBtn" style="background: rgb(209, 209, 209)" disabled>Crear Recibo</button>
+            <p class="l12" *ngIf="validation.uniquePaymentMonthly == 1">Ya se realizo el pago de este mes</p><br>
+            <h2 class="l12 credit">
+                <i class="material-icons" [ngClass]="{ 'green-text': receipt.payment_type == false}" (click)="receipt.payment_type = false" matTooltip="Pago en efectivo">attach_money</i>
+                <i class="material-icons" [ngClass]="{ 'green-text': receipt.payment_type == true}" (click)="receipt.payment_type = true" matTooltip="Pago con tarjeta">credit_card</i>
+            </h2>
+            <div class="l6 relative">
+                <label>Nombre de Alumno:</label><br>
+                <input [(ngModel)]="receipt.user.name" name="name" type="search" [matAutocomplete]="auto" (keyup)="searchSugest($event)">
+                <small class="error" *ngIf="validation.user_id == 1 ">Seleccione un Usuario</small>
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let user of sugests" [value]="user.name" (onSelectionChange)="setMonthlyPayment(user)">
+                        {{ user.name }}
+                    </mat-option>
+                </mat-autocomplete>
 
             </div>
+
+            <div class="l6">
+
+                <label>Tipo de pago:</label><br>
+                <select [(ngModel)]="receipt.type" name="type" (change)="restoreValidations()">
+                        <option value="1">Mensualidad</option> 
+                        <option value="2">Inscripcion</option>
+                        <option value="3">Otro</option>
+                        <!-- <option value="4">Uniforme</option>                                                 -->
+                        <!-- <option value="5">Evento/Viajes/Otros</option>                                                 -->
+                        <!-- <option value="6">Otros</option>                                                 -->
+                </select>
+
+            </div>
+
+            <div class="l6 relative">
+                <label>Monto:</label><br>
+
+                <input *ngIf="receipt.type == 1 && storage.getUserType() <= 4" [(ngModel)]="receipt.monthlyAmount" name="monthlyAmount" type="number" disabled>
+                <input *ngIf="receipt.type == 1 && storage.getUserType() >= 6" [(ngModel)]="receipt.monthlyAmount" name="monthlyAmount" type="number" min="0">
+
+                <small class="validate" *ngIf="validation.paymentDate == 1 && receipt.type == 1">Descuento ${{desc}}.00</small>
+                <small class="error" *ngIf="validation.paymentDate == 2 && receipt.type == 1">Recargo ${{recharge}}.00</small>
+
+                <input *ngIf="receipt.type > 1" [(ngModel)]="receipt.amount" name="amount" type="number" min="0">                
+
+                <small class="error" *ngIf="validation.amount == 1">Requerido</small>
+
+            </div>
+
+            <div *ngIf="receipt.type == 1" >
+                <label>Mes:</label><br>
+                <select [(ngModel)]="receipt.month" name="month" (change)="validateMonthlyPayment()">
+                    <option  *ngFor="let x of months" value="{{ x.value }}">{{ x.view}}</option>
+                </select>
+            </div>
+
+            <div *ngIf="receipt.type < 3" class="relative">
+                <label>Año:</label><br>
+                <input [(ngModel)]="receipt.year" name="year" type="number" min="2000" max="9999" (change)="validateMonthlyPayment()">
+                <small class="error" *ngIf="validation.year == 1">Requerido</small>
+            </div>
+
+            <div *ngIf="receipt.type == 3" class="l12 relative">
+                <label>Descripción:</label><br>
+                <textarea [(ngModel)]="receipt.description" name="description"></textarea>
+                <small class="error" *ngIf="validation.description == 1">5 caracteres requeridos*</small>
+            </div>
+
+            <button *ngIf="sendingData.request == false" class="btn formBtn" style="background: rgb(238, 163, 0)" type="submit">Crear Recibo</button>
+            <button *ngIf="sendingData.request == true" class="btn formBtn" style="background: rgb(209, 209, 209)" disabled>Crear Recibo</button>
+
+        
         </form>
 
         <div *ngIf="window == 2">

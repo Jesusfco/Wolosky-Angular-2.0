@@ -26,7 +26,7 @@ export class CreateRecieptComponent implements OnInit {
     card: 'initial',
   };
 
-  public payment: Receipt = new Receipt();
+  public receipt: Receipt = new Receipt();
    
 
   public sugests: Array<User> = [];
@@ -42,9 +42,11 @@ export class CreateRecieptComponent implements OnInit {
   public validation = {
     
     paymentDate: 0,
+    uniquePaymentMonthly: 0,
+    year: 0,
     description: 0,
     amount: 0,
-    uniquePaymentMonthly: 0,
+    user_id: 0,    
     form: true,
   };
   
@@ -52,16 +54,16 @@ export class CreateRecieptComponent implements OnInit {
 
   public storage: Storage =  new Storage();
   auth: User = User.authUser()
-
+  httpSugestSubscription
   constructor(private router: Router,
     private actRou: ActivatedRoute,
     private _http: ReceiptService,
     private notification: NotificationService) { 
 
       let d = new Date();
-      this.payment.month = d.getMonth() + 1;
-      this.payment.year = d.getFullYear();
-      this.payment.creator = this.auth
+      this.receipt.month = d.getMonth() + 1;
+      this.receipt.year = d.getFullYear();
+      this.receipt.creator = this.auth
 
 
     }
@@ -88,46 +90,46 @@ export class CreateRecieptComponent implements OnInit {
 
   searchSugest(key){
 
-    if(key.keyCode >=37 && key.keyCode <= 40 || key.keyCode == 13) return;
+    if(key.keyCode >=37 && key.keyCode <= 40 || key.keyCode == 13) return;    
 
-    this.timer++;    
+    setTimeout(() => {            
+        
+      if(this.httpSugestSubscription != null) {    
+        if(!this.httpSugestSubscription.closed) {
+          this.httpSugestSubscription.unsubscribe()    
+          // this.sendingData--
+        }                
+      }
 
-    setTimeout(() => {      
-      this.timer--;      
-    }, 300);
+      this.sendingData.sugest = true;
 
-    setTimeout(() => {
-      
-      if(this.timer == 0){
-        this.sendingData.sugest = true;
-        this._http.sugestUserReceipt({search: this.payment.user.name}).then(
-          data => {
+      this.httpSugestSubscription = this._http
+      .sugestUserReceipt({search: this.receipt.user.name}).subscribe(
+        data => {
 
-            this.sugests = [];
+          this.sugests = [];
 
-            for(let d of data) {
+          for(let d of data) {
 
-              let user = new User();
-              user.setValues(d);
-              this.sugests.push(user);
+            let user = new User();
+            user.setValues(d);
+            this.sugests.push(user);
 
-            }
-             
-          }, error => console.log(error)
-        ).then(
-          () => this.sendingData.sugest = false
-        );
-      } 
+          }
+            
+        }, error => console.log(error),
+        () => this.sendingData.sugest = false
+      )
 
     }, 350);
   }
 
   setMonthlyPayment(user: User){
 
-    this.payment.user_id = user.id;            
-    this.payment.monthlyAmount = 0;
-    this.payment.monthly = user.monthly_payment.amount;
-    this.payment.user = user;
+    this.receipt.user_id = user.id;            
+    this.receipt.monthlyAmount = 0;
+    this.receipt.monthly = user.monthly_payment.amount;
+    this.receipt.user = user;
     
     this.validateMonthlyPayment();    
 
@@ -139,38 +141,38 @@ export class CreateRecieptComponent implements OnInit {
     this.validation.paymentDate = 0;
 
     // si el año es mayor al actual
-    if(d.getFullYear() < this.payment.year) {
-        this.payment.monthlyAmount = (this.payment.monthly - this.desc);
+    if(d.getFullYear() < this.receipt.year) {
+        this.receipt.monthlyAmount = (this.receipt.monthly - this.desc);
         this.validation.paymentDate = 1;
         return;
     }
 
     //DENTRO DEL MISMO MES
-    if((d.getMonth() + 1) == this.payment.month){      
+    if((d.getMonth() + 1) == this.receipt.month){      
 
       if(d.getDate() <= 3){
-         this.payment.monthlyAmount = (this.payment.monthly - this.desc);
+         this.receipt.monthlyAmount = (this.receipt.monthly - this.desc);
          this.validation.paymentDate = 1;
         }
 
         else if(d.getDate() >= 11) {
 
-          this.payment.monthlyAmount = (this.payment.monthly + this.recharge);
+          this.receipt.monthlyAmount = (this.receipt.monthly + this.recharge);
           this.validation.paymentDate = 2;
 
       } else {        
         
-        this.payment.monthlyAmount = this.payment.monthly;
+        this.receipt.monthlyAmount = this.receipt.monthly;
         
       }
 
     }
 
-    else if((d.getMonth() + 1) < this.payment.month) {
-      this.payment.monthlyAmount = (this.payment.monthly - this.desc);
+    else if((d.getMonth() + 1) < this.receipt.month) {
+      this.receipt.monthlyAmount = (this.receipt.monthly - this.desc);
       this.validation.paymentDate = 1;
     } else {
-      this.payment.monthlyAmount = (this.payment.monthly + this.recharge);
+      this.receipt.monthlyAmount = (this.receipt.monthly + this.recharge);
       this.validation.paymentDate = 2;
     }
   }
@@ -178,71 +180,53 @@ export class CreateRecieptComponent implements OnInit {
   createReceipt(){
     
     this.restoreValidations();
-    if(this.payment.type == 6) this.validateDescription();
-    if(this.validation.form == false) return;
-    
+    this.validateForm()
+
+    if(this.validation.form == false) return;        
+
+    if(this.receipt.type != 1) { 
+      this.sendReceipt();
+      return;
+    }
+
     this.sendingData.request = true;
 
-    if(this.payment.type == 1) {
-
-      this._http.checkUnique(this.payment).then(
-        data => {
-          
-          if(data == true) {
-            this.validation.uniquePaymentMonthly = 1;
-          } else if (data == false) {
-
-            this.sendReceipt();
-
-          }
-
-        },
-
-        error => localStorage.setItem('request', JSON.stringify(error))
+    this._http.checkUnique(this.receipt).then(
+      data => {
         
-      ).then(
-        () => this.sendingData.request = false
-      );
+        if(data == true) {
+          this.validation.uniquePaymentMonthly = 1;
+        } else if (data == false) {
 
-    } else {
-      this.sendReceipt();
-    }
-  }
+          this.sendReceipt();
 
-  restoreValidations(){
+        }
+
+      },
+
+      error => this.notification.sendError(error)
+      
+    ).then(
+      () => this.sendingData.request = false
+    );
+
     
-    this.validation = {
-      paymentDate: this.validation.paymentDate,
-      description: 0,
-      amount: 0,
-      form: true,
-      uniquePaymentMonthly: 0,
-    };
-
   }
 
-  validateDescription() {
-    if(this.payment.description.trim().length == 5) {
-      this.validation.form = false
-      this.validation.description = 1
-    }
-  }
-  printReceipt(){
-      window.print();
-  }
+  printReceipt() { window.print() }
 
   sendReceipt(){
     
-    this._http.postNewReceipt(this.payment).then(
+    this._http.postNewReceipt(this.receipt).then(
       data => {
 
-        this.payment.id = data.id
-        this.payment.created_at = data.created_at
-        this.payment.amount = data.amount        
+        this.receipt.id = data.id
+        this.receipt.created_at = data.created_at
+        this.receipt.amount = data.amount        
 
-        this._http.sendData('new', this.payment);
+        this._http.sendData('new', this.receipt);
         
-        if(this.payment.payment_type == false) 
+        if(this.receipt.payment_type == false) 
           this.storage.updateCash(data.amount);        
 
         this.notification.sendNotification('Recibo Creado', 'Datos guardados en el servidor', 5000);
@@ -255,5 +239,66 @@ export class CreateRecieptComponent implements OnInit {
     );
   }
 
+  changeType(){
+
+  }
+
+  restoreValidations(){
+    
+    this.validation = {    
+      paymentDate: 0,
+      uniquePaymentMonthly: 0,
+      year: 0,
+      description: 0,
+      amount: 0,
+      user_id: 0,    
+      form: true,
+    }
+
+  }  
+
+  validateForm() {
+    this.validateAmount()
+    this.validateUserSelected()
+    this.validateDescription()
+    this.validateYear()
+  }
+
+  validateUserSelected(){
+    if(this.receipt.type >= 3) return;
+    if(this.receipt.user_id >= 1) return;
+    this.validation.user_id = 1
+    this.validation.form = false
+  }
+
+  validateAmount(){
+    if(this.receipt.type == 1) {
+
+      if(this.receipt.monthlyAmount != null && this.receipt.monthlyAmount >= 0) return
+
+      this.validation.amount = 1
+      this.validation.form = false
+      return  
+
+    }
+
+    if(this.receipt.amount > 0) return;
+    this.validation.amount = 1
+    this.validation.form = false
+  }
+
+  validateDescription() {
+    if(this.receipt.type != 3) return;
+    if(this.receipt.description.trim().length <= 4) {
+      this.validation.form = false
+      this.validation.description = 1
+    }
+  }
+
+  validateYear(){ 
+    if(this.receipt.year != null &&  this.receipt.year >= 2008) return;
+    this.validation.year = 1
+    this.validation.form = false
+  }
 
 }

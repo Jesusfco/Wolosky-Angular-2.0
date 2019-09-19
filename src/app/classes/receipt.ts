@@ -55,7 +55,7 @@ export class Receipt {
         if(this.type == 0) return 'Recibo Tienda'
         if(this.type == 1) return 'Mensualidad ' + MyCarbon.monthToString(this.month) + ' ' + this.year
         if(this.type == 2) return 'Inscripción ' + this.year
-        if(this.type == 3) return 'Otros'                
+        if(this.type == 3) return this.description                
         return ''
     }
     setData(data) {
@@ -68,6 +68,7 @@ export class Receipt {
         this.type = parseInt(data.type);
         this.month = parseInt(data.month);
         this.year = parseInt(data.year);
+        this.description = data.description;
         this.days = parseInt(data.days);
         this.payment_type = false;
         if(parseInt(data.payment_type) == 1) 

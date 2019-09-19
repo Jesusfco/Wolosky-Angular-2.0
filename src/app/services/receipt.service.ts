@@ -40,8 +40,7 @@ export class ReceiptService {
 
   sugestUserReceipt(data){
     return this._http.post(this.link.url + "receipt/sugestUser" + this.token.getTokenUrl(), data)
-              .map(data => data.json())
-              .toPromise();
+              .map(data => data.json());
   }
 
   getMonthlyPayment(data){
