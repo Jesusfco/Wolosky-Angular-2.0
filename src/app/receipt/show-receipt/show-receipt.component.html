@@ -62,13 +62,7 @@
                 <label>Año:</label><br>
                 <p>{{ receipt.year }}</p>
             </div>
-
-            <div *ngIf="receipt.type == 3" class="formData l6">
-                <label>Dias:</label><br>
-                <p>{{ receipt.days }}</p>
-
-            </div>
-
+            
             <div class="formData l12" *ngIf="receipt.type == 5 ">
                 <label>Evento:</label><br>
                 <p>{{ receipt.event.name }}</p>

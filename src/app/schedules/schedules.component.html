@@ -20,6 +20,21 @@
         </div>            
     </div>
 
+    <div class="l4">
+        <label>Desde</label><br>
+        <div class="icon-left">            
+            <input [(ngModel)]="search.from"  name="from" type="time" (change)="getSchel()">
+            <label class="icon"><mat-icon>access_time</mat-icon></label>
+        </div>            
+    </div>
+    <div class="l4">
+        <label>Desde</label><br>
+        <div class="icon-left">            
+            <input [(ngModel)]="search.to"  name="to" type="time" (change)="getSchel()">
+            <label class="icon"><mat-icon>access_time</mat-icon></label>
+        </div>            
+    </div>
+
 
 </form>
 
@@ -54,6 +69,8 @@
             <form ngNoForm method="POST" action="{{ storage.getUrl() + 'excel/schedules' + storage.getTokenUrl() }}
             &type={{ filter }}" *ngIf="!sendingData">
                 <input type="hidden" name="data" value='{{dataOrder | json}}'>
+                <input type="hidden" name="from" [(ngModel)]="search.from">
+                <input type="hidden" name="to" [(ngModel)]="search.to">
                 
             
                 <button type="submit" class="green" matTooltip="Descargar Horarios" matTooltipPosition="left" mat-fab>
