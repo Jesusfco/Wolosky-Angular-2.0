@@ -21,7 +21,7 @@
                 <p *ngIf="userData.getUserType() == 4">Contador</p>
                 <p *ngIf="userData.getUserType() == 6">Administrador</p>
                 <p *ngIf="userData.getUserType() == 7">Desarrollador</p>
-                <p *ngIf="userData.getUserType() >= 6" class="cash" [routerLink]="['/cash']"> $ {{ userData.getCash() }}</p>
+                <p *ngIf="userData.getUserType() >= 6" class="cash" [routerLink]="['/cutout']"> $ {{ userData.getCash() }}</p>
                 <p *ngIf="userData.getUserType() < 5 && userData.getUserType() > 1"> $ {{ userData.getCash() }}</p>
             </div>
 
@@ -43,7 +43,7 @@
 
         <li [routerLink]="['/expenses']"><button mat-button>Gastos</button></li>        
 
-        <li [routerLink]="['/cutout']" *ngIf="userData.getUserType() >= 6"><button mat-button>Recorte de Caja</button></li>
+        <!-- <li [routerLink]="['/cutout']" *ngIf="userData.getUserType() >= 6"><button mat-button>Recorte de Caja</button></li> -->
         <li [routerLink]="['/pago-trabajadores']" *ngIf="userData.getUserType() >= 6"><button mat-button>Pago Trabajadores</button></li>
 
     </ul>

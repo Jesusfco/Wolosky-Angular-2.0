@@ -139,7 +139,7 @@
             </div>
 
             <div class="flexRow l12" *ngIf="user.user_type_id == 1 ">
-                <h2 class="l12">Pago Mensual</h2>
+                <h2 class="l12">Mensualidad</h2>
                 <div class="formData l6 m6">
                     <label>Monto:</label><br>
                     <input [(ngModel)]="user.monthly_payment.amount" name="amount" type="number" min="0" placehoder="Monto" *ngIf="credential >= 6">

@@ -30,7 +30,7 @@ export class CreateExpenseComponent implements OnInit {
 
   constructor(private _http: ExpenseService, private router: Router) { 
 
-    this.expense = new Expense(undefined,undefined, "", "", 0, undefined, undefined);
+    this.expense = new Expense();
     setTimeout(() => {
       this.state.background = 'final';
       this.state.card = 'final';
@@ -55,8 +55,8 @@ export class CreateExpenseComponent implements OnInit {
     this._http.createExpense(this.expense).then(
       data => {
         
-        if(this.expense.updateCash)
-          this.cash.substractCash(this.expense.$amount);
+        if(this.expense.from_cashbox)
+          this.cash.substractCash(this.expense.amount);
 
         this.router.navigate(['/expenses']);
         
@@ -85,12 +85,12 @@ export class CreateExpenseComponent implements OnInit {
 
     this.retoreseValidation();
 
-    if(this.expense.$name.length <= 7){
+    if(this.expense.name.length <= 7){
       this.validation.form = false;
       this.validation.name = 1;
     }
 
-    if(this.expense.$amount <= 0) {
+    if(this.expense.amount <= 0) {
       this.validation.form = false;
       this.validation.amount = 1;
     }

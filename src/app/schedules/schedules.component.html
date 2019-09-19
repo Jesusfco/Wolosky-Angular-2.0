@@ -5,14 +5,6 @@
 <form class="flex" (submit)="getSchel()">
 
     <div class="l4">
-        <label>Tipo de Usuarios:</label><br>
-        <select [(ngModel)]="search.type" name="type" (change)="getSchel()">
-            <option value="1">Alumnos</option> 
-            <option value="2">Trabajadores</option>                    
-        </select>
-    </div>
-
-    <div class="l4">
         <label>Nombre De Usuario</label><br>
         <div class="icon-left">            
             <input [(ngModel)]="search.name"  name="name" type="search" placeholder="Buscar Usuario">
@@ -20,14 +12,22 @@
         </div>            
     </div>
 
-    <div class="l4">
+    <div class="l3">
+        <label>Tipo de Usuarios:</label><br>
+        <select [(ngModel)]="search.type" name="type" (change)="getSchel()">
+            <option value="1">Alumnos</option> 
+            <option value="2">Trabajadores</option>                    
+        </select>
+    </div>    
+
+    <div class="l2">
         <label>Desde</label><br>
         <div class="icon-left">            
             <input [(ngModel)]="search.from"  name="from" type="time" (change)="getSchel()">
             <label class="icon"><mat-icon>access_time</mat-icon></label>
         </div>            
     </div>
-    <div class="l4">
+    <div class="l2">
         <label>Desde</label><br>
         <div class="icon-left">            
             <input [(ngModel)]="search.to"  name="to" type="time" (change)="getSchel()">
@@ -42,6 +42,7 @@
 
     <h4 class="centerText">Día: {{ day.day | dayPipe }}</h4>
 
+    <h5 *ngIf="day.schedules.length == 0" class="centerText l12"> Sin horarios</h5>
     <div *ngFor="let schedule of day.schedules" class="l4">
 
         <div>

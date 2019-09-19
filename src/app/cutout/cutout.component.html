@@ -9,7 +9,7 @@
         <div>
             <label>Caja:</label><br>
 
-            <input [(ngModel)]="caja" name="caja" type="number" min="0">
+            <input [(ngModel)]="cashbox.amount" name="amount" type="number" min="0">
 
         </div>
 
@@ -19,43 +19,71 @@
     </div>
 </form>
 
-<p>Dinero en caja: <strong>$ {{ cutout.caja }}</strong></p>
+<p>Dinero en caja: <strong>$ {{ cashbox.amount }}</strong></p>
+
+<h4>Datos de Ultimo Recorto</h4>
+<p>Monto: ${{cashHistory.allow}}</p>
+<p>Fecha/Hora de Corte: {{cashHistory.created_at}}</p>
+<p>Creador de corte: {{cashHistory.creator.name}}</p>
 <div class="receiptDiv">
-    <h3>Pago de alumnos</h3>
-    <p>$ {{ cutout.receipts }} </p>
-    <i (click)="showTable = !showTable" class="material-icons" [ngClass]='{"iconActive": showTable == true}'>arrow_drop_down</i>
+    <h3 (click)="showTable1 = !showTable1">Recibos</h3>
+    <p class="green-text">$ {{ cutout.receipts }} </p>
+    <i  class="material-icons" [ngClass]='{"iconActive": showTable1 == true}'>arrow_drop_down</i>
 </div>
 <div>
-    <div class="responsive-table">
+    <div class="responsive-table" *ngIf="showTable1">
         <table align="center">
             <thead>
-                <tr>
-                    <!-- <th class="left">id</th> -->
-                    <th>Alumno</th>
-                    <th>Hora</th>
+                <tr>                                                           
                     <th>Monto</th>
-                    <th>Tipo</th>
-                </tr>
-                <!-- <th colspan="3">Opciones</th> -->
+                    <th>Usuario</th> 
+                    <th>Fecha/Hora</th>                    
+                    <th>Tipo de Pago</th> 
+                    <th>Descripción</th>
+                </tr>                
             </thead>
-            <tbody *ngIf="showTable">
-                <tr *ngFor="let re of recibos">
-                    <td class="left">{{ re.user_name }}</td>
-                    <td>{{ re.created_at | date: 'hh:mm a' }}</td>
-                    <td>$ {{ re.amount }}</td>
-                    <td *ngIf="re.type == 1">Mensualidad</td>
-                    <td *ngIf="re.type == 2">Inscripcion</td>
-                    <td *ngIf="re.type == 3">Día</td>
-                    <td *ngIf="re.type == 4">Uniforme</td>
-                    <td *ngIf="re.type == 5">Evento</td>
+            <tbody >
+                <tr *ngFor="let re of receipts">
+                        <td>$ {{ re.amount }}</td>
+                    <td class="left">{{ re.user.name }}</td>
+                    
+                    <td>{{ re.created_at  }}</td>                    
+                    <td>{{ re.paymentTypeView  }}</td>                    
+                    <td>{{ re.descriptionView }}</td>
 
                 </tr>
             </tbody>
         </table>
-    </div>
-    <br> <br>
+    </div>    
     <div class="receiptDiv">
-        <h3>Venta de abarroteria:</h3>
-        <p>$ {{ cutout.inventory }} </p>
-        <!-- <i (click)="showTable = !showTable" class="material-icons" [ngClass]='{"iconActive": showTable == true}'>arrow_drop_down</i> -->
+        <h3 (click)="showTable2 = !showTable2">Gastos:</h3>
+        <p class="red-text">$ {{ cutout.expenses }} </p>
+        <i class="material-icons" [ngClass]='{"iconActive": showTable2 == true}'>arrow_drop_down</i>
+        <div class="responsive-table" *ngIf="showTable2">
+                <table align="center">
+                    <thead>
+                        <tr>                                                           
+                            <th>Monto</th>
+                            <th>Creador</th> 
+                            <th>Fecha/Hora</th>                                                
+                            <th>Descripción</th>
+                        </tr>                
+                    </thead>
+                    <tbody >
+                        <tr *ngFor="let x of expenses">
+                                <td>$ {{ x.amount }}</td>
+                            <td class="left">{{ x.creator.name }}</td>
+                            
+                            <td>{{ x.created_at  }}</td>                    
+                            <td>{{ x.name  }}</td>                                                
+        
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+
+    <div class="receiptDiv">
+        <h3 (click)="showTable2 = !showTable2">Total:</h3>
+        <p [ngClass]='{"green-text": (cutout.receipts - cutout.expenses) > 0}'>$ {{ cutout.receipts - cutout.expenses }} </p>
     </div>

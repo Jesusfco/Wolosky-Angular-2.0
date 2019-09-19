@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CutoutService } from '../services/cutout.service';
 import { Storage } from '../classes/storage';
+import { Receipt } from '../classes/receipt';
+import { Expense } from '../classes/expense';
+import { Cash } from '../classes/cash';
+import { NotificationService } from '../notification/notification.service';
+import { CashboxHistory } from '../classes/cashbox-history';
 
 @Component({
   selector: 'app-cutout',
@@ -11,28 +16,34 @@ export class CutoutComponent implements OnInit {
 
   public storage: Storage = new Storage();
   public cutout: any = {
-    caja: 0,
-    receipts: 0,
-    inventory: 0,
+    expenses: 0,
+    receipts: 0,    
   };
 
-  public recibos = [];
-  public showTable = false;
-  public sendingData:boolean = false;
+  receipts: Array<Receipt> = [];
+  expenses: Array<Expense> = [];
+  showTable1 = false;
+  showTable2 = false;
+  sendingData: boolean = false;
 
-  public caja: number = 0;
+  cashbox: Cash = Cash.getCashbox();
+  cashHistory: CashboxHistory = new CashboxHistory()
 
-  constructor(private _http: CutoutService) {
-
-    this.cutout.caja = this.storage.getCash();
-    this.caja = parseInt(this.storage.getCash());
+  constructor(
+    private _http: CutoutService, 
+    private notificatio: NotificationService
+  ) {    
+    
     this.sendingData = true;
 
     _http.getCutout().then(
       data => {
-        this.cutout.receipts = data.receipts;
-        this.cutout.inventory = data.inventory;
-        this.recibos = data.recibos;
+        if(data == false) return;
+        this.receipts = Receipt.convertToArray(data.receipts);
+        this.expenses = Expense.convertToArray(data.expenses);
+        this.cutout.expenses = data.expenses_total
+        this.cutout.receipts = data.receipts_total 
+        this.cashHistory.setData(data.last_cut)       
       }
     ).then(
       () => this.sendingData = false
@@ -47,10 +58,9 @@ export class CutoutComponent implements OnInit {
 
     this.sendingData = true;
 
-    this._http.updateCash({cash: this.caja}).then(
+    this._http.updateCash({cash: this.cashbox.amount}).then(
       data => {
-        this.storage.setCash(this.caja);
-        this.cutout.caja = this.caja;
+        
       },
       error => alert('no se pudo actualizar')
     ).then(

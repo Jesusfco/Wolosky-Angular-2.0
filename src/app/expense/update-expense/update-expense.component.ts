@@ -3,6 +3,7 @@ import { BackgroundCard, Card } from '../../animations/card.animation';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Expense } from '../../classes/expense';
 import { ExpenseService } from '../../services/expense.service';
+import { NotificationService } from '../../notification/notification.service';
 
 @Component({
   selector: 'app-update-expense',
@@ -30,12 +31,13 @@ export class UpdateExpenseComponent implements OnInit {
 
   constructor(private _http: ExpenseService,
     private router: Router,
-    private actRou: ActivatedRoute) {
+    private actRou: ActivatedRoute,
+    private notification: NotificationService) {
 
-      this.expense = new Expense(undefined,undefined, "", "", 0, undefined, undefined);
+      this.expense = new Expense();
 
       this.observerRef = actRou.params.subscribe(params => {
-        this.expense.$id = params['id'];
+        this.expense.id = params['id'];
         this.getExpense();
       });
      }
@@ -53,18 +55,10 @@ export class UpdateExpenseComponent implements OnInit {
       
       data => {
 
-        this.expense = new Expense(
-              parseInt(data.id),
-              data.creator_id,
-              data.name,
-              data.description,
-              parseInt(data.amount),
-              data.created_at,
-              data.updated_at
-            );
+        this.expense.setData(data)
 
       },
-      error => console.log(error)
+      error => this.notification.sendError(error)
     );
   }
 
@@ -81,7 +75,7 @@ export class UpdateExpenseComponent implements OnInit {
       },
 
 
-      error => console.log(error)
+      error => this.notification.sendError(error)
     ).then(
 
       () => this.request = false
@@ -110,12 +104,12 @@ export class UpdateExpenseComponent implements OnInit {
 
     this.retoreseValidation();
 
-    if(this.expense.$name.length <= 7){
+    if(this.expense.name.length <= 7){
       this.validation.form = false;
       this.validation.name = 1;
     }
 
-    if(this.expense.$amount <= 0) {
+    if(this.expense.amount <= 0) {
       this.validation.form = false;
       this.validation.amount = 1;
     }
@@ -138,7 +132,7 @@ export class UpdateExpenseComponent implements OnInit {
         this.router.navigate(['/expenses']);
         localStorage.removeItem('expenseUpdateStatus');
       },
-      error => console.log(error)
+      error => this.notification.sendError(error)
     ).then(
       () => this.request = false
     );

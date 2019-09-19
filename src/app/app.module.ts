@@ -139,6 +139,7 @@ import { ExportRecordsComponent } from './records/export-records/export-records.
 import { DeleteRecordsComponent } from './records/delete-records/delete-records.component';
 import { DetailsRecordComponent } from './records/details-record/details-record.component';
 import { Time12FormatPipe } from './pipes/time-12-format.pipe';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
@@ -216,6 +217,7 @@ import { Time12FormatPipe } from './pipes/time-12-format.pipe';
     DeleteRecordsComponent,
     DetailsRecordComponent,
     Time12FormatPipe,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

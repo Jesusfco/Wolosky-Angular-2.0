@@ -23,4 +23,11 @@ export class Cash {
         localStorage.setItem('userCash', (money - cash).toString() );
     }
 
+    static getCashbox(){
+        let obj = new Cash();
+        obj.id = 1;
+        obj.amount = obj.getAmount()
+        return obj
+    }
+
 }

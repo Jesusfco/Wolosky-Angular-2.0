@@ -14,26 +14,26 @@
 
         <form (submit)="send()">
 
-            <div *ngIf="expense.updateCash == false" class="checkBox"><input [(ngModel)]="expense.updateCash" name="updateCash" type="checkbox">No reflejar en caja</div>
-            <div *ngIf="expense.updateCash == true" class="checkBox"><input [(ngModel)]="expense.updateCash" name="updateCash" type="checkbox">Reflejar en Caja</div>
+            <div *ngIf="expense.from_cashbox == false" class="checkBox"><input [(ngModel)]="expense.from_cashbox" name="from_cashbox" type="checkbox">No reflejar en caja</div>
+            <div *ngIf="expense.from_cashbox == true" class="checkBox"><input [(ngModel)]="expense.from_cashbox" name="from_cashbox" type="checkbox">Reflejar en Caja</div>
             <div class="">
 
                 <div class="l12">
                     <label>Nombre de Gasto:</label><br>
-                    <input class="l12" [(ngModel)]="expense.$name" name="$name" type="text">
+                    <input class="l12" [(ngModel)]="expense.name" name="name" type="text">
                     <small class="error" *ngIf="validation.name == 1">Se requieren por lo menos 7 caracteres.</small>
                 </div>
 
                 <div>
                     <label>Monto:</label><br>
-                    <input [(ngModel)]="expense.$amount" name="$amount" type="number" min="0">
+                    <input [(ngModel)]="expense.amount" name="amount" type="number" min="0">
                     <small class="error" *ngIf="validation.amount == 1">El valo no puede ser $0 o menos</small>
 
                 </div>
 
                 <div class="l12">
                     <label>Descripción:</label><br>
-                    <textarea [(ngModel)]="expense.$description" name="$description"></textarea>
+                    <textarea [(ngModel)]="expense.description" name="description"></textarea>
                 </div>
 
 

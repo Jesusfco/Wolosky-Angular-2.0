@@ -4,6 +4,7 @@
     <h1 class="centerText">GASTOS</h1>   
 
     <form class="flex" *ngIf="auth.user_type_id >= 6">
+        
         <div class="l4">
             <div class="icon-left">
                 <input (change)="get()" type="date" [(ngModel)]="search.from" name="from">
@@ -53,22 +54,22 @@
             </thead>
 
             <tbody *ngIf="storage.getUserType() >= 6">
-                <tr *ngFor="let ex of expenses" [routerLink]="['/expenses/edit', ex.$id]" >
+                <tr *ngFor="let ex of expenses" [routerLink]="['/expenses/edit', ex.id]" >
                     <!-- <td class="left">{{ ex.$id }}</td> -->
-                    <td>$ {{ ex.$amount }}</td>
-                    <td>{{ ex.$name }}</td>
-                    <td>{{ ex.$created_at | date: format}}</td>
-                    <td>{{ ex.$created_at | date: 'hh:mm a' }}</td>
+                    <td>$ {{ ex.amount }}</td>
+                    <td>{{ ex.name }}</td>
+                    <td>{{ ex.created_at | date: format}}</td>
+                    <td>{{ ex.created_at | date: 'hh:mm a' }}</td>
                 </tr>
             </tbody>
 
             <tbody *ngIf="storage.getUserType() == 3">
                 <tr *ngFor="let ex of expenses">
                     <!-- <td class="left">{{ ex.$id }}</td> -->
-                    <td>$ {{ ex.$amount }}</td>
-                    <td>{{ ex.$name }}</td>
-                    <td>{{ ex.$created_at | date: format}}</td>
-                    <td>{{ ex.$created_at | date: 'hh:mm a' }}</td>
+                    <td>$ {{ ex$amount }}</td>
+                    <td>{{ ex.name }}</td>
+                    <td>{{ ex.created_at | date: format}}</td>
+                    <td>{{ ex.created_at | date: 'hh:mm a' }}</td>
                 </tr>
             </tbody>
 

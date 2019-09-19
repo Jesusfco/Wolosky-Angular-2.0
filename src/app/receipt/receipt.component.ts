@@ -161,15 +161,7 @@ export class ReceiptComponent implements OnInit {
     this.request = this._http.getReceipts(this.search).subscribe(
       data => {
 
-        this.receipts = [];
-
-        for(let da of data.data) {
-
-          let receipt = new Receipt();
-          receipt.setData(da);
-          this.receipts.push(receipt);
-
-        }
+        this.receipts = Receipt.convertToArray(data.data)
         
         this.search.total = data.total;
       },

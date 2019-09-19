@@ -2,7 +2,7 @@ import { MyCarbon } from './../utils/classes/my-carbon';
 import { User } from "./user";
 import { Event } from "./event";
 
-export class Receipt {
+export class Receipt {  
 
     id: number;
     user_id: number;    
@@ -56,6 +56,12 @@ export class Receipt {
         if(this.type == 1) return 'Mensualidad ' + MyCarbon.monthToString(this.month) + ' ' + this.year
         if(this.type == 2) return 'Inscripción ' + this.year
         if(this.type == 3) return this.description                
+        return ''
+    }
+
+    get paymentTypeView() {
+        if(!this.payment_type ) 'Efectivo'
+        if(this.payment_type) 'Tarjeta'
         return ''
     }
     setData(data) {
@@ -156,5 +162,17 @@ export class Receipt {
         else return 'Mes no asignado'
         
 
+    }
+
+    static convertToArray(data: any): Receipt[] {
+    
+        let receipts: Array<Receipt> = [];
+            for(let da of data) {
+              let receipt = new Receipt();
+              receipt.setData(da);
+              receipts.push(receipt);
+            }
+        return receipts;
+    
     }
 }

@@ -53,23 +53,7 @@ export class ExpenseComponent implements OnInit {
 
       data => {
 
-        this.expenses = [];
-
-        for(let x of data.data) {
-
-          this.expenses.push( 
-              new Expense (
-                x.id, 
-                x.creator_id, 
-                x.name, 
-                x.description, 
-                x.amount, 
-                x.created_at,
-                x.updated_at
-              )
-          );
-
-        } //end of for
+        this.expenses = Expense.convertToArray(data.data)
 
         this.search.total = data.total;
         
