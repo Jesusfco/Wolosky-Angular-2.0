@@ -5,6 +5,8 @@ import { Sale } from '../../classes/sale';
 import { SaleService } from '../../services/sale.service';
 import { cardPop, backgroundOpacity } from '../../animations';
 import { Storage } from '../../classes/storage';
+import { NotificationService } from '../../notification/notification.service';
+import { Cash } from '../../classes/cash';
 
 @Component({
   selector: 'app-show-sale',
@@ -24,9 +26,12 @@ export class ShowSaleComponent implements OnInit {
   public products = [];
   public observerRef;
   public storage: Storage = new Storage();
+  window = 1
+  sendData
 
   constructor(private router: Router, 
     private _http: SaleService, 
+    private notification: NotificationService,
     private actRou: ActivatedRoute) {
 
       console.log(this.auth)
@@ -71,7 +76,18 @@ export class ShowSaleComponent implements OnInit {
     window.print()
   }
 
-  deleteProcess() {
+  delete(n) {
+
+    this.sendData++
+    this._http.deleteSale(this.sale.id, n).then(
+      data => {
+        if(n == 1) {
+          if(this.sale.type <= 2) 
+            Cash.addCash(- this.sale.total)
+          this.closePop()
+        }
+      }, error => this.notification.sendError(error)
+    ).then(() =>this.sendData--)
 
   }
 

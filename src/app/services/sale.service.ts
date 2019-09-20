@@ -55,6 +55,12 @@ export class SaleService {
     .toPromise();
   }
 
+  deleteSale(id, type){
+    return this._http.post(this.link.url + 'sale/delete' + this.storage.getTokenUrl(), {id: id, type: type})
+    .map(data => data.json())
+    .toPromise();
+  }
+
   debtSale(data) {
     return this._http.post(this.link.url + 'saleDebt' + this.storage.getTokenUrl(), data)
                   .map(data => data.json())

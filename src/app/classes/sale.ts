@@ -13,10 +13,9 @@ export class Sale {
     public receipts: Array<Receipt> = []
     public created_at: string = '';
     public saleDebt: SaleDebt
-    public type: number;
+    public type: number = 1;
 
-    constructor(){        
-        this.type = 1;
+    constructor(){                
     }
 
     setData(data) {
