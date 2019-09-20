@@ -1,8 +1,7 @@
 export class Reference {
     public id: number;
     public user_id: number;
-    public relationship_id: number;
-    public relationshipView: string;
+    public relationship_id: number;    
     public name: string;
     public phone: string;
     public phone2: string;
@@ -47,19 +46,20 @@ export class Reference {
         this.work_place = data.work_place;
         this.created_at = data.created_at;
         this.updated_at = data.updated_at;
-        this.setRelationshipView();
-    }
-
-    setRelationshipView(){
-        if(this.relationship_id == 1) this.relationshipView = 'Padres/Madre';
-        else if(this.relationship_id == 2) this.relationshipView = 'Hermano/a';
-        else if(this.relationship_id == 3) this.relationshipView = 'Familiares';
-        else if(this.relationship_id == 4) this.relationshipView = 'Amigos';
-        else if(this.relationship_id == 5) this.relationshipView = 'Compañeros de Trabajo';
-        else if(this.relationship_id == 6) this.relationshipView = 'Otro';
-
         
     }
+
+    get relationshipView () {
+        if(this.relationship_id == 1) return'Padres/Madre';
+        else if(this.relationship_id == 2) return 'Hermano/a';
+        else if(this.relationship_id == 3) return 'Familiares';
+        else if(this.relationship_id == 4) return 'Amigos';
+        else if(this.relationship_id == 5) return 'Compañeros de Trabajo';
+        else if(this.relationship_id == 6)  return 'Otro';
+
+        return ''
+    }
+    
 
     
 
@@ -117,9 +117,7 @@ export class Reference {
         if(x.work_place != null)            
             this.work_place = x.work_place.toUpperCase();
         this.created_at = x.created_at;
-        this.updated_at = x.updated_at;
-
-        this.setRelationshipView();
+        this.updated_at = x.updated_at;        
 
     }
 
@@ -259,7 +257,7 @@ export class Reference {
       }
 
 
-    setRelationshipOptions() {
+    static getRelationshipOptions() {
 
         let relationshipOptions = [
             {
@@ -308,5 +306,17 @@ export class Reference {
         }
 
         return this.validations.validate;
+    }
+
+    static convertToArray(data: any): Reference[] {
+    
+        let array: Array<Reference> = [];
+            for(let d of data) {
+              let obj = new Reference();
+              obj.setValues(d);
+              array.push(obj);
+            }
+        return array;
+    
     }
 }

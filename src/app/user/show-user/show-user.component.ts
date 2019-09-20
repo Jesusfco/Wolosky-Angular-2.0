@@ -56,11 +56,13 @@ export class ShowUserComponent implements OnInit {
       
         if (x.action == 'SCHEDULES') {
   
-          this.updateSchedules(x.data);
+          this.user.schedules = Schedule.convertToArray(x.data)
+          this.showUser.schedules = Schedule.convertToArray(x.data)
   
         } else if(x.action ==  'REFERENCES') {
 
-          this.updateReferences(x.data);
+          this.user.references = Reference.convertToArray(x.data)
+          this.showUser.references = Reference.convertToArray(x.data)
 
         } else if(x.action == 'MONTHLY') {
         

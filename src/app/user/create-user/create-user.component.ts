@@ -45,9 +45,9 @@ export class CreateUserComponent implements OnInit {
 
     this.outletOutput = this._http.getData().subscribe(x => {      
         if (x.action == 'SCHEDULES')    
-          this.user.receiveSchedules(x.data) 
+          this.user.schedules = Schedule.convertToArray(x.data)
         else if(x.action == 'REFERENCES') 
-          this.receiveReferences(x.data);  
+        this.user.references = Reference.convertToArray(x.data)
         else if (x.action == 'MONTHLY_AMOUNT' && this.user.user_type_id == 1)           
           this.user.monthly_payment.amount = x.data
     })  

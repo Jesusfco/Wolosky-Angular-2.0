@@ -6,6 +6,7 @@ import { User } from '../../../classes/user';
 import { Reference } from '../../../classes/reference';
 import { FadeAnimation, SlideAnimation } from '../../../animations/slide-in-out.animation';
 import { Storage } from '../../../classes/storage';
+import { NotificationService } from '../../../notification/notification.service';
 
 
 @Component({
@@ -29,66 +30,29 @@ export class EditReferenceComponent implements OnInit {
   public reference: Reference = new Reference();  
   public referenceToModify: Reference = new Reference();
 
-  public relationshipOptions = this.reference.setRelationshipOptions();
+  public relationshipOptions = Reference.getRelationshipOptions();
+  outletOutput: any;
 
   constructor(private _http: UserService,
               private router: Router,
               private location: Location,
-              private actRou: ActivatedRoute) { 
-
-                this.storage = new Storage();
-                this.setReferenceDataObserver();
-                this.setUserObserverData();
-
-              }
+              private actRou: ActivatedRoute,
+              private notification: NotificationService) 
+  { 
+    
+    this.outletOutput = this._http.getData().subscribe(x => {      
+      if (x.action == 'user')   
+        this.user.setValues(x.data) 
+    })
+  }
 
   ngOnInit() {
   }
-
-  setReferenceDataObserver() {
-    this.referenceDataObserver = setInterval(() => this.referenceDataObserverLogic(), 500);
+  ngOnDestroy(){
+    this.outletOutput.unsubscribe()
   }
 
-  referenceDataObserverLogic() {
-
-    if(localStorage.getItem('userReferences') == undefined) return;
-
-    this.references = JSON.parse(localStorage.getItem('userReferences'));
-    this.reference.references = this.references;
-
-    clearInterval(this.referenceDataObserver);
-
-  }
-
-  setUserObserverData() {
-    this.userDataObserver = setInterval(() => this.userDataObserverLogic(), 500);
-  }
-
-  userDataObserverLogic() {
-    if(localStorage.getItem('userData') == undefined) return;
-
-    this.user = JSON.parse(localStorage.getItem('userData'));
-    this.reference.user_id = this.user.id;
-    clearInterval(this.referenceDataObserver);
-  }
-
-
-  
-  close(){
-
-    this.cardState = 'initial';
-    this.backgroundState = 'initial';    
-
-    setTimeout(() => {
-      this.location.back();
-    }, 400);
-    
-  }
-
-  refreshReferenceStorage() {
-    localStorage.setItem('userReferences', JSON.stringify(this.references));
-    localStorage.setItem('userReferencesUpdates', '1');
-  }
+  close(){ this.router.navigate(['../']) }  
 
   form(){
 
@@ -110,20 +74,12 @@ export class EditReferenceComponent implements OnInit {
 
           this.reference = new Reference();
           this.reference.references = this.references;
-
-          let not = {
-            status: 200,
-            title: 'Referencia Guardada',
-            description: 'Datos Guardados en el servidor'
-          };
-
-          localStorage.setItem('request', JSON.stringify(not));
-
-          this.refreshReferenceStorage();
-
+          
+          this.notification.sendNotification('Referencia Guardada', 'Datos guardados en el servidor', 5000)
+          this._http.sendData('REFERENCES', this.references)
         } ,
 
-        error => localStorage.setItem('request', JSON.stringify(error))
+        error => this.notification.sendError(error)
 
       ).then(
         () => this.sendingData = false
@@ -146,18 +102,12 @@ export class EditReferenceComponent implements OnInit {
 
           this.references.splice(this.references.indexOf(ref), 1);
 
-          let not = {
-            status: 200,
-            title: 'Referencia Eliminada',
-            description: 'Datos Cargados en el servidor'
-          };
-
-          localStorage.setItem('request', JSON.stringify(not));
-          this.refreshReferenceStorage();
+          this.notification.sendNotification('Referencia Eliminada', 'Datos guardados en el servidor', 5000)
+          this._http.sendData('REFERENCES', this.references)
 
         } ,
 
-        error => localStorage.setItem('request', JSON.stringify(error))
+        error => this.notification.sendError(error)
 
       ).then(
         () => this.sendingData = false
@@ -195,18 +145,12 @@ export class EditReferenceComponent implements OnInit {
 
           this.freshReferences();
 
-          let not = {
-            status: 200,
-            title: 'Referencia Actualizada',
-            description: 'Datos Cargados en el servidor'
-          };
-
-          localStorage.setItem('request', JSON.stringify(not));
-          this.refreshReferenceStorage();
+          this.notification.sendNotification('Referencia Actualizada', 'Datos guardados en el servidor', 5000)
+          this._http.sendData('REFERENCES', this.references)
 
         } ,
 
-        error => localStorage.setItem('request', JSON.stringify(error))
+        error => this.notification.sendError(error)
 
       ).then(
         () => this.sendingData = false

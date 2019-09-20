@@ -71,8 +71,7 @@ export class CreateScheduleComponent implements OnInit {
   }
 
   close(){
-  
-    this.user.name = 'hasd'
+      
     this.cardState = 'initial';
     this.backgroundState = 'initial';    
 

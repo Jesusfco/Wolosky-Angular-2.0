@@ -102,4 +102,16 @@ export class Schedule {
 
     }
 
+    static convertToArray(data: any): Schedule[] {
+    
+        let array: Array<Schedule> = [];
+            for(let d of data) {
+              let obj = new Schedule();
+              obj.setValues(d);
+              array.push(obj);
+            }
+        return array;
+    
+    }
+
 }

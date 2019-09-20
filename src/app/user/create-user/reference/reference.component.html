@@ -1,5 +1,5 @@
-<div class="background" [@background]="backgroundState"></div>
-<div id="createCard" [@principal]="cardState">
+<div class="background"></div>
+<div id="createCard">
 
     <div id="cerrarBtn" (click)="close()"> Cerrar <i class="material-icons">close</i></div>
 
@@ -12,7 +12,7 @@
 
             <div class="formData l6 m6">
                 <label>Nombre completo:</label><br>
-                <input type="text" [ngClass]="{'inputError': reference.validations.name > 0}" [(ngModel)]="reference.name" name="name" placeholder="Nombre Completo" (keyup)="reference.nameUpper()">
+                <input type="text" [ngClass]="{'inputError': reference.validations.name > 0}" [(ngModel)]="reference.name" name="name" placeholder="Nombre Completo" >
                 <small class="error" *ngIf="reference.validations.name == 1">Requerido</small>
                 <small class="error" *ngIf="reference.validations.name == 2">6 letras minimo</small>
                 <small class="error" *ngIf="reference.validations.name == 3">Nombre ya asignado</small>
@@ -21,8 +21,8 @@
             <div class="formData l6 m6">
                 <label>Parentesco:</label><br>
                 <select [(ngModel)]="reference.relationship_id" name="relationship_id" placeholder="Parentesco">
-                            <option *ngFor="let x of relationshipOptions" value="{{x.value}}">{{x.view}}</option>               
-                        </select>
+                    <option *ngFor="let x of relationshipOptions" value="{{x.value}}">{{x.view}}</option>               
+                </select>
             </div>
 
             <div class="formData l6 m6">
@@ -36,7 +36,7 @@
 
             <div class="formData l6 m6">
                 <label>Correo</label><br>
-                <input type="mail" [ngClass]="{'inputError': reference.validations.email > 0 || reference.validations.nuMail > 0}" [(ngModel)]="reference.email" name="email" placeholder="Correo" (keyup)="reference.emailUpper()">
+                <input type="mail" [ngClass]="{'inputError': reference.validations.email > 0 || reference.validations.nuMail > 0}" [(ngModel)]="reference.email" name="email" placeholder="Correo" >
                 <small class="error" *ngIf="reference.validations.nuMail == 1">Se requiere el Correo/Telefono</small>
                 <small class="error" *ngIf="reference.validations.email == 1">13 caracteres minimo</small>
                 <small class="error" *ngIf="reference.validations.email == 2">Correo ya Asignado</small>
@@ -57,7 +57,7 @@
 
             <div class="formData l6 m6">
                 <label>Lugar de Trabajo:</label><br>
-                <input type="text" [(ngModel)]="reference.work_place" name="work_place" placeholder="Telefono" (keyup)="reference.work_placeUpper()">
+                <input type="text" [(ngModel)]="reference.work_place" name="work_place" placeholder="Telefono">
             </div>
 
             <button class="btn btnPrimary l12" type="submit">Aceptar</button>
@@ -65,9 +65,7 @@
         </form>
 
 
-        <!-- //SECCION PARA MODIFICAR REFERENCIA -->
-        <!-- //SECCION PARA MODIFICAR REFERENCIA -->
-
+        <!-- //SECCION PARA MODIFICAR REFERENCIA -->        
         <form class="flexRow" (submit)="update()" *ngIf="referenceToModify.updating" autocomplete="off">
 
 
@@ -142,7 +140,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let x of references">
+                    <tr *ngFor="let x of user.references">
                         <th>{{ x.id }}</th>
                         <th>{{ x.relationshipView }}</th>
                         <th (click)="selectReference(x)">{{ x.name }}</th>

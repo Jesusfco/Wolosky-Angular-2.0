@@ -1,108 +1,81 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes} from '@angular/animations';
 import { Reference } from '../../../classes/reference';
+import { UserService } from '../../../services/user.service';
+import { Router } from '@angular/router';
+import { User } from '../../../classes/user';
 
 @Component({
   selector: 'app-reference-create',
   templateUrl: './reference.component.html',
-  styleUrls: ['./reference.component.css'],
-  animations: [
-    trigger('principal', [
-      
-      state('initial', style({
-        transform: 'translate3d(100%,0,0)',                
-      })),
-
-      state('final' ,style({
-        transform: 'translate3d(0,0,0) scale(1)',               
-      })),      
-
-      transition('initial <=> final' , animate('350ms ease-out')),
-    ]),
-
-    trigger('background', [
-      
-      state('initial', style({        
-        opacity: 0
-      })),
-
-      state('final' ,style({       
-        opacity: .7
-      })),      
-
-      transition('initial <=> final' , animate('180ms ease-out')),
-    ])
-
-  ]
+  styleUrls: ['./reference.component.css'],  
 })
 export class ReferenceComponent implements OnInit {
-
-  cardState: string = 'initial';
-  backgroundState: string = 'initial';
-
-
-  @Output() closeReferenceEvent = new EventEmitter();
-  @Input() references;
+  
+  user: User = new User()
 
   public reference: Reference = new Reference();
   public referenceToModify: Reference = new Reference();
 
-  public relationshipOptions = this.reference.setRelationshipOptions();
+  public relationshipOptions = Reference.getRelationshipOptions();
 
   arrayNumber = 1;
+  outletOutput
 
+  @HostListener('document:keyup', ['$event']) sss($event) {    
+    if($event.keyCode == 27) 
+        this.close();    
+  }
+  constructor(
+    private _http: UserService,
+    private router: Router) {
 
-  constructor() { }
+      this.outletOutput = this._http.getData().subscribe(x => {      
+        if (x.action == 'user')   
+          this.user.setValues(x.data) 
+      })
 
-  ngOnInit() {
+     }
 
-    setTimeout(() => {      
-      this.cardState = 'final';
-      this.backgroundState = 'final';
-    }, 100);
+  ngOnInit() {  
 
     this.countReferences();
     
   }
 
+  ngOnDestroy(){
+    this.outletOutput.unsubscribe()
+  }
+
   countReferences(){
 
-    for(let x = 0; x < Object.keys(this.references).length; x++){
-      this.arrayNumber = this.references[x].id + 1;
+    for(let x = 0; x < Object.keys(this.user.references).length; x++){
+      this.arrayNumber = this.user.references[x].id + 1;
     }
 
   }
 
-  close(){
-
-    this.cardState = 'initial';
-    this.backgroundState = 'initial';
-
-    setTimeout(() => {      
-      this.closeReferenceEvent.emit();
-    }, 350);
-
-  }
+  close(){ this.router.navigate(['/users/create']) }
 
   form(){
 
 
     if(this.reference.validate()) {
       
-      this.reference.id =  this.arrayNumber;
-
-      this.reference.setRelationshipView();
+      this.reference.id =  this.arrayNumber;      
 
       this.reference.references = [];
       this.reference.validations = null;
 
-      this.references.push(this.reference);
+      this.user.references.push(this.reference);
 
       this.reference = new Reference();
-      this.reference.references = this.references;
+      this.reference.references = this.user.references;
 
       this.arrayNumber++;
       
+      this._http.sendData('REFERENCES', this.user.references)
+
     }
     
 
@@ -110,7 +83,8 @@ export class ReferenceComponent implements OnInit {
   }
 
   deleteReference(ref){    
-    this.references.splice(this.references.indexOf(ref), 1);
+    this.user.references.splice(this.user.references.indexOf(ref), 1);
+    this._http.sendData('REFERENCES', this.user.references)
   }
 
   selectReference(ref){
@@ -122,7 +96,7 @@ export class ReferenceComponent implements OnInit {
     this.referenceToModify.setValuesFromData(data);
     // Object.assign(this.referenceToModify, ref);  
     
-    this.referenceToModify.references = this.references;
+    this.referenceToModify.references = this.user.references;
     this.referenceToModify.beforeUpdate = ref;
     this.referenceToModify.updating = true;
 
@@ -138,22 +112,24 @@ export class ReferenceComponent implements OnInit {
 
   freshReferences() {
 
-    for(let i = 0; i < this.references.length; i++) {
+    for(let i = 0; i < this.user.references.length; i++) {
 
-      if(this.references[i].id == this.referenceToModify.id) {
+      if(this.user.references[i].id == this.referenceToModify.id) {
 
         this.referenceToModify.references = [];
         this.referenceToModify.validations = null;
 
-        this.references[i] = this.referenceToModify;
+        this.user.references[i] = this.referenceToModify;
         this.referenceToModify = new Reference();
-        this.referenceToModify.references = this.references;
+        this.referenceToModify.references = this.user.references;
 
         break;
 
       }
 
     }
+
+    this._http.sendData('REFERENCES', this.user.references)
 
   }
 

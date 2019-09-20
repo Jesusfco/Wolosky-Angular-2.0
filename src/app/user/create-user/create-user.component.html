@@ -198,13 +198,10 @@
             </tbody>
         </table>
 
-        <button class="btn referenceBtn" (click)="referenceView = true">Asignar Referencias</button>
+        <button class="btn referenceBtn" (click)="sendUser()" [routerLink]="['./references']">Asignar Referencias</button>
 
     </div>
 
 </div>
     
 </div>
-
-
-<app-reference-create *ngIf="referenceView" (closeReferenceEvent)="closeReferenceView()" [references]="references"></app-reference-create>
