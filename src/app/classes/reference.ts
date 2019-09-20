@@ -1,14 +1,14 @@
 export class Reference {
     public id: number;
     public user_id: number;
-    public relationship_id: number;    
-    public name: string;
-    public phone: string;
-    public phone2: string;
-    public email: string;
-    public work_place: string;
-    public created_at: String;
-    public updated_at: String;
+    public relationship_id: number = 1;    
+    public name: string = '';
+    public phone: string = '';
+    public phone2: string = '';
+    public email: string = '';
+    public work_place: string = '';
+    public created_at: String = '';
+    public updated_at: String = '';
 
     public updating: Boolean = false;
 
@@ -24,15 +24,9 @@ export class Reference {
         email: 0,
       };
 
-    constructor(){
-        this.name = '';
-        this.phone = '';
-        this.phone2 = '';
-        this.email = '';
-        this.work_place = '';
-        this.relationship_id = 1;
+    constructor(){                
         
-        this.restoreValidationValues();
+        
     }
 
     setValues(data) {

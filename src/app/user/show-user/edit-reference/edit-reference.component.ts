@@ -19,13 +19,11 @@ export class EditReferenceComponent implements OnInit {
 
   public cardState: String = 'initial';
   public backgroundState: String = 'initial';
+
   public sendingData: Boolean = false;
   public references: Array<Reference> = [];
   public user: User = new User();
-  public storage: Storage = new Storage();
-
-  public referenceDataObserver: any;
-  public userDataObserver: any;
+  public storage: Storage = new Storage();  
 
   public reference: Reference = new Reference();  
   public referenceToModify: Reference = new Reference();
@@ -37,12 +35,16 @@ export class EditReferenceComponent implements OnInit {
               private router: Router,
               private location: Location,
               private actRou: ActivatedRoute,
-              private notification: NotificationService) 
+              private notification: NotificationService,) 
   { 
     
     this.outletOutput = this._http.getData().subscribe(x => {      
-      if (x.action == 'user')   
+      if (x.action == 'user')    {
         this.user.setValues(x.data) 
+        this.references = Reference.convertToArray(x.data.references)
+        this.reference.user_id = this.user.id
+      }
+        
     })
   }
 
@@ -52,7 +54,7 @@ export class EditReferenceComponent implements OnInit {
     this.outletOutput.unsubscribe()
   }
 
-  close(){ this.router.navigate(['../']) }  
+  close(){ this.location.back(); }  
 
   form(){
 
@@ -60,19 +62,20 @@ export class EditReferenceComponent implements OnInit {
 
       this.sendingData = true;
 
-      this.reference.references = [];
-      this.reference.validations = null;
+      // this.reference.references = [];
+      // this.reference.validations = null;
       
       this._http.postReference(this.reference).then(
 
         data => {
 
           let r = new Reference();
-          r.setValuesFromData(data);
+          r.setValues(data);
           
           this.references.push(r);
 
           this.reference = new Reference();
+          this.reference.user_id = this.user.id
           this.reference.references = this.references;
           
           this.notification.sendNotification('Referencia Guardada', 'Datos guardados en el servidor', 5000)

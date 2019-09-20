@@ -24,7 +24,7 @@
 
                 <div class="formData l6 m6">
                     <label>Nombre completo:</label><br>
-                    <input type="text" [ngClass]="{'inputError': reference.validations.name > 0}" [(ngModel)]="reference.name" name="name" placeholder="Nombre Completo" (keyup)="reference.nameUpper()">
+                    <input type="text" [ngClass]="{'inputError': reference.validations.name > 0}" [(ngModel)]="reference.name" name="name" placeholder="Nombre Completo">
                     <small class="error" *ngIf="reference.validations.name == 1">Requerido</small>
                     <small class="error" *ngIf="reference.validations.name == 2">6 letras minimo</small>
                     <small class="error" *ngIf="reference.validations.name == 3">Nombre ya asignado</small>
@@ -143,7 +143,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <!-- <th>#</th> -->
                             <th>Parentesco</th>
                             <th>Nombre</th>
                             <th>Tel1</th>
@@ -155,7 +155,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let x of references">
-                            <th>{{ x.id }}</th>
+                            <!-- <th>{{ x.id }}</th> -->
                             <th>{{ x.relationshipView }}</th>
                             <th (click)="selectReference(x)">{{ x.name }}</th>
                             <th (click)="selectReference(x)">{{ x.phone }}</th>
