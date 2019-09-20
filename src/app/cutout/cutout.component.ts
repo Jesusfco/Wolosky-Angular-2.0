@@ -27,6 +27,7 @@ export class CutoutComponent implements OnInit {
   sendingData: boolean = false;
 
   cashbox: Cash = Cash.getCashbox();
+  cashbox2: Cash = Cash.getCashbox();
   cashHistory: CashboxHistory = new CashboxHistory()
 
   constructor(
@@ -60,7 +61,20 @@ export class CutoutComponent implements OnInit {
 
     this._http.updateCash({cash: this.cashbox.amount}).then(
       data => {
-        
+        this.cashHistory.setData(data.history)
+        Cash.addCash(this.cashbox.amount)
+        this.notificatio.sendNotification(
+          'Dinero en caja actualizado',
+          'El recorte de caja ha concluido con exito', 5000
+        )
+
+        this.cashbox2 = Cash.getCashbox()
+        this.receipts = []        
+        this.expenses = []
+        this.cutout = {
+          expenses: 0,
+          receipts: 0
+        }
       },
       error => alert('no se pudo actualizar')
     ).then(
