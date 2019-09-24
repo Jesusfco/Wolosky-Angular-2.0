@@ -81,11 +81,13 @@ export class ShowSaleComponent implements OnInit {
     this.sendData++
     this._http.deleteSale(this.sale.id, n).then(
       data => {
-        if(n == 1) {
-          if(this.sale.type <= 2) 
-            Cash.addCash(- this.sale.total)
-          this.closePop()
-        }
+        // if(n == 1) {
+        //   if(this.sale.type <= 2) 
+        //     Cash.addCash(- this.sale.total)        
+        // }
+        this._http.sendData('delete', this.sale)
+        this.closePop()
+
       }, error => this.notification.sendError(error)
     ).then(() =>this.sendData--)
 

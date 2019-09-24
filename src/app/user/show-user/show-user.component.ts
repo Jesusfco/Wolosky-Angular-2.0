@@ -86,7 +86,7 @@ export class ShowUserComponent implements OnInit {
 
   }
 
-  ngOnDestroy() {
+  ngOnDestroy() {    
     this.outletOutput.unsubscribe()
   }
 

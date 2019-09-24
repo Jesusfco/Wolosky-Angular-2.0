@@ -31,8 +31,7 @@ export class EditScheduleComponent implements OnInit {
   };  
   
   scheduleCopied: Schedule
-  sendingData: Boolean = false
-  schedules: Array<Schedule> = []
+  sendingData: Boolean = false  
   sche: Schedule = new Schedule()
   user: User = new User()
 
@@ -87,7 +86,7 @@ export class EditScheduleComponent implements OnInit {
           array.push(m);          
         }
         localStorage.setItem('monthlyPrices', JSON.stringify(array));
-        this.setResult()        
+        this.countHoursForMonthlyAnalisis()        
       },
       error => this.notification.sendError(error)
     );
@@ -104,12 +103,6 @@ export class EditScheduleComponent implements OnInit {
     
   }
 
-  
-  selectLV(){
-    for(let x = 0; x < 5;x++){
-      this.schedules[x].active = true;
-    }
-  }
 
   form(){    
     
@@ -150,12 +143,13 @@ export class EditScheduleComponent implements OnInit {
         this._http.sendData('SCHEDULES', this.user.schedules)          
 
       }, error => this.notification.sendError(error)
+
     ).then( () => this.sendingData = false )
 
     
   }
 
-  setResult() {
+  countHoursForMonthlyAnalisis() {
 
     if(this.validateSchedules()) {
       
@@ -218,12 +212,9 @@ export class EditScheduleComponent implements OnInit {
     this.validations.checkOut = 0;
     this.validations.format = 0;
 
-    for(let x of this.schedules){
-
-      x.error = 0;
-      
-    }
-
+    for(let x of this.user.schedules)
+      x.error = 0;      
+          
   }
 
   changeActive(day) {
@@ -278,14 +269,16 @@ export class EditScheduleComponent implements OnInit {
     if(sche.id != null) {
 
       this._http.deleteSchedule(sche).then(
+
         data => { 
           
           this.splitSchedule(sche);
 
-          this._http.sendData('SCHEDULES', this.schedules)
+          this._http.sendData('SCHEDULES', this.user.schedules)
+          this.countHoursForMonthlyAnalisis()
 
         } ,
-        error => localStorage.setItem('request', JSON.stringify(error))
+        error => this.notification.sendError(error)
       );
 
     } else {
@@ -378,7 +371,7 @@ export class EditScheduleComponent implements OnInit {
     this.quitEdit()            
     schedule.check_in = this.scheduleCopied.check_in
     schedule.check_out = this.scheduleCopied.check_out
-    this.setResult()
+    this.countHoursForMonthlyAnalisis()
   }
 
   quitEdit(){

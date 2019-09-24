@@ -139,19 +139,8 @@ export class User {
             
         }
        
-        if(data.schedules != undefined) {
-
-            this.schedules = [];
-
-            for(let sche of data.schedules) {
-                
-                let schedule: Schedule = new Schedule();
-                schedule.setValues(sche);
-                this.schedules.push(sche);
-
-            }
-
-        }
+        if(data.schedules != undefined) 
+            this.schedules = Schedule.convertToArray(data.schedules)
 
         if(data.references != undefined) {
 

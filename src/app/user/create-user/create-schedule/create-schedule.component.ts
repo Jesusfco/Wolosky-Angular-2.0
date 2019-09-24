@@ -21,7 +21,8 @@ export class CreateScheduleComponent implements OnInit {
     validate: true,
     checkIn: -1,
     checkOut: -1,
-    format: 0
+    format: 0,
+    crossed: 0,
   };
 
   user: User = new User();
@@ -164,13 +165,15 @@ export class CreateScheduleComponent implements OnInit {
 
   countHours(){
 
-    if(this.user.user_type_id != 1) return;
-
-    const re = Schedule.countHours(this.user.schedules);
+    if(this.user.user_type_id == 1){
+      const re = Schedule.countHours(this.user.schedules);
     
-    this.analisisCountHours.hours = re.hours;
-    this.analisisCountHours.amount = re.amount;
-    this.analisisCountHours.amountForce = re.amount;
+      this.analisisCountHours.hours = re.hours;
+      this.analisisCountHours.amount = re.amount;
+      this.analisisCountHours.amountForce = re.amount;
+    }    
+
+
 
   }
 
@@ -195,11 +198,20 @@ export class CreateScheduleComponent implements OnInit {
           x.error = 1;
         } 
 
-      }  
+      }
+      
+      // for(let sche of this.user.schedules){
+      //   if(sche.day_id == x.day_id){
+      //     if(sche.check_in >= x.check_in && sche)
+      //   }
+      // }
 
     }
 
-    if(this.validations.checkOut == 1 || this.validations.checkOut == 1 || this.validations.format == 1) this.validations.validate = false;
+    if(this.validations.checkOut == 1 || this.validations.checkOut == 1 
+      || this.validations.format == 1 || this.validations.crossed == 1
+    ) 
+      this.validations.validate = false;
 
 
     return this.validations.validate;
@@ -209,6 +221,7 @@ export class CreateScheduleComponent implements OnInit {
     this.validations.validate = true;
     this.validations.checkIn = 0;
     this.validations.checkOut = 0;
+    this.validations.crossed = 0;
     this.validations.format = 0;
     for(let x of this.user.schedules){
       x.error = 0;

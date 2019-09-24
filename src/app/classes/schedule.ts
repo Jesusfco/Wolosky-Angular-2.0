@@ -105,11 +105,33 @@ export class Schedule {
     static convertToArray(data: any): Schedule[] {
     
         let array: Array<Schedule> = [];
-            for(let d of data) {
-              let obj = new Schedule();
-              obj.setValues(d);
-              array.push(obj);
+
+        for(let d of data) {
+            let obj = new Schedule();
+            obj.setValues(d);
+            array.push(obj);
+        }
+
+        array.sort((a, b) => {
+            if(a.check_in < b.check_in){
+              return -1;
+            } else if (a.check_in > b.check_in){
+              return 1;
+            } else {
+              return 0;
             }
+        })
+
+        array.sort((a, b) => {
+            if(a.day_id < b.day_id){
+              return -1;
+            } else if (a.day_id > b.day_id){
+              return 1;
+            } else {
+              return 0;
+            }
+        })
+
         return array;
     
     }

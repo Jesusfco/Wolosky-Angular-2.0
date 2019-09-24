@@ -24,8 +24,8 @@ export class SchedulesComponent implements OnInit {
   search = {
     type: 1,    
     name: '',    
-    to: '',    
-    from: '',    
+    from: '19:00:00',    
+    to: '20:00:00',    
   };
 
   constructor(private _http: ScheduleService) {    

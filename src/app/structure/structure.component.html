@@ -60,7 +60,7 @@
     <ul>        
         <li [routerLink]="['/users']"><button mat-button>Usuarios</button></li>
         <li [routerLink]="['/events']"><button mat-button>Eventos</button></li>
-        <li [routerLink]="['/monthly-cost']"><button mat-button>Costos por Hora</button></li>
+        <li [routerLink]="['/monthly-cost']"><button mat-button>Mensualidades</button></li>
     </ul>
 
     <ul *ngIf="userData.getUserType() <= 5 && userData.getUserType() >= 2">

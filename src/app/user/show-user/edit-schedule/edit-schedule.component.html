@@ -25,7 +25,7 @@
             <p *ngIf="validations.format == 1">Recuerda que siempre la H.Entrada debe ser mas temprano que la H.Salida</p>
         </div>
 
-        <button (click)="selectLV()" class="btn LV">L-V</button>
+        <!-- <button (click)="selectLV()" class="btn LV">L-V</button> -->
         <!-- [ngClass]="{active: x.active}" -->
         <button (click)="createNewSchedule(day.day_id)" matTooltip="Crear Horario en día {{ day.day_id | dayPipe}}"  *ngFor="let day of days" class="btn black">{{ day.day }}</button>
         <button class="btn blue" *ngIf="scheduleCopied">Horario Copiado: 

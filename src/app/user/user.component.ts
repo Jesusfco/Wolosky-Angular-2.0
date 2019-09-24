@@ -51,7 +51,9 @@ export class UserComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.request.unsubscribe()    
+    if(this.request != null)
+      if(!this.request.closed) 
+        this.request.unsubscribe()    
   }
   
 
