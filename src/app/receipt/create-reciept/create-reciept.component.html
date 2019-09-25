@@ -49,8 +49,8 @@
             <div class="l6 relative">
                 <label>Monto:</label><br>
 
-                <input *ngIf="receipt.type == 1 && storage.getUserType() <= 4" [(ngModel)]="receipt.monthlyAmount" name="monthlyAmount" type="number" disabled>
-                <input *ngIf="receipt.type == 1 && storage.getUserType() >= 6" [(ngModel)]="receipt.monthlyAmount" name="monthlyAmount" type="number" min="0">
+                <input *ngIf="receipt.type == 1 && credential <= 4" [(ngModel)]="receipt.monthlyAmount" name="monthlyAmount" type="number" disabled>
+                <input *ngIf="receipt.type == 1 && credential >= 6" [(ngModel)]="receipt.monthlyAmount" name="monthlyAmount" type="number" min="0">
 
                 <small class="validate" *ngIf="validation.paymentDate == 1 && receipt.type == 1">Descuento ${{desc}}.00</small>
                 <small class="error" *ngIf="validation.paymentDate == 2 && receipt.type == 1">Recargo ${{recharge}}.00</small>

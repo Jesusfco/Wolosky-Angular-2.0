@@ -28,7 +28,7 @@
             </div>
         </div>
 
-        <div class="l4" *ngIf="storage.getUserType() >= 6">
+        <div class="l4" *ngIf="credential >= 6">
             <div class="icon-left">
                 <input (change)="getReceipts()" type="date" [(ngModel)]="search.to" name="to">
                 <label class="icon"><mat-icon>date_range</mat-icon></label>

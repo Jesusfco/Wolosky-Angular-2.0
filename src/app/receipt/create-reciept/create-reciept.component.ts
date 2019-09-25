@@ -7,6 +7,7 @@ import { ReceiptService } from '../../services/receipt.service';
 import { Storage } from '../../classes/storage';
 import { Receipt } from '../../classes/receipt';
 import { User } from '../../classes/user';
+import { Cash } from '../../classes/cash';
 // import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
@@ -52,13 +53,15 @@ export class CreateRecieptComponent implements OnInit {
   
   public request: any = undefined;
 
-  public storage: Storage =  new Storage();
+  credential
   auth: User = User.authUser()
   httpSugestSubscription
   constructor(private router: Router,
     private actRou: ActivatedRoute,
     private _http: ReceiptService,
     private notification: NotificationService) { 
+
+      this.credential = this.auth.user_type_id
 
       let d = new Date();
       this.receipt.month = d.getMonth() + 1;
@@ -227,7 +230,7 @@ export class CreateRecieptComponent implements OnInit {
         this._http.sendData('new', this.receipt);
         
         if(this.receipt.payment_type == false) 
-          this.storage.updateCash(data.amount);        
+          Cash.addCash(data.amount);       
 
         this.notification.sendNotification('Recibo Creado', 'Datos guardados en el servidor', 5000);
         this.window++;

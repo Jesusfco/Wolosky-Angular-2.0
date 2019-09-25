@@ -7,6 +7,7 @@ import { ReceiptService } from '../../services/receipt.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NotificationService } from '../../notification/notification.service';
 import { CashboxHistory } from '../../classes/cashbox-history';
+import { User } from '../../classes/user';
 
 @Component({
   selector: 'app-show-receipt',
@@ -27,7 +28,7 @@ export class ShowReceiptComponent implements OnInit {
   private observerRef: any;
   public request: boolean = false;
   public receipt: Receipt = new Receipt();
-  public storage: Storage = new Storage();
+  credential = User.authUser().user_type_id
 
   constructor(private _http: ReceiptService, 
     private router: Router, 

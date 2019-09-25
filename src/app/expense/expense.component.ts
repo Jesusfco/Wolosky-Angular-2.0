@@ -7,6 +7,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { Storage } from '../classes/storage';
 import { MyCarbon } from '../utils/classes/my-carbon';
 import { User } from '../classes/user';
+import { NotificationService } from '../notification/notification.service';
 
 @Component({
   selector: 'app-expense',
@@ -30,7 +31,10 @@ export class ExpenseComponent implements OnInit {
 
   public auth: User = User.authUser();
 
-  constructor(private _http: ExpenseService, private router: Router) {
+  constructor(
+    private _http: ExpenseService, 
+    private router: Router,
+    private notification: NotificationService) {
       this.getDates();
       
 
@@ -53,13 +57,12 @@ export class ExpenseComponent implements OnInit {
 
       data => {
 
-        this.expenses = Expense.convertToArray(data.data)
-
+        this.expenses = Expense.convertToArray(data.data)        
         this.search.total = data.total;
         
       },
       
-      error => console.log(error)
+      error => this.notification.sendError(error)
       
     ).then(
 

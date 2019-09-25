@@ -5,6 +5,7 @@ import { Storage } from '../classes/storage';
 import { Receipt } from '../classes/receipt';
 import { MyCarbon } from '../utils/classes/my-carbon';
 import { NotificationService } from '../notification/notification.service';
+import { User } from '../classes/user';
 
 @Component({
   selector: 'app-receipt',
@@ -47,7 +48,7 @@ export class ReceiptComponent implements OnInit {
 
   request
   sendingData = 0
-
+  credential = User.authUser().user_type_id
   public storage: Storage = new Storage();
   httpSugestSubscription: any;
   

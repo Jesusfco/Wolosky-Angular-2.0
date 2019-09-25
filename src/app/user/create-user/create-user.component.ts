@@ -29,7 +29,7 @@ export class CreateUserComponent implements OnInit {
   backgroundState: string = 'initial';
   sendingData: boolean = false;
   
-  credential = parseInt(localStorage.getItem('userType'));
+  credential = User.authUser().user_type_id;
 
   user: User = new User();
   monthlyPrices: Array<MonthlyPrice> = [];

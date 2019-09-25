@@ -11,7 +11,7 @@
     <div style="background-image: url(../assets/img/backgroundMenu.jpeg)" id="userInfSection">
         <div>
 
-            <img src="{{ auth.img }}">
+            <img src="{{ auth.getImage }}">
             <p>{{auth.name | lowercase}}</p>
             <p id="emailInf">{{auth.email | lowercase}}</p>
             <div id="userTypeInf">

@@ -238,6 +238,7 @@ export class CreateScheduleComponent implements OnInit {
     this.quitEdit()        
     schedule.check_in = this.scheduleCopied.check_in
     schedule.check_out = this.scheduleCopied.check_out
+    this.countHours()
   }
 
   editSchedule(schedule){
@@ -250,6 +251,7 @@ export class CreateScheduleComponent implements OnInit {
   deleteSchedule(schedule){
     let i = this.user.schedules.indexOf(schedule);
     this.user.schedules.splice(i, 1);
+    this.countHours();
   }
 
   quitEdit(){

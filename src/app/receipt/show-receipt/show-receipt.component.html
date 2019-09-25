@@ -14,9 +14,9 @@
 
         <div class="options">
             <i class="material-icons" (click)="window = 1" matTooltip="Ver Recibo">visibility</i>
-            <i class="material-icons" (click)="window = 3" matTooltip="Editar Recibo" *ngIf="storage.getUserType() > 5">edit</i>
+            <i class="material-icons" (click)="window = 3" matTooltip="Editar Recibo" *ngIf="credential > 5">edit</i>
             <i class="material-icons" (click)="printReceipt()" matTooltip="Imprimir recibo">print</i>
-            <i class="material-icons" (click)="window = 2" matTooltip="Eliminar Recibo" *ngIf="storage.getUserType() > 5">delete</i>
+            <i class="material-icons" (click)="window = 2" matTooltip="Eliminar Recibo" *ngIf="credential > 5">delete</i>
         </div>
 
 
@@ -53,14 +53,12 @@
 
             </div>
 
-            <div *ngIf="receipt.type == 1" class="formData l6">
-                <label>Mes:</label><br>
-                <p>{{ receipt.monthView() }}</p>
-            </div>
+            <div class="formData l6">
 
-            <div class="formData l6" *ngIf="receipt.type == 1 || receipt.type == 2">
-                <label>Año:</label><br>
-                <p>{{ receipt.year }}</p>
+                <label>Descripción:</label><br>
+                <p *ngIf="receipt.type != 3">{{ receipt.descriptionView }}</p>
+                <p *ngIf="receipt.type == 3">{{ receipt.description }}</p>
+
             </div>
             
             <div class="formData l12" *ngIf="receipt.type == 5 ">

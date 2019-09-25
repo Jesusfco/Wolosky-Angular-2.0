@@ -9,71 +9,52 @@ import { Url } from './url';
 
 export class User {
 
-    public id: number = null;
-    public email:  string = '';
-    public password: string = '';
-    public name: string = '';
-    public img: string = '';
-    public birthday: string = '';
-    public curp: string = '';
-    public placeBirth: string = '';
-    public gender: number = null;
-    public phone: string = '';
-    public insurance: string = '';
+    id: number = null;
+    email:  string = '';
+    password: string = '';
+    name: string = '';
+    img: string = '';
+    birthday: string = '';
+    curp: string = '';
+    placeBirth: string = 'TUXTLA GUTIERREZ';
+    gender: number = 1;
+    phone: string = '';
+    insurance: string = '';
 
-    public street: string = '';
-    public houseNumber: number = null;
-    public colony: string = '';
-    public city: string = '';
+    street: string = '';
+    houseNumber: number = null;
+    colony: string = '';
+    city: string = 'TUXTLA GUTIERREZ';
 
-    public timer: any;
-    public validations: any;
+    timer: any = {
+        name: 0,
+        email: 0
+    }
+    validations: any  = {
+        validate: true,
+        name: 0,
+        email: 0,
+        password: 0,
+        monthlyPaymentAmount: 0,
+        salaryAmount: 0
+    };
 
-    public creator_user_id: number = null;
-    public monthly_payment_id: number;
-    public user_type_id: number;
-    public salary_id: number;
+    creator_user_id: number = null;
+    monthly_payment_id: number;
+    user_type_id: number = 1;
+    salary_id: number;
     
-    public status: number;    
-    public created_at: string;
-    public updated_at: string;    
+    status: number;    
+    created_at: string;
+    updated_at: string;    
 
-    public salary: Salary = new Salary();
-    public monthly_payment: MonthlyPayment = new MonthlyPayment();
-    public schedules: Array<Schedule> = [];
-    public references: Array<Reference> = [];
-    public payments: Array<Payment> = [];
+    salary: Salary = new Salary();
+    monthly_payment: MonthlyPayment = new MonthlyPayment();
+    schedules: Array<Schedule> = [];
+    references: Array<Reference> = [];
+    payments: Array<Payment> = [];
 
-    constructor(){
-        this.name = '';
-        this.user_type_id = 1;
-        this.phone = '';
-        this.email = '';
-        this.birthday = null;
-        this.placeBirth = 'TUXTLA GUTIERREZ';
-        this.curp = '';
-        this.insurance = '';
-        this.gender = 1;
-        this.password = null;
-
-        this.street = '';
-        this.houseNumber = null;
-        this.colony = '';
-        this.city = 'TUXTLA GUTIERREZ';
-
-        this.timer = {
-            name: 0,
-            email: 0
-        };
-
-        this.validations = {
-            validate: true,
-            name: 0,
-            email: 0,
-            password: 0,
-            monthlyPaymentAmount: 0,
-            salaryAmount: 0
-        };
+    constructor(){                        
     }
 
     setData(data) {
@@ -164,7 +145,7 @@ export class User {
         localStorage.setItem('userLogged', JSON.stringify(user))
     }
 
-    static  authUser() {
+    static authUser() {
         let user = new User()
         let data = JSON.parse(localStorage.getItem('userLogged'))
         if(data == undefined)   return user      
@@ -201,6 +182,24 @@ export class User {
         return 'Desconocido'
     }
 
+    get getImage() {
+        let y: Url = new Url();
+        
+        if(this.img != null) {
+            
+            return y.basic + 'images/app/users/' + this.img;
+
+        } else {
+
+            this.img = y.basic + 'images/app/';
+
+            if( this.gender == 1) {
+                return this.img + 'man_avatar.png';
+            } else {
+                return this.img + 'woman_avatar.png';
+            }
+        }   
+    }
     setImg() {
         let y: Url = new Url();
         
