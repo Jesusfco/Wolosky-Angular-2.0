@@ -156,7 +156,7 @@
                         <div class="formData l6 m6">
                             <label> Monto:</label><br>
                             <input [(ngModel)]="user.salary.amount" name="amount" type="number" min="0" placeholder="Monto" [ngClass]="{ 'inputError': user.validations.salaryAmount == 1}">
-                            <small class="error" *ngIf="user.validations.salaryAmount == 1">Requerido</small>
+                            <small class="error" *ngIf="user.validations.salaryAmount == 1">Monto Minimo $0</small>
                         </div>
 
 
@@ -181,7 +181,7 @@
                             <label>Monto:</label><br>
                             <input [(ngModel)]="user.monthly_payment.amount" name="amount" type="number" min="0" placehoder="Monto" *ngIf="credential >= 6">
                             <input [(ngModel)]="user.monthly_payment.amount" name="amount" type="number" placehoder="Monto" *ngIf="credential == 3" disabled>
-                            <small class="error" *ngIf="user.validations.monthlyPaymentAmount > 0">Requerido</small>
+                            <small class="error" *ngIf="user.validations.monthlyPaymentAmount > 0">Mensualidad minima de $0</small>
                         </div>
 
                         <div class="formData l6 m6">

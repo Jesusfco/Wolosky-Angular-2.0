@@ -282,6 +282,58 @@ export class User {
         }
     }
 
+    restoreValidations() {
+
+        this.validations = {
+            validate: true,
+            name: 0,
+            email: 0,
+            password: 0,
+            monthlyPaymentAmount: 0,
+            salaryAmount: 0
+        }
+
+    }
+
+    emailValidation(){
+        if(this.email == null || this.email == ''){
+          if(this.user_type_id > 2){
+            this.validations.validate = false;
+            this.validations.email = 1;
+          }
+          return false;
+        } else {
+          return true;
+        }
+    }
+
+    nameValidation(){
+
+        if(this.name == null || this.name == ''){
+          this.validations.validate = false;
+          this.validations.name = 1;
+          return false;
+        }
+        else {
+          return true;
+        }
+
+    }
+
+    monthlyPaymentAmountValidation(){
+        if(this.monthly_payment.amount == null || this.monthly_payment.amount < 0) {
+          this.validations.validate = false;
+          this.validations.monthlyPaymentAmount = 1; 
+        }    
+    }
+
+    salaryAmountValidation() {        
+        if (this.salary.amount == null || this.salary.amount < 0){
+          this.validations.validate = false;
+          this.validations.salaryAmount = 1;
+        }
+    }
+
 }    
 
 

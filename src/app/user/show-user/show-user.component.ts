@@ -124,7 +124,9 @@ export class ShowUserComponent implements OnInit {
 
   updateUser() {
 
-    if(this.user.validations.validate == false) return;
+    this.logicValidations()
+
+    if(!this.user.validations.validate) return;
 
     if (this.user.user_type_id > 1  && this.user.user_type_id < 5) {
 
@@ -137,10 +139,14 @@ export class ShowUserComponent implements OnInit {
     this.sendingData++;
 
     this._http.updateUser(this.user).then(
-      data => this.notification.sendNotification(
+      data => {
+        
+        this.notification.sendNotification(
         'Usuario ' + this.user.name + ' Actualizado',
-        'Los datos han sido cargados al servidor', 5000
-      ), error => this.notification.sendError(error)              
+        'Los datos han sido cargados al servidor', 5000)
+        this.showUser.setData(this.user)
+
+      }, error => this.notification.sendError(error)              
     ).then(
       () => this.sendingData--
     );
@@ -156,6 +162,27 @@ export class ShowUserComponent implements OnInit {
     );
 
   }
+
+  logicValidations(){
+
+    this.user.restoreValidations();
+
+    if(this.user.emailValidation())
+      this.uniqueEmail();    
+    if(this.user.nameValidation())
+      this.uniqueName();
+
+    if(this.user.user_type_id == 1){
+      this.user.monthlyPaymentAmountValidation();
+    }
+
+    else if(this.user.user_type_id >= 2 && this.user.user_type_id <= 4){
+      this.user.salaryAmountValidation();
+    }
+   
+    
+
+  }   
   
   setMonthlyPrices() {
     this._http.getAllMonthlyPrices().then(

@@ -10,6 +10,7 @@
             <h5>Error/es:</h5>
             <p *ngIf="validations.checkIn == 1">No se ha asignado la hora de entrada en todos los campos</p>
             <p *ngIf="validations.checkOut == 1">No se ha asignado la hora de salida en todos los campos</p>
+            <p *ngIf="validations.crossed == 1">Hay Horarios crusados</p>
             <p *ngIf="validations.format == 1">Recuerda que siempre la H.Entrada debe ser mas temprano que la H.Salida</p>
         </div>
 
