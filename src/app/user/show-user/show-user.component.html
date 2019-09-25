@@ -333,18 +333,21 @@
                     <thead>
                         <tr>
                             <th>Dia</th>
-                            <th>Entrada</th>
-                            <th>Salida</th>
+                            <th>Horario</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let x of showUser.schedules">
+                        <ng-container *ngFor="let day of scheduleDays">
+                            <tr  *ngIf="day.schedules.length > 0">
 
-                            <th>{{ x.day_id | dayPipe }}</th>
-                            <th>{{ x.check_in | time }}</th>
-                            <th>{{ x.check_out | time }}</th>
+                                <th>{{ day.day_id | dayPipe }}</th>
+                                <th>
+                                    <div *ngFor="let x of day.schedules">{{ x.check_in | time }} - {{ x.check_out | time }}</div>
+                                </th>                                
 
-                        </tr>
+                            </tr>
+                        </ng-container>
                     </tbody>
                 </table>
 

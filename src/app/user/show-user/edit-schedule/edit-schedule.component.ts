@@ -134,7 +134,7 @@ export class EditScheduleComponent implements OnInit {
         )                
 
         this.user.schedules = [];
-        
+        this.scheduleDays = []
         for(let d of data) {
 
           let sh = new Schedule();
@@ -143,7 +143,16 @@ export class EditScheduleComponent implements OnInit {
 
         }
 
-        this.sortSchedulesByDay();
+        this.scheduleDays = ScheduleDay.getScheduleDayArrayLD()
+
+        console.log(this.user.schedules)
+        setTimeout(() =>{
+          ScheduleDay.setSchedulesToArray(this.scheduleDays, this.user.schedules)
+          console.log(this.scheduleDays)
+          },200)
+        
+        
+        
 
         this._http.sendData('SCHEDULES', this.user.schedules)          
 
@@ -222,47 +231,6 @@ export class EditScheduleComponent implements OnInit {
           
   }
 
-  changeActive(day) {
-
-    let validate = null;
-    let count = 0;
-
-    for(let schedule of this.user.schedules) {
-
-      if(schedule.day_id == day.day_id) {
-
-        count++;
-
-        if(validate == null) {
-
-
-        }
-
-      }
-
-    }
-
-    if(count == 0) {
-
-      let schedule = new Schedule();
-
-      schedule.user_id = this.user.id;
-      schedule.day_id = day.day_id;      
-      schedule.active = true;
-
-      this.user.schedules.push(schedule);
-
-      this.sortSchedulesByDay();
-
-    }
-
-    setTimeout(() => {
-      // this.chronomize();
-    }, 10);
-
-  }
-
-
   startEditSche(schedule){
     this.quitEdit()
     schedule.edit = true;    
@@ -296,6 +264,8 @@ export class EditScheduleComponent implements OnInit {
 
       let i = this.user.schedules.indexOf(schedule);
       this.user.schedules.splice(i, 1);
+      this.scheduleDays = ScheduleDay.getScheduleDayArrayLD()
+      ScheduleDay.setSchedulesToArray(this.scheduleDays, this.user.schedules)
 
   }
 
@@ -327,43 +297,10 @@ export class EditScheduleComponent implements OnInit {
 
     this.user.schedules.push(schedule);
 
-    this.sortSchedulesByDay();
+    this.scheduleDays = ScheduleDay.getScheduleDayArrayLD()
+    ScheduleDay.setSchedulesToArray(this.scheduleDays, this.user.schedules)
 
-  }
-
-  sortSchedulesByDay() {
-
-
-    this.user.schedules.sort((a, b) => {
-
-      if(a.day_id < b.day_id) {
-        return -1;
-      } else if (a.day_id > b.day_id) {
-        return 1;
-      } else if (a.day_id == b.day_id) {
-
-        if(a.check_in < b.check_in) {
-
-          return -1;
-
-        } else if (a.check_in > b.check_in) {
-
-          return 1;
-
-        } else {
-
-          return 0;
-
-        }
-        
-      } else {
-
-        return 0;
-
-      }
-    });
-
-  }
+  }  
   
 
   copySchedule(schedule){

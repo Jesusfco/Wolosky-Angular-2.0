@@ -43,7 +43,47 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let x of user.schedules; let i = index">
+                    <ng-container *ngFor="let day of scheduleDays; let i = index">
+                        <tr  *ngIf="day.schedules.length > 0">
+
+
+                                <th (click)="createNewSchedule(day.day_id)">{{ day.day_id | dayPipe }}</th>
+                                <th> 
+                                    <ng-container *ngFor="let sche of day.schedules"> 
+                                        <div>
+                                            <span *ngIf="!sche.edit && sche.check_in != nul">{{ sche.check_in | time }}</span>
+                                            <span *ngIf="!sche.edit && sche.check_in == null">Asigne Hora de Entrada</span>
+                                            <input *ngIf="sche.edit" id="editCheckIn" (change)="countHours()" [ngClass]="{inputError: sche.error == 1}" [(ngModel)]="sche.check_in" name="check_in{{sche.id}}" type="time">
+                                        </div>
+                                    </ng-container>
+                                    
+                                </th>
+                                <th>
+                                    <ng-container *ngFor="let sche of day.schedules"> 
+                                        <div>
+                                            <span *ngIf="!sche.edit && sche.check_out != nul">{{ sche.check_out | time }}</span>
+                                            <span *ngIf="!sche.edit && sche.check_out == null">Asigne Hora de Entrada</span>
+                                            <input *ngIf="sche.edit" id="" (change)="countHours()" [ngClass]="{inputError: sche.error == 1}" [(ngModel)]="sche.check_out" name="check_out{{sche.id}}" type="time">
+                                        </div>
+                                    </ng-container>
+                                </th>
+                                        
+        
+                                <th>
+                                    <ng-container *ngFor="let x of day.schedules"> 
+                                        <div>
+                                            <button type="button" (click)="deleteSchedule(x)" class="red btn btnCancel">Eliminar</button>
+                                            <button type="button" (click)="startEditSche(x)" class="btn green">Editar</button>
+                                            <button type="button" class="btn orange" (click)="copySchedule(x)">Copiar</button>
+                                            <button type="button" class="btn black white-text" (click)="pasteSchedule(x)" *ngIf="scheduleCopied">Pegar</button>
+                                        </div>
+                                    </ng-container>
+                                    
+                                </th>
+        
+                            </tr>
+                        </ng-container>
+                    <!-- <tr *ngFor="let x of user.schedules; let i = index">
 
 
                         <th (click)="createNewSchedule(x)">{{ x.day_id | dayPipe }}</th>
@@ -69,7 +109,7 @@
                             <button type="button" class="btn black white-text" (click)="pasteSchedule(x)" *ngIf="scheduleCopied">Pegar</button>
                         </th>
 
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
 

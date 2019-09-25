@@ -13,6 +13,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Url } from '../../classes/url';
 import { Storage } from '../../classes/storage';
 import { UserService } from '../../services/user.service';
+import { ScheduleDay } from '../../utils/classes/schedule-day';
 
 @Component({
   selector: 'app-show-user',
@@ -40,6 +41,8 @@ export class ShowUserComponent implements OnInit {
   
   credential = User.authUser().user_type_id
 
+  scheduleDays: Array<ScheduleDay> = ScheduleDay.getScheduleDayArrayLD()
+  
   public userImgFile: any;
 
   constructor(private _http: UserService,
@@ -58,7 +61,9 @@ export class ShowUserComponent implements OnInit {
   
           this.user.schedules = Schedule.convertToArray(x.data)
           this.showUser.schedules = Schedule.convertToArray(x.data)
-  
+          this.scheduleDays = ScheduleDay.getScheduleDayArrayLD()
+          ScheduleDay.setSchedulesToArray(this.scheduleDays, this.user.schedules)
+          
         } else if(x.action ==  'REFERENCES') {
 
           this.user.references = Reference.convertToArray(x.data)
@@ -101,7 +106,8 @@ export class ShowUserComponent implements OnInit {
         if(this.user.img.length > 0) {
           this.downloadPerfilPhoto()
         }  
-        
+        this.scheduleDays = ScheduleDay.getScheduleDayArrayLD()
+        ScheduleDay.setSchedulesToArray(this.scheduleDays, this.user.schedules)
         this.sendUser()
 
       }, error => this.notification.sendError(error)

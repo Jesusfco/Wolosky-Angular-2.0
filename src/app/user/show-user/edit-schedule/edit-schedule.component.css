@@ -16,6 +16,11 @@ button {
     width: initial;
 }
 
+table button {
+    padding: 6px;
+    margin-top: 8px;
+}
+
 button:hover {
     opacity: .85;
     background: rgb(221, 221, 221);
