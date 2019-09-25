@@ -167,7 +167,7 @@ export class User {
     static  authUser() {
         let user = new User()
         let data = JSON.parse(localStorage.getItem('userLogged'))
-        if(data == undefined)   return null      
+        if(data == undefined)   return user      
         user.setData(data)
         return user
     }
