@@ -128,11 +128,7 @@ export class ShowUserComponent implements OnInit {
 
     if(!this.user.validations.validate) return;
 
-    if (this.user.user_type_id > 1  && this.user.user_type_id < 5) {
-
-      this.user.salary = this.salary;
-      if(this.salary.id != null)
-        this.updateSalary();  
+    if (this.user.user_type_id > 1  && this.user.user_type_id < 5) {              
         
     }
 
@@ -140,7 +136,7 @@ export class ShowUserComponent implements OnInit {
 
     this._http.updateUser(this.user).then(
       data => {
-        
+
         this.notification.sendNotification(
         'Usuario ' + this.user.name + ' Actualizado',
         'Los datos han sido cargados al servidor', 5000)

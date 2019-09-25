@@ -27,7 +27,7 @@
 
     <h5>APLICACIÓN</h5>
 
-    <ul *ngIf="auth.user_type_id >= 6">
+    <ul>
 
         
         <li [routerLink]="['/receipt']"><button mat-button>Recibos</button></li>
@@ -57,32 +57,7 @@
         <li [routerLink]="['/users']"><button mat-button>Usuarios</button></li>
         <li [routerLink]="['/events']"><button mat-button>Eventos</button></li>
         <li [routerLink]="['/monthly-cost']"><button mat-button>Mensualidades</button></li>
-    </ul>
-
-    <ul *ngIf="auth.user_type_id <= 5 && auth.user_type_id >= 2">
-
-
-        <li [routerLink]="['/users']"><button mat-button>Usuarios</button></li>
-
-        <li [routerLink]="['/schedules']"><button mat-button>Horarios</button></li>
-
-        <li [routerLink]="['/receipt']"><button mat-button>Recibos</button></li>
-
-        <li [routerLink]="['/events']"><button mat-button>Eventos</button></li>
-
-        <!-- <li [routerLink]="['/inventory']"><button mat-button>Inventario</button></li> -->
-
-        <li [routerLink]="['/sale-point']"><button mat-button>Punto de Venta <span class="notified">{{ auth.getSalesErrorConnection() }}</span></button></li>
-
-        <li [routerLink]="['/sales']"><button mat-button>Registro de Ventas</button></li>
-
-        <li [routerLink]="['/sale-debt']"><button mat-button>Deudores Abarrotería</button></li>
-
-        <li [routerLink]="['/expenses']"><button mat-button>Gastos</button></li>
-
-        <li [routerLink]="['/monthly-cost']"><button mat-button>Costos por Hora</button></li>
-
-    </ul>
+    </ul>   
 
     <h5>USUARIO</h5>
 

@@ -11,6 +11,7 @@ import { Storage } from '../../../classes/storage';
 import { MonthlyPrice } from '../../../classes/monthly-price';
 import { NotificationService } from '../../../notification/notification.service';
 import { Focus } from '../../../utils/classes/focus';
+import { ScheduleDay } from '../../../utils/classes/schedule-day';
 
 @Component({
   selector: 'app-edit-schedule',
@@ -47,6 +48,8 @@ export class EditScheduleComponent implements OnInit {
 
  storage: Storage = new Storage();
 
+ scheduleDays: Array<ScheduleDay> = ScheduleDay.getScheduleDayArrayLD()
+
   @HostListener('document:keyup', ['$event']) sss($event) {
     
     if($event.keyCode == 27) {
@@ -65,12 +68,14 @@ export class EditScheduleComponent implements OnInit {
 
       this.outletOutput = this._http.getData().subscribe(x => {      
         if (x.action == 'user') 
-          this.user.setValues(x.data)                
+          this.user.setValues(x.data)  
+          this.countHours()
+          ScheduleDay.setSchedulesToArray(this.scheduleDays, this.user.schedules)          
       });
 
       this.getMonthlyPrices()
 
-  }
+  }  
 
   ngOnInit() {
 
@@ -86,7 +91,7 @@ export class EditScheduleComponent implements OnInit {
           array.push(m);          
         }
         localStorage.setItem('monthlyPrices', JSON.stringify(array));
-        this.countHoursForMonthlyAnalisis()        
+        this.countHours()        
       },
       error => this.notification.sendError(error)
     );
@@ -149,7 +154,7 @@ export class EditScheduleComponent implements OnInit {
     
   }
 
-  countHoursForMonthlyAnalisis() {
+  countHours() {
 
     if(this.validateSchedules()) {
       
@@ -275,7 +280,7 @@ export class EditScheduleComponent implements OnInit {
           this.splitSchedule(sche);
 
           this._http.sendData('SCHEDULES', this.user.schedules)
-          this.countHoursForMonthlyAnalisis()
+          this.countHours()
 
         } ,
         error => this.notification.sendError(error)
@@ -368,10 +373,10 @@ export class EditScheduleComponent implements OnInit {
   }
 
   pasteSchedule(schedule){
-    this.quitEdit()            
+    this.quitEdit()                
     schedule.check_in = this.scheduleCopied.check_in
     schedule.check_out = this.scheduleCopied.check_out
-    this.countHoursForMonthlyAnalisis()
+    this.countHours()
   }
 
   quitEdit(){

@@ -57,9 +57,9 @@
                         </th>
 
                         <th *ngIf="x.edit">
-                            <input id="editCheckIn" (change)="setResult()" [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_in" name="check_in{{x.id}}" type="time">
+                            <input id="editCheckIn" (change)="countHours()" [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_in" name="check_in{{x.id}}" type="time">
                         </th>
-                        <th *ngIf="x.edit"><input (change)="setResult()" [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_out" name="check_out{{x.id}}" type="time">
+                        <th *ngIf="x.edit"><input (change)="countHours()" [ngClass]="{inputError: x.error == 1}" [(ngModel)]="x.check_out" name="check_out{{x.id}}" type="time">
                         </th>
 
                         <th>
