@@ -3,6 +3,10 @@ import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter }
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
 import { Storage } from '../classes/storage';
+import { User } from '../classes/user';
+import { CashboxHistory } from '../classes/cashbox-history';
+import { Product } from '../classes/product';
+import { NotificationService } from '../notification/notification.service';
 
 
 @Component({
@@ -31,7 +35,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private _http:  LoginService,
-    private router: Router) { }
+    private router: Router,
+    private notification: NotificationService) { }
   
     ngOnInit() {
       
@@ -53,35 +58,19 @@ export class LoginComponent implements OnInit {
       this._http.login(this.data).then(
         data => {
           localStorage.setItem('token', data.token);
-          localStorage.setItem('userName', data.user.name);
-          localStorage.setItem('userId', data.user.id);
-          localStorage.setItem('userEmail', data.user.email);                    
-          localStorage.setItem('userType', data.user.user_type_id);
-          
-          localStorage.setItem('userCash', data.cash);
-
-          this._http.getProducts().then(
-            product => {
-                this.storage.storageInventory(product);
-            },
-            error => localStorage.setItem('request', JSON.stringify(error))
-          );
+          User.storageAuthUser(data.user)        
+          Storage.storageCash(data.cash);
+          CashboxHistory.storeLastHistory(data.cash_history_last)
+          Product.storageInventory(data.products);                    
           
           this.router.navigate(['/users']);
           
         },
         error => {
-          localStorage.setItem('request', JSON.stringify(error));
+          
           this.serverConection = false;
         }
       );
-    }
-    
-    checkAuth() {
-      this._http.checkAuth().then(
-        data => console.log(data),
-        error => localStorage.setItem('request', JSON.stringify(error))
-      );  
     }
   
     validateMail(){

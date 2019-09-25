@@ -51,61 +51,15 @@ export class Storage {
 
     getUserType(){
         return parseInt(localStorage.getItem('userType'));
-    }
-
-    storageUserData(data) {        
-        localStorage.setItem('userName', data.name);
-        localStorage.setItem('userId', data.id);
-        localStorage.setItem('userEmail', data.email);
-        localStorage.setItem('userType', data.user_type_id);
-
-        let path = '';
-        
-        let y: Url = new Url();
-            
-        if(data.img != null) {
-                
-            path = y.basic + 'images/app/users/' + data.img;
-    
-        } else {
-    
-            path = y.basic + 'images/app/';
-
-            if( parseInt(data.gender) == 1) {
-                path = path + 'man_avatar.png';
-            } else {
-                path = path + 'woman_avatar.png';
-            }
-        }    
-
-        localStorage.setItem('userImg', path);
-    }
+    }    
     
     storageToken(data){
         localStorage.setItem('token', data.token);
     }
 
-    storageCash(data){
-        
-        localStorage.setItem('userCash', data.toString());
-    }
-    // SOBRE EL PUNTO DE VENTA
-    storageInventory(data){
-        if(data.length !== 0){
-
-            if( typeof data[0].id == 'string'){
-                for(let x = 0; x < data.length; x++){
-                    data[x].price = parseFloat(data[x].price);
-                    data[x].id = parseInt(data[x].id);
-                    data[x].stock = parseInt(data[x].stock);
-                    data[x].reorder = parseInt(data[x].reorder);
-                }
-            }
-
-        }
-
-        localStorage.setItem('inventory', JSON.stringify(data));
-    }
+    static storageCash(data){        
+        localStorage.setItem('cashbox', data.toString());
+    }    
 
     getInventory(){
         let array = JSON.parse(localStorage.getItem('inventory'));
@@ -121,13 +75,13 @@ export class Storage {
     }
 
     getCash(){
-        return localStorage.getItem('userCash');
+        return localStorage.getItem('cashbox');
     }
 
     pushProduct(data){
         let products = this.getInventory();
         products.push(data);
-        this.storageInventory(products);
+        Product.storageInventory(products);
     }
 
     updateProduct(product){
@@ -137,7 +91,7 @@ export class Storage {
             if (product.id == products[x].id) { 
                 products[x] = product;
                 console.log(products);
-                this.storageInventory(products);
+                Product.storageInventory(products);
                 break;
             }
         }
@@ -174,17 +128,17 @@ export class Storage {
     }
 
     storeCash(data){
-        localStorage.setItem('userCash', data.cash);
+        localStorage.setItem('cashbox', data.cash);
     }
 
     updateCash(cash){
-        let x = parseFloat(localStorage.getItem('userCash'));
+        let x = parseFloat(localStorage.getItem('cashbox'));
         x += cash;
-        localStorage.setItem('userCash', x.toString());
+        localStorage.setItem('cashbox', x.toString());
     }
     
     setCash(cash){
-        localStorage.setItem('userCash', cash.toString());
+        localStorage.setItem('cashbox', cash.toString());
     }
 
     storeServiceData(service){

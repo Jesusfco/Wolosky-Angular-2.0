@@ -5,6 +5,8 @@ import { LoginService } from './services/login.service';
 import { Storage } from './classes/storage';
 import { Router } from '@angular/router';
 import { LogoPop, BackgroundLogo } from './animations/initial.animation';
+import { Product } from './classes/product';
+import { CashboxHistory } from './classes/cashbox-history';
 
 @Component({
   selector: 'app-root',
@@ -60,15 +62,16 @@ export class AppComponent {
   checkLogin(){
     this._http.checkAuth().then(
       data => {
-        User.storageAuthUser(data.user)
-        this.localData.storageUserData(data.user);
-        this.localData.storageCash(data.cash);
+
+        User.storageAuthUser(data.user)        
+        Storage.storageCash(data.cash);
+        CashboxHistory.storeLastHistory(data.cash_history_last)
+        Product.storageInventory(data.products);
         
-        if(this.router.url == '/login') {
-          
+        if(this.router.url == '/login') {          
           this.router.navigate(['/users']);
         }
-          this.storeInventoryHttp();
+
       },
       error =>  {
         localStorage.removeItem('token');
@@ -85,14 +88,7 @@ export class AppComponent {
     this.stateLoader = (this.stateLoader === 'initial' ? 'final' : 'initial');
   }
 
-  storeInventoryHttp(){
-    this._http.getProducts().then(
-      data => {
-          this.localData.storageInventory(data);
-      },
-      error => console.log(error)
-    );
-  }
+  
 
   setloginObserverInterval(){
     this.loginObserverInterval = setInterval(() => this.loginObserverLogic(), 1000);

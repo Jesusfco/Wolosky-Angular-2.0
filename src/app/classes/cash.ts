@@ -6,21 +6,26 @@ export class Cash {
     constructor() {}
 
     getAmount() {
-        return parseInt( localStorage.getItem('userCash') );
+        return parseInt( localStorage.getItem('cashbox') );
     }
 
     addCash(cash) {
-        let money = parseInt( localStorage.getItem('userCash') );
-        localStorage.setItem('userCash', (money + cash).toString() );
+        let money = parseInt( localStorage.getItem('cashbox') );
+        localStorage.setItem('cashbox', (money + cash).toString() );
     }
 
     static addCash(cash) {
-        let money = parseInt( localStorage.getItem('userCash') );
-        localStorage.setItem('userCash', (money + cash).toString() );
+        let money = parseInt( localStorage.getItem('cashbox') );
+        localStorage.setItem('cashbox', (money + cash).toString() );
     }
     substractCash(cash) {
-        let money = parseInt( localStorage.getItem('userCash') );
-        localStorage.setItem('userCash', (money - cash).toString() );
+        let money = parseInt( localStorage.getItem('cashbox') );
+        localStorage.setItem('cashbox', (money - cash).toString() );
+    }
+
+    static substractCash(cash) {
+        let money = parseInt( localStorage.getItem('cashbox') );
+        localStorage.setItem('cashbox', (money - cash).toString() );
     }
 
     static getCashbox(){

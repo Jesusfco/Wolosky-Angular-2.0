@@ -6,6 +6,7 @@ import { Storage } from '../../classes/storage';
 import { ReceiptService } from '../../services/receipt.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NotificationService } from '../../notification/notification.service';
+import { CashboxHistory } from '../../classes/cashbox-history';
 
 @Component({
   selector: 'app-show-receipt',
@@ -71,6 +72,7 @@ export class ShowReceiptComponent implements OnInit {
       data => {
 
         this._http.sendData('delete', this.receipt);
+        CashboxHistory.decrementIfInLastCash(this.receipt)
         this.notificationService.sendNotification('Recibo Eliminado', 'Los datos han sido actualizado correctamente', 2500);
         this.closePop();
 

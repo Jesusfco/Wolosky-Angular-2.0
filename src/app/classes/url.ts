@@ -2,15 +2,15 @@ import { Storage } from "./storage";
 
 export class Url {
 
-    static basicUrl = "http://www.woloskygimnasia.com/";
-    // static basicUrl = 'http://localhost:8000/';
+    // static basicUrl = "http://www.woloskygimnasia.com/";
+    static basicUrl = 'http://localhost:8000/';
     public url: string;
     public basic: string;
     
-        constructor() {
-            this.basic = Url.basicUrl            
-            this.url = this.basic + 'api/';
-        }        
+    constructor() {
+        this.basic = Url.basicUrl            
+        this.url = this.basic + 'api/';
+    }        
 
     static getApiUrlToken(link: string): string {
         return this.basicUrl + 'api/' + link + Storage.getTokenUrl();

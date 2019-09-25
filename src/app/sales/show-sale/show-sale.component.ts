@@ -7,6 +7,7 @@ import { cardPop, backgroundOpacity } from '../../animations';
 import { Storage } from '../../classes/storage';
 import { NotificationService } from '../../notification/notification.service';
 import { Cash } from '../../classes/cash';
+import { CashboxHistory } from '../../classes/cashbox-history';
 
 @Component({
   selector: 'app-show-sale',
@@ -32,9 +33,7 @@ export class ShowSaleComponent implements OnInit {
   constructor(private router: Router, 
     private _http: SaleService, 
     private notification: NotificationService,
-    private actRou: ActivatedRoute) {
-
-      console.log(this.auth)
+    private actRou: ActivatedRoute) {      
 
       this.backSales = JSON.parse(localStorage.getItem('salesComponent'));
       this.products = JSON.parse(localStorage.getItem('inventory'));
@@ -44,10 +43,9 @@ export class ShowSaleComponent implements OnInit {
 
       this._http.showSale(this.sale.id).then(
         data => {
-          this.sale.setData(data);
-          console.log(this.sale)
+          this.sale.setData(data);          
         },
-        error => console.log(error)
+        error =>  this.notification.sendError(error)
       );
     });
    }
@@ -81,10 +79,10 @@ export class ShowSaleComponent implements OnInit {
     this.sendData++
     this._http.deleteSale(this.sale.id, n).then(
       data => {
-        // if(n == 1) {
-        //   if(this.sale.type <= 2) 
-        //     Cash.addCash(- this.sale.total)        
-        // }
+        if(n == 1) {
+          if(this.sale.receipts.length == 1) 
+            CashboxHistory.decrementIfInLastCash(this.sale.receipts[0])
+        }
         this._http.sendData('delete', this.sale)
         this.closePop()
 
