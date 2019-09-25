@@ -9,21 +9,18 @@ import { Url } from '../classes/url';
 export class ParkingService {
 
   public token: Storage = new Storage();
-  public url: Url = new Url()
-  private subject = new Subject<any>();  
+  public url: Url = new Url()  
 
   constructor(private _http: Http) { }
 
+  private subject = new Subject<any>();  
   getData(): Observable<any> {
     return this.subject.asObservable();
   }
 
   sendData(action: String, data: any) {
-    let message = {
-      action: action,
-      data: data
-    };
-    this.subject.next(message);
+    const message = {action: action, data: data};
+    setTimeout(() => this.subject.next(message), 50);    
   }
 
   getParkings(data){

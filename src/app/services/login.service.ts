@@ -2,7 +2,7 @@ import { Url } from '../classes/url';
 import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 import "rxjs";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { Storage } from '../classes/storage';
 
 @Injectable()
@@ -13,6 +13,15 @@ export class LoginService {
   
   constructor(private _http: Http) { }
 
+  private subject = new Subject<any>();  
+  getData(): Observable<any> {
+    return this.subject.asObservable();
+  }
+
+  sendData(action: String, data: any) {
+    const message = {action: action, data: data};
+    setTimeout(() => this.subject.next(message), 50);    
+  }
 
   login(information) {
     return this._http.post(this.link.url + 'login', information)

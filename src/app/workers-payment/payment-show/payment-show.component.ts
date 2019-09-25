@@ -73,7 +73,7 @@ export class PaymentShowComponent implements OnInit {
     this._http.getPayment(this.payment).then(
 
       data => this.payment.setValues(data),
-      error => this._http.sendData({action: 'notification', data: error})
+      error => this._http.sendData('notification', error)
 
     ).then(
 
@@ -95,10 +95,10 @@ export class PaymentShowComponent implements OnInit {
     this._http.updatePayment(this.payment).then(
       data => {
 
-        this._http.sendData({action: 'updatePayment', data: this.payment});        
+        this._http.sendData('updatePayment', this.payment);        
 
       },
-      error => this._http.sendData({action: 'notification', data: error})
+      error => this._http.sendData('notification', error)
 
     ).then(() => this.sendingData--);
   }
@@ -110,11 +110,11 @@ export class PaymentShowComponent implements OnInit {
     this._http.deletePayment(this.payment).then(
       data => {
 
-        this._http.sendData({action: 'deletePayment', data: this.payment});
+        this._http.sendData('deletePayment', this.payment);
         this.closePop();
 
       },
-      error => this._http.sendData({action: 'notification', data: error})
+      error => this._http.sendData('notification',error)
 
     ).then(() => this.sendingData--);
   }

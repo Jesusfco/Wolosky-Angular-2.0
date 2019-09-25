@@ -17,17 +17,14 @@ export class UserService {
   private subject = new Subject<any>();
   
   constructor(private _http: Http) { }
-
+  
   getData(): Observable<any> {
     return this.subject.asObservable();
   }
 
   sendData(action: String, data: any) {
-    
-    setTimeout(() => this.subject.next( {
-      action: action,
-      data: data
-    }), 50);
+    const message = {action: action, data: data};
+    setTimeout(() => this.subject.next(message), 50);    
   }
 
   create(information) {

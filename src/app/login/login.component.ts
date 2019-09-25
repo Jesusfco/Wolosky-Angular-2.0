@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
           Storage.storageCash(data.cash);
           CashboxHistory.storeLastHistory(data.cash_history_last)
           Product.storageInventory(data.products);                    
-          
+          this._http.sendData('auth', data.user)
           this.router.navigate(['/users']);
           
         },

@@ -68,6 +68,8 @@ export class AppComponent {
         CashboxHistory.storeLastHistory(data.cash_history_last)
         Product.storageInventory(data.products);
         
+        this._http.sendData('auth', data.user)
+        
         if(this.router.url == '/login') {          
           this.router.navigate(['/users']);
         }

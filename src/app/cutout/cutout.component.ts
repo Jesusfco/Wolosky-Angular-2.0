@@ -6,6 +6,7 @@ import { Expense } from '../classes/expense';
 import { Cash } from '../classes/cash';
 import { NotificationService } from '../notification/notification.service';
 import { CashboxHistory } from '../classes/cashbox-history';
+import { User } from '../classes/user';
 
 @Component({
   selector: 'app-cutout',
@@ -61,8 +62,14 @@ export class CutoutComponent implements OnInit {
 
     this._http.updateCash({cash: this.cashbox.amount}).then(
       data => {
+
+        data.history.created_at = data.history.created_at.date
         this.cashHistory.setData(data.history)
-        Cash.addCash(this.cashbox.amount)
+        this.cashHistory.creator = User.authUser()
+        CashboxHistory.storeLastHistory(this.cashHistory)
+
+        Cash.setCash(this.cashbox.amount)
+
         this.notificatio.sendNotification(
           'Dinero en caja actualizado',
           'El recorte de caja ha concluido con exito', 5000
@@ -76,7 +83,7 @@ export class CutoutComponent implements OnInit {
           receipts: 0
         }
       },
-      error => alert('no se pudo actualizar')
+      error => this.notificatio.sendError(error)
     ).then(
       () => this.sendingData = false
     );

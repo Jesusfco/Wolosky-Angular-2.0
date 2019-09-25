@@ -6,6 +6,7 @@ import { WorkPaymentService } from '../../services/work-payment.service';
 import { Record } from '../../classes/record';
 import { User } from '../../classes/user';
 import { Payment } from '../../classes/payment';
+import { NotificationService } from '../../notification/notification.service';
 
 @Component({
   selector: 'app-payment-create',
@@ -74,7 +75,7 @@ export class PaymentCreateComponent implements OnInit {
     card: 'initial',
   }
 
-  constructor(private _http: WorkPaymentService, private router: Router) { }
+  constructor(private _http: WorkPaymentService, private router: Router, private notification: NotificationService) { }
 
   ngOnInit() {    
         
@@ -342,12 +343,9 @@ export class PaymentCreateComponent implements OnInit {
       data => {
         payment.setValues(data);
         this.analizedArray[this.userSelect].payment = payment;
-        this._http.sendData({
-          data: payment,
-          action: 'new'
-        });
+        this._http.sendData('new', payment);
       },
-      error => localStorage.setItem('request', JSON.stringify(error))
+      error => this.notification.sendError(error)
       ).then(
         () => this.sendingData--
       );

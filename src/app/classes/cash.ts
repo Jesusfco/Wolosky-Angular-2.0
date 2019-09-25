@@ -13,11 +13,7 @@ export class Cash {
         let money = parseInt( localStorage.getItem('cashbox') );
         localStorage.setItem('cashbox', (money + cash).toString() );
     }
-
-    static addCash(cash) {
-        let money = parseInt( localStorage.getItem('cashbox') );
-        localStorage.setItem('cashbox', (money + cash).toString() );
-    }
+    
     substractCash(cash) {
         let money = parseInt( localStorage.getItem('cashbox') );
         localStorage.setItem('cashbox', (money - cash).toString() );
@@ -33,6 +29,15 @@ export class Cash {
         obj.id = 1;
         obj.amount = obj.getAmount()
         return obj
+    }
+
+    static setCash(cash) {        
+        localStorage.setItem('cashbox', (0 + cash).toString() );
+    }
+    
+    static addCash(cash) {
+        let money = parseInt( localStorage.getItem('cashbox') );
+        localStorage.setItem('cashbox', (money + cash).toString() );
     }
 
 }

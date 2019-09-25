@@ -13,16 +13,15 @@ export class WorkPaymentService {
   private subject = new Subject<any>();  
 
   constructor(private _http: Http) { }
-
+  
   getData(): Observable<any> {
     return this.subject.asObservable();
   }
 
-  sendData(message: any) {
-    this.subject.next(message);
+  sendData(action: String, data: any) {
+    const message = {action: action, data: data};
+    setTimeout(() => this.subject.next(message), 50);    
   }
-
- 
 
   getPayments(object) {
     return this._http.post(this.token.getUrl() + 'workers-payment' + this.token.getTokenUrl(), object )

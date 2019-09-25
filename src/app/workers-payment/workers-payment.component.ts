@@ -68,8 +68,7 @@ export class WorkersPaymentComponent implements OnInit {
   }
 
   sendPayment(payment) {
-    setTimeout(() => this._http.sendData({action: 'getPayment', data: payment}), 50);
-    
+    this._http.sendData('getPayment', payment)        
   }
 
   updatePayment(payment: Payment) {
@@ -98,9 +97,9 @@ export class WorkersPaymentComponent implements OnInit {
       title: 'Pago Eliminado',
       description: 'Los datos han sido eliminados permanentemente de la base de datos',
       time: 2500
-    };
-
-    this._http.sendData({action: 'notification', data: notification});
+    };    
+    
+    this._http.sendData('notification', notification) 
     
     let i = 0;
     for(let pay of this.payments) {

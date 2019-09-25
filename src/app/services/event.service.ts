@@ -13,17 +13,14 @@ export class EventService {
   private subject = new Subject<any>();  
 
   constructor(private _http: Http) { }
-
+  
   getData(): Observable<any> {
     return this.subject.asObservable();
   }
 
   sendData(action: String, data: any) {
-    let message = {
-      action: action,
-      data: data
-    };
-    this.subject.next(message); 
+    const message = {action: action, data: data};
+    setTimeout(() => this.subject.next(message), 50);    
   }
 
   search(data) {

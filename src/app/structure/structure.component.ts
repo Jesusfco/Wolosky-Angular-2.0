@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes} from '@angular/animations';
 import { Storage } from "../classes/storage";
 import { Router } from '@angular/router';
+import { User } from '../classes/user';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-structure',
@@ -45,9 +47,22 @@ export class StructureComponent implements OnInit {
 
   };
 
-  userData: Storage = new Storage();
+  auth: User = User.authUser();
+  storage: Storage =new Storage()
+  observerSer
 
-  constructor( private router: Router) { }
+  constructor( 
+    private router: Router,
+    private loginService: LoginService
+    ) { 
+
+      this.observerSer = this.loginService.getData().subscribe(data => {
+        if(data.action == 'auth') {
+          this.auth.setData(data.data)
+        }
+      })
+
+  }
 
   ngOnInit() {
     if(window.screen.width < 750){

@@ -190,6 +190,17 @@ export class User {
         return 'Desconocido'
     }
 
+    get typeView() {
+        if(this.user_type_id == 1) return 'Alumn@'
+        if(this.user_type_id == 2) return 'Maestr@'
+        if(this.user_type_id == 3) return 'Cajer@'
+        if(this.user_type_id == 4) return 'Contador@'
+        if(this.user_type_id == 5) return 'Escritor@'        
+        if(this.user_type_id == 6) return 'Administrador'
+        if(this.user_type_id == 7) return 'Desarrollador'
+        return 'Desconocido'
+    }
+
     setImg() {
         let y: Url = new Url();
         
