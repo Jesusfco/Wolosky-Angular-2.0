@@ -4,6 +4,7 @@ import { MonthlyPriceService } from '../services/monthly-price.service';
 
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operator/filter';
+import { User } from '../classes/user';
 
 @Component({
   selector: 'app-monthly-price',
@@ -15,7 +16,7 @@ export class MonthlyPriceComponent implements OnInit {
   public monthlyPrices: Array<MonthlyPrice> = [];
 
   public intervalNewPrice: any;
-  public credential = parseInt(localStorage.getItem('userType'));
+  public credential = User.authUser().user_type_id;
   public sort: number = 0;
   public request: boolean = false;
 

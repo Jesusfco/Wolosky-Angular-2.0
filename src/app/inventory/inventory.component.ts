@@ -5,6 +5,7 @@ import { Storage } from '../classes/storage';
 import { FilterInventoryPipe } from '../pipes/filter-inventory.pipe';
 import { PageEvent } from '@angular/material';
 import { Url } from '../classes/url';
+import { User } from '../classes/user';
 // import { setInterval } from 'timers';
 
 @Component({
@@ -21,6 +22,7 @@ export class InventoryComponent implements OnInit {
   search: string = '';
   createPro: boolean =  false;
   storage: Storage = new Storage();
+  auth: User = User.authUser()
   url: Url = new Url();
 
   lenghtArrayOptions: Array<number> = [ 10, 25, 50, 100, 200 ];

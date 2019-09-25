@@ -4,6 +4,7 @@ import { Product } from '../../classes/product';
 import { InventoryService } from '../../services/inventory.service';
 import { Storage } from '../../classes/storage';
 import { Router, ActivatedRoute } from '@angular/router';
+import { User } from '../../classes/user';
 
 
 
@@ -23,6 +24,7 @@ export class EditProductComponent implements OnInit {
   observerRef: any;
 
   store: Storage = new Storage();
+  credential = User.authUser().user_type_id
 
   state = {
     background: 'initial',

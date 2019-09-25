@@ -20,7 +20,7 @@
                 <th (click)="sortCode()">Codigo</th>
             </tr>
         </thead>
-        <tbody *ngIf="storage.getUserType() >= 6 && products != undefined">
+        <tbody *ngIf="auth.user_type_id >= 6 && products != undefined">
 
             <tr (click)="updateObservable()" [routerLink]="['/inventory/edit', product.id]" *ngFor="let product of products" [ngClass]="{ 'advice': product.stock < product.reorder && product.stock > 0, 'danger': product.stock < 1 }">
                 <td class="alignLeft">{{ product.name | lowercase }}</td>
@@ -33,7 +33,7 @@
             </tr>
         </tbody>
 
-        <tbody *ngIf="storage.getUserType() == 3 && products != undefined">
+        <tbody *ngIf="auth.user_type_id == 3 && products != undefined">
 
             <tr *ngFor="let product of products" [ngClass]="{ 'advice': product.stock < product.reorder && product.stock > 0, 'danger': product.stock < 1 }">
                 <td class="alignLeft">{{ product.name | lowercase }}</td>
@@ -63,11 +63,11 @@
                     </button>
         </a>
 
-        <button (click)="createObservable()" [routerLink]="['/inventory/create']" *ngIf="storage.getUserType() >= 6 " matTooltip="Nuevo Producto" matTooltipPosition="left" mat-fab id="sellButton">
+        <button (click)="createObservable()" [routerLink]="['/inventory/create']" *ngIf="auth.user_type_id >= 6 " matTooltip="Nuevo Producto" matTooltipPosition="left" mat-fab id="sellButton">
                 <mat-icon >create</mat-icon>
             </button>
 
-        <button *ngIf="storage.getUserType() == 3" matTooltip="Nuevo Producto" matTooltipPosition="left" mat-fab id="sellButton">
+        <button *ngIf="auth.user_type_id == 3" matTooltip="Nuevo Producto" matTooltipPosition="left" mat-fab id="sellButton">
                 <mat-icon >create</mat-icon>
             </button>
 

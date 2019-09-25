@@ -4,6 +4,7 @@ import { InventoryService } from '../../services/inventory.service';
 import { Storage } from '../../classes/storage';
 import { Router } from '@angular/router';
 import { cardPop, backgroundOpacity} from '../../animations';
+import { User } from '../../classes/user';
 
 // import { trigger, state, style, transition, animate, keyframes} from '@angular/animations';
 
@@ -34,6 +35,7 @@ export class NewProductComponent implements OnInit {
   };
 
   storage: Storage = new Storage();
+  credential = User.authUser().user_type_id
 
   constructor(private _http: InventoryService, private router: Router) { }
 
