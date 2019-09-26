@@ -30,6 +30,7 @@ export class AppComponent {
   ){}
 
   ngOnInit(){
+    console.log('WOLOSKY_APP: v1.5')
 
     this.webChargerLogic();
 

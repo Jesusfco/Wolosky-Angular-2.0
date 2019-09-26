@@ -58,7 +58,7 @@ export class UserComponent implements OnInit {
 
       _http.getData().subscribe(x => {
         if(x.action == 'FILTER') {
-
+          this.search.page = 1
           this.search.active = x.data.active
           this.search.inactive = x.data.inactive
           this.search.typeA = x.data.typeA
@@ -70,7 +70,7 @@ export class UserComponent implements OnInit {
           this.search.age2 = x.data.age2
           this.search.hours1 = x.data.hours1
           this.search.hours2 = x.data.hours2
-         
+          // this.searchRequest()
         }
       })
 

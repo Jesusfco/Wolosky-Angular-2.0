@@ -95,6 +95,8 @@ export class FilterUserComponent implements OnInit {
       hours1: this.hours1,
       hours2: this.hours2,
     })
+
+    this.closePop()
   }
 
   validateFilter() {

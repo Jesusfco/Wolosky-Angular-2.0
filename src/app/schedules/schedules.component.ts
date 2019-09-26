@@ -24,8 +24,8 @@ export class SchedulesComponent implements OnInit {
   search = {
     type: 1,    
     name: '',    
-    from: '19:00:00',    
-    to: '20:00:00',    
+    from: '',    
+    to: '',    
   };
 
   constructor(private _http: ScheduleService) {    
@@ -157,7 +157,7 @@ export class SchedulesComponent implements OnInit {
     this.setNameVisualSchedule();
     this.sortDataOrder();
 
-    console.log(this.dataOrder);
+    // console.log(this.dataOrder);
   
 
   }

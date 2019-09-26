@@ -51,15 +51,15 @@
         <div class="moreOptions">
     
             
-            <button class="green" matTooltip="Filtrar/Exportar Usuarios" [routerLink]="['./filter']" matTooltipPosition="left" mat-fab id="cancelButton" (click)="sendFilter()">
-                <mat-icon >file_download</mat-icon>
+            <button class="orange" matTooltip="Filtrar / Exportar Usuarios" [routerLink]="['./filter']" matTooltipPosition="left" mat-fab id="cancelButton" (click)="sendFilter()">
+                <mat-icon >filter_list</mat-icon>
             </button>
             
             <!-- <button class="red darken-4"  matTooltip="Eliminar Asistencias" [routerLink]="['./delete']" matTooltipPosition="left" mat-fab>
                 <mat-icon >delete</mat-icon>
             </button> -->
     
-            <button class="blue" [routerLink]="['./create']"  matTooltip="Nuevo Usuario" matTooltipPosition="left" mat-fab>                
+            <button class="green" [routerLink]="['./create']"  matTooltip="Nuevo Usuario" matTooltipPosition="left" mat-fab>                
                 <mat-icon >create</mat-icon>
             </button>
     
