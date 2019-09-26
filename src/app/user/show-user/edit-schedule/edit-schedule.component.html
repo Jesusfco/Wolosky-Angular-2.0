@@ -6,8 +6,8 @@
     <div id="cerrarBtn" [routerLink]="['../']"> Cerrar <i class="material-icons">close</i></div>
 
     <div class="form" [ngClass]="{'loadingForm': sendingData == true}">
-        <h1 align="center">Horarios</h1>
-        <h2 align="center">{{ user.name }}</h2>
+        <h1 align="center" (click)="con(user.schedules)">Horarios</h1>
+        <h2 align="center" (click)="con(scheduleDays)">{{ user.name }}</h2>
         <h3 align="center">{{ user.getUserTypeView() }}</h3>
 
         <div class="options">

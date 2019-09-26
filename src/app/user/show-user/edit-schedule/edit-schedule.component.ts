@@ -122,45 +122,35 @@ export class EditScheduleComponent implements OnInit {
 
       data => {
         
-        if(this.user.user_type_id == 1) {
-          this.result.amountActual = this.result.amountForce;
-
-          this._http.sendData('MONTHLY', this.result.amountForce)            
-
-        }
+        this.user.schedules = Schedule.convertToArray(data);  
+        this.scheduleDays = []
+        setTimeout(() => {
+          this.scheduleDays = ScheduleDay.getScheduleDayArrayLD()  
+          ScheduleDay.setSchedulesToArray(this.scheduleDays, this.user.schedules) 
+        },60)              
         
+
         this.notification.sendNotification(
           'Horario Actualizado','Datos cargados en el servidor', 4500
-        )                
+        )          
 
-        this.user.schedules = [];
-        this.scheduleDays = []
-        for(let d of data) {
+        this._http.sendData('SCHEDULES', data) 
 
-          let sh = new Schedule();
-          sh.setValues(d);          
-          this.user.schedules.push(sh);
-
-        }
-
-        this.scheduleDays = ScheduleDay.getScheduleDayArrayLD()
-
-        console.log(this.user.schedules)
-        setTimeout(() =>{
-          ScheduleDay.setSchedulesToArray(this.scheduleDays, this.user.schedules)
-          console.log(this.scheduleDays)
-          },200)
-        
-        
-        
-
-        this._http.sendData('SCHEDULES', this.user.schedules)          
+        if(this.user.user_type_id == 1) {
+          this.result.amountActual = this.result.amountForce;
+          this.user.monthly_payment.amount = this.result.amountForce;
+          this._http.sendData('MONTHLY', this.result.amountForce)            
+        }                                      
 
       }, error => this.notification.sendError(error)
 
     ).then( () => this.sendingData = false )
 
     
+  }
+
+  con(algo){
+    console.log(algo)
   }
 
   countHours() {

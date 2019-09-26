@@ -58,12 +58,14 @@ export class ShowUserComponent implements OnInit {
       this.outletOutput = this._http.getData().subscribe(x => {
       
         if (x.action == 'SCHEDULES') {
-  
+          
+          this.user.schedules = []
+          this.showUser.schedules = []
           this.user.schedules = Schedule.convertToArray(x.data)
           this.showUser.schedules = Schedule.convertToArray(x.data)
           this.scheduleDays = ScheduleDay.getScheduleDayArrayLD()
           ScheduleDay.setSchedulesToArray(this.scheduleDays, this.user.schedules)
-          
+
         } else if(x.action ==  'REFERENCES') {
 
           this.user.references = Reference.convertToArray(x.data)
