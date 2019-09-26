@@ -19,6 +19,18 @@ export class UserComponent implements OnInit {
     items: 10,
     page: 1,
     total: 0,
+    //FILTRADO
+    active : true,
+    inactive: true,
+    typeA: true,
+    typeT : true,
+    typeO: true,
+    genderM: true,
+    genderF: true,
+    age1: null,
+    age2: null,
+    hours1: null,
+    hours2: null,
   };
 
   sendingData = 0;
@@ -37,17 +49,38 @@ export class UserComponent implements OnInit {
 
     router.events.filter((event: any) => event instanceof NavigationEnd)
         .subscribe(event => {           
-          if(event.url == "/users") {
-            this.principal = true
-            this.users = []
+          if(event.url == "/users" || event.url == "/users/filter") {
+            this.principal = true            
             this.searchRequest()
           }
           else this.principal = false            
       }); 
 
+      _http.getData().subscribe(x => {
+        if(x.action == 'FILTER') {
+
+          this.search.active = x.data.active
+          this.search.inactive = x.data.inactive
+          this.search.typeA = x.data.typeA
+          this.search.typeT = x.data.typeT
+          this.search.typeO = x.data.typeO
+          this.search.genderM = x.data.genderM
+          this.search.genderF = x.data.genderF
+          this.search.age1 = x.data.age1
+          this.search.age2 = x.data.age2
+          this.search.hours1 = x.data.hours1
+          this.search.hours2 = x.data.hours2
+         
+        }
+      })
+
   }
 
   ngOnInit() {   
+  }
+
+  sendFilter(){
+    this._http.sendData('LAST_FILTER', this.search)
   }
 
   ngOnDestroy() {

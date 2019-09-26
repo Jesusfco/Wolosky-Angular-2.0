@@ -51,7 +51,7 @@
         <div class="moreOptions">
     
             
-            <button class="green" matTooltip="Exportar Usuarios" [routerLink]="['./filter']" matTooltipPosition="left" mat-fab id="cancelButton">
+            <button class="green" matTooltip="Filtrar/Exportar Usuarios" [routerLink]="['./filter']" matTooltipPosition="left" mat-fab id="cancelButton" (click)="sendFilter()">
                 <mat-icon >file_download</mat-icon>
             </button>
             

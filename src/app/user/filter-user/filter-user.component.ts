@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Card, BackgroundCard } from '../../animations/card.animation';
 import { Storage } from '../../classes/storage';
 import { timeout } from 'rxjs/operator/timeout';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-filter-user',
@@ -34,7 +35,27 @@ export class FilterUserComponent implements OnInit {
 
 
   validation = true;
-  constructor(private router: Router) { }
+  constructor(private router: Router, private _http: UserService) { 
+
+    _http.getData().subscribe(x => {
+      if(x.action == 'LAST_FILTER') {
+        
+        this.active = x.data.active
+        this.inactive = x.data.inactive
+        this.typeA = x.data.typeA
+        this.typeT = x.data.typeT
+        this.typeO = x.data.typeO
+        this.genderM = x.data.genderM
+        this.genderF = x.data.genderF
+        this.age1 = x.data.age1
+        this.age2 = x.data.age2
+        this.hours1 = x.data.hours1
+        this.hours2 = x.data.hours2
+       
+      }
+    })
+
+  }
 
   ngOnInit() {
     setTimeout(() => {
@@ -50,7 +71,7 @@ export class FilterUserComponent implements OnInit {
     setTimeout(() => {
 
       this.router.navigate(['/users']);
-
+        
     }, 450);
 
     setTimeout(() => {
@@ -58,6 +79,22 @@ export class FilterUserComponent implements OnInit {
       this.state.card = 'initial';
     }, 100);
     
+  }
+
+  sendFilter() {
+    this._http.sendData('FILTER', {
+      active : this.active,
+      inactive: this.inactive,
+      typeA: this.typeA,
+      typeT : this.typeT,
+      typeO: this.typeO,
+      genderM: this.genderM,
+      genderF: this.genderF,
+      age1: this.age1,
+      age2: this.age2,
+      hours1: this.hours1,
+      hours2: this.hours2,
+    })
   }
 
   validateFilter() {

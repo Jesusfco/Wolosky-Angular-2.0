@@ -9,12 +9,12 @@
     </div>
 
     <div class="cardModule" [@card]="state.card">
-        <h2 class="centerText">Exportar Usuario Excel</h2>
+        <h2 class="centerText">Exportar Usuarios Excel</h2>
 
         <div class="flex" (click)="validateFilter()">
 
             <div class="l12">
-                <h5 class="centerText">Status de Usuario</h5>
+                <h5 class="centerText">Estatus de Usuario</h5>
                 <div class="flex centerFlex">
                     <mat-checkbox [(ngModel)]="active">Activos</mat-checkbox>
                     <mat-checkbox [(ngModel)]="inactive">Inactivos</mat-checkbox>
@@ -40,24 +40,40 @@
             </div>
 
             <div class="l12">
-                <h5 class="centerText">Filtrado Por Edades</h5>
+
+                <h5 class="centerText">Rango de Edades</h5>
+
                 <div class="flex centerFlex">
-                    <input [(ngModel)]="age1" type="number" min="0" placeholder="Desde" (keyup)="validateFilter()">
-                    <input [(ngModel)]="age2" type="number" min="0" placeholder="Hasta" (keyup)="validateFilter()">
+
+                    <div class="s6">
+                        <input [(ngModel)]="age1" type="number" min="0" placeholder="Desde" (keyup)="validateFilter()">
+                    </div>
+                    <div class="s6">
+                        <input [(ngModel)]="age2" type="number" min="0" placeholder="Hasta" (keyup)="validateFilter()">
+                    </div>
+                                        
                 </div>
 
             </div>
 
             <div class="l12">
-                <h5 class="centerText">Filtrado Por Horas</h5>
+                <h5 class="centerText">Rango de Horas semanales</h5>
                 <div class="flex centerFlex">
-                    <input [(ngModel)]="hours1" type="number" min="0" placeholder="Desde" (keyup)="validateFilter()">
-                    <input [(ngModel)]="hours2" type="number" min="0" placeholder="Hasta" (keyup)="validateFilter()">
+                    <div class="s6">
+                        <input [(ngModel)]="hours1" type="number" min="0" placeholder="Desde" (keyup)="validateFilter()">
+                    </div>
+                    <div class="s6">
+                            <input [(ngModel)]="hours2" type="number" min="0" placeholder="Hasta" (keyup)="validateFilter()">
+                    </div>
+                    
 
                 </div>
             </div>
 
-            <a *ngIf="validation" class="btn centerText" href="{{ storage.getUrl() + 'excel/users' +storage.getTokenUrl() }}&active={{ active }}&inactive={{ inactive }}&typeA={{ typeA }}&typeT={{ typeT }}&typeO={{ typeO }}&genderM={{ genderM }}&genderF={{ genderF }}&age2={{ age2 }}&age1={{ age1 }}&hours1={{ hours1 }}&hours2={{ hours2 }}">Descargar Excel</a>
+            <button *ngIf="validation" class="btn blue" (click)="sendFilter()">Filtrar Busqueda</button>
+            <a class="l12" href="{{ storage.getUrl() + 'excel/users' +storage.getTokenUrl() }}&active={{ active }}&inactive={{ inactive }}&typeA={{ typeA }}&typeT={{ typeT }}&typeO={{ typeO }}&genderM={{ genderM }}&genderF={{ genderF }}&age2={{ age2 }}&age1={{ age1 }}&hours1={{ hours1 }}&hours2={{ hours2 }}">
+                <button *ngIf="validation" class="btn green" >Descargar Excel</button>
+            </a>
 
         </div>
 
