@@ -157,7 +157,7 @@ export class SchedulesComponent implements OnInit {
     this.setNameVisualSchedule();
     this.sortDataOrder();
 
-    // console.log(this.dataOrder);
+    console.log(this.dataOrder);
   
 
   }
@@ -225,6 +225,7 @@ export class SchedulesComponent implements OnInit {
 
   }
 
+  //Set init default value of data OrderValues
   setDataOrder() {
 
     this.dataOrder = [];
@@ -233,6 +234,7 @@ export class SchedulesComponent implements OnInit {
       
       let data = {
         day: i + 1,
+        day_name: Schedule.getWeekDays()[i].day,
         schedules: []
       };
 
