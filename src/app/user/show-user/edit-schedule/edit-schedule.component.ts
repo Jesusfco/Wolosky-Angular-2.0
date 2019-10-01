@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { User } from '../../../classes/user';
 import { Schedule } from '../../../classes/schedule';
@@ -64,7 +64,9 @@ export class EditScheduleComponent implements OnInit {
     private router: Router,
     private notification: NotificationService,
     private location: Location,
-    private actRou: ActivatedRoute) {
+    private actRou: ActivatedRoute,
+    
+    ) {
 
       this.outletOutput = this._http.getData().subscribe(x => {      
         if (x.action == 'user') 

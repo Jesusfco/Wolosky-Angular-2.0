@@ -3,7 +3,8 @@
 <div class="background" [@background]="backgroundState"></div>
 <div id="createCard" [@principal]="cardState">
 
-    <div id="cerrarBtn" [routerLink]="['../']"> Cerrar <i class="material-icons">close</i></div>
+    <!-- <div id="cerrarBtn" [routerLink]="['../']"> Cerrar <i class="material-icons">close</i></div> -->
+    <div id="cerrarBtn" (click)="close()"> Cerrar <i class="material-icons">close</i></div>
 
     <div class="form" [ngClass]="{'loadingForm': sendingData == true}">
         <h1 align="center" (click)="con(user.schedules)">Horarios</h1>
