@@ -240,12 +240,21 @@ export class EditScheduleComponent implements OnInit {
           this._http.sendData('SCHEDULES', this.user.schedules)
           this.countHours()
 
+          setTimeout(() => {
+            this.scheduleDays = ScheduleDay.getScheduleDayArrayLD()  
+            ScheduleDay.setSchedulesToArray(this.scheduleDays, this.user.schedules) 
+          },60)       
+
         } ,
         error => this.notification.sendError(error)
       );
 
     } else {
       this.splitSchedule(sche);
+      setTimeout(() => {
+        this.scheduleDays = ScheduleDay.getScheduleDayArrayLD()  
+        ScheduleDay.setSchedulesToArray(this.scheduleDays, this.user.schedules) 
+      },60)       
     }
 
   }
