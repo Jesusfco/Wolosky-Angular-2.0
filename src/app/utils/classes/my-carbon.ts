@@ -70,8 +70,8 @@ export class MyCarbon {
             to = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + lastDayMonth.getDate();        
             
         } else {
-            from = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-01";
-            to = d.getFullYear() + "-0" + (d.getMonth() + 1 ) + "-" + lastDayMonth.getDate();
+            from = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-01";
+            to = d.getFullYear() + "-" + (d.getMonth() + 1 ) + "-" + lastDayMonth.getDate();
         }
         
 
