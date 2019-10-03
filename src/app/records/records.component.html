@@ -42,7 +42,7 @@
             <!-- <th colspan="3">Opciones</th> -->
         </thead>
         <tbody>
-            <tr *ngFor="let record of records">
+            <tr *ngFor="let record of records" [routerLink]="['./ver', record.id]">
 
                 <td class="left">{{ record.user.name }}</td>
                 <td>{{ record.date }}</td>

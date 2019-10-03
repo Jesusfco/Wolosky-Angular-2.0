@@ -140,6 +140,8 @@ import { DeleteRecordsComponent } from './records/delete-records/delete-records.
 import { DetailsRecordComponent } from './records/details-record/details-record.component';
 import { Time12FormatPipe } from './pipes/time-12-format.pipe';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { CreateRecordComponent } from './records/create-record/create-record.component';
+import { UpdateRecordComponent } from './records/update-record/update-record.component';
 
 
 @NgModule({
@@ -218,6 +220,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     DetailsRecordComponent,
     Time12FormatPipe,
     DashboardComponent,
+    CreateRecordComponent,
+    UpdateRecordComponent,
   ],
   imports: [
     BrowserModule,

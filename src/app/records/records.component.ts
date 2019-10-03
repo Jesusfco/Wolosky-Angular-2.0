@@ -85,7 +85,6 @@ export class RecordsComponent implements OnInit {
  getDates(){
   
     this.search.from = MyCarbon.getFromToThisMonth().from
-    this.search.to = MyCarbon.getFromToThisMonth().to
-    console.log(this.search)
+    this.search.to = MyCarbon.getFromToThisMonth().to    
  }
 }

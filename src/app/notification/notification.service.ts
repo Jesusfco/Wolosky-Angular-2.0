@@ -7,6 +7,7 @@ import { Subject } from 'rxjs/Subject';
 export class NotificationService {
 
   private subject = new Subject<any>();
+  
 
   constructor() { }
 
@@ -18,6 +19,21 @@ export class NotificationService {
     this.subject.next(message);
   }
 
+  sendNot2(title, description) {    
+    let message = {
+      title: title,
+      description: description,
+      time: 5000,
+      status: 200,
+    };
+
+    let notification = {
+      action: 'notification',
+      data: message
+    };
+
+    this.subject.next(notification);
+  }
   sendNotification(title: String, description: String, time: Number) {
 
     let message = {

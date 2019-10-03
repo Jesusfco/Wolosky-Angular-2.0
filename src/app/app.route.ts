@@ -72,6 +72,8 @@ import { VerifyMonthlyPriceComponent } from './monthly-prices/verify-monthly-pri
 import { ExportRecordsComponent } from './records/export-records/export-records.component';
 import { DetailsRecordComponent } from './records/details-record/details-record.component';
 import { DeleteRecordsComponent } from './records/delete-records/delete-records.component';
+import { UpdateRecordComponent } from './records/update-record/update-record.component';
+import { CreateRecordComponent } from './records/create-record/create-record.component';
 
 
 export const routes: Routes = [
@@ -148,9 +150,13 @@ export const routes: Routes = [
         path: 'asistencias',
         component: RecordsComponent,
         children: [
+            { path: 'create', component: CreateRecordComponent },
             { path: 'exportar', component: ExportRecordsComponent },
             { path: 'delete', component: DeleteRecordsComponent },
-            { path: 'ver/:id', component: DetailsRecordComponent },
+            { path: 'ver/:id', component: DetailsRecordComponent, children: [
+                { path: 'update', component: UpdateRecordComponent}
+                // { path: 'delete', component: DeleteRecordComponent}
+            ] },
         ]
     },
 

@@ -1,0 +1,35 @@
+<form class=" flex" (submit)="update()">
+  
+    <div class="l6">              
+        <label>Entrada:</label><br>
+        <input type="time" [(ngModel)]="record.checkIn" name="checkIn">                                                  
+    </div>
+    <div class="l6">              
+        <label>Salida:</label><br>
+        <input type="time" [(ngModel)]="record.checkOut" name="checkOut">                                                  
+    </div>
+
+    <div class="l6">              
+        <label>Fecha:</label><br>
+        <input type="date" [(ngModel)]="record.date" name="date">                                                  
+    </div>
+
+    <div class="l12">
+        <label>Usuario:</label><br>
+        <input [(ngModel)]="record.user.name" name="name" disabled>                      
+    </div>
+    <div class="l12">
+        <label>Tipos de usuario:</label><br>
+        <input [(ngModel)]="record.user.typeView" name="typeView" disabled>
+                
+    </div>
+
+    <!-- <div class="l12">
+        <div class="icon-left">
+            <input [(ngModel)]="search.name"  name="name" type="search" placeholder="Buscar Usuario">
+            <label class="icon"><mat-icon>search</mat-icon></label>
+        </div>
+        
+    </div> -->
+    <button class="btn blue">Actualizar</button>        
+</form>

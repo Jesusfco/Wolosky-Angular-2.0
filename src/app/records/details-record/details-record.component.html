@@ -1,3 +1,74 @@
-<p>
-  details-record works!
-</p>
+<mat-progress-bar mode="indeterminate" *ngIf="sendingData > 0" class="barLoader"></mat-progress-bar>
+
+<div class="cardSpace">
+
+    <div class="closeCardBackground" (click)="close()">
+        <h5 class="closeIcon">
+            <mat-icon>close</mat-icon>
+        </h5>
+    </div>
+  
+    <div class="cardModule">            
+  
+      <div class="options" *ngIf="credential == 7">
+          <i class="material-icons" [routerLink]="['/asistencias/ver', record.id]" matTooltip="Ver Asistencia">visibility</i>
+          <i class="material-icons" [routerLink]="['/asistencias/ver/' + record.id + '/update']"(click)="sendRecord()" matTooltip="Editar Asistencia">edit</i>          
+          <!-- <i class="material-icons" [routerLink]="['asistencias/ver/' + record.id + '/delete']" (click)="sendRecord()" matTooltip="Eliminar Asistencia">delete</i> -->
+          <i class="material-icons" (click)="delete()" matTooltip="Eliminar Asistencia">delete</i>
+      </div>
+
+      <router-outlet></router-outlet>
+
+      <div *ngIf="window == 1">
+      <h2>Detalles de Asistencia</h2>
+      <form class=" flex">
+  
+          <div class="l6">              
+              <label>Entrada:</label><br>
+              <input type="time" [(ngModel)]="record.checkIn" name="checkIn" disabled>                                                  
+          </div>
+          <div class="l6">              
+              <label>Salida:</label><br>
+              <input type="time" [(ngModel)]="record.checkOut" name="checkOut" disabled>                                                  
+          </div>
+      
+          <div class="l6">              
+              <label>Fecha:</label><br>
+              <input type="date" [(ngModel)]="record.date" name="date" disabled>                                                  
+          </div>
+      
+          <div class="l12">
+              <label>Usuario:</label><br>
+              <input [(ngModel)]="record.user.name" name="name" disabled>                      
+          </div>
+          <div class="l12">
+              <label>Tipos de usuario:</label><br>
+              <input [(ngModel)]="record.user.typeView" name="typeView" disabled>
+                      
+          </div>
+  
+          <!-- <div class="l12">
+              <div class="icon-left">
+                  <input [(ngModel)]="search.name"  name="name" type="search" placeholder="Buscar Usuario">
+                  <label class="icon"><mat-icon>search</mat-icon></label>
+              </div>
+              
+          </div> -->
+          <!-- <button class="btn red">Eliminar Asistencias</button>         -->
+      </form>
+
+      </div>
+
+      <div *ngIf="window == 2">
+          <h3>¿Estas seguro/a que desea borrar esta Asistencia?</h3>
+          <p>Una vez eliminado ya no se podra recuperar. </p>
+          <div class="confirmCancel">
+              <button class="btn btnCancel" (click)="window = 1">Cancelar</button>              
+              <button class="btn btnDelete" (click)="deleteConfirm()">Eliminar</button>
+          </div>
+      </div>
+      
+  
+    </div>
+  
+  </div>

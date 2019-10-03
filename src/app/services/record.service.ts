@@ -28,6 +28,21 @@ export class RecordService {
             .map(data => data.json());
   }
 
+  show(object) {
+    return this._http.get(this.token.getUrl() + 'record/show/' + object.id + this.token.getTokenUrl() )
+            .map(data => data.json()).toPromise();
+  }
+
+  update(object) {
+    return this._http.post(this.token.getUrl() + 'record/update/' + object.id + this.token.getTokenUrl(), object )
+            .map(data => data.json());
+  }
+
+  delete(object) {
+    return this._http.get(this.token.getUrl() + 'record/delete/' + object.id + this.token.getTokenUrl() )
+            .map(data => data.json());
+  }
+
   deleteRecords(object) {
     return this._http.post(this.token.getUrl() + 'records/delete' + this.token.getTokenUrl(), object )
             .map(data => data.json()).toPromise();
