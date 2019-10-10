@@ -16,8 +16,12 @@
             <mat-icon (click)="modifyUser()" matTooltip="Editar Usuario" matTooltipPosition="below">edit</mat-icon>
 
 
-            <a href="{{ url.url }}pdf/user{{ storage.getTokenUrl() }}&id={{user.id}}" target="_blank">
+            <!-- <a href="{{ url.url }}pdf/user{{ storage.getTokenUrl() }}&id={{user.id}}" target="_blank">
                 <mat-icon matTooltip="Imprimir Informacion de Usuario" matTooltipPosition="below">local_printshop</mat-icon>
+            </a> -->
+
+            <a href="{{ url.getApiUrlToken('pdf/userCredential/' + user.id) }}" target="_blank" *ngIf="user.user_type_id == 1">
+                <mat-icon matTooltip="Imprimir Credencial de Alumno" matTooltipPosition="below">local_printshop</mat-icon>
             </a>
 
             <mat-icon routerLink="/users/show/{{ user.id }}/delete" (click)="sendUser()" matTooltip="Eliminar Usuario" matTooltipPosition="below" *ngIf="credential >= 6">delete</mat-icon>
