@@ -1,0 +1,21 @@
+<div class="cardSpace">
+
+    <div class="closeCardBackground" (click)="closePop()">
+        <h5 class="closeIcon">
+            <mat-icon>close</mat-icon>
+        </h5>
+    </div>
+
+    <div class="cardModule">
+        <h2>Exportar Inventario</h2>
+        
+        <div class="flex">
+          <a type="button" class="btn green"  href="{{ url.getApiUrlToken('excel/inventory') }}" target="_blank">Excel con todos los datos</a>
+          <a type="submit" class="btn red" href="{{ url.getApiUrlToken('pdf/productsForSale')}}" target="_blank">Exportar PDF para venta CodigoB</a>
+        </div>
+          
+
+        
+
+    </div>
+</div>

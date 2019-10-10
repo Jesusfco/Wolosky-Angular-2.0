@@ -142,6 +142,7 @@ import { Time12FormatPipe } from './pipes/time-12-format.pipe';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CreateRecordComponent } from './records/create-record/create-record.component';
 import { UpdateRecordComponent } from './records/update-record/update-record.component';
+import { ExportProductsOptionComponent } from './inventory/export-products-option/export-products-option.component';
 
 
 @NgModule({
@@ -222,6 +223,7 @@ import { UpdateRecordComponent } from './records/update-record/update-record.com
     DashboardComponent,
     CreateRecordComponent,
     UpdateRecordComponent,
+    ExportProductsOptionComponent,
   ],
   imports: [
     BrowserModule,

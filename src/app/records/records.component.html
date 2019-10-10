@@ -61,6 +61,9 @@
 
     <div class="moreOptions">
 
+        <button  matTooltip="Crear" matTooltipPosition="left" mat-fab [routerLink]="['./create']" *ngIf="credential == 7">        
+            <mat-icon >create</mat-icon>
+        </button>
         
         <button class="green" matTooltip="Exportar Asistencias" [routerLink]="['./exportar']" matTooltipPosition="left" mat-fab id="cancelButton">
             <mat-icon >file_download</mat-icon>
@@ -70,10 +73,7 @@
             <mat-icon >delete</mat-icon>
         </button>
 
-        <!-- <button  matTooltip="Nuevo Producto" matTooltipPosition="left" mat-fab>
-            
-            <mat-icon >create</mat-icon>
-        </button> -->
+        
 
     </div>
 

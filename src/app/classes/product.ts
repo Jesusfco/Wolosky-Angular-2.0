@@ -79,4 +79,10 @@ export class Product {
 
         localStorage.setItem('inventory', JSON.stringify(data));
     }
+
+    generateCodeBar() {
+        var code = Math.random() * (9999999 - 1000000) + 1000000;
+        code = Math.round(code)
+        this.code = code.toString();
+    }
 }

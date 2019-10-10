@@ -4,6 +4,7 @@ import { Record } from '../classes/record';
 import { NotificationService } from '../notification/notification.service';
 import { MyCarbon } from '../utils/classes/my-carbon';
 import { Router, NavigationEnd } from '@angular/router';
+import { User } from '../classes/user';
 
 @Component({
   selector: 'app-records',
@@ -23,6 +24,8 @@ export class RecordsComponent implements OnInit {
     page: 1,
     total: 0,
   };
+
+  credential = User.authUser().user_type_id
 
   request
 
@@ -82,9 +85,8 @@ export class RecordsComponent implements OnInit {
 
  }
 
- getDates(){
-  
+  getDates(){  
     this.search.from = MyCarbon.getFromToThisMonth().from
     this.search.to = MyCarbon.getFromToThisMonth().to    
- }
+  }
 }

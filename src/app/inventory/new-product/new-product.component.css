@@ -1,12 +1,5 @@
-input {
-    width: 100%;
-    border: none;
-    background: #ECECEC;
-    padding: 10px;
-    border-radius: 3px;
-    margin-bottom: 15px;
-}
+
 
 .cardModule {
-    max-width: 400px;
+    /* max-width: 400px; */
 }

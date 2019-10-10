@@ -57,7 +57,8 @@
 
     <div class="moreOptions">
 
-        <a target="_blank" href="{{ url.url }}excel/inventory{{ storage.getTokenUrl() }}">
+        <a 
+        [routerLink]="['/inventory/exportar']">
             <button matTooltip="Descargar Inventario" matTooltipPosition="left" mat-fab id="cancelButton">
                         <mat-icon >archive</mat-icon>
                     </button>

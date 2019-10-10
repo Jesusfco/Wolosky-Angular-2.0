@@ -10,42 +10,42 @@
 
     <div class="cardModule" [@card]="state.card">
         <h2>Nuevo Producto</h2>
-        <form (submit)="formSubmit()" autocomplete="off" [ngClass]="{ 'loadingForm': request == true}">
+        <form class="flex" (submit)="formSubmit()" autocomplete="off" [ngClass]="{ 'loadingForm': request == true}">
 
 
-            <div>
+            <div class="l12">
                 <label>Nombre</label><br>
-                <input [(ngModel)]="product.name" name="name" type="text" [ngClass]="{ 'inputError': form.name >= 1? 'inputVerified': form.name == -1 }"><br>
+                <input [(ngModel)]="product.name" name="name" type="text" [ngClass]="{ 'inputError': form.name >= 1? 'inputVerified': form.name == -1 }"> 
                 <small class="smallError" *ngIf="form.name == 1">Requerido</small>
                 <small class="smallError" *ngIf="form.name == 2">Nombre ya asignado</small>
             </div>
 
-            <div>
+            <div class="l12">
                 <label>Codigo de barras</label><br>
-                <input [(ngModel)]="product.code" name="code" type="text" [ngClass]="{ 'inputError': form.code >= 1, 'inputVerified': form.code == -1 }"><br>
+                <input [(ngModel)]="product.code" name="code" type="text" [ngClass]="{ 'inputError': form.code >= 1, 'inputVerified': form.code == -1 }"> 
                 <small class="smallError" *ngIf="form.code == 2">Codigo ya asignado</small>
             </div>
 
-            <div *ngIf="credential >= 6">
+            <div *ngIf="credential >= 6"  class="l6">
                 <label>Precio Público</label><br>
-                <input [(ngModel)]="product.price_public" name="price_public" type="number" min="0"><br>
+                <input [(ngModel)]="product.price_public" name="price_public" type="number" min="0"> 
                 <small class="smallError" *ngIf="form.price == 1">Requerido</small>
             </div>
 
-            <div *ngIf="credential >= 6">
+            <div *ngIf="credential >= 6" class="l6">
                 <label>Precio Interno</label><br>
-                <input [(ngModel)]="product.price_intern" name="price_inter" type="number" min="0"><br>
+                <input [(ngModel)]="product.price_intern" name="price_inter" type="number" min="0"> 
                 <!-- <small class="smallError" *ngIf="form.price == 1">Requerido</small> -->
             </div>
 
-            <div *ngIf="credential >= 6">
+            <div *ngIf="credential >= 6" class="l6">
                 <label>Costo de Compra</label><br>
-                <input [(ngModel)]="product.cost_price" name="cost_price" type="number" min="0"><br>
+                <input [(ngModel)]="product.cost_price" name="cost_price" type="number" min="0"> 
             </div>
 
-            <div>
+            <div class="l6">
                 <label>Cantidad</label><br>
-                <input [(ngModel)]="product.stock" name="stock" type="number"><br>
+                <input [(ngModel)]="product.stock" name="stock" type="number"> 
             </div>
 
             <!-- <div>
@@ -53,12 +53,13 @@
                 <input [(ngModel)]="product.department" name="department" type="text"><br>
             </div> -->
 
-            <div>
+            <div class="l6">
                 <label>Reorden</label><br>
-                <input [(ngModel)]="product.reorder" name="reorder" type="number"><br>
+                <input [(ngModel)]="product.reorder" name="reorder" type="number">
             </div>
 
-            <button type="submit" class="btn btnAccept">Crear Producto</button>
+            <button type="button" class="btn green" (click)="product.generateCodeBar()">Generar Codigo de barras</button>
+            <button type="submit" class="btn blue">Crear Producto</button>
 
         </form>
 

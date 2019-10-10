@@ -74,6 +74,7 @@ import { DetailsRecordComponent } from './records/details-record/details-record.
 import { DeleteRecordsComponent } from './records/delete-records/delete-records.component';
 import { UpdateRecordComponent } from './records/update-record/update-record.component';
 import { CreateRecordComponent } from './records/create-record/create-record.component';
+import { ExportProductsOptionComponent } from './inventory/export-products-option/export-products-option.component';
 
 
 export const routes: Routes = [
@@ -173,6 +174,7 @@ export const routes: Routes = [
     { path: 'inventory', component: InventoryComponent,
         children : [
             { path: 'create', component: NewProductComponent },
+            { path: 'exportar', component: ExportProductsOptionComponent },
             { path: 'edit/:id', component: EditProductComponent },
         ]
     },

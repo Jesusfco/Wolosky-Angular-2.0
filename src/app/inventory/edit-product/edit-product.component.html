@@ -10,55 +10,58 @@
 
     <div class="cardModule" [@card]="state.card">
         <h2>Editar Producto</h2>
+        
         <label class="delete" (click)="editProcess = !editProcess"><mat-icon>delete</mat-icon></label>
-        <form *ngIf="editProcess" (submit)="formSubmit()" autocomplete="off" [ngClass]="{ 'loadingForm': request == true}">
-            <div>
+        <form class="flex" *ngIf="editProcess" (submit)="formSubmit()" autocomplete="off" [ngClass]="{ 'loadingForm': request == true}">
+        
+            <div class="l12">
                 <label>Nombre</label><br>
-                <input [(ngModel)]="productEditable.name" name="name" type="text" [ngClass]="{ 'inputError': form.name >= 1, 'inputVerified': form.name == -1 }"><br>
+                <input [(ngModel)]="productEditable.name" name="name" type="text" [ngClass]="{ 'inputError': form.name >= 1, 'inputVerified': form.name == -1 }">
                 <small class="smallError" *ngIf="form.name == 1">Requerido</small>
                 <small class="smallError" *ngIf="form.name == 2">Nombre ya asignado</small>
             </div>
 
-            <div *ngIf="credential >= 6">
-                <label>Precio Público</label><br>
-                <input [(ngModel)]="productEditable.price_public" name="price_public" type="number" min="0"><br>
-                <small class="smallError" *ngIf="form.price == 1">Requerido</small>
-            </div>
-
-            <div *ngIf="credential >= 6">
-                <label>Precio Interno</label><br>
-                <input [(ngModel)]="productEditable.price_intern" name="price_inter" type="number" min="0"><br>
-                <!-- <small class="smallError" *ngIf="form.price == 1">Requerido</small> -->
-            </div>
-
-            <div *ngIf="credential >= 6">
-                <label>Costo de Compra</label><br>
-                <input [(ngModel)]="productEditable.cost_price" name="cost_price" type="number" min="0"><br>
-            </div>
-
-            <div>
-                <label>Cantidad</label><br>
-                <input [(ngModel)]="productEditable.stock" name="stock" type="number"><br>
-            </div>
-
-            <div>
-                <label>Reorden</label><br>
-                <input [(ngModel)]="productEditable.reorder" name="reorder" type="number" min="0"><br>
-            </div>
-
-            <div>
-                <label>Departamento:</label><br>
-                <input [(ngModel)]="productEditable.department" name="department" type="text"><br>
-            </div>
-
-            <div>
+            <div  class="l12">
                 <label>Codigo de barras</label><br>
-                <input [(ngModel)]="productEditable.code" name="code" type="text" [ngClass]="{ 'inputError': form.code >= 1, 'inputVerified': form.code == -1 }"><br>
+                <input [(ngModel)]="productEditable.code" name="code" type="text" [ngClass]="{ 'inputError': form.code >= 1, 'inputVerified': form.code == -1 }">
                 <small class="smallError" *ngIf="form.code == 2">Codigo ya asignado</small>
             </div>
 
+            <div *ngIf="credential >= 6"  class="l6">
+                <label>Precio Público</label><br>
+                <input [(ngModel)]="productEditable.price_public" name="price_public" type="number" min="0"> 
+                <small class="smallError" *ngIf="form.price == 1">Requerido</small>
+            </div>
 
-            <button type="submit" class="btn btnAccept">Editar</button>
+            <div *ngIf="credential >= 6" class="l6">
+                <label>Precio Interno</label><br>
+                <input [(ngModel)]="productEditable.price_intern" name="price_inter" type="number" min="0">
+                <!-- <small class="smallError" *ngIf="form.price == 1">Requerido</small> -->
+            </div>
+
+            <div *ngIf="credential >= 6" class="l6">
+                <label>Costo de Compra</label><br>
+                <input [(ngModel)]="productEditable.cost_price" name="cost_price" type="number" min="0">
+            </div>
+
+            <div  class="l6">
+                <label>Cantidad</label><br>
+                <input [(ngModel)]="productEditable.stock" name="stock" type="number">
+            </div>
+
+            <div class="l6">
+                <label>Reorden</label><br>
+                <input [(ngModel)]="productEditable.reorder" name="reorder" type="number" min="0"> 
+            </div>
+
+            <!-- <div>
+                <label>Departamento:</label><br>
+                <input [(ngModel)]="productEditable.department" name="department" type="text">
+            </div> -->           
+
+
+            <button type="button" class="btn green" (click)="productEditable.generateCodeBar()">Generar Codigo de barras</button>
+            <button type="submit" class="btn blue">Editar Producto</button>
 
         </form>
 
