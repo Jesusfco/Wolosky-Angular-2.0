@@ -50,15 +50,14 @@
             </div>
 
             <div class="l6">
-                <label>Reorden</label><br>
-                <input [(ngModel)]="productEditable.reorder" name="reorder" type="number" min="0"> 
-            </div>
-
-            <!-- <div>
                 <label>Departamento:</label><br>
                 <input [(ngModel)]="productEditable.department" name="department" type="text">
-            </div> -->           
-
+            </div>
+            
+            <div class="l6">
+                <label>Reorden</label><br>
+                <input [(ngModel)]="productEditable.reorder" name="reorder" type="number" min="0"> 
+            </div>           
 
             <button type="button" class="btn green" (click)="productEditable.generateCodeBar()">Generar Codigo de barras</button>
             <button type="submit" class="btn blue">Editar Producto</button>
