@@ -157,6 +157,22 @@ export class SchedulesComponent implements OnInit {
     this.setNameVisualSchedule();
     this.sortDataOrder();
 
+    if(this.search.from != null && this.search.to != null) {
+      let to = parseInt(this.search.to.split(':')[0])
+      let from = parseInt(this.search.from.split(':')[0])
+
+      for(let day of this.dataOrder) {
+
+        for(let i = 0; i < day.schedules.length; i++) {
+          let check = day.schedules[i].check_in
+          if(check < from || check > to) {
+            day.schedules.splice(i, 1);
+          }
+
+        }
+
+      }
+    }
     console.log(this.dataOrder);
   
 
