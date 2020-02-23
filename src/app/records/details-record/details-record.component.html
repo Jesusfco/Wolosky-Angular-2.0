@@ -22,30 +22,52 @@
       <div *ngIf="window == 1">
       <h2>Detalles de Asistencia</h2>
       <form class=" flex">
-  
-          <div class="l6">              
-              <label>Entrada:</label><br>
-              <input type="time" [(ngModel)]="record.checkIn" name="checkIn" disabled>                                                  
-          </div>
-          <div class="l6">              
-              <label>Salida:</label><br>
-              <input type="time" [(ngModel)]="record.checkOut" name="checkOut" disabled>                                                  
-          </div>
-      
-          <div class="l6">              
-              <label>Fecha:</label><br>
-              <input type="date" [(ngModel)]="record.date" name="date" disabled>                                                  
-          </div>
-      
-          <div class="l12">
-              <label>Usuario:</label><br>
-              <input [(ngModel)]="record.user.name" name="name" disabled>                      
-          </div>
-          <div class="l12">
-              <label>Tipos de usuario:</label><br>
-              <p disabled>{{record.user.typeView}}</p>
-                      
-          </div>
+        
+        <div class="l12">
+            <label>Usuario:</label><br>
+            <p [routerLink]="['/users/show', record.user_id]">{{ record.user.name }}</p>
+        </div>
+        <div class="l6">
+            <label>Tipos de usuario:</label><br>
+            <p disabled>{{record.user.typeView}}</p>                      
+        </div>
+
+        <div class="l6">              
+            <label>Fecha:</label><br>
+            <input type="date" [(ngModel)]="record.date" name="date" disabled>                                                  
+        </div>
+
+        <div class="l6">              
+            <label>Entrada:</label><br>
+            <input type="time" [(ngModel)]="record.checkIn" name="checkIn" disabled>                                                  
+        </div>
+        <div class="l6">              
+            <label>Salida:</label><br>
+            <input type="time" [(ngModel)]="record.checkOut" name="checkOut" disabled>                                                  
+        </div>
+
+        <div class="l6">              
+            <label>Tiempo trabajado:</label><br>
+            <input type="time" [(ngModel)]="record.time_worked" name="time_worked" disabled>                                                  
+        </div>
+
+        <div class="l6" *ngIf="record.type < 2">              
+            <label>Tiempo Extra:</label><br>
+            <input type="time" [(ngModel)]="record.time_worked" name="time_worked" disabled>                                                  
+        </div>
+
+        <div class="l6" *ngIf="record.type < 2">              
+            <label>Tipo de asistencia:</label><br>
+            <p> {{record.typeView() }}</p>            
+        </div>
+
+        
+        <div class="l6" *ngIf="record.type < 2">              
+            <label>Observación:</label><br>
+            <p> {{record.observation }}</p>            
+        </div>
+                
+                
   
           <!-- <div class="l12">
               <div class="icon-left">
