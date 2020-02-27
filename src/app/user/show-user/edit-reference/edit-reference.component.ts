@@ -52,13 +52,19 @@ export class EditReferenceComponent implements OnInit {
       this.user.id = params['id'];                
     });
 
-    router.events.filter((event: any) => event instanceof NavigationEnd)
-      .subscribe(event => {              
-        if(event.url == "/users/show/" + this.user.id + "/references" )  
-          this.principal = true                                            
-        else  
-          this.principal = false            
-    }); 
+    
+        setTimeout(() => {
+          
+          router.events.filter((event: any) => event instanceof NavigationEnd)
+          .subscribe(event => {    
+              if(event.url == "/users/show/" + this.user.id + "/references" )  
+                this.principal = true                                            
+              else  
+                this.principal = true            
+          }); 
+
+        },50)          
+        
   }
 
   ngOnInit() {

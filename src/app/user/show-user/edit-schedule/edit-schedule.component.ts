@@ -85,16 +85,17 @@ export class EditScheduleComponent implements OnInit {
           
       });
 
-      router.events.filter((event: any) => event instanceof NavigationEnd)
-      .subscribe(event => {              
-        if(event.url == "/users/show/" + this.user.id + "/schedule" )  {
-          this.principal = true  
-          console.log(event)     
-        }
-                                          
-        else  
-          this.principal = false            
-    }); 
+      setTimeout(() => {
+          
+        router.events.filter((event: any) => event instanceof NavigationEnd)
+        .subscribe(event => {    
+            if(event.url == "/users/show/" + this.user.id + "/schedule" )  
+              this.principal = true                                            
+            else  
+              this.principal = true            
+        }); 
+
+      },50)       
 
       this.getMonthlyPrices()
 
