@@ -26,54 +26,54 @@ export class ReceiptService {
     setTimeout(() => this.subject.next(message), 50);    
   }
 
-  getReceiptAnalisis(){
-    return this._http.get(this.link.url + "receipt/analisis" + this.token.getTokenUrl())
+  getReceiptAnalisis(data){
+    return this._http.get(Url.getApiUrlToken("receipt/getDebtorsAnalisis") , data)
               .map(data => data.json())
               .toPromise();
   }
 
   postNewReceipt(data){
-    return this._http.post(this.link.url + "receipt" + this.token.getTokenUrl(), data)
+    return this._http.post(Url.getApiUrlToken("receipt"), data)
               .map(data => data.json())
               .toPromise();
   }
 
   sugestUserReceipt(data){
-    return this._http.post(this.link.url + "receipt/sugestUser" + this.token.getTokenUrl(), data)
+    return this._http.post(Url.getApiUrlToken("receipt/sugestUser") , data)
               .map(data => data.json());
   }
 
   getMonthlyPayment(data){
-    return this._http.post(this.link.url + "receipt/getMonthlyPayment" + this.token.getTokenUrl(), data)
+    return this._http.post(Url.getApiUrlToken("receipt/getMonthlyPayment"), data)
               .map(data => data.json())
               .toPromise();
   }
 
   getReceipts(data){
-    return this._http.post(this.link.url + "receipt/get" + this.token.getTokenUrl() + '&page=' + data.page, data)
+    return this._http.post(Url.getApiUrlTokenWithVariables("receipt/get",'&page=' + data.page), data)
               .map(data => data.json())               
   }
 
   showReceipt(receipt) {
-    return this._http.get(this.link.url + "receipt/show/" + receipt.id + this.token.getTokenUrl())
+    return this._http.get(Url.getApiUrlToken("receipt/show/" + receipt.id ))
               .map(data => data.json())
               .toPromise();
   }
 
   updateReceipt(receipt) {
-    return this._http.post(this.link.url + "receipt/update"  + this.token.getTokenUrl(), receipt)
+    return this._http.post(Url.getApiUrlToken("receipt/update" ), receipt)
             .map(data => data.json())
             .toPromise();
   }
 
   deleteReceipt(receipt){
-    return this._http.delete(this.link.url + "receipt/delete/" + receipt.id + this.token.getTokenUrl())
+    return this._http.delete(Url.getApiUrlToken("receipt/delete/" + receipt.id ))
               .map(data => data.json())
               .toPromise();
   }
 
   checkUnique(receipt) {
-    return this._http.post(this.link.url + "receipt/checkUnique" + this.token.getTokenUrl(), receipt)
+    return this._http.post(Url.getApiUrlToken("receipt/checkUnique" ), receipt)
               .map(data => data.json())
               .toPromise();
   }

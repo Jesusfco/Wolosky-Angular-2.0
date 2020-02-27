@@ -26,6 +26,8 @@ export class Record {
         if(data.user != undefined) {
             this.user.setData(data.user);
         }
+
+        console.log("tipo de record",this.type)
         
     }
 

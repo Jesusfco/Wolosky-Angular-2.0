@@ -80,14 +80,14 @@
                 <small class="error" *ngIf="validation.description == 1">5 caracteres requeridos*</small>
             </div>
 
-            <button *ngIf="sendingData.request == false" class="btn formBtn" style="background: rgb(238, 163, 0)" type="submit">Crear Recibo</button>
-            <button *ngIf="sendingData.request == true" class="btn formBtn" style="background: rgb(209, 209, 209)" disabled>Crear Recibo</button>
+            <button *ngIf="sendingData.request == false" class="btn l12" type="submit">Crear Recibo</button>
+            <button *ngIf="sendingData.request == true" class="btn l12" style="background: rgb(209, 209, 209)" disabled>Crear Recibo</button>
 
         
         </form>
 
         <div *ngIf="window == 2">
-            <button class="btn" (click)="printReceipt()">Imprimir Recibo</button>
+            <button class="btn secundary l12" (click)="printReceipt()">Imprimir Recibo</button>
         </div>
 
 

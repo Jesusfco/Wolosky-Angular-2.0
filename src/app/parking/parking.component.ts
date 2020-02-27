@@ -56,7 +56,7 @@ export class ParkingComponent implements OnInit {
         for(let parking of data) {
 
           let object = new Parking()
-          object.setValues(parking);
+          object.setData(parking);
           this.parkings.push(object)
 
         }

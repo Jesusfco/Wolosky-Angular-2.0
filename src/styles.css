@@ -19,7 +19,7 @@ h3,
 h4,
 h5 {
     font-family: 'Oswald', sans-serif;
-    margin: 0;
+    margin: 5px;
 }
 
 a {
@@ -27,6 +27,9 @@ a {
     text-decoration: none;
 }
 
+.linksTitle, .linksTitle a {
+    font-family: 'Oswald', sans-serif !important;
+}
 .pc {
     display: flex !important;
 }
@@ -209,30 +212,45 @@ th {
 /* BOTONES */
 
 .btn {
-    width: 100%;
-    padding: 10px;
-    color: white;
-    transition: .45s;
+    
+    padding: 20px;
+    color: white;    
     border: none;
     cursor: pointer;
     margin-top: 20px;
-    background-color: rgb(255, 0, 200);
-    transition: .35
+    background: #034e8b;
+    transition: background .35s ;
+    display: block;
+    width: fit-content;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    font-size: 15px;
+    font-family: 'Oswald', 'sans-serif';
 }
 
-.btn:focus {
-    transform: scale(1.035);
-    -webkit-box-shadow: 10px 10px 4px -7px rgba(0, 0, 0, 0.28);
-    -moz-box-shadow: 10px 10px 4px -7px rgba(0, 0, 0, 0.28);
-    box-shadow: 10px 10px 4px -7px rgba(0, 0, 0, 0.28);
+.btn.secundary {
+    background: none;
+    border: solid 2px #034e8b;
+    color: #034e8b;
+    transition: border .35s ;
+    transition: color .35s ;
 }
 
 .btn:hover {
-    transform: scale(1.035);
-    -webkit-box-shadow: 10px 10px 4px -7px rgba(0, 0, 0, 0.28);
-    -moz-box-shadow: 10px 10px 4px -7px rgba(0, 0, 0, 0.28);
-    box-shadow: 10px 10px 4px -7px rgba(0, 0, 0, 0.28);
+    background: rgba(255, 255, 255, 0);
+    border: solid 2px #034e8b;
+    color: #034e8b;
+    padding: 18px;
 }
+
+.btn.secundary:hover {
+    border: solid 2px #002d52;
+    color: #002d52;
+}
+
+
 
 .btnPrimary {
     background: #3679e4
@@ -592,6 +610,10 @@ input {
     display: flex !important;
     flex-flow: row wrap;
     margin: 0 auto;
+}
+
+.flex > div {
+    padding: 12px;
 }
 
 .centerFlex {

@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { User } from '../../../classes/user';
 import { Reference } from '../../../classes/reference';
@@ -30,6 +30,7 @@ export class EditReferenceComponent implements OnInit {
 
   public relationshipOptions = Reference.getRelationshipOptions();
   outletOutput: any;
+  principal: boolean = true;
 
   constructor(private _http: UserService,
               private router: Router,
@@ -46,6 +47,18 @@ export class EditReferenceComponent implements OnInit {
       }
         
     })
+
+    actRou.params.subscribe(params => {
+      this.user.id = params['id'];                
+    });
+
+    router.events.filter((event: any) => event instanceof NavigationEnd)
+      .subscribe(event => {              
+        if(event.url == "/users/show/" + this.user.id + "/references" )  
+          this.principal = true                                            
+        else  
+          this.principal = false            
+    }); 
   }
 
   ngOnInit() {

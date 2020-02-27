@@ -107,7 +107,7 @@ export class CreateUserComponent implements OnInit {
                 data => {                  
 
                   this.notification.sendNotification(
-                    this.user.getUserTypeView() + " "+ this.user.name + " ha sido dado de alta",
+                    this.user.typeView + " "+ this.user.name + " ha sido dado de alta",
                     'Datos cargados a la base de datos correctamente',
                     5000
                   )                                      

@@ -59,7 +59,7 @@ export class NewParkingComponent implements OnInit {
     this._http.createParking(this.parking).then(
     
       data => {
-        this.parking.setValues(data)
+        this.parking.setData(data)
         this._http.sendData('new', this.parking)
         this.closePop()
 

@@ -22,8 +22,8 @@ import { ScheduleDay } from '../../../utils/classes/schedule-day';
 })
 export class EditScheduleComponent implements OnInit {
 
-  cardState: String = 'initial'
-  backgroundState: String = 'initial'
+  principal = true
+  
   validations = {
     validate: true,
     checkIn: -1,
@@ -68,12 +68,33 @@ export class EditScheduleComponent implements OnInit {
     
     ) {
 
+      actRou.params.subscribe(params => {
+        this.user.id = params['id'];                
+      });
+
       this.outletOutput = this._http.getData().subscribe(x => {      
         if (x.action == 'user') 
           this.user.setValues(x.data)  
           this.countHours()
-          ScheduleDay.setSchedulesToArray(this.scheduleDays, this.user.schedules)          
+          this.scheduleDays = []
+          this.scheduleDays = ScheduleDay.getScheduleDayArrayLD();
+          setTimeout(() => {
+            
+            ScheduleDay.setSchedulesToArray(this.scheduleDays, this.user.schedules)          
+          }, 100)
+          
       });
+
+      router.events.filter((event: any) => event instanceof NavigationEnd)
+      .subscribe(event => {              
+        if(event.url == "/users/show/" + this.user.id + "/schedule" )  {
+          this.principal = true  
+          console.log(event)     
+        }
+                                          
+        else  
+          this.principal = false            
+    }); 
 
       this.getMonthlyPrices()
 
@@ -100,9 +121,7 @@ export class EditScheduleComponent implements OnInit {
   }
   
   close(){
-
-    this.cardState = 'initial';
-    this.backgroundState = 'initial';    
+    
 
     setTimeout(() => {
       this.location.back();

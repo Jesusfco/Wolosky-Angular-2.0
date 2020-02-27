@@ -3,6 +3,7 @@ import { UserService } from '../services/user.service';
 import { Router, NavigationEnd } from '@angular/router';
 import {PageEvent} from '@angular/material';
 import { filter } from 'rxjs/operator/filter';
+import { User } from '../classes/user';
 
 @Component({
   selector: 'app-user',
@@ -13,7 +14,7 @@ export class UserComponent implements OnInit {
 
   principal = true;
 
-  users: Array<any> = [];
+  users: Array<User> = [];
   search = {
     searchWord: '',
     items: 10,
@@ -123,7 +124,8 @@ export class UserComponent implements OnInit {
 
     this.request = this._http.search(this.search).subscribe(
       data => {
-        this.users = data.data;
+        this.users = User.convertToArray(data.data)
+        
         this.search.total = data.total;
       },
       error => localStorage.setItem('request', JSON.stringify(error)),

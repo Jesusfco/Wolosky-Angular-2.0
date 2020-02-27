@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ReceiptService } from '../services/receipt.service';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { Storage } from '../classes/storage';
 import { Receipt } from '../classes/receipt';
 import { MyCarbon } from '../utils/classes/my-carbon';
@@ -52,15 +52,23 @@ export class ReceiptComponent implements OnInit {
   public storage: Storage = new Storage();
   httpSugestSubscription: any;
   
+  principal = true
+
   constructor(
     private _http: ReceiptService, 
-    private not: NotificationService) {     
+    private not: NotificationService,
+    private router: Router) {     
 
-    this.getNotifications();
+    // this.getNotifications();
     this.getDates();
     this.getReceipts();
 
-    
+    router.events.filter((event: any) => event instanceof NavigationEnd)
+        .subscribe(event => {           
+          if(event.url == "/receipt" || event.url == "/receipt/create") 
+            this.principal = true                                  
+          else this.principal = false            
+      });
 
     this.outletOutput = this._http.getData().subscribe(x => {      
       
@@ -91,30 +99,7 @@ export class ReceiptComponent implements OnInit {
     
   }
 
-  getNotifications(){
-
-    this.sendingData++;
-
-    this._http.getReceiptAnalisis().then(
-
-      data => {
-
-        if(data.count > 0)                  
-          this.notifications.on = true;
-
-        this.notifications.debtorsMonthly = data.count;
-        this.notifications.debtors = data.users;
-
-      },
-
-      error => this.not.sendError(error),
-
-    ).then(
-
-      () => this.sendingData--,
-
-    );
-  }
+  
 
   searchInput(key){
 

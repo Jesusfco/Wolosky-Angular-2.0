@@ -9,7 +9,7 @@ import { Salary } from '../../classes/salary';
 import { MonthlyPayment } from '../../classes/monthly-payment';
 import { MonthlyPrice } from '../../classes/monthly-price';
 import { FadeAnimation, SlideAnimation } from '../../animations/slide-in-out.animation';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Url } from '../../classes/url';
 import { Storage } from '../../classes/storage';
 import { UserService } from '../../services/user.service';
@@ -23,6 +23,8 @@ import { ScheduleDay } from '../../utils/classes/schedule-day';
 })
 export class ShowUserComponent implements OnInit {
 
+  
+  principal = true;
   public user: User = new User();
   public showUser: User = new User();    
   public salary: Salary =  new Salary();
@@ -54,6 +56,14 @@ export class ShowUserComponent implements OnInit {
         this.user.id = params['id'];        
         this.getUserData();
       });
+
+      router.events.filter((event: any) => event instanceof NavigationEnd)
+        .subscribe(event => {           
+          if(event.url == "/users/show/" + this.user.id ) 
+            this.principal = true                                  
+          else  
+            this.principal = false            
+      }); 
 
       this.outletOutput = this._http.getData().subscribe(x => {
       

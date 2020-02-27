@@ -75,6 +75,9 @@ import { DeleteRecordsComponent } from './records/delete-records/delete-records.
 import { UpdateRecordComponent } from './records/update-record/update-record.component';
 import { CreateRecordComponent } from './records/create-record/create-record.component';
 import { ExportProductsOptionComponent } from './inventory/export-products-option/export-products-option.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { DebtorsMonthlyComponent } from './receipt/debtors-monthly/debtors-monthly.component';
+ 
 
 
 export const routes: Routes = [
@@ -82,6 +85,7 @@ export const routes: Routes = [
     { path: 'resetear-contraseña', component: ResetComponent },
     { path: 'restablecer-contraseña', component: RecoverComponent },
     { path: 'login', component: LoginComponent },
+    { path: 'dashboard', component: DashboardComponent },
 
     {
         path: 'cash',
@@ -115,6 +119,7 @@ export const routes: Routes = [
         component: ReceiptComponent,
         children: [
             { path: 'create', component: CreateRecieptComponent },
+            { path: 'deudores', component: DebtorsMonthlyComponent },
             { path: 'show/:id',  component: ShowReceiptComponent}
         ]
     },

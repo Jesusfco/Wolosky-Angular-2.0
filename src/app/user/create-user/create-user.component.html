@@ -2,7 +2,7 @@
 <mat-progress-bar mode="indeterminate" *ngIf="sendingData" class="barLoader"></mat-progress-bar>
 <div>
 
-<h1><a [routerLink]="['../']"> USUARIOS</a> >>  CREAR USUARIO</h1>
+<h2 class="linksTitle"><a [routerLink]="['/users']"> Usuarios</a> >>  Crear Usuario</h2>
 
 <div class="form" [ngClass]="{'loadingForm': sendingData == true}">
     
@@ -151,13 +151,13 @@
 
         </div>
 
-        <button type="submit" class="btn formBtn">Crear Usuario</button>
+        <button type="submit" class="btn l12">Crear Usuario</button>
 
     </form>
 
     <div class="horarios" *ngIf="user.user_type_id <= 4">
         <h2>Horarios</h2>
-        <p class="centerText" *ngIf="user.schedules.length == 0">Sin horarios asignados</p>
+        <h2 class="centerText" *ngIf="user.schedules.length == 0">Sin horarios asignados</h2>
         <table *ngIf="user.schedules.length > 0">
             <thead>
                 <tr>
@@ -176,12 +176,12 @@
             
         </table>
 
-        <button class="btn horarioBtn" (click)="sendUser()" [routerLink]="['./schedules']">Asignar Horario</button>
+        <button class="btn secundary l12" (click)="sendUser()" [routerLink]="['./schedules']">Asignar Horario</button>
 
     </div>
     <div class="referencias" *ngIf="user.user_type_id <= 4">
         <h2>Referencias</h2>
-        <p class="centerText" *ngIf="user.references.length == 0">Sin referencias asignadas</p>
+        <h2 class="centerText" *ngIf="user.references.length == 0">Sin referencias asignadas</h2>
         <table *ngIf="user.references.length > 0">
             <thead>
                 <tr>
@@ -198,7 +198,7 @@
             </tbody>
         </table>
 
-        <button class="btn referenceBtn" (click)="sendUser()" [routerLink]="['./references']">Asignar Referencias</button>
+        <button class="btn secundary l12" (click)="sendUser()" [routerLink]="['./references']">Asignar Referencias</button>
 
     </div>
 

@@ -1,12 +1,12 @@
 <mat-progress-bar mode="indeterminate" *ngIf="sendingData" class="barLoader"></mat-progress-bar>
 
-<div class="background" [@background]="backgroundState"></div>
-<div id="createCard" [@principal]="cardState">
 
-    <div id="cerrarBtn" (click)="close()"> Cerrar <i class="material-icons">close</i></div>
+<div *ngIf="principal">
+    
+    <h2 class="linksTitle"><a [routerLink]="['/users']"> Usuarios</a> >>  <a [routerLink]="['/users/show/' + user.id]">{{ user.name }}</a> >> Referencias</h2>
 
     <div class="form" [ngClass]="{'loadingForm': sendingData == true}">
-        <h1 align="center">Editar Referencias</h1>
+        
 
         <div class="options">
 

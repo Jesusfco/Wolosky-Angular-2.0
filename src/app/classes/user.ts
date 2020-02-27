@@ -8,7 +8,18 @@ import { Salary } from '../classes/salary';
 import { Url } from './url';
 
 export class User {
+  static convertToArray(data: any): User[] {
+    
+    let objects: Array<User> = [];
+        for(let da of data) {
+          let object = new User();
+          object.setData(da);
+          objects.push(object);
+        }
 
+    return objects;
+
+}
     id: number = null;
     email:  string = '';
     password: string = '';
@@ -145,6 +156,21 @@ export class User {
         localStorage.setItem('userLogged', JSON.stringify(user))
     }
 
+    get edad() {
+        if(this.birthday == null)
+            return ""
+
+        var d: Date = new Date();   
+        var bird: Date = new Date(this.birthday)
+        var years = d.getFullYear() - bird.getFullYear();
+        
+        if(d.getMonth() < bird.getMonth() || 
+            (bird.getMonth() == d.getMonth() && bird.getDate() > d.getDate())            
+            )
+            years--
+
+        return years
+    }
     static authUser() {
         let user = new User()
         let data = JSON.parse(localStorage.getItem('userLogged'))
@@ -160,16 +186,7 @@ export class User {
         return ''
     }
 
-    getUserTypeView() {
-        if(this.user_type_id == 1) return 'Alumn@'
-        if(this.user_type_id == 2) return 'Maestr@'
-        if(this.user_type_id == 3) return 'Cajer@'
-        if(this.user_type_id == 4) return 'Contador@'
-        if(this.user_type_id == 5) return 'Escritor@'        
-        if(this.user_type_id == 6) return 'Administrador'
-        if(this.user_type_id == 7) return 'Desarrollador'
-        return 'Desconocido'
-    }
+   
 
     get typeView() {
         if(this.user_type_id == 1) return 'Alumn@'

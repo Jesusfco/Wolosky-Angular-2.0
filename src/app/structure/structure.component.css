@@ -130,6 +130,7 @@ nav button {
     min-height: 85vh;
     font-weight: 300px;
     margin-bottom: 80px;
+    padding: 10px;
 }
 
 .notified {

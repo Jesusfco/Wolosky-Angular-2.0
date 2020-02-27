@@ -1,18 +1,30 @@
 import { User } from "./user";
+import { ObjectJSONParser } from "../utils/classes/ObjectJSON";
 
-export class Parking { 
+export class Parking {
+  static convertToArray(data: any): Parking[] {
+    
+    let array: Array<Parking> = [];
+        for(let da of data) {
+          let obj = new Parking();
+          obj.setData(da);
+          array.push(obj);
+        }
+    return array;
+
+}
     id: Number
     user: User = new User()
     creator: User = new User()
     user_id: Number
     creator_id: Number
-    check_in: String
-    check_out: String
-    date_entry: String
-    paid: Boolean
-    amount: Number;
-    created_at: String
-    updated_at: String    
+    check_in: String= ""
+    check_out: String= ""
+    date_entry: String = ""
+    paid: Boolean = false
+    amount: Number = 0;
+    created_at: String = ""
+    updated_at: String = ""
     validations = {
         date: 0,
         user: 0,
@@ -22,21 +34,15 @@ export class Parking {
         validated: true
     }
 
-    setValues(data: any) {
-        this.id = parseInt(data.id)
-        this.user_id = parseInt(data.user_id)
-        this.user_id = parseInt(data.user_id)
-        this.amount = parseFloat(data.amount)
-        this.check_in = data.check_in
-        this.check_out = data.check_out
-        this.date_entry = data.date_entry
-        this.updated_at = data.updated_at
-        this.created_at = data.created_at
-        this.paid = data.paid
+    setData(data: any) {
+        this.id = 0
+        this.user_id = 0
+        this.creator_id = 0        
+        ObjectJSONParser.set(data, this) 
 
         if(data.user) {
             this.user = new User()
-            this.user.setValues(data.user)
+            this.user.setData(data.user)
         }
 
         if(data.creator) {

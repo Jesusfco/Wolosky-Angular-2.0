@@ -1,14 +1,13 @@
+<router-outlet></router-outlet>
 <mat-progress-bar mode="indeterminate" *ngIf="sendingData" class="barLoader"></mat-progress-bar>
-<div class="background" [@background]></div>
-<div id="createCard" @principal>
 
-    <a [routerLink]="['../../']">
-        <div id="cerrarBtn" matTooltip="Cerrar Pestaña" matTooltipPosition="right"> Cerrar <i class="material-icons">close</i></div>
-    </a>
+<div *ngIf="principal">
+   
+    <h2 class="linksTitle"><a [routerLink]="['/users']"> Usuarios</a> >>  {{ user.name }}</h2>
 
 
     <div class="form">
-        <h1 align="center">Modificar Usuario</h1>
+        
 
         <div class="options">
 
@@ -32,7 +31,7 @@
             <input id="imgInput" type="file" (change)="getFile($event.target.files)" accept="image/*">
         </div>
 
-        <div class="container">
+        <div class="">
             <form class="flexRow" [ngClass]="{'loadingForm': sendingData == true}" (submit)="updateUser()" enctype="multipart/form-data" autocomplete="off" *ngIf="modify">
                 <div class="flexRow l6">
                     <h2 class="l12">Datos Personales</h2>
@@ -189,14 +188,14 @@
                         </div>
 
                         <div class="formData l6 m6">
-                            <div class="btn formBtn" (click)="modifyMonthlyPayment()">Modificar Mensualidad</div>
+                            <div class="btn secundary" (click)="modifyMonthlyPayment()">Modificar Mensualidad</div>
                         </div>
 
                     </div>
 
                 </div>
 
-                <button type="submit" class="btn formBtn">Modificar Datos de Usuario</button>
+                <button type="submit" class="btn l12">Modificar Datos de Usuario</button>
 
             </form>
 
@@ -355,7 +354,7 @@
                     </tbody>
                 </table>
 
-                <button routerLink="/users/show/{{ user.id }}/schedule" class="btn horarioBtn" (click)="sendUser()">Modificar Horario</button>
+                <button routerLink="/users/show/{{ user.id }}/schedule" class="btn secundary l12" (click)="sendUser()">Modificar Horario</button>
 
             </div>
             <div class="referencias" *ngIf="showUser.user_type_id <= 4">
@@ -376,7 +375,7 @@
                     </tbody>
                 </table>
 
-                <button routerLink="/users/show/{{ user.id }}/references" class="btn referenceBtn" (click)="sendUser()">Modificar Referencias</button>
+                <button routerLink="/users/show/{{ user.id }}/references" class="btn secundary l12" (click)="sendUser()">Modificar Referencias</button>
 
                 <br><br><br>
 

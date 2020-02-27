@@ -1,15 +1,14 @@
 <mat-progress-bar mode="indeterminate" *ngIf="sendingData" class="barLoader"></mat-progress-bar>
+<router-outlet></router-outlet>
 
-<div class="background" [@background]="backgroundState"></div>
-<div id="createCard" [@principal]="cardState">
-
-    <!-- <div id="cerrarBtn" [routerLink]="['../']"> Cerrar <i class="material-icons">close</i></div> -->
-    <div id="cerrarBtn" (click)="close()"> Cerrar <i class="material-icons">close</i></div>
+<div *ngIf="principal">
+   
+    <h2 class="linksTitle"><a [routerLink]="['/users']"> Usuarios</a> >>  <a [routerLink]="['/users/show/' + user.id]">{{ user.name }}</a> >> Horarios</h2>
 
     <div class="form" [ngClass]="{'loadingForm': sendingData == true}">
         <h1 align="center" (click)="con(user.schedules)">Horarios</h1>
         <h2 align="center" (click)="con(scheduleDays)">{{ user.name }}</h2>
-        <h3 align="center">{{ user.getUserTypeView() }}</h3>
+        <h3 align="center">{{ user.typeView }}</h3>
 
         <div class="options">
 
@@ -26,12 +25,14 @@
             <p *ngIf="validations.format == 1">Recuerda que siempre la H.Entrada debe ser mas temprano que la H.Salida</p>
         </div>
 
-        <!-- <button (click)="selectLV()" class="btn LV">L-V</button> -->
-        <!-- [ngClass]="{active: x.active}" -->
-        <button (click)="createNewSchedule(day.day_id)" matTooltip="Crear Horario en día {{ day.day_id | dayPipe}}"  *ngFor="let day of days" class="btn black">{{ day.day }}</button>
-        <button class="btn blue" *ngIf="scheduleCopied">Horario Copiado: 
-            {{ scheduleCopied.check_in | time }} - {{ scheduleCopied.check_out | time }}
-        </button>
+        <div class="flex week">
+
+            <button (click)="createNewSchedule(day.day_id)" matTooltip="Crear Horario en día {{ day.day_id | dayPipe}}"  *ngFor="let day of days" class="btn black">{{ day.day }}</button>
+            <button class="btn blue" *ngIf="scheduleCopied">Horario Copiado: 
+                {{ scheduleCopied.check_in | time }} - {{ scheduleCopied.check_out | time }}
+            </button>
+
+        </div>
         
         <form (submit)="form()">
             <table>
@@ -126,7 +127,7 @@
 
             </div>
 
-            <button type="submit" class="btn blue">Actualizar Horarios</button>
+            <button type="submit" class="btn  l12">Actualizar Horarios</button>
         </form>
 
 

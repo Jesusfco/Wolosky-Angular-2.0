@@ -143,12 +143,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CreateRecordComponent } from './records/create-record/create-record.component';
 import { UpdateRecordComponent } from './records/update-record/update-record.component';
 import { ExportProductsOptionComponent } from './inventory/export-products-option/export-products-option.component';
+import { DashboardService } from './dashboard/dashboard.service';
+import { DebtorsMonthlyComponent } from './receipt/debtors-monthly/debtors-monthly.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-
     InventoryComponent,
     NewProductComponent,
     EditProductComponent,
@@ -224,6 +225,7 @@ import { ExportProductsOptionComponent } from './inventory/export-products-optio
     CreateRecordComponent,
     UpdateRecordComponent,
     ExportProductsOptionComponent,
+    DebtorsMonthlyComponent,
   ],
   imports: [
     BrowserModule,
@@ -286,6 +288,7 @@ import { ExportProductsOptionComponent } from './inventory/export-products-optio
         EventService,
         NotificationService,
         ParkingService,
+        DashboardService,
       ],
 
   bootstrap: [AppComponent]

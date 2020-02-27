@@ -57,7 +57,7 @@ export class ShowParkingComponent implements OnInit {
 
     this._http.showParking(this.parking).then(
 
-      data => this.parking.setValues(data),
+      data => this.parking.setData(data),
 
       error =>  this.not.sendError(error)
 

@@ -1,7 +1,7 @@
+<router-outlet></router-outlet>
 <mat-progress-bar mode="indeterminate" *ngIf="sendingData" class="barLoader"></mat-progress-bar>
 
-
-<div class="relative">
+<div *ngIf="principal">
 
     <h2 class="centerText">RECIBOS </h2>
 
@@ -94,7 +94,7 @@
             </button>
         </a>
 
-        <button class="orange" matTooltip="Deudores del mes" matTooltipPosition="left" mat-fab>
+        <button [routerLink]="['./deudores']" class="orange" matTooltip="Deudores del mes" matTooltipPosition="left" mat-fab>
             <mat-icon >people</mat-icon>
         </button>
 

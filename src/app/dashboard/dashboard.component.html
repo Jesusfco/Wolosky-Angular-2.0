@@ -1,3 +1,105 @@
-<p>
-  dashboard works!
-</p>
+
+
+<h1>Inicio</h1>
+<div class="flex">
+<div class="l6">
+  <h3>Ultimos Usuarios Registrados</h3>
+  <table align="center">
+    <thead>
+        <tr>
+            <th class="left">Nombre</th>
+            <th>Tipo</th>            
+            <th>Sexo</th>
+            <th>Edad</th>
+        </tr>        
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of usersLastCreated | slice:0:6; let i=index" [routerLink]="['/users/show', user.id]" [ngClass]="{ 'status2': user.status == 2 , 'status3': user.status == 3 }">
+            <td class="left">{{ user.name }}</td>
+            <td>{{ user.typeView }}</td>                            
+            <td *ngIf="user.gender == 1">M</td>
+            <td *ngIf="user.gender == 2">F</td>
+            <td>{{ user.edad }}</td>
+        </tr>
+    </tbody>
+  </table>
+
+  <a class="btn secundary">Ver mas Usuarios</a>
+</div>
+
+<div class="l6">
+  <h3>Ultimos Usuarios Actualizados</h3>
+  <table align="center">
+    <thead>
+        <tr>
+            <th class="left">Nombre</th>
+            <th>Tipo</th>            
+            <th>Sexo</th>
+            <th>Edad</th>
+        </tr>        
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of usersLastUpdated | slice:0:6; let i=index" [routerLink]="['/users/show', user.id]" [ngClass]="{ 'status2': user.status == 2 , 'status3': user.status == 3 }">
+            <td class="left">{{ user.name }}</td>
+            <td>{{ user.typeView }}</td>                            
+            <td *ngIf="user.gender == 1">M</td>
+            <td *ngIf="user.gender == 2">F</td>
+            <td>{{ user.edad }}</td>
+        </tr>
+    </tbody>
+  </table>
+
+  <a class="btn secundary">Ver mas Usuarios</a>
+
+</div>
+
+
+<div class="l6">
+  <h3>Recibos</h3>
+  <table align="center">
+    <thead>
+        <tr>
+          <th>Alumno</th>
+          <th>Monto</th>
+          <th>Descripción</th>
+        </tr>        
+    </thead>
+    <tbody>
+        <tr *ngFor="let re of receipts | slice:0:6; let i=index"[routerLink]="['/receipt/show', re.id]" >
+          <td class="left">{{ re.user.name }}</td>
+          <td>${{ re.amount }}</td>
+          <td>{{re.descriptionView}}</td>
+        </tr>
+    </tbody>
+  </table>
+
+  <a class="btn secundary">Ver Recibos</a>
+</div>
+
+<div class="l6">
+  <h3>Estacionamiento</h3>
+  <table align="center">
+    <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Monto</th>
+          <th>Check In</th>
+          <th>Check Out</th>
+          <th>Fecha</th>
+        </tr>        
+    </thead>
+    <tbody>
+        <tr *ngFor="let re of parking | slice:0:6; let i=index" [routerLink]="['/parking/ver', re.id]">
+          <td class="left">{{ re.user.name }}</td>
+          <td>${{ re.amount }}</td>
+          <td>{{ re.check_in }}</td>
+          <td>{{ re.check_out }}</td>
+          <td>{{ re.date_entry }}</td>
+        </tr>
+    </tbody>
+  </table>
+
+  <a class="btn secundary">Ver Estacionamiento</a>
+</div>
+
+</div>

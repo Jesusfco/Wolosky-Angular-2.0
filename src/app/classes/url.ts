@@ -2,8 +2,8 @@ import { Storage } from "./storage";
 
 export class Url {
 
-    // static basicUrl = "http://www.woloskygimnasia.com/";
-    static basicUrl = 'http://localhost:8000/';
+    static basicUrl = "http://www.woloskygimnasia.com/";
+    // static basicUrl = 'http://localhost:8000/';
     public url: string;
     public basic: string;
     
@@ -14,6 +14,10 @@ export class Url {
 
     static getApiUrlToken(link: string): string {
         return this.basicUrl + 'api/' + link + Storage.getTokenUrl();
+    } 
+
+    static getApiUrlTokenWithVariables(link: string, variables): string {
+        return this.basicUrl + 'api/' + link + Storage.getTokenUrl() + variables;
     } 
      getApiUrlToken(link: string): string {
         return Url.basicUrl + 'api/' + link + Storage.getTokenUrl();

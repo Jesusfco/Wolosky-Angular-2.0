@@ -48,35 +48,25 @@
 
         <div class="l6">              
             <label>Tiempo trabajado:</label><br>
-            <input type="time" [(ngModel)]="record.time_worked" name="time_worked" disabled>                                                  
+            <input [(ngModel)]="record.time_worked" name="time_worked" disabled>                                                  
         </div>
 
-        <div class="l6" *ngIf="record.type < 2">              
+        <div class="l6" *ngIf="record.type > 0">              
             <label>Tiempo Extra:</label><br>
-            <input type="time" [(ngModel)]="record.time_worked" name="time_worked" disabled>                                                  
+            <input [(ngModel)]="record.time_worked" name="time_worked" disabled>                                                  
         </div>
 
-        <div class="l6" *ngIf="record.type < 2">              
+        <div class="l6" *ngIf="record.type > 0">              
             <label>Tipo de asistencia:</label><br>
             <p> {{record.typeView() }}</p>            
         </div>
 
         
-        <div class="l6" *ngIf="record.type < 2">              
+        <div class="l6" *ngIf="record.type > 0">              
             <label>Observación:</label><br>
             <p> {{record.observation }}</p>            
         </div>
                 
-                
-  
-          <!-- <div class="l12">
-              <div class="icon-left">
-                  <input [(ngModel)]="search.name"  name="name" type="search" placeholder="Buscar Usuario">
-                  <label class="icon"><mat-icon>search</mat-icon></label>
-              </div>
-              
-          </div> -->
-          <!-- <button class="btn red">Eliminar Asistencias</button>         -->
       </form>
 
       </div>

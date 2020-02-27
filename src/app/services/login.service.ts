@@ -7,9 +7,7 @@ import { Storage } from '../classes/storage';
 
 @Injectable()
 export class LoginService {
-
-  public link: Url = new Url();
-  public token: Storage = new Storage();
+  
   
   constructor(private _http: Http) { }
 
@@ -24,39 +22,41 @@ export class LoginService {
   }
 
   login(information) {
-    return this._http.post(this.link.url + 'login', information)
+
+    
+    return this._http.post(Url.getApiUrlToken("login"), information)
             .map(data => data.json())
             .toPromise();
   }
 
   checkAuth() { 
-    return this._http.get(this.link.url + 'login/check' + this.token.getTokenUrl())
+    return this._http.get(Url.getApiUrlToken('login/check') )
     .map(data => data.json())
     .toPromise();
   }
 
   getProducts() { 
-    return this._http.get(this.link.url + 'inventory/getProducts' + this.token.getTokenUrl())
+    return this._http.get(Url.getApiUrlToken('inventory/getProducts') )
     .map(data => data.json())
     .toPromise();
   }
 
   resetPassword(data) { 
 
-    return this._http.post(Url.getApiUrl() + 'resetPassword', data)    
+    return this._http.post(Url.getApiUrlToken('resetPassword'), data)    
     .map(data => data.json())
     .toPromise();
 
   }
 
   validateResetToken(data){
-    return this._http.post(Url.getApiUrl() + 'validateResetToken', data)  
+    return this._http.post(Url.getApiUrlToken('validateResetToken'), data)  
     .map(data => data.json())  
     .toPromise();
   }
 
   setPassword(data){
-    return this._http.post(Url.getApiUrl() + 'setPassword', data)    
+    return this._http.post(Url.getApiUrlToken('setPassword'), data)    
     .map(data => data.json())
     .toPromise();
   }

@@ -1,4 +1,16 @@
 export class MonthlyPrice {
+  static convertToArray(data: any): MonthlyPrice[] {
+    
+    let objects: Array<MonthlyPrice> = [];
+        for(let da of data) {
+          let object = new MonthlyPrice();
+          object.setData(da);
+          objects.push(object);
+        }
+        
+    return objects;
+
+}
 
     public id: number;
     public hours: number;
