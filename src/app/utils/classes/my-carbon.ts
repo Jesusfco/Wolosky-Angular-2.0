@@ -114,4 +114,19 @@ export class MyCarbon {
         ]
     }
 
+    static getYear(){
+        var d = new Date()
+        return d.getFullYear()
+    }
+
+    static getMonth() {
+        var d = new Date()
+        return d.getMonth() + 1
+    }
+
+    static getDate() {
+        var d = new Date()
+        return d.getDate()
+    }
+
 }

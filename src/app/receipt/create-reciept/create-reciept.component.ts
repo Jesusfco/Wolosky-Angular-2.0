@@ -18,29 +18,28 @@ import { Cash } from '../../classes/cash';
 })
 export class CreateRecieptComponent implements OnInit {
 
-  public months = MyCarbon.getMonthsArrayForOptions()
+  months = MyCarbon.getMonthsArrayForOptions()
 
-  public window: number = 1;
+  window: number = 1;
   
-  public state = {
+  state = {
     background: 'initial',
     card: 'initial',
   };
 
-  public receipt: Receipt = new Receipt();
+  receipt: Receipt = new Receipt();
    
-
-  public sugests: Array<User> = [];
-  public sendingData: any = {
+  sugests: Array<User> = [];
+  sendingData: any = {
     request: false,
     sugest: false,
     monthly: false
   };
-  public timer: number = 0;
-  public desc: number = 50;
-  public recharge: number = 100;
+  
+  desc: number = 50;
+  recharge: number = 100;
 
-  public validation = {
+  validation = {
     
     paymentDate: 0,
     uniquePaymentMonthly: 0,
@@ -51,17 +50,20 @@ export class CreateRecieptComponent implements OnInit {
     form: true,
   };
   
-  public request: any = undefined;
+  request: any = undefined;
 
-  credential
+  
   auth: User = User.authUser()
   httpSugestSubscription
+
+  dayDiscount = 3
+  dayRecharge = 11
   constructor(private router: Router,
     private actRou: ActivatedRoute,
     private _http: ReceiptService,
     private notification: NotificationService) { 
 
-      this.credential = this.auth.user_type_id
+      
 
       let d = new Date();
       this.receipt.month = d.getMonth() + 1;
@@ -143,41 +145,32 @@ export class CreateRecieptComponent implements OnInit {
     let d = new Date();        
     this.validation.paymentDate = 0;
 
-    // si el año es mayor al actual
-    if(d.getFullYear() < this.receipt.year) {
+    // ------------ Agregar Descuento -----------
+    // SI ES EL MISMO AÑO - O
+    // MISMO AÑO MES ANTES - 0
+    // MISMO AÑO - MISMO MES - ANTES DE LA FECHA
+    if(d.getFullYear() < this.receipt.year ||     
+      (d.getFullYear() == this.receipt.year && d.getMonth() + 1 < this.receipt.month) ||    
+      (d.getFullYear() == this.receipt.year && d.getMonth() + 1 == this.receipt.month && d.getDate() <= this.dayDiscount)    
+    ) {
         this.receipt.monthlyAmount = (this.receipt.monthly - this.desc);
         this.validation.paymentDate = 1;
         return;
     }
 
-    //DENTRO DEL MISMO MES
-    if((d.getMonth() + 1) == this.receipt.month){      
+    //----------------- Cobrar Recargo --------------
+    // MISMO AÑO - MES - DESPUES DEL 11
+    else if(
+      (d.getFullYear() == this.receipt.year && d.getMonth() + 1 == this.receipt.month && d.getDate() >= this.dayRecharge) ||
+      (d.getFullYear() == this.receipt.year && d.getMonth() + 1 > this.receipt.month )
+    ) {
 
-      if(d.getDate() <= 3){
-         this.receipt.monthlyAmount = (this.receipt.monthly - this.desc);
-         this.validation.paymentDate = 1;
-        }
+        this.receipt.monthlyAmount = (this.receipt.monthly + this.recharge);
+        this.validation.paymentDate = 2;
 
-        else if(d.getDate() >= 11) {
-
-          this.receipt.monthlyAmount = (this.receipt.monthly + this.recharge);
-          this.validation.paymentDate = 2;
-
-      } else {        
-        
-        this.receipt.monthlyAmount = this.receipt.monthly;
-        
-      }
-
-    }
-
-    else if((d.getMonth() + 1) < this.receipt.month) {
-      this.receipt.monthlyAmount = (this.receipt.monthly - this.desc);
-      this.validation.paymentDate = 1;
-    } else {
-      this.receipt.monthlyAmount = (this.receipt.monthly + this.recharge);
-      this.validation.paymentDate = 2;
-    }
+    } else         
+        this.receipt.monthlyAmount = this.receipt.monthly;            
+    
   }
 
   createReceipt(){

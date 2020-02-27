@@ -165,14 +165,16 @@ export class Receipt {
     }
 
     static convertToArray(data: any): Receipt[] {
-    
-        let array: Array<Receipt> = [];
+        let array: Array<Receipt> = []
+        try {
             for(let da of data) {
-              let obj = new Receipt();
-              obj.setData(da);
-              array.push(obj);
-            }
-        return array;
+                let obj = new Receipt()
+                obj.setData(da)
+                array.push(obj)
+              }
+        } catch (error) {}
+
+        return array
     
     }
 }

@@ -27,7 +27,7 @@ export class ReceiptService {
   }
 
   getReceiptAnalisis(data){
-    return this._http.get(Url.getApiUrlToken("receipt/getDebtorsAnalisis") , data)
+    return this._http.post(Url.getApiUrlToken("receipt/getDebtorsAnalisis") , data)
               .map(data => data.json())
               .toPromise();
   }

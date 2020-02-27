@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { ReceiptService } from '../../services/receipt.service';
 import { NotificationService } from '../../notification/notification.service';
+import { User } from '../../classes/user';
+import { MyCarbon } from '../../utils/classes/my-carbon';
 
 @Component({
   selector: 'app-debtors-monthly',
@@ -13,15 +15,17 @@ export class DebtorsMonthlyComponent implements OnInit {
   principal = true
   sendingData = 0
 
-  
+  months = MyCarbon.getMonthsArrayForOptions()
 
-  public notifications = {
-    on: false,
-    viewDebtors: false,
-    debtorsMonthly: 0,
-    debtorsInscription: 0,
-    debtors: undefined,
-  };
+  dataToPost = {
+    month: MyCarbon.getMonth(),
+    year: MyCarbon.getYear(),
+    deptors: 1,
+    name: ''
+  }
+  pendUsers: Array<User> = []
+  regularUsers: Array<User> = []
+  
   constructor(
     private router: Router, 
     private _http: ReceiptService,
@@ -47,15 +51,12 @@ export class DebtorsMonthlyComponent implements OnInit {
     
       this.sendingData++;
   
-      this._http.getReceiptAnalisis({data: 1}).then(
+      this._http.getReceiptAnalisis(this.dataToPost).then(
   
         data => {
-  
-          if(data.count > 0)                              
-  
-          this.notifications.debtorsMonthly = data.count;
-          this.notifications.debtors = data.users;
-  
+          this.pendUsers = User.convertToArray(data.pendUsers)
+          this.regularUsers = User.convertToArray(data.regularUsers)   
+          console.log(data)                   
         },
   
         error => this.not.sendError(error),

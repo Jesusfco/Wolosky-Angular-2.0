@@ -6,20 +6,10 @@ import { Schedule } from '../classes/schedule';
 import { Payment } from '../classes/payment';
 import { Salary } from '../classes/salary';
 import { Url } from './url';
+import { Receipt } from './receipt';
 
 export class User {
-  static convertToArray(data: any): User[] {
-    
-    let objects: Array<User> = [];
-        for(let da of data) {
-          let object = new User();
-          object.setData(da);
-          objects.push(object);
-        }
-
-    return objects;
-
-}
+ 
     id: number = null;
     email:  string = '';
     password: string = '';
@@ -64,6 +54,7 @@ export class User {
     schedules: Array<Schedule> = [];
     references: Array<Reference> = [];
     payments: Array<Payment> = [];
+    receipts: Array<Receipt> = []
 
     constructor(){                        
     }
@@ -85,6 +76,9 @@ export class User {
             this.receiveSchedules(data.schedules)
         
 
+        if(data.receipts != undefined) 
+            this.receipts = Receipt.convertToArray(data.receipts)
+        
         if(data.references != undefined) {
             this.references = [];
             for(let re of data.references) {
@@ -152,8 +146,30 @@ export class User {
 
     }
 
+    static convertToArray(data: any): User[] {
+        let objects: Array<User> = [];    
+        try {        
+            for(let da of data) {
+                let object = new User();
+                object.setData(da);
+                objects.push(object);
+              }
+        } catch (error) {
+            
+        }                    
+        return objects;    
+    }
+
     static storageAuthUser(user) {
         localStorage.setItem('userLogged', JSON.stringify(user))
+    }
+
+    get ultimoPago() {
+        var receipt: Receipt = new Receipt()
+        receipt.created_at = ""
+        if(this.receipts.length == 1) 
+            return this.receipts[0]
+        return receipt
     }
 
     get edad() {
