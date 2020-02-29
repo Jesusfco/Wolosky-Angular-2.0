@@ -23,12 +23,12 @@
       <h2>Detalles de Asistencia</h2>
       <form class=" flex">
         
-        <div class="l12">
+        <div class="l6">
             <label>Usuario:</label><br>
-            <p [routerLink]="['/users/show', record.user_id]">{{ record.user.name }}</p>
+            <p> <a [routerLink]="['/users/show', record.user_id]">{{ record.user.name }}</a></p>
         </div>
         <div class="l6">
-            <label>Tipos de usuario:</label><br>
+            <label>Tipo de usuario:</label><br>
             <p disabled>{{record.user.typeView}}</p>                      
         </div>
 
@@ -46,25 +46,25 @@
             <input type="time" [(ngModel)]="record.checkOut" name="checkOut" disabled>                                                  
         </div>
 
-        <div class="l6">              
+        <div class="l6" *ngIf="record.isWorked()">              
             <label>Tiempo trabajado:</label><br>
             <input [(ngModel)]="record.time_worked" name="time_worked" disabled>                                                  
         </div>
 
-        <div class="l6" *ngIf="record.type > 0">              
+        <div class="l6" *ngIf="record.isWorked()">              
             <label>Tiempo Extra:</label><br>
-            <input [(ngModel)]="record.time_worked" name="time_worked" disabled>                                                  
+            <input [(ngModel)]="record.time_extra" name="time_extra" disabled>                                                  
         </div>
 
-        <div class="l6" *ngIf="record.type > 0">              
+        <div class="l6" *ngIf="record.isWorked()">              
             <label>Tipo de asistencia:</label><br>
-            <p> {{record.typeView() }}</p>            
+            <p>{{ record.typeView() }}</p>            
         </div>
 
         
-        <div class="l6" *ngIf="record.type > 0">              
+        <div class="l12" *ngIf="record.isWorked() && record.observation.length > 0">              
             <label>Observación:</label><br>
-            <p> {{record.observation }}</p>            
+            <p>{{ record.observation }}</p>            
         </div>
                 
       </form>

@@ -23,9 +23,12 @@ h5 {
 }
 
 a {
-    color: black;
+    color: #034e8b;
     text-decoration: none;
+    font-weight: 700;
+    transition: .4s;
 }
+a:hover{ color:#182733 }
 
 .linksTitle, .linksTitle a {
     font-family: 'Oswald', sans-serif !important;
@@ -271,6 +274,14 @@ th {
     -ms-flex-flow: row wrap;
     flex-flow: row wrap;
 }
+
+label {
+    width: 100%;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+label.icon {width: auto;}
 
 input,
 textarea,

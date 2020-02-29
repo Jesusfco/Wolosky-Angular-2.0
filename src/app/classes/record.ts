@@ -33,8 +33,14 @@ export class Record {
 
     typeView() {
         if(this.type == 0) return 'Normal'
-        if(this.type == 1) return 'Entrada Previa'
+        if(this.type == 1) return 'Entrada/Salida fuera de rango'
         if(this.type == 2) return 'Sin horario relacionado'
         return ''
+    }
+
+    isWorked() {
+        if(this.user == undefined) return false
+        if(this.user.user_type_id >= 2 && this.user.user_type_id <= 4) return true
+        return false
     }
 }
