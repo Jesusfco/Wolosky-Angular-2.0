@@ -1,0 +1,43 @@
+<router-outlet></router-outlet>
+<div class="cardSpace">
+
+    <div class="closeCardBackground" [routerLink]="['../']">
+        <h2 class="closeIcon">
+            <mat-icon>close</mat-icon>
+        </h2>
+    </div>
+
+    <div class="cardModule" >
+
+      <div *ngIf="selection == 'usersLastCreated'">
+        <div class="l12">
+          <h3>Ultimos Usuarios Actualizados</h3>
+          <table align="center">
+            <thead>
+                <tr>
+                    <th class="left">Nombre</th>
+                    <th>Tipo</th>            
+                    <th>Sexo</th>
+                    <th>Edad</th>
+                </tr>        
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of usersLastCreated "  [ngClass]="{ 'status2': user.status == 2 , 'status3': user.status == 3 }">
+                    <td class="left" >
+                      <a [routerLink]="['/users/show', user.id]">{{ user.name }}</a></td>
+                    <td>{{ user.typeView }}</td>                            
+                    <td *ngIf="user.gender == 1">M</td>
+                    <td *ngIf="user.gender == 2">F</td>
+                    <td>{{ user.edad }}</td>
+                </tr>
+            </tbody>
+          </table>
+        
+          <a class="btn  l12">Cargar más</a>
+        
+        </div>
+      </div>
+      
+    </div>
+
+  </div>

@@ -8,7 +8,7 @@ import { Salary } from '../classes/salary';
 import { Url } from './url';
 import { Receipt } from './receipt';
 
-export class User {
+export class User {  
  
     id: number = null;
     email:  string = '';
@@ -365,6 +365,27 @@ export class User {
           this.validations.validate = false;
           this.validations.salaryAmount = 1;
         }
+    }
+
+    sendUserByStorage() {
+        localStorage.setItem('sendedUser',JSON.stringify(this))
+    }
+    static isUserSended() {
+        var data = localStorage.getItem('sendedUser')
+        data = JSON.parse(data)        
+        if(data == undefined) return false
+        return true
+    }
+    static getUserSended() {
+        var data = localStorage.getItem('sendedUser')
+        data = JSON.parse(data)     
+        let user = new User();
+        user.setData(data)   
+        return user        
+    }
+
+    static cleanUserSended() {
+        localStorage.removeItem('sendedUser')
     }
 
 }    

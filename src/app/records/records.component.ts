@@ -1,5 +1,5 @@
 import { RecordService } from '../services/record.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Record } from '../classes/record';
 import { NotificationService } from '../notification/notification.service';
 import { MyCarbon } from '../utils/classes/my-carbon';
@@ -43,7 +43,21 @@ export class RecordsComponent implements OnInit {
       }); 
    }
 
-  ngOnInit() {        
+  ngOnInit() {   
+    if(!User.isUserSended()) return    
+    this.search.name = User.getUserSended().name
+    User.cleanUserSended()
+    this.setRecords()     
+  }
+
+  ngOnDestroy() {
+    this.killRequest()  
+  }
+  
+  killRequest() {
+    if(this.request != null)
+      if(!this.request.closed) 
+        this.request.unsubscribe()
   }
 
   pageAction(data) {

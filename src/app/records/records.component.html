@@ -44,7 +44,7 @@
         <tbody>
             <tr *ngFor="let record of records" [routerLink]="['./ver', record.id]">
 
-                <td class="left">{{ record.user.name }}</td>
+                <td class="left"><a [routerLink]="['/users/show', record.user_id]">{{ record.user.name }}</a></td>
                 <td>{{ record.date }}</td>
                 <td>{{ record.checkIn | time }} 
                     <span *ngIf="record.checkOut != null">- {{ record.checkOut | time }} </span>

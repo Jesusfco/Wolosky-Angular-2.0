@@ -61,13 +61,10 @@
             </thead>
             <tbody>
                 <tr *ngFor="let re of receipts" [routerLink]="['/receipt/show', re.id]">
-                    <td class="left">{{ re.user.name }}</td>
+                    <td class="left"><a [routerLink]="['/users/show', re.user_id]">{{ re.user.name }}</a></td>
                     <td>$ {{ re.amount }}</td>
                     <td>{{re.descriptionView}}</td>
                     <td>{{ re.created_at }}</td>
-
-
-
                 </tr>
             </tbody>
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ReceiptService } from '../services/receipt.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { Storage } from '../classes/storage';
@@ -59,9 +59,7 @@ export class ReceiptComponent implements OnInit {
     private not: NotificationService,
     private router: Router) {     
 
-    // this.getNotifications();
-    this.getDates();
-    this.getReceipts();
+    // this.getNotifications();    
 
     router.events.filter((event: any) => event instanceof NavigationEnd)
         .subscribe(event => {           
@@ -84,6 +82,23 @@ export class ReceiptComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getDates();
+    this.getReceipts();
+    if(!User.isUserSended()) return    
+    this.search.name = User.getUserSended().name
+    User.cleanUserSended()
+    this.getReceipts()
+    
+  }
+
+  ngOnDestroy() {
+    this.killRequest()  
+  }
+  
+  killRequest() {
+    if(this.request != null)
+      if(!this.request.closed) 
+        this.request.unsubscribe()
   }
 
   pageAction(data){

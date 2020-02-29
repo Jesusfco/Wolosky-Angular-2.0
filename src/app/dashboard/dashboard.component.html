@@ -1,9 +1,22 @@
 
 
+<router-outlet></router-outlet>
+<mat-progress-bar mode="indeterminate" *ngIf="sendingData" class="barLoader"></mat-progress-bar>
 <h1>Inicio</h1>
+<div class="menuHelper">
+  <ul>
+    <li (click)="sendLastCreated()"><a>U. Usuarios Registrados <mat-icon>people</mat-icon></a></li>
+    <li (click)="sendLastUpdated()"><a>U. Usuarios Actualizados <mat-icon>people</mat-icon></a></li>
+    <li (click)="sendReceipts()"><a>U. Recibos <mat-icon>receipt</mat-icon></a></li>
+    <li (click)="sendParking()"><a>Estacionamiento <mat-icon>directions_car</mat-icon></a></li>
+    <li (click)="sendInventory()"><a>Inventario Bajo <mat-icon>shopping_cart</mat-icon></a></li>
+    <li (click)="sendDeptors()"><a>Mensualidades Pendientes <mat-icon>receipt</mat-icon></a></li>
+  </ul>
+</div>
+
 <div class="flex">
 <div class="l6">
-  <h3>Ultimos Usuarios Registrados</h3>
+  <h2>Ultimos Usuarios Registrados</h2>
   <table align="center">
     <thead>
         <tr>
@@ -14,8 +27,8 @@
         </tr>        
     </thead>
     <tbody>
-        <tr *ngFor="let user of usersLastCreated | slice:0:6; let i=index" [routerLink]="['/users/show', user.id]" [ngClass]="{ 'status2': user.status == 2 , 'status3': user.status == 3 }">
-            <td class="left">{{ user.name }}</td>
+        <tr *ngFor="let user of usersLastCreated | slice:0:6; let i=index">
+            <td><a [routerLink]="['/users/show', user.id]">{{ user.name }}</a></td>
             <td>{{ user.typeView }}</td>                            
             <td *ngIf="user.gender == 1">M</td>
             <td *ngIf="user.gender == 2">F</td>
@@ -24,11 +37,11 @@
     </tbody>
   </table>
 
-  <a class="btn secundary">Ver mas Usuarios</a>
+  <a class="btn secundary" (click)="sendLastCreated()">Ver mas Usuarios</a>
 </div>
 
 <div class="l6">
-  <h3>Ultimos Usuarios Actualizados</h3>
+  <h2>Ultimos Usuarios Actualizados</h2>
   <table align="center">
     <thead>
         <tr>
@@ -39,8 +52,8 @@
         </tr>        
     </thead>
     <tbody>
-        <tr *ngFor="let user of usersLastUpdated | slice:0:6; let i=index" [routerLink]="['/users/show', user.id]" [ngClass]="{ 'status2': user.status == 2 , 'status3': user.status == 3 }">
-            <td class="left">{{ user.name }}</td>
+        <tr *ngFor="let user of usersLastUpdated | slice:0:6; let i=index">
+            <td><a [routerLink]="['/users/show', user.id]">{{ user.name }}</a></td>
             <td>{{ user.typeView }}</td>                            
             <td *ngIf="user.gender == 1">M</td>
             <td *ngIf="user.gender == 2">F</td>
@@ -49,13 +62,13 @@
     </tbody>
   </table>
 
-  <a class="btn secundary">Ver mas Usuarios</a>
+  <a class="btn secundary" (click)="sendLastUpdated()">Ver mas Usuarios</a>
 
 </div>
 
 
 <div class="l6">
-  <h3>Recibos</h3>
+  <h2>Recibos</h2>
   <table align="center">
     <thead>
         <tr>
@@ -66,25 +79,25 @@
     </thead>
     <tbody>
         <tr *ngFor="let re of receipts | slice:0:6; let i=index"[routerLink]="['/receipt/show', re.id]" >
-          <td class="left">{{ re.user.name }}</td>
+          <td><a [routerLink]="['/users/show', re.user_id]">{{ re.user.name }}</a></td>
           <td>${{ re.amount }}</td>
-          <td>{{re.descriptionView}}</td>
+          <td><a>{{re.descriptionView}}</a></td>
         </tr>
     </tbody>
   </table>
 
-  <a class="btn secundary">Ver Recibos</a>
+  <a class="btn secundary" (click)="sendReceipts()">Ver Recibos</a>
 </div>
 
 <div class="l6">
-  <h3>Estacionamiento</h3>
+  <h2>Estacionamiento</h2>
   <table align="center">
     <thead>
         <tr>
           <th>Usuario</th>
           <th>Monto</th>
-          <th>Check In</th>
-          <th>Check Out</th>
+          <th>Entrada</th>
+          <th>Salida</th>
           <th>Fecha</th>
         </tr>        
     </thead>
@@ -99,7 +112,7 @@
     </tbody>
   </table>
 
-  <a class="btn secundary">Ver Estacionamiento</a>
+  <a class="btn secundary" (click)="sendParking()">Ver Estacionamiento</a>
 </div>
 
 </div>

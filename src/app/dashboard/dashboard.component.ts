@@ -5,6 +5,9 @@ import { Receipt } from '../classes/receipt';
 import { Parking } from '../classes/parking';
 import { MonthlyPrice } from '../classes/monthly-price';
 import { NotificationService } from '../notification/notification.service';
+import { Router } from '@angular/router';
+
+import { Product } from '../classes/product';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,16 +16,44 @@ import { NotificationService } from '../notification/notification.service';
 })
 export class DashboardComponent implements OnInit {
 
+  sendLastCreated(){
+    this._http.sendData('usersLastCreated', this.usersLastCreated)
+    this.goDetails()
+  }
+  sendLastUpdated(){
+    this._http.sendData('usersLastUpdated', this.usersLastUpdated)
+    this.goDetails()
+  }
+  sendReceipts(){
+    this._http.sendData('receipts', this.receipts)
+    this.goDetails()
+  }
+  sendParking(){
+    this._http.sendData('parking', this.parking)
+    this.goDetails()
+  }
+  sendInventory() {
+    this._http.sendData('inventory', this.inventory)
+    this.goDetails()
+  }
+  sendDeptors() {
+    this._http.sendData('debtors', this.deptors)
+    this.goDetails()
+  }
   usersLastCreated: Array<User> = [];
   usersLastUpdated: Array<User> = [];
+  deptors: Array<User> = [];
   receipts: Array<Receipt> = [];
   monthlyPrices: Array<MonthlyPrice> = [];
   parking: Array<Parking> = [];
+  inventory: Array<Product> = [];
 
   request = null
   sendingData = 0
 
-  constructor(private _http: DashboardService, private not: NotificationService) {
+  constructor(private _http: DashboardService, 
+    private not: NotificationService,
+    private router: Router) {
     this.getResumeData();
   }
 
@@ -55,6 +86,11 @@ export class DashboardComponent implements OnInit {
     
     )
 
+  }
+
+  
+  goDetails() {
+    this.router.navigate(['/dashboard/detalles'])
   }
 
 }

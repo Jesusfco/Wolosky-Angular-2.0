@@ -419,5 +419,6 @@ export class ShowUserComponent implements OnInit {
        reader.readAsDataURL(image);
     }
  }
+ 
 
 }

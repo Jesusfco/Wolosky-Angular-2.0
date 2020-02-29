@@ -77,6 +77,7 @@ import { CreateRecordComponent } from './records/create-record/create-record.com
 import { ExportProductsOptionComponent } from './inventory/export-products-option/export-products-option.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DebtorsMonthlyComponent } from './receipt/debtors-monthly/debtors-monthly.component';
+import { DashboardDetailsComponent } from './dashboard/dashboard-details/dashboard-details.component';
  
 
 
@@ -85,8 +86,9 @@ export const routes: Routes = [
     { path: 'resetear-contraseña', component: ResetComponent },
     { path: 'restablecer-contraseña', component: RecoverComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'dashboard', component: DashboardComponent },
-
+    { path: 'dashboard', component: DashboardComponent,  children: [
+        { path: 'detalles', component: DashboardDetailsComponent }, 
+    ]},
     {
         path: 'cash',
         component: CashComponent

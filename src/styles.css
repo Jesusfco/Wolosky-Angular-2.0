@@ -263,7 +263,8 @@ th {
 }
 
 .btn:hover {
-    background: rgb(56, 56, 56);            
+    background: rgb(56, 56, 56);   
+    color: white;         
 }
 
 .btn.secundary:hover {

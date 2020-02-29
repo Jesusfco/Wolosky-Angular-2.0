@@ -145,6 +145,7 @@ import { UpdateRecordComponent } from './records/update-record/update-record.com
 import { ExportProductsOptionComponent } from './inventory/export-products-option/export-products-option.component';
 import { DashboardService } from './dashboard/dashboard.service';
 import { DebtorsMonthlyComponent } from './receipt/debtors-monthly/debtors-monthly.component';
+import { DashboardDetailsComponent } from './dashboard/dashboard-details/dashboard-details.component';
 
 
 @NgModule({
@@ -226,6 +227,7 @@ import { DebtorsMonthlyComponent } from './receipt/debtors-monthly/debtors-month
     UpdateRecordComponent,
     ExportProductsOptionComponent,
     DebtorsMonthlyComponent,
+    DashboardDetailsComponent,
   ],
   imports: [
     BrowserModule,

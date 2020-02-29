@@ -13,8 +13,10 @@
                 <a href="{{ url.getApiUrlToken('pdf/userCredential/' + user.id) }}">Imprimir Credencial <mat-icon>local_printshop</mat-icon></a></li>
             <li [routerLink]="['./delete']" (click)="sendUser()"><a>Eliminar <mat-icon>delete</mat-icon></a></li>
                 
-            <li (click)="sendUser()" *ngIf="user.user_type_id <= 4"><a>Horarios </a></li>
-            <li (click)="sendUser()" *ngIf="user.user_type_id <= 4"><a>Referencias</a></li>
+            <li (click)="sendUser()" [routerLink]="['./schedule']" *ngIf="user.user_type_id <= 4"><a>Horarios </a></li>
+            <li (click)="sendUser()" [routerLink]="['./references']" *ngIf="user.user_type_id <= 4"><a>Referencias</a></li>
+            <li (click)="user.sendUserByStorage()" [routerLink]="['/asistencias']"><a>Asistencias</a></li>
+            <li (click)="user.sendUserByStorage()" [routerLink]="['/receipt']"><a>Recibos</a></li>
             
             <li (click)="getUserData()"><a>Recargar <mat-icon>cached</mat-icon></a></li>
         </ul>
