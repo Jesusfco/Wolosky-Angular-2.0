@@ -17,7 +17,7 @@ export class DebtorsMonthlyComponent implements OnInit {
 
   months = MyCarbon.getMonthsArrayForOptions()
 
-  dataToPost = {
+  search = {
     month: MyCarbon.getMonth(),
     year: MyCarbon.getYear(),
     deptors: 1,
@@ -51,7 +51,7 @@ export class DebtorsMonthlyComponent implements OnInit {
     
       this.sendingData++;
   
-      this._http.getReceiptAnalisis(this.dataToPost).then(
+      this._http.getReceiptAnalisis(this.search).then(
   
         data => {
           this.pendUsers = User.convertToArray(data.pendUsers)

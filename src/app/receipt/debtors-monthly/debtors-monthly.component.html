@@ -3,23 +3,34 @@
 
 <div *ngIf="principal">
 
-<h2 class="linksTitle"><a [routerLink]="['/receipt']"> Recibos</a> >> Mensualidades Pendientes </h2>
+<h2 class="linksTitle"><a [routerLink]="['/receipt']"> Recibos</a> / Mensualidades Pendientes </h2>
+
+<div class="menuHelper">
+  <ul>
+      
+      <li><a target="_blank" href="{{ storage.getUrl() + 'excel/monthlyDebtor' +storage.getTokenUrl() }}
+          &year={{ search.year }}&month={{ search.month }}&deptors={{ search.deptors }}">Exportar a Excel <mat-icon>archive</mat-icon></a></li>      
+      
+      
+      <li (click)="getDebtors()"><a>Recargar <mat-icon>cached</mat-icon></a></li>
+  </ul>
+</div>
 
 <div class="flex">
   <div class="l4">
     <label>Mes:</label><br>
-    <select [(ngModel)]="dataToPost.month" name="month" (change)="getDebtors()">
+    <select [(ngModel)]="search.month" name="month" (change)="getDebtors()">
             <option *ngFor="let m of months" value="{{m.value}}">{{m.view}}</option>           
     </select>
   </div>
   <div class="l4">
     <label>Año:</label><br>
-    <input  type="number" [(ngModel)]="dataToPost.year" name="year" (change)="getDebtors()">
+    <input  type="number" [(ngModel)]="search.year" name="year" (change)="getDebtors()">
   </div>
 
   <div class="l4">
     <label>Estatus de usuario:</label><br>
-    <select [(ngModel)]="dataToPost.deptors" name="deptors">
+    <select [(ngModel)]="search.deptors" name="deptors">
       <option value="1">Pendiente</option>           
       <option value="0">Al corriente</option>           
     </select>

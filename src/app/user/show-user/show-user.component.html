@@ -3,28 +3,24 @@
 
 <div *ngIf="principal">
    
-    <h2 class="linksTitle"><a [routerLink]="['/users']"> Usuarios</a> >>  {{ user.name }}</h2>
+    <h2 class="linksTitle"><a [routerLink]="['/users']"> Usuarios</a> /  {{ user.name }}</h2>
 
+    <div class="menuHelper">
+        <ul>
+            <li (click)="modifyUser()" ><a>Editar Usuario <mat-icon>edit</mat-icon></a></li>
+            <li [routerLink]="['./status']" (click)="sendUser()"><a>Editar Estatus <mat-icon>assessment</mat-icon></a></li>
+            <li *ngIf="user.user_type_id == 1">
+                <a href="{{ url.getApiUrlToken('pdf/userCredential/' + user.id) }}">Imprimir Credencial <mat-icon>local_printshop</mat-icon></a></li>
+            <li [routerLink]="['./delete']" (click)="sendUser()"><a>Eliminar <mat-icon>delete</mat-icon></a></li>
+                
+            <li (click)="sendUser()" *ngIf="user.user_type_id <= 4"><a>Horarios </a></li>
+            <li (click)="sendUser()" *ngIf="user.user_type_id <= 4"><a>Referencias</a></li>
+            
+            <li (click)="getUserData()"><a>Recargar <mat-icon>cached</mat-icon></a></li>
+        </ul>
+    </div>
 
-    <div class="form">
-        
-
-        <div class="options">
-
-            <mat-icon routerLink="/users/show/{{ user.id }}/status" (click)="sendUser()" matTooltip="Editar Status" matTooltipPosition="below">assessment</mat-icon>
-            <mat-icon (click)="modifyUser()" matTooltip="Editar Usuario" matTooltipPosition="below">edit</mat-icon>
-
-
-            <!-- <a href="{{ url.url }}pdf/user{{ storage.getTokenUrl() }}&id={{user.id}}" target="_blank">
-                <mat-icon matTooltip="Imprimir Informacion de Usuario" matTooltipPosition="below">local_printshop</mat-icon>
-            </a> -->
-
-            <a href="{{ url.getApiUrlToken('pdf/userCredential/' + user.id) }}" target="_blank" *ngIf="user.user_type_id == 1">
-                <mat-icon matTooltip="Imprimir Credencial de Alumno" matTooltipPosition="below">local_printshop</mat-icon>
-            </a>
-
-            <mat-icon routerLink="/users/show/{{ user.id }}/delete" (click)="sendUser()" matTooltip="Eliminar Usuario" matTooltipPosition="below" *ngIf="credential >= 6">delete</mat-icon>
-        </div>
+    <div class="form">                
 
         <div class="imgUser">
             <img src="{{ userImgFile }}" id="imgUser">

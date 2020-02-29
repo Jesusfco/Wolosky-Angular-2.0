@@ -3,22 +3,19 @@
 
 <div *ngIf="principal">
 
-    <h2 class="centerText">RECIBOS </h2>
+    <h2 class="linksTitle">Recibos / Lista </h2>
 
-    <!-- <div *ngIf="notifications.on" class="notifyReceipt">
-        <h5>Notificaciones</h5>
-        <div>
-            <p>Hay #{{ notifications.debtorsMonthly }} alumnos con pagos pendientes de este mes.
-                <span (click)="notifications.viewDebtors = !notifications.viewDebtors">Ver Alumnos</span>
-            </p>
-
-            <div *ngIf="notifications.viewDebtors" id="debtors">
-                <p *ngFor="let deb of notifications.debtors" (click)="debtorPay(deb)" [routerLink]="['/receipt/create']"> {{ deb.name }}</p>
-            </div>
-         <p>Hay #{{ notifications.debtorsInscription }} alumnos con inscripciones pendientes de este mes.</p>
-        </div>
-
-    </div> -->
+    <div class="menuHelper">
+        <ul>
+            <li [routerLink]="['./create']"><a>Crear Recibo <mat-icon>edit</mat-icon></a></li>
+            <li><a target="_blank" href="{{ storage.getUrl() + 'excel/receipt' +storage.getTokenUrl() }}
+                &from={{ search.from }}&to={{ search.to }}&id={{ search.id }}">Descargar Recibos <mat-icon>archive</mat-icon></a></li>
+            <li [routerLink]="['./deudores']" (click)="sendUser()"><a>Ver Estudiantes Sin Pago <mat-icon>people</mat-icon></a></li>
+            
+            
+            <li (click)="getReceipts()"><a>Recargar <mat-icon>cached</mat-icon></a></li>
+        </ul>
+    </div>
 
     <form class=" flex" (submit)="getReceipts()">
         <div class="l4">
@@ -80,31 +77,5 @@
         </mat-paginator>
 
     </div>
-
-</div>
-
-<div class="floatOptions">
-
-    <div class="moreOptions">
-
-        <a target="_blank" href="{{ storage.getUrl() + 'excel/receipt' +storage.getTokenUrl() }}
-            &from={{ search.from }}&to={{ search.to }}&id={{ search.id }}">
-            <button class="green" matTooltip="Descargar Recibos" matTooltipPosition="left" mat-fab id="cancelButton">
-                <mat-icon >archive</mat-icon>
-            </button>
-        </a>
-
-        <button [routerLink]="['./deudores']" class="orange" matTooltip="Deudores del mes" matTooltipPosition="left" mat-fab>
-            <mat-icon >people</mat-icon>
-        </button>
-
-        <button class="blue" [routerLink]="['./create']" matTooltip="Crear Recibo" matTooltipPosition="left" mat-fab>
-            <mat-icon >create</mat-icon>
-        </button>
-    </div>
-
-    <button matTooltip="Opciones de Recibos" matTooltipPosition="left" mat-fab color="pri" class="floatOptionPrincipal">
-                <mat-icon >settings</mat-icon>
-            </button>
 
 </div>

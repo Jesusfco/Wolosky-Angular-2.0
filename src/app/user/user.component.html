@@ -2,15 +2,27 @@
 <div *ngIf="principal">
 <mat-progress-bar mode="indeterminate" *ngIf="sendingData" class="barLoader"></mat-progress-bar>
 
-<h2 class="centerText">Usuarios</h2>
+<h2 class="linksTitle">Usuarios / Lista</h2>
 
-<div class="divSearch">
-    <input [(ngModel)]="search.searchWord" (keyup)="searchInput()" placeholder="Buscar Usuario" name="search" type="search">
-
-    <br>
-    <mat-icon *ngIf="search.searchWord == ''">search</mat-icon>
-    <mat-icon *ngIf="search.searchWord !== ''" (click)="search.searchWord = ''">close</mat-icon>
+<div class="menuHelper">
+    <ul>
+        
+        <li [routerLink]="['./create']"><a>Crear Usuario</a></li>
+        <li [routerLink]="['./filter']"><a>Filtrar/Exportar</a></li>
+        <li (click)="searchRequest()"><a>Recargar</a></li>
+    </ul>
 </div>
+
+<form class="flex">
+    <div class="l4">
+        <label>Nombre de Usuario</label>
+        <input [(ngModel)]="search.searchWord" (keyup)="searchInput()" placeholder="Buscar Usuario" name="search" type="search">
+    </div>
+    <div>
+        <button class="btn small">Buscar</button>
+    </div>
+</form>
+
 
 <div class="responsive-table">
     <table align="center">

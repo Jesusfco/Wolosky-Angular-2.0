@@ -105,6 +105,24 @@ a:hover{ color:#182733 }
     }
 }
 
+.menuHelper {
+    float: ;
+}
+
+.menuHelper .material-icons {
+    font-size: inherit;
+    height: inherit;
+    width: inherit;
+}
+.menuHelper ul { padding: 0;}
+.menuHelper ul li a { }
+.menuHelper ul li {
+    display: inline-block;    
+    margin-bottom: 10px;
+    cursor: pointer;
+    padding: 10px;
+    border: rgb(223, 223, 223) solid 1px;
+}
 
 /* TITULO DE LA RUTA */
 
@@ -242,15 +260,18 @@ th {
 }
 
 .btn:hover {
-    background: rgba(255, 255, 255, 0);
-    border: solid 2px #034e8b;
-    color: #034e8b;
-    padding: 18px;
+    background: rgb(56, 56, 56);            
 }
 
 .btn.secundary:hover {
-    border: solid 2px #002d52;
-    color: #002d52;
+    border: solid 2px rgb(56, 56, 56);
+    color: rgb(56, 56, 56);
+    background: none;
+}
+
+.btn.small {
+    padding: 10px;
+    font-size: 16px;
 }
 
 

@@ -3,7 +3,7 @@
 
 <div *ngIf="principal">
     
-    <h2 class="linksTitle"><a [routerLink]="['/users']"> Usuarios</a> >>  <a [routerLink]="['/users/show/' + user.id]">{{ user.name }}</a> >> Referencias</h2>
+    <h2 class="linksTitle"><a [routerLink]="['/users']"> Usuarios</a> / <a [routerLink]="['/users/show/' + user.id]">{{ user.name }}</a> >> Referencias</h2>
 
     <div class="form" [ngClass]="{'loadingForm': sendingData == true}">
         
