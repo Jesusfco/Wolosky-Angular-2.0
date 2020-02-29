@@ -57,6 +57,9 @@ a:hover{ color:#182733 }
     cursor: pointer;
 }
 
+.quitMargin { margin: 0 !important}
+.quitPadding { padding: 0;}
+
 .divSearch {
     display: block;
     margin: 0 auto;

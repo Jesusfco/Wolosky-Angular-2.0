@@ -8,7 +8,7 @@
 <div class="menuHelper">
   <ul>
       
-      <li><a target="_blank" href="{{ storage.getUrl() + 'excel/monthlyDebtor' +storage.getTokenUrl() }}
+      <li><a target="_blank" href="{{ url.getApiUrlToken('excel/monthlyDebtor') }}
           &year={{ search.year }}&month={{ search.month }}&deptors={{ search.deptors }}">Exportar a Excel <mat-icon>archive</mat-icon></a></li>      
       
       
@@ -39,9 +39,22 @@
 </div>
 
 <div>
-  <h3>Alumnos sin Adeudo: {{ regularUsers.length +  "/" + (pendUsers.length + regularUsers.length) }}</h3>
+  <h3>Alumnos sin Adeudo: {{ regularUsers.length +  "/" + (pendUsersBack.length + regularUsersBack.length) }}</h3>
+  <form class="flex">
+    <div class="l4">
+      
+      <label>Buscar Alumno:</label>
+      <div class="icon-left">
+        <input [(ngModel)]="search.name" name="name" type="search" (keyup)="searchWriting()">
+        <label class="icon"><mat-icon>search</mat-icon></label>
+      </div>
+    </div>
+  </form>
+  
 </div>
-<div class="responsive-table" *ngIf="dataToPost.deptors == '1'">
+
+
+<div class="responsive-table" *ngIf="search.deptors == '1'">
   <table align="center" *ngIf="pendUsers.length > 0">
       <thead>
           <tr>
@@ -56,13 +69,11 @@
       </thead>
       <tbody>
           <tr *ngFor="let re of pendUsers">
-              <td class="left" [routerLink]="['/users/show', re.id]">{{ re.name }}</td>
+              <td class="left" [routerLink]="['/users/show', re.id]"><a>{{ re.name }}</a></td>
               <td>{{ re.edad }}</td>
               <td>${{ re.monthly_payment.amount }}</td>
               <td>{{ re.ultimoPago.created_at }}</td>
-              <td><a class="btn secundary" [routerLink]="['/receipt/create']">Pagar</a></td>
-
-
+              <td><a class="btn secundary small quitMargin"  (click)="pay(re)">Pagar</a></td>
 
           </tr>
       </tbody>
@@ -71,7 +82,7 @@
   <h3 *ngIf="pendUsers.length == 0">Sin Alumnos Pendientes</h3>
 </div>
 
-<div class="responsive-table" *ngIf="dataToPost.deptors != 1">
+<div class="responsive-table" *ngIf="search.deptors != 1">
 
   <table align="center" *ngIf="pendUsers.length > 0">
     <thead>
@@ -86,7 +97,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let re of regularUsers">
-            <td class="left" [routerLink]="['/users/show', re.id]">{{ re.name }}</td>
+            <td class="left" [routerLink]="['/users/show', re.id]"><a>{{ re.name }}</a></td>
             <td>${{ re.ultimoPago.amount }}</td>
             <td>{{ re.ultimoPago.created_at }}</td>
             <td>{{ re.edad }}</td>

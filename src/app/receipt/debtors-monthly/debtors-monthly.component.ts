@@ -4,6 +4,8 @@ import { ReceiptService } from '../../services/receipt.service';
 import { NotificationService } from '../../notification/notification.service';
 import { User } from '../../classes/user';
 import { MyCarbon } from '../../utils/classes/my-carbon';
+import { Storage } from '../../classes/storage';
+import { Url } from '../../classes/url';
 
 @Component({
   selector: 'app-debtors-monthly',
@@ -14,6 +16,7 @@ export class DebtorsMonthlyComponent implements OnInit {
 
   principal = true
   sendingData = 0
+  public url: Url = new Url();
 
   months = MyCarbon.getMonthsArrayForOptions()
 
@@ -24,7 +27,9 @@ export class DebtorsMonthlyComponent implements OnInit {
     name: ''
   }
   pendUsers: Array<User> = []
+  pendUsersBack: Array<User> = []
   regularUsers: Array<User> = []
+  regularUsersBack: Array<User> = []
   
   constructor(
     private router: Router, 
@@ -54,9 +59,11 @@ export class DebtorsMonthlyComponent implements OnInit {
       this._http.getReceiptAnalisis(this.search).then(
   
         data => {
+          this.pendUsersBack = User.convertToArray(data.pendUsers)
+          this.regularUsersBack = User.convertToArray(data.regularUsers)   
           this.pendUsers = User.convertToArray(data.pendUsers)
           this.regularUsers = User.convertToArray(data.regularUsers)   
-          console.log(data)                   
+          this.search.name = '';                             
         },
   
         error => this.not.sendError(error),
@@ -69,4 +76,41 @@ export class DebtorsMonthlyComponent implements OnInit {
     
   }
 
+  searchWriting(){
+    if(this.search.deptors == 1)
+      this.pendUsers = this.searchNameDeptors();
+    else
+      this.regularUsers = this.searchNameDeptors();
+  }
+
+  searchNameDeptors(){
+        
+    this.pendUsers = this.pendUsersBack;
+    let busqueda = this.search.name.toUpperCase().trim();
+
+    if(this.search === undefined) return this.pendUsers;    
+
+    return this.pendUsers.filter(function(user){      
+      return user.name.toUpperCase().includes( busqueda );      
+    });
+  }
+
+  searchNameRegular(){
+        
+    this.regularUsers = this.regularUsersBack;
+    let busqueda = this.search.name.toUpperCase().trim();
+
+    if(this.search.name === undefined) return this.regularUsers;    
+
+    return this.regularUsers.filter(function(user){      
+      return user.name.toUpperCase().includes( busqueda );      
+    });
+  }
+
+  pay(user){
+    localStorage.setItem('userToPay', JSON.stringify(user))
+    this.router.navigate(['/receipt/create'])
+    // setTimeout(() => , 50)
+    
+  }
 }

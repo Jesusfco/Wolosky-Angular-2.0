@@ -1,6 +1,6 @@
 import { MyCarbon } from './../../utils/classes/my-carbon';
 import { NotificationService } from './../../notification/notification.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BackgroundCard, Card } from '../../animations/card.animation';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReceiptService } from '../../services/receipt.service';
@@ -74,12 +74,27 @@ export class CreateRecieptComponent implements OnInit {
     }
 
   
+  ngOnDestroy() {
+    try {
+      localStorage.removeItem('userToPay')
+    } catch (error) {
+      
+    }
+  }
 
   ngOnInit() {
     setTimeout(() => {
       this.state.background = 'final';
       this.state.card = 'final';
+
+      var data = JSON.parse(localStorage.getItem('userToPay'))
+      if(data == undefined) return
+        var user: User = new User()
+        user.setData(data)
+        this.setMonthlyPayment(user)
     }, 100);
+
+    
   }
 
  

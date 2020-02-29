@@ -10,7 +10,7 @@
             <li [routerLink]="['./create']"><a>Crear Recibo <mat-icon>edit</mat-icon></a></li>
             <li><a target="_blank" href="{{ storage.getUrl() + 'excel/receipt' +storage.getTokenUrl() }}
                 &from={{ search.from }}&to={{ search.to }}&id={{ search.id }}">Descargar Recibos <mat-icon>archive</mat-icon></a></li>
-            <li [routerLink]="['./deudores']" (click)="sendUser()"><a>Ver Estudiantes Sin Pago <mat-icon>people</mat-icon></a></li>
+            <li [routerLink]="['./deudores']" ><a>Ver Estudiantes Sin Pago <mat-icon>people</mat-icon></a></li>
             
             
             <li (click)="getReceipts()"><a>Recargar <mat-icon>cached</mat-icon></a></li>
