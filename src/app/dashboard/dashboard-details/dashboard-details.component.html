@@ -1,4 +1,5 @@
 <router-outlet></router-outlet>
+<mat-progress-bar mode="indeterminate" *ngIf="sendingData" class="barLoader"></mat-progress-bar>
 <div class="cardSpace">
 
     <div class="closeCardBackground" [routerLink]="['../']">
@@ -11,7 +12,7 @@
 
       <div *ngIf="selection == 'usersLastCreated'">
         <div class="l12">
-          <h3>Ultimos Usuarios Actualizados</h3>
+          <h3>Ultimos Usuarios Creados</h3>
           <table align="center">
             <thead>
                 <tr>
@@ -19,6 +20,7 @@
                     <th>Tipo</th>            
                     <th>Sexo</th>
                     <th>Edad</th>
+                    <th>Fecha/Hora</th>
                 </tr>        
             </thead>
             <tbody>
@@ -29,15 +31,99 @@
                     <td *ngIf="user.gender == 1">M</td>
                     <td *ngIf="user.gender == 2">F</td>
                     <td>{{ user.edad }}</td>
+                    <td>{{ user.created_at }}</td>
                 </tr>
             </tbody>
           </table>
         
-          <a class="btn  l12">Cargar más</a>
+          <a class="btn l12" (click)="chargeMore()" *ngIf="sendingData >0">Cargar más</a>
+        
+        </div>
+      </div>
+
+      
+      <div *ngIf="selection == 'usersLastUpdated'">
+        <div class="l12">
+          <h3>Ultimos Usuarios Actualizados</h3>
+          <table align="center">
+            <thead>
+                <tr>
+                    <th class="left">Nombre</th>
+                    <th>Tipo</th>            
+                    <th>Sexo</th>
+                    <th>Edad</th>
+                    <th>Fecha/Hora</th>
+                </tr>        
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of usersLastUpdated "  [ngClass]="{ 'status2': user.status == 2 , 'status3': user.status == 3 }">
+                    <td class="left" >
+                      <a [routerLink]="['/users/show', user.id]">{{ user.name }}</a></td>
+                    <td>{{ user.typeView }}</td>                            
+                    <td *ngIf="user.gender == 1">M</td>
+                    <td *ngIf="user.gender == 2">F</td>
+                    <td>{{ user.edad }}</td>
+                    <td>{{ user.updated_at }}</td>
+                </tr>
+            </tbody>
+          </table>
+        
+          <a class="btn  l12" (click)="chargeMore()" *ngIf="sendingData >0">Cargar más</a>
         
         </div>
       </div>
       
-    </div>
+
+      <div *ngIf="selection == 'receipts'">
+        <h2>Recibos</h2>
+          <table align="center">
+            <thead>
+                <tr>
+                  <th>Alumno</th>
+                  <th>Monto</th>
+                  <th>Descripción</th>
+                </tr>        
+            </thead>
+            <tbody>
+                <tr *ngFor="let re of receipts "[routerLink]="['/receipt/show', re.id]" >
+                  <td><a [routerLink]="['/users/show', re.user_id]">{{ re.user.name }}</a></td>
+                  <td>${{ re.amount }}</td>
+                  <td><a>{{re.descriptionView}}</a></td>
+                </tr>
+            </tbody>
+          </table>
+
+          <a class="btn l12" (click)="chargeMore()" *ngIf="sendingData >0">Ver Más</a>
+      </div>
+
+      <div *ngIf="selection == 'parking'">
+        <h2>Estacionamiento</h2>
+        <table align="center">
+          <thead>
+              <tr>
+                <th>Usuario</th>
+                <th>Monto</th>
+                <th>Entrada</th>
+                <th>Salida</th>
+                <th>Fecha</th>
+              </tr>        
+          </thead>
+          <tbody>
+              <tr *ngFor="let re of parking" [routerLink]="['/parking/ver', re.id]">
+                <td><a [routerLink]="['/users/show', re.user_id]">{{ re.user.name }}</a></td>
+                <td>${{ re.amount }}</td>
+                <td>{{ re.check_in }}</td>
+                <td>{{ re.check_out }}</td>
+                <td>{{ re.date_entry }}</td>
+              </tr>
+          </tbody>
+        </table>
+      
+        <a class="btn l12" (click)="chargeMore()" *ngIf="sendingData >0">Ver Más</a>
+      </div>
+
+    
 
   </div>
+
+</div>

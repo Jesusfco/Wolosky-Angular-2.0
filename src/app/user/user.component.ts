@@ -116,12 +116,7 @@ export class UserComponent implements OnInit {
   }
 
   searchRequest(){
-    if(this.request != null) {    
-      if(!this.request.closed) {
-        this.request.unsubscribe()    
-        this.sendingData--
-      }            
-    }
+    this.killRequest()
 
     this.sendingData ++;
 

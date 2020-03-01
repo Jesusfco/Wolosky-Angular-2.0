@@ -2,117 +2,127 @@
 
 <router-outlet></router-outlet>
 <mat-progress-bar mode="indeterminate" *ngIf="sendingData" class="barLoader"></mat-progress-bar>
-<h1>Inicio</h1>
+<h1>Resumen Wolosky</h1>
+
 <div class="menuHelper">
   <ul>
     <li (click)="sendLastCreated()"><a>U. Usuarios Registrados <mat-icon>people</mat-icon></a></li>
     <li (click)="sendLastUpdated()"><a>U. Usuarios Actualizados <mat-icon>people</mat-icon></a></li>
     <li (click)="sendReceipts()"><a>U. Recibos <mat-icon>receipt</mat-icon></a></li>
     <li (click)="sendParking()"><a>Estacionamiento <mat-icon>directions_car</mat-icon></a></li>
-    <li (click)="sendInventory()"><a>Inventario Bajo <mat-icon>shopping_cart</mat-icon></a></li>
-    <li (click)="sendDeptors()"><a>Mensualidades Pendientes <mat-icon>receipt</mat-icon></a></li>
+    <!-- <li (click)="sendInventory()"><a>Inventario Bajo <mat-icon>shopping_cart</mat-icon></a></li> -->
+    <li  [routerLink]="['/receipt/deudores']"><a>Mensualidades Pendientes <mat-icon>receipt</mat-icon></a></li>
+    <li (click)="getResumeData()"><a>Recargar Datos<mat-icon>cached</mat-icon></a></li>
   </ul>
 </div>
 
 <div class="flex">
-<div class="l6">
-  <h2>Ultimos Usuarios Registrados</h2>
-  <table align="center">
-    <thead>
-        <tr>
-            <th class="left">Nombre</th>
-            <th>Tipo</th>            
-            <th>Sexo</th>
-            <th>Edad</th>
-        </tr>        
-    </thead>
-    <tbody>
-        <tr *ngFor="let user of usersLastCreated | slice:0:6; let i=index">
-            <td><a [routerLink]="['/users/show', user.id]">{{ user.name }}</a></td>
-            <td>{{ user.typeView }}</td>                            
-            <td *ngIf="user.gender == 1">M</td>
-            <td *ngIf="user.gender == 2">F</td>
-            <td>{{ user.edad }}</td>
-        </tr>
-    </tbody>
-  </table>
+  <div class="l12">
+    <h2 class="centerText">Analisis de Mensualidad {{ month }}</h2>
+    <br>
+    <h3 class="centerText">Dinero Estimado: {{ monthlyMoneyAnalisis.moneyPayed + "/" + monthlyMoneyAnalisis.moneyExpected }}</h3>
+    <h3 class="centerText">Alumnos Regulares: {{ regularUsers.length +  "/" + (pendUsers.length + regularUsers.length) }}</h3>
+    <a class="btn l12" [routerLink]="['/receipt/deudores']">Ver Mensualidades Pendientes</a>
+  </div>
 
-  <a class="btn secundary" (click)="sendLastCreated()">Ver mas Usuarios</a>
-</div>
+  <div class="l6">
+    <h2>Ultimos Usuarios Registrados</h2>
+    <table align="center">
+      <thead>
+          <tr>
+              <th class="left">Nombre</th>
+              <th>Tipo</th>            
+              <th>Sexo</th>
+              <th>Edad</th>
+          </tr>        
+      </thead>
+      <tbody>
+          <tr *ngFor="let user of usersLastCreated | slice:0:6; let i=index">
+              <td><a [routerLink]="['/users/show', user.id]">{{ user.name }}</a></td>
+              <td>{{ user.typeView }}</td>                            
+              <td *ngIf="user.gender == 1">M</td>
+              <td *ngIf="user.gender == 2">F</td>
+              <td>{{ user.edad }}</td>
+          </tr>
+      </tbody>
+    </table>
 
-<div class="l6">
-  <h2>Ultimos Usuarios Actualizados</h2>
-  <table align="center">
-    <thead>
-        <tr>
-            <th class="left">Nombre</th>
-            <th>Tipo</th>            
-            <th>Sexo</th>
-            <th>Edad</th>
-        </tr>        
-    </thead>
-    <tbody>
-        <tr *ngFor="let user of usersLastUpdated | slice:0:6; let i=index">
-            <td><a [routerLink]="['/users/show', user.id]">{{ user.name }}</a></td>
-            <td>{{ user.typeView }}</td>                            
-            <td *ngIf="user.gender == 1">M</td>
-            <td *ngIf="user.gender == 2">F</td>
-            <td>{{ user.edad }}</td>
-        </tr>
-    </tbody>
-  </table>
+    <a class="btn secundary" (click)="sendLastCreated()">Ver mas Usuarios</a>
+  </div>
 
-  <a class="btn secundary" (click)="sendLastUpdated()">Ver mas Usuarios</a>
+  <div class="l6">
+    <h2>Ultimos Usuarios Actualizados</h2>
+    <table align="center">
+      <thead>
+          <tr>
+              <th class="left">Nombre</th>
+              <th>Tipo</th>            
+              <th>Sexo</th>
+              <th>Edad</th>
+          </tr>        
+      </thead>
+      <tbody>
+          <tr *ngFor="let user of usersLastUpdated | slice:0:6; let i=index">
+              <td><a [routerLink]="['/users/show', user.id]">{{ user.name }}</a></td>
+              <td>{{ user.typeView }}</td>                            
+              <td *ngIf="user.gender == 1">M</td>
+              <td *ngIf="user.gender == 2">F</td>
+              <td>{{ user.edad }}</td>
+          </tr>
+      </tbody>
+    </table>
 
-</div>
+    <a class="btn secundary" (click)="sendLastUpdated()">Ver mas Usuarios</a>
+
+  </div>
 
 
-<div class="l6">
-  <h2>Recibos</h2>
-  <table align="center">
-    <thead>
-        <tr>
-          <th>Alumno</th>
-          <th>Monto</th>
-          <th>Descripción</th>
-        </tr>        
-    </thead>
-    <tbody>
-        <tr *ngFor="let re of receipts | slice:0:6; let i=index"[routerLink]="['/receipt/show', re.id]" >
-          <td><a [routerLink]="['/users/show', re.user_id]">{{ re.user.name }}</a></td>
-          <td>${{ re.amount }}</td>
-          <td><a>{{re.descriptionView}}</a></td>
-        </tr>
-    </tbody>
-  </table>
+  <div class="l6">
+    <h2>Recibos</h2>
+    <table align="center">
+      <thead>
+          <tr>
+            <th>Alumno</th>
+            <th>Monto</th>
+            <th>Descripción</th>
+          </tr>        
+      </thead>
+      <tbody>
+          <tr *ngFor="let re of receipts | slice:0:6; let i=index"[routerLink]="['/receipt/show', re.id]" >
+            <td><a [routerLink]="['/users/show', re.user_id]">{{ re.user.name }}</a></td>
+            <td>${{ re.amount }}</td>
+            <td><a>{{re.descriptionView}}</a></td>
+          </tr>
+      </tbody>
+    </table>
 
-  <a class="btn secundary" (click)="sendReceipts()">Ver Recibos</a>
-</div>
+    <a class="btn secundary" (click)="sendReceipts()">Ver Recibos</a>
+  </div>
 
-<div class="l6">
-  <h2>Estacionamiento</h2>
-  <table align="center">
-    <thead>
-        <tr>
-          <th>Usuario</th>
-          <th>Monto</th>
-          <th>Entrada</th>
-          <th>Salida</th>
-          <th>Fecha</th>
-        </tr>        
-    </thead>
-    <tbody>
-        <tr *ngFor="let re of parking | slice:0:6; let i=index" [routerLink]="['/parking/ver', re.id]">
-          <td class="left">{{ re.user.name }}</td>
-          <td>${{ re.amount }}</td>
-          <td>{{ re.check_in }}</td>
-          <td>{{ re.check_out }}</td>
-          <td>{{ re.date_entry }}</td>
-        </tr>
-    </tbody>
-  </table>
+  <div class="l6">
+    <h2>Estacionamiento</h2>
+    <table align="center">
+      <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Monto</th>
+            <th>Entrada</th>
+            <th>Salida</th>
+            <th>Fecha</th>
+          </tr>        
+      </thead>
+      <tbody>
+          <tr *ngFor="let re of parking | slice:0:6; let i=index" [routerLink]="['/parking/ver', re.id]">
+            <td><a [routerLink]="['/users/show', re.user_id]">{{ re.user.name }}</a></td>
+            <td>${{ re.amount }}</td>
+            <td>{{ re.check_in }}</td>
+            <td>{{ re.check_out }}</td>
+            <td>{{ re.date_entry }}</td>
+          </tr>
+      </tbody>
+    </table>
 
-  <a class="btn secundary" (click)="sendParking()">Ver Estacionamiento</a>
-</div>
+    <a class="btn secundary" (click)="sendParking()">Ver Estacionamiento</a>
+  </div>
 
 </div>

@@ -13,7 +13,7 @@
     </ul>
 </div>
 
-<form class="flex">
+<form class="flex" (submit)="searchRequest()">
     <div class="l4">
         <label>Nombre de Usuario</label>
         <input [(ngModel)]="search.searchWord" (keyup)="searchInput()" placeholder="Buscar Usuario" name="search" type="search">

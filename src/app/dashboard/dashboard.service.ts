@@ -26,4 +26,10 @@ export class DashboardService {
     ;
   }
 
+  chargeMore(select, page){
+    return this._http.post(Url.getApiUrlToken("dashboard/details") + "&page=" + page,  {selection: select})    
+    .map(data => data.json())
+    ;
+  }
+
 }
